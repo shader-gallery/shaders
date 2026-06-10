@@ -1,0 +1,34 @@
+{
+  "name": "Lacework",
+  "slug": "lacework",
+  "family": "Loom",
+  "author": "Erin Carter",
+  "tags": ["dark", "grid", "lattice", "glow", "rainbow", "organic", "loop"],
+  "description": "A dark field of stitches — dots that morph into crosses as a radial wave passes through them, lit by four drifting glow blobs and tinted by angle into a faint rainbow.",
+  "entry": "shader.frag",
+  "params": [
+    { "key": "WAVE_SPEED", "label": "Wave speed", "min": 0.0, "max": 2.0, "default": 0.6 },
+    { "key": "SPACING_CSS", "label": "Dot spacing", "min": 16.0, "max": 60.0, "default": 30.0 }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}
