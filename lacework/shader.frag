@@ -29,6 +29,15 @@ float sdCircle(vec2 p, float r) {
   return length(p) - r;
 }
 
+// palette gradient over 0..1 using constant indices only (GLSL ES 1.00 cannot
+// dynamically index uniform arrays in the fragment stage)
+vec3 paletteRamp(float h) {
+  vec3 c = mix(u_palette[0], u_palette[1], smoothstep(0.00, 0.34, h));
+  c = mix(c, u_palette[2], smoothstep(0.33, 0.67, h));
+  c = mix(c, u_palette[3], smoothstep(0.66, 1.00, h));
+  return c;
+}
+
 // thin plus/cross: union of a horizontal and a vertical bar
 float sdCross(vec2 p, float arm, float th) {
   p = abs(p);
@@ -52,10 +61,10 @@ void main() {
   vec2 p2 = vec2(res.x * (0.20 + 0.15 * sin(t * 0.4)), res.y * (0.70 + 0.10 * cos(t * 0.9)));
   vec2 p3 = vec2(res.x * (0.75 + 0.10 * sin(t * 0.5)), res.y * (0.20 + 0.10 * cos(t * 0.7)));
   float R = max(res.x, res.y);
-  col += u_palette[0] * 0.22 * smoothstep(R * 0.60, 0.0, distance(fc, p0));
-  col += u_palette[1] * 0.18 * smoothstep(R * 0.55, 0.0, distance(fc, p1));
-  col += u_palette[2] * 0.14 * smoothstep(R * 0.45, 0.0, distance(fc, p2));
-  col += u_palette[3] * 0.10 * smoothstep(R * 0.35, 0.0, distance(fc, p3));
+  col += u_palette[0] * 0.30 * smoothstep(R * 0.60, 0.0, distance(fc, p0));
+  col += u_palette[1] * 0.25 * smoothstep(R * 0.55, 0.0, distance(fc, p1));
+  col += u_palette[2] * 0.20 * smoothstep(R * 0.45, 0.0, distance(fc, p2));
+  col += u_palette[3] * 0.16 * smoothstep(R * 0.35, 0.0, distance(fc, p3));
 
   // --- dot grid, in device pixels ---
   float spacing = SPACING_CSS * pr;
@@ -77,18 +86,21 @@ void main() {
   float shape  = mix(dDot, dCross, smoothstep(0.15, 0.85, m));
   float mask   = 1.0 - smoothstep(-pr, pr, shape);
 
-  // rainbow tint by angle from centre, brightness from morph + radial falloff
-  vec2  d     = dotCtr - ctr;
-  float hue   = (atan(d.y, d.x) + 3.14159265) / 6.2831853;
-  vec3  dotCol = vec3(
-    0.40 + m * 0.47 + hue * 0.23,
-    0.47 + m * 0.16 - hue * 0.16,
-    0.78 + m * 0.21 + (1.0 - hue) * 0.16
-  );
-  float radial  = 0.24 - (dCtr / length(ctr)) * 0.06;
-  float opacity = clamp(radial + m * 0.18, 0.0, 1.0);
+  // rainbow tint by angle from centre, slowly rotating, blended with the
+  // palette ramp so themes read on the lace itself (not just the blobs)
+  vec2  d       = dotCtr - ctr;
+  float hue     = fract((atan(d.y, d.x) + 3.14159265) / 6.2831853 + t * 0.015);
+  vec3  rainbow = 0.55 + 0.45 * cos(6.2831853 * hue + vec3(0.0, 2.094, 4.188));
+  vec3  dotCol  = mix(rainbow, paletteRamp(hue), 0.45);
+  float radial  = 0.38 - (dCtr / length(ctr)) * 0.10;
+  float opacity = clamp(radial + m * 0.42, 0.0, 1.0);
 
-  col += dotCol * mask * opacity;
+  col += dotCol * mask * opacity * (0.85 + 0.45 * m);
+
+  // faint smooth glow along the wavefront so the crest reads between dots
+  float wavePix = sin((distance(fc, ctr) / (WAVELEN_CSS * pr)) * 6.2831853 - t * WAVE_SPEED);
+  float crest   = smoothstep(0.90, 1.0, wavePix);
+  col += paletteRamp(fract(hue + 0.5)) * crest * 0.045;
 
   gl_FragColor = vec4(col, 1.0);
 }
