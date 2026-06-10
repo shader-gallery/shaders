@@ -1,0 +1,12 @@
+{
+  "categories": ["Loom", "Veil", "Bloom", "Wake", "Abyss"],
+  "shaders": [
+    "lacework",
+    "warp",
+    "filigree",
+    "gossamer",
+    "lantern",
+    "undertow",
+    "starfall"
+  ]
+}
