@@ -3,8 +3,8 @@
   "slug": "spatter",
   "family": "Noir",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "rain", "glass", "droplets", "flicker"],
-  "description": "Near-black wet glass, almost empty. At hash-timed instants a raindrop strikes, drawing a tiny asymmetric splat with angular spikes that flares in a palette hue chosen by position, then relaxes into a single bead that slides a short way down the pane and fades, over a quiet stipple of old rain. Stochastic, percussive, no global pulse.",
+  "tags": ["dark", "glow", "loop", "paint", "splatter", "texture", "organic"],
+  "description": "Thrown paint on a dark wall: a dense, clumping field of ragged-edged splats, each flanked by a spray of satellite droplets and trailing a thin drip, in palette hues chosen by position. Splats flare on impact then settle into slow-fading stains so many coexist as built-up texture, clumping heavier off-centre.",
   "entry": "shader.frag",
   "params": [
     {
@@ -13,26 +13,35 @@
       "min": 0.2,
       "max": 3,
       "step": 0.05,
-      "default": 1,
-      "effect": "Average rain-strike frequency across the pane, from a lone tap every few seconds to a steady patter of overlapping hits."
+      "default": 1.4,
+      "effect": "How fast new splats land across the field, from an occasional throw to a constant overlapping barrage."
     },
     {
       "uniform": "u_splatSize",
       "label": "Splat size",
-      "min": 4,
-      "max": 24,
+      "min": 6,
+      "max": 30,
       "step": 1,
-      "default": 10,
-      "effect": "Radius in CSS pixels of each impact splat and its resulting bead, from fine drizzle to fat heavy drops."
+      "default": 17,
+      "effect": "Radius in CSS pixels of each splat, its satellite spray and drip, from fine flecks to fat heavy blots."
     },
     {
       "uniform": "u_slide",
-      "label": "Slide",
+      "label": "Drip",
       "min": 0,
-      "max": 60,
+      "max": 70,
       "step": 1,
-      "default": 22,
-      "effect": "Distance in CSS pixels the relaxed bead slides before fading; 0 makes drops die where they land, high values leave short running tails."
+      "default": 30,
+      "effect": "Distance in CSS pixels each splat drips downward; 0 makes paint stay where it lands, high values leave long running drips."
+    },
+    {
+      "uniform": "u_coverage",
+      "label": "Coverage",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How densely the paint clumps across the frame, from a sparse scatter to a heavily built-up wall."
     }
   ],
   "defaultPalette": "midnight"
