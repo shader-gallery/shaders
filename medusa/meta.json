@@ -22,8 +22,26 @@
       "min": 50,
       "max": 200,
       "step": 1,
-      "default": 110,
+      "default": 120,
       "effect": "Dome radius in CSS pixels; all bells scale together (tentacle lengths follow) while keeping their drift lanes."
+    },
+    {
+      "uniform": "u_count",
+      "label": "Bells",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "effect": "How many jellyfish bells swim the frame at once."
+    },
+    {
+      "uniform": "u_brightness",
+      "label": "Bell brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.2,
+      "effect": "Overall emission of the bells and their tentacles; raises the jellies clear of the dark water."
     },
     {
       "uniform": "u_tentacleLag",

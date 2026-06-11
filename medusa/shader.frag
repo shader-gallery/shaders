@@ -23,11 +23,13 @@ uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_pulseSpeed;    // contraction-cycle rate scale   (default 0.7)
-uniform float u_bellSize;      // dome radius in CSS px          (default 110)
+uniform float u_bellSize;      // dome radius in CSS px          (default 120)
+uniform float u_count;         // how many bells swim, 2..5      (default 4)
+uniform float u_brightness;    // bell emission multiplier, 0..2 (default 1.2)
 uniform float u_tentacleLag;   // tentacle phase lag, 0..1 pulse (default 0.45)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const int   NBELLS   = 4;       // structured organisms, fixed count
+const int   NBELLS   = 5;       // structured organisms, count-gated
 const int   NTENT    = 5;       // tentacle curves hanging per bell
 const float TWO_PI   = 6.2831853;
 
@@ -85,13 +87,15 @@ void main() {
   // accumulate glow from each bell (additive over the dark water)
   for (int bi = 0; bi < NBELLS; bi++) {
     float fbi = float(bi);
+    if (fbi > u_count - 0.5) continue;   // u_count gates how many bells swim
 
     // per-bell deterministic constants (depth, lane, period, phase offset)
     float depth   = fract(fbi * 0.2637 + 0.15);            // 0 far .. 1 near
     float period  = mix(9.0, 5.0, fract(fbi * 0.4115 + 0.3)); // 5..9 s cycle
     float phOff   = fract(fbi * 0.7321 + 0.11);
-    float laneAng = mix(-0.45, 0.45, fract(fbi * 0.5550 + 0.2)); // diagonal lane slope
-    float laneY0  = mix(0.18, 0.82, fract(fbi * 0.3170 + 0.05)); // lane vertical anchor
+    float laneAng = mix(-0.35, 0.35, fract(fbi * 0.5550 + 0.2)); // diagonal lane slope
+    // keep lanes clear of the top/bottom edges so bells aren't clipped
+    float laneY0  = mix(0.30, 0.68, fract(fbi * 0.3170 + 0.05)); // lane vertical anchor
 
     // depth scales the body: far bells smaller and dimmer
     float dscale  = mix(0.55, 1.15, depth);
@@ -144,12 +148,13 @@ void main() {
     vec3 tint = paletteMix(hue);
 
     float pump = mix(0.35, 1.0, contract);       // glow swells on contraction
-    float brightness = mix(0.55, 1.0, depth) * edgeFade;
+    float emit = clamp(u_brightness, 0.0, 2.0);
+    float brightness = mix(0.85, 1.35, depth) * edgeFade * emit;
 
     vec3 bellCol = vec3(0.0);
-    bellCol += tint * inner * cap * 0.42 * pump;                   // dome body glow
-    bellCol += tint * rim * cap * (0.55 + 1.5 * contract);        // flaring rim
-    bellCol += tint * halo * cap * 0.16 * pump;                    // bloom halo
+    bellCol += tint * inner * cap * 0.60 * pump;                   // dome body glow
+    bellCol += mix(tint, vec3(1.0), 0.25) * rim * cap * (0.85 + 2.1 * contract); // flaring rim
+    bellCol += tint * halo * cap * 0.24 * pump;                    // bloom halo
     col += bellCol * brightness;
 
     // --- tentacles: NTENT thin analytic curves hanging DOWN from the bell rim,
@@ -182,8 +187,8 @@ void main() {
       // only below the bell, within hang range
       float band = smoothstep(0.05, -0.05, ny);          // 1 below centre
       float fade = (1.0 - s);                             // trail into darkness
-      col += tint * line * band * fade * fade * 0.30 * edgeFade
-             * mix(0.5, 1.0, depth) * (0.55 + 0.9 * tentPh);
+      col += tint * line * band * fade * fade * 0.42 * edgeFade * emit
+             * mix(0.6, 1.1, depth) * (0.55 + 0.9 * tentPh);
     }
   }
 
