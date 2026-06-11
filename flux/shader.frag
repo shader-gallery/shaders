@@ -93,6 +93,15 @@ void main() {
   float aa    = pr * 1.0;
   float stroke = 1.0 - smoothstep(halfw, halfw + aa, linePx);
 
+  // iron-filing granularity: modulate brightness with a fine texture running
+  // across + along the arcs so they read as chains of aligned magnetic filings
+  // rather than perfectly smooth curves — flux's granular identity vs isobar's
+  // clean cyclonic spirals. A slow drift keeps the filings alive without reset.
+  float grain = sin(field * 2.7 + (p.x - p.y) * mind * 0.55 + t * 0.3)
+              * sin((p.x + p.y) * mind * 0.42 - t * 0.2);
+  grain = 0.60 + 0.40 * (0.5 + 0.5 * grain);
+  stroke *= grain;
+
   // arc index for hue: the contour level number from inner bundle outward.
   // floor of (field / pi) gives a per-arc integer that the crawl advances slowly.
   float arc = floor(field / 3.14159265);
