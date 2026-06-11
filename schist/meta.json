@@ -1,0 +1,20 @@
+{
+  "name": "Schist",
+  "slug": "schist",
+  "family": "Strata",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "rock", "bands", "texture", "mineral", "organic", "rainbow"],
+  "description": "A slab of foliated metamorphic rock face-on: dense wavy mineral bands sweep diagonally across the frame, each layer a different restrained palette tint separated by thin dark cleavage seams, domain-warped into boudinage swells and pinches so it never reads as ruled stripes. Tiny mica flakes scattered along the foliation catch the light and twinkle. Dark rock, luminous mineral colour, everything creeping slowly with no loop seam.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_bandScale", "label": "Band scale", "min": 18.0, "max": 110.0, "step": 1.0,
+      "default": 46.0, "effect": "CSS-pixel thickness of one mineral band — fine gives a tightly laminated schist, coarse gives a few broad gneissic layers." },
+    { "uniform": "u_fold", "label": "Folding", "min": 0.0, "max": 2.5, "step": 0.01,
+      "default": 1.0, "effect": "Strength of the domain-warp folding, from near-flat parallel bands to tightly contorted boudinage swells and pinches." },
+    { "uniform": "u_mica", "label": "Mica", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 1.0, "effect": "Density and brightness of the twinkling mica flakes scattered along the foliation; 0 leaves bare rock bands." },
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.5, "effect": "Creep speed of the warp folds and the flake twinkle, from a still slab to a slowly breathing seam." }
+  ],
+  "defaultPalette": "midnight"
+}
