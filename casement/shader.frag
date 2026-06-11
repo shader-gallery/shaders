@@ -84,11 +84,12 @@ void main() {
   // ---- build the projected window frame in css space ----
   // Centre of the lit figure glides horizontally with the light, leaning toward
   // a corner at the extremes. Vertical centre dips slightly as it elongates.
-  vec2  ctr   = vec2(0.5 * R.x + 0.30 * R.x * swing,
-                     0.46 * R.y + 0.06 * R.y * arc);
+  vec2  ctr   = vec2(0.5 * R.x + 0.22 * R.x * swing,
+                     0.48 * R.y + 0.06 * R.y * arc);
 
-  // base half-size of the trapezoid (a comfortable window on the wall)
-  vec2  half0 = vec2(0.26, 0.30) * minR;
+  // base half-size of the trapezoid — large enough that the thrown window-light
+  // fills the frame rather than floating as a small figure on a black wall.
+  vec2  half0 = vec2(0.44, 0.50) * minR;
 
   // projective shear + stretch: the window leans and elongates toward a corner
   // as the source flattens. shr is the horizontal lean (px per px of height),
