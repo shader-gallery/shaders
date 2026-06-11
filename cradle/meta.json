@@ -12,25 +12,5 @@
     { "uniform": "u_line", "label": "Line weight", "min": 0.8, "max": 3.0, "step": 0.05, "default": 1.4, "effect": "Core thickness of each chord in CSS px, with halo scaling alongside — thin reads as hairline wire, thick as soft neon string." },
     { "uniform": "u_glintSpeed", "label": "Glint speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.7, "effect": "Travel speed of the bright beads sliding along the chords — at 0 they rest as fixed highlights, at max light visibly courses down every string." }
   ],
-  "palettes": {
-    "midnight": [
-      [0.231, 0.510, 0.965],
-      [0.659, 0.333, 0.969],
-      [0.133, 0.827, 0.933],
-      [0.957, 0.247, 0.369]
-    ],
-    "witchlight": [
-      [0.545, 0.361, 0.965],
-      [0.925, 0.282, 0.600],
-      [0.298, 0.733, 0.910],
-      [0.984, 0.749, 0.141]
-    ],
-    "ember": [
-      [0.984, 0.451, 0.133],
-      [0.957, 0.247, 0.369],
-      [0.965, 0.620, 0.043],
-      [0.561, 0.149, 0.305]
-    ]
-  },
   "defaultPalette": "midnight"
 }

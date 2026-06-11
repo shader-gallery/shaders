@@ -12,25 +12,5 @@
     { "uniform": "u_rows", "label": "Lit rows", "min": 4.0, "max": 24.0, "step": 1.0, "default": 10.0, "effect": "How many completed rows stay lit above the needle before dimming away; few keeps a narrow luminous band in mostly dark cloth, many fills most of the frame with banded embroidery." },
     { "uniform": "u_complexity", "label": "Sampler complexity", "min": 1.0, "max": 8.0, "step": 1.0, "default": 4.0, "effect": "Biases the hashed per-row band patterns; low keeps simple running stripes and zigzags, high works dense diamond, check, and bordered medallion samplers." }
   ],
-  "palettes": {
-    "midnight": [
-      [0.231, 0.510, 0.965],
-      [0.659, 0.333, 0.969],
-      [0.133, 0.827, 0.933],
-      [0.957, 0.247, 0.369]
-    ],
-    "witchlight": [
-      [0.545, 0.361, 0.965],
-      [0.925, 0.282, 0.600],
-      [0.298, 0.733, 0.910],
-      [0.984, 0.749, 0.141]
-    ],
-    "ember": [
-      [0.984, 0.451, 0.133],
-      [0.957, 0.247, 0.369],
-      [0.965, 0.620, 0.043],
-      [0.561, 0.149, 0.305]
-    ]
-  },
   "defaultPalette": "midnight"
 }

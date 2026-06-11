@@ -11,25 +11,5 @@
     { "uniform": "u_ringTime", "label": "Ring time", "min": 2.0, "max": 14.0, "step": 0.05, "default": 6.5, "effect": "Exponential decay constant of the ring-down, from a damped thud to a long singing sustain." },
     { "uniform": "u_modeRichness", "label": "Mode richness", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7, "effect": "Continuously fades the upper partials in, from a single breathing fundamental ring to the full quartered figure." }
   ],
-  "palettes": {
-    "midnight": [
-      [0.231, 0.510, 0.965],
-      [0.659, 0.333, 0.969],
-      [0.133, 0.827, 0.933],
-      [0.957, 0.247, 0.369]
-    ],
-    "witchlight": [
-      [0.545, 0.361, 0.965],
-      [0.925, 0.282, 0.600],
-      [0.298, 0.733, 0.910],
-      [0.984, 0.749, 0.141]
-    ],
-    "ember": [
-      [0.984, 0.451, 0.133],
-      [0.957, 0.247, 0.369],
-      [0.965, 0.620, 0.043],
-      [0.561, 0.149, 0.305]
-    ]
-  },
   "defaultPalette": "midnight"
 }
