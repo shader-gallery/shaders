@@ -1,0 +1,20 @@
+{
+  "name": "Cairn",
+  "slug": "cairn",
+  "family": "Plinth",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "stone", "fog", "depth", "monument", "organic"],
+  "description": "A moor of balanced stone cairns — stacks of flattened rounded boulders, each teetering on the one below — recedes into luminous haze. Raymarched as true 3D solids so nearer stacks occlude farther ones, with exponential distance fog, a colour-2 rim where each silhouette meets the brighter haze behind it, and a sparse moss-vein of colour 3 on a hash-chosen few crowns. The camera dollies forward down a sinuous lane threaded between the cairns; the world holds perfectly still.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dollySpeed", "label": "Dolly speed", "min": 0.0, "max": 1.2, "step": 0.01,
+      "default": 0.3, "effect": "Forward walking speed of the camera down the lane, from a near-still drift to a steady stride." },
+    { "uniform": "u_fogDensity", "label": "Fog density", "min": 0.2, "max": 2.5, "step": 0.01,
+      "default": 1.0, "effect": "How fast distance dissolves the cairns into haze — thin air reveals a deep field, dense fog closes it to a few near stacks." },
+    { "uniform": "u_cairnSpacing", "label": "Cairn spacing", "min": 2.5, "max": 7.0, "step": 0.05,
+      "default": 4.2, "effect": "World gap between cairns, from a crowded boulder field to sparse stacks on an open moor." },
+    { "uniform": "u_rimGlow", "label": "Rim glow", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.9, "effect": "Strength of the bright fog-lit rim tracing each cairn's silhouette." }
+  ],
+  "defaultPalette": "midnight"
+}
