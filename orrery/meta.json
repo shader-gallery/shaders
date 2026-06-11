@@ -1,0 +1,67 @@
+{
+  "name": "Orrery",
+  "slug": "orrery",
+  "family": "Trace",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "orbits",
+    "rings",
+    "clockwork",
+    "astronomy"
+  ],
+  "description": "Six faint etched orbit rings centred on the dark field, each carrying one small glowing body trailing a short arc of phosphor smear. Bodies revolve at clock-steady commensurate rates — 8 seconds on the innermost lap, over a minute on the outermost — and when a pair drifts into alignment a hair-thin radial resonance line fades up between them, flares gently at conjunction, and fades away.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_orbitSpeed",
+      "label": "Orbit speed",
+      "min": 0.2,
+      "max": 3,
+      "step": 0.05,
+      "default": 1,
+      "effect": "Scales every body's angular rate together, from contemplative planetarium drift to busy clockwork whirl, without changing the period ratios."
+    },
+    {
+      "uniform": "u_ringGap",
+      "label": "Ring gap",
+      "min": 50,
+      "max": 160,
+      "step": 1,
+      "default": 90,
+      "effect": "Spacing between adjacent orbit rings (scaled to the viewport so the system fits); tight spacing nests the system compactly at centre, wide spacing spreads orbits toward the frame edges."
+    },
+    {
+      "uniform": "u_flare",
+      "label": "Flare",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Intensity of the resonance line drawn between aligning bodies — invisible at 0, a clearly visible luminous chord briefly bridging the rings at max."
+    }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Contour",
+  "slug": "contour",
+  "family": "Strata",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "contour", "topo", "organic", "rainbow"],
+  "description": "A plan-view topographic map of terrain that doesn't exist: thin glowing isolines over a near-black base, every fifth index contour brighter and twice as wide, hue climbing the palette with elevation. The land deforms at geological patience while each line creeps uphill — crawling, pinching, merging and splitting in place.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_morphSpeed",
+      "label": "Morph speed",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Rate the terrain deforms — how fast lines crawl, merge and split; 0 freezes the landscape while the threshold drift keeps lines creeping."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Contour density",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 12,
+      "effect": "Number of contour levels across the height range; higher packs the map with tighter, finer line bunches."
+    },
+    {
+      "uniform": "u_lineWidth",
+      "label": "Line width",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.05,
+      "default": 1.2,
+      "effect": "Stroke width of ordinary isolines in CSS pixels; index contours track at about double this width."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

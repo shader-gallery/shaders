@@ -1,0 +1,53 @@
+{
+  "name": "Bead",
+  "slug": "bead",
+  "family": "Noir",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "rain", "glass", "neon", "droplets"],
+  "description": "A sparse constellation of large condensation droplets on near-black glass, each thick water lens trapping a sharp inverted miniature of an unseen neon sign. Drops swell on their own clocks, occasionally merge with a quick wobble, and plunge off the bottom leaving a brief wet line while a new bead condenses elsewhere.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_dropSize",
+      "label": "Drop size",
+      "min": 24,
+      "max": 110,
+      "step": 1,
+      "default": 56,
+      "effect": "Mean radius in CSS pixels of the droplet lenses, from marble-sized beads to heavy drops with clearly readable inverted signs inside."
+    },
+    {
+      "uniform": "u_lifecycleRate",
+      "label": "Lifecycle rate",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How quickly drops swell toward merges and plunges; 0 holds the constellation in glinting stasis, 2 keeps a merge or fall happening somewhere every few seconds."
+    },
+    {
+      "uniform": "u_signFlicker",
+      "label": "Sign flicker",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Raggedness of the neon glyphs' flicker inside the drops; 0 burns every tiny sign steady, 1 lets them sputter like failing tubes."
+    },
+    {
+      "uniform": "u_glint",
+      "label": "Glint",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Brightness of each droplet's crescent rim highlight, from matte fog beads to sharply lit glass pearls."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

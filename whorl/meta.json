@@ -1,0 +1,44 @@
+{
+  "name": "Whorl",
+  "slug": "whorl",
+  "family": "Rosette",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "particles", "spiral", "phyllotaxis", "radial"],
+  "description": "A phyllotaxis bloom: two hundred glowing motes placed by the golden-angle spiral form a sunflower seed head drawn in light. Each dot ignites at the centre, brightens through mid-life, and dims away at the rim as the whole population streams outward at a felt-not-seen pace.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_bloomSpeed",
+      "label": "Bloom speed",
+      "min": 0.05,
+      "max": 0.8,
+      "step": 0.01,
+      "default": 0.2,
+      "effect": "How fast each dot ages and rides the spiral outward; the entire population streams faster at higher values."
+    },
+    {
+      "uniform": "u_dot",
+      "label": "Dot size",
+      "min": 2,
+      "max": 9,
+      "step": 0.05,
+      "default": 4,
+      "effect": "Radius of each glowing mote in CSS px; larger dots overlap into a softer continuous bloom."
+    },
+    {
+      "uniform": "u_spread",
+      "label": "Spread",
+      "min": 9,
+      "max": 28,
+      "step": 0.05,
+      "default": 15,
+      "effect": "Radial spacing constant of the phyllotaxis in CSS px per square-root-index step; sets the seed head's overall footprint and dot density."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

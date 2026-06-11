@@ -1,0 +1,52 @@
+{
+  "name": "Shaft",
+  "slug": "shaft",
+  "family": "Shoal",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "beams",
+    "light",
+    "volumetric",
+    "slow"
+  ],
+  "description": "A fan of slanted volumetric light beams pours from the upper-left corner and crosses the frame diagonally — a few soft-edged shafts separated by dark gaps, each blooming and dying on its own slow phase while the whole fan rocks a few degrees over about a minute, like moonlight bent through unseen water.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_swing",
+      "label": "Swing",
+      "min": 0,
+      "max": 12,
+      "step": 0.05,
+      "default": 4,
+      "effect": "Amplitude in degrees of the fan's slow rocking — 0 pins the beams perfectly still, 12 sweeps them noticeably across the frame."
+    },
+    {
+      "uniform": "u_fadeSpeed",
+      "label": "Fade speed",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How quickly individual beams bloom in and fade out of the fan."
+    },
+    {
+      "uniform": "u_beam",
+      "label": "Beam width",
+      "min": 50,
+      "max": 300,
+      "step": 1,
+      "default": 130,
+      "effect": "CSS-pixel width of a typical shaft — narrow gives many slivers of light, wide gives two or three broad columns."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

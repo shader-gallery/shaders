@@ -1,0 +1,52 @@
+{
+  "name": "Marble",
+  "slug": "marble",
+  "family": "Gyre",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "ink",
+    "marbling",
+    "flow",
+    "organic"
+  ],
+  "description": "Suminagashi paper-marbling: two inks from opposite ends of the palette interleave as thin luminous filaments on a near-black ground, folding into hooked swirls as a drifting domain warp perpetually stretches and refolds the sheet — ink combed on water that never settles and never resets.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_churnSpeed",
+      "label": "Churn speed",
+      "min": 0.05,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.25,
+      "effect": "Scales how fast the domain-warp offsets advance — filaments fold lazily at the low end and visibly roil at the high end."
+    },
+    {
+      "uniform": "u_fold",
+      "label": "Fold",
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.2,
+      "effect": "Amplitude of the iterated domain warp — low gives gentle wavy bands, high gives tightly wound hooks and spirals."
+    },
+    {
+      "uniform": "u_scale",
+      "label": "Swirl scale",
+      "min": 150,
+      "max": 900,
+      "step": 1,
+      "default": 420,
+      "effect": "CSS-pixel size of the dominant swirl features, from fine dense marbling to a few huge slow folds."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

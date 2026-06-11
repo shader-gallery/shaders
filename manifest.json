@@ -5,7 +5,15 @@
     "Bloom",
     "Wake",
     "Abyss",
-    "Mosaic"
+    "Mosaic",
+    "Shoal",
+    "Gyre",
+    "Rosette",
+    "Strata",
+    "Burnish",
+    "Noir",
+    "Omen",
+    "Trace"
   ],
   "shaders": [
     "lacework",
@@ -22,6 +30,14 @@
     "vein",
     "shale",
     "floe",
-    "froth"
+    "froth",
+    "shaft",
+    "marble",
+    "whorl",
+    "contour",
+    "kintsugi",
+    "bead",
+    "corona",
+    "orrery"
   ]
 }
