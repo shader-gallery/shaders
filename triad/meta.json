@@ -1,0 +1,25 @@
+{
+  "name": "Triad",
+  "slug": "triad",
+  "family": "Knell",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "resonance", "hexagon", "cymatic", "lattice", "decay"],
+  "description": "Three standing plane-wave trains cross at 120 degrees and sum into a honeycomb of glowing antinode cells on a vibrating bronze pan. Hash-scheduled strikes flood the lattice with shimmering amplitude that rings down at three different rates, melting the hexagons through stripe-dominant interludes before settling to a faint residual.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cellSize", "label": "Cell size", "min": 22, "max": 110, "step": 1,
+      "default": 48, "effect": "CSS-pixel scale of the hexagonal cells, from a fine cymatic mesh to a few large breathing cells." },
+    { "uniform": "u_strikeGap", "label": "Strike gap", "min": 4, "max": 30, "step": 1,
+      "default": 11, "effect": "Mean seconds between hash-scheduled strikes that re-flood and reseat the lattice." },
+    { "uniform": "u_ringTime", "label": "Ring time", "min": 2, "max": 13, "step": 1,
+      "default": 7, "effect": "How long the three trains take to die away, stretching or shortening the hexagon-to-stripes melt." },
+    { "uniform": "u_skew", "label": "Skew", "min": 0.0, "max": 0.15, "step": 0.01,
+      "default": 0.04, "effect": "Detunes one train's wavelength so the lattice drifts toward a slow moire superlattice; zero locks a perfect honeycomb." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

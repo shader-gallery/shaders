@@ -1,0 +1,25 @@
+{
+  "name": "Throat",
+  "slug": "throat",
+  "family": "Delve",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "ice", "cave", "organic", "depth"],
+  "description": "An ice-cave throat swallowing the view: concentric shelves of translucent ice with organic noise-displaced contours, cold rim light pooling in the bays, hue sliding through the palette by depth, and an exponential gullet of true black at center. Shelves and their frozen wobble descend the scale axis forever — a continuous zoom that never arrives.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_descentSpeed", "label": "Descent speed", "min": 0.02, "max": 0.4, "step": 0.01,
+      "default": 0.1, "effect": "Scale-octaves per second the ice shelves are swallowed toward the center." },
+    { "uniform": "u_wobble", "label": "Wobble", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Amplitude of the organic contour displacement; 0 gives clean circular ice rings." },
+    { "uniform": "u_shelfDensity", "label": "Shelf density", "min": 2.0, "max": 9.0, "step": 1.0,
+      "default": 4.0, "effect": "Number of ice shelves per scale octave." },
+    { "uniform": "u_iceGlow", "label": "Ice glow", "min": 0.2, "max": 1.4, "step": 0.01,
+      "default": 0.8, "effect": "Brightness of the cold rim light along each shelf edge." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

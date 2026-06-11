@@ -1,0 +1,61 @@
+{
+  "name": "Stubble",
+  "slug": "stubble",
+  "family": "Smolder",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "ember",
+    "fire",
+    "field",
+    "rows"
+  ],
+  "description": "A harvested field at night seen from straight above: parallel windrows of stubble cross the frame on a shallow diagonal while an unseen burn line advances across them. The glow is gated hard by the fuel, so the fire reads as a chain of discrete point-fires catching one row after another — each igniting with a prominent flare, then guttering into a graded ember bead with row-aligned cooling sparks. Staggered burn fields crossfade unseen, so the relay never pauses or retreats.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_lineSpeed",
+      "label": "Line speed",
+      "min": 0.05,
+      "max": 0.8,
+      "step": 0.01,
+      "default": 0.22,
+      "effect": "How fast the fire line advances across the rows."
+    },
+    {
+      "uniform": "u_rowSpacing",
+      "label": "Row spacing",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "default": 32,
+      "effect": "Distance in CSS pixels between windrows; wider spacing leaves longer dark gaps between point-fires."
+    },
+    {
+      "uniform": "u_flareIntensity",
+      "label": "Flare intensity",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the prominent catch-flare when the front ignites a fresh row; zero removes the flares."
+    },
+    {
+      "uniform": "u_sparkDensity",
+      "label": "Spark density",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "How many cooling sparks lie along the charred rows behind the line."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

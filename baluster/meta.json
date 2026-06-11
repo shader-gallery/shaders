@@ -1,0 +1,25 @@
+{
+  "name": "Baluster",
+  "slug": "baluster",
+  "family": "Umbra",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "shadow", "bars", "fan", "stairs", "penumbra"],
+  "description": "A stair banister's shadow thrown up a wall: a fan of dark bars radiates from an off-screen anchor below the corner, tapering and graded from broad-soft to knife-sharp. An implied lamp swings on a slow pendulum downstairs, so the whole fan pivots and the bars scissor between deeper dark and lit wedges.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_swingSpeed", "label": "Swing speed", "min": 0.05, "max": 0.6, "step": 0.01,
+      "default": 0.18, "effect": "Rate of the implied lamp's pendulum arc that pivots and scissors the fan." },
+    { "uniform": "u_barWidth", "label": "Bar width", "min": 6.0, "max": 40.0, "step": 1.0,
+      "default": 16.0, "effect": "CSS-pixel base thickness of the banister bars before projective taper." },
+    { "uniform": "u_fanSpread", "label": "Fan spread", "min": 0.3, "max": 1.4, "step": 0.05,
+      "default": 0.85, "effect": "How widely the fan of bars opens across the frame, from a tight sheaf to a full sweep." },
+    { "uniform": "u_penumbra", "label": "Penumbra", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.8, "effect": "Strength of the soft-to-sharp blur gradient across the fan." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

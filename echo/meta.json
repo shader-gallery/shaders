@@ -1,0 +1,61 @@
+{
+  "name": "Echo",
+  "slug": "echo",
+  "family": "Delve",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "rings",
+    "well",
+    "minimal",
+    "depth"
+  ],
+  "description": "A stone well heard rather than seen: thin, perfectly circular wavefront rings procession inward like a dropped pebble's sound returning, sitting at exact log-spaced stations on a near-black wall. Each ring is born faint at the rim, swells to full glow at mid-depth, then drowns in the dark well before a pure-black pupil at the center, tinted through the palette by depth. The procession marches down the scale axis forever — equal spacing maintained, no ring arriving, nothing rotating or translating.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_descentSpeed",
+      "label": "Descent speed",
+      "min": 0.02,
+      "max": 0.5,
+      "step": 0.01,
+      "default": 0.15,
+      "effect": "Scale-octaves per second the wavefronts sink toward the pupil at the center of the well."
+    },
+    {
+      "uniform": "u_ringDensity",
+      "label": "Ring density",
+      "min": 1,
+      "max": 7,
+      "step": 1,
+      "default": 3,
+      "effect": "Wavefront rings per scale octave — low gives lonely echoes, high a dense procession."
+    },
+    {
+      "uniform": "u_lineWidth",
+      "label": "Line width",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 2,
+      "effect": "Stroke width of each wavefront ring in CSS pixels."
+    },
+    {
+      "uniform": "u_haloGlow",
+      "label": "Halo glow",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Softness and reach of the glow halo around each ring; 0 leaves crisp bare circles."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

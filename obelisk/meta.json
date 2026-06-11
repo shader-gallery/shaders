@@ -1,0 +1,25 @@
+{
+  "name": "Obelisk",
+  "slug": "obelisk",
+  "family": "Plinth",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "monument", "spire", "fog", "parallax", "raymarch"],
+  "description": "A single tapering needle crowned by a pyramidion rises alone out of a rolling sea of fog under an empty near-black sky. The camera rides a slow helical orbit, fog dropping away to reveal the shaft on the rise and climbing back over its base on the descent while the monument stands utterly still.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_orbitSpeed", "label": "Orbit speed", "min": 0.05, "max": 0.9, "step": 0.01,
+      "default": 0.2, "effect": "How fast the camera spirals around the shaft." },
+    { "uniform": "u_fogLevel", "label": "Fog level", "min": 0.2, "max": 1.4, "step": 0.01,
+      "default": 0.7, "effect": "How high the rolling fog sea laps up the shaft - the pyramidion and tip-light always stay clear above it." },
+    { "uniform": "u_tipGlow", "label": "Tip glow", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.8, "effect": "Brightness of the star-point and halo on the pyramidion." },
+    { "uniform": "u_rimGlow", "label": "Rim glow", "min": 0.1, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "Strength of the hairline light running up the shaft's lit edge." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

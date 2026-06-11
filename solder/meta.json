@@ -1,0 +1,53 @@
+{
+  "name": "Solder",
+  "slug": "solder",
+  "family": "Mercury",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "liquid", "metaball", "merge", "molten", "seam"],
+  "description": "Four molten beads ride a gently bowed weld seam, summed and smooth-min iso-surfaced so neighbours bulge, neck, and wick into longer liquid slugs. Merges propagate left-to-right down the line like solder drawn by heat, the slug reluctantly re-pinches back into four beads, and the peristaltic round repeats phase-continuously. Bead hue blends from colour 0 at the left to colour 1 at the right with a cool colour-2 sheen on each bead's upper edge.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_beadSize",
+      "label": "Bead size",
+      "min": 40,
+      "max": 140,
+      "step": 1,
+      "default": 80,
+      "effect": "Radius of the molten beads in CSS pixels, setting how fat the liquid sits on the seam."
+    },
+    {
+      "uniform": "u_travelSpeed",
+      "label": "Travel speed",
+      "min": 0.1,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "How fast merge events wick along the seam and how quickly the beads re-pinch."
+    },
+    {
+      "uniform": "u_seamSag",
+      "label": "Seam sag",
+      "min": 0,
+      "max": 0.35,
+      "step": 0.01,
+      "default": 0.12,
+      "effect": "How deeply the seam line bows downward; at zero the weld runs perfectly straight."
+    },
+    {
+      "uniform": "u_sheen",
+      "label": "Sheen",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Strength of the cool interior sheen on each bead's upper edge; at zero the beads read as pure dark mirror."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

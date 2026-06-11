@@ -1,0 +1,25 @@
+{
+  "name": "Fringe",
+  "slug": "fringe",
+  "family": "Knell",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "resonance", "interference", "fringes", "decay"],
+  "description": "Two unseen exciters pinch a dark glass sheet; their summed standing waves glow in lozenge fringes while hyperbolic nodal curves stay pinned and black. A hash-scheduled strike floods the figure with shimmer, then it rings down toward stillness — nothing travels, only brightness lives and dies.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_split", "label": "Source split", "min": 80, "max": 380, "step": 1,
+      "default": 210, "effect": "CSS-px distance between the two exciter points, from tight near-circular fringes to wide sweeping hyperbolae." },
+    { "uniform": "u_wavelength", "label": "Wavelength", "min": 14, "max": 64, "step": 1,
+      "default": 26, "effect": "CSS-px wavelength of the standing field, setting how finely the fringe orders pack." },
+    { "uniform": "u_strikeGap", "label": "Strike gap", "min": 4, "max": 28, "step": 1,
+      "default": 12, "effect": "Mean seconds between strikes that re-flood (and occasionally re-place) the fringe system." },
+    { "uniform": "u_ringTime", "label": "Ring time", "min": 2, "max": 12, "step": 1,
+      "default": 6, "effect": "Decay constant of the shared envelope, from quick damping to a slow dying shimmer." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Panicle",
+  "slug": "panicle",
+  "family": "Sough",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "wind", "grass", "feather", "organic"],
+  "description": "Two or three pampas plumes at close range — tall curved stems carrying feathery FBM-streaked heads, deep charcoal at rest. When a gust combs through, streaks of glow run lengthwise to the feathered fringe while the head streams downwind and the stem bows late with one soft overshoot, settling back into the dark between fronts.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_gustRate", "label": "Gust rate", "min": 0.1, "max": 1.5, "step": 0.01,
+      "default": 0.4, "effect": "How often combing gust fronts stream through the plumes; the long calms between fronts leave the field nearly still and dark." },
+    { "uniform": "u_comb", "label": "Comb", "min": 0.2, "max": 2.0, "step": 0.01,
+      "default": 1.0, "effect": "How far the fibers stretch downwind and how hard the streak-glow surges through the head during a gust." },
+    { "uniform": "u_fiberScale", "label": "Fiber scale", "min": 2, "max": 12, "step": 0.1,
+      "default": 5, "effect": "CSS-pixel wavelength of the fiber texture, from silky-fine to coarse and strawlike." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

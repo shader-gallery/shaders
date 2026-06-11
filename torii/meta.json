@@ -1,0 +1,25 @@
+{
+  "name": "Torii",
+  "slug": "torii",
+  "family": "Plinth",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "monument", "gates", "corridor", "fog", "parallax", "raymarch"],
+  "description": "A processional avenue of gates running dead away from the eye: a single torii SDF (two round pillars, a long gently curved lintel, a lower tie-beam) repeated down the view axis by domain mod, each instance hash-leaned and hash-scaled a few percent off true. Dozens nest in one-point perspective, the nearest a huge near-black frame and the farthest dissolving into fog; the underside of every lintel catches a faint warm lantern rim while a thin ankle mist breathes between the pillars. The camera dollies forward forever down the centerline - only the eye moves.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dollySpeed", "label": "Dolly speed", "min": 0.05, "max": 1.5, "step": 0.01,
+      "default": 0.4, "effect": "How fast the camera advances down the avenue of gates." },
+    { "uniform": "u_gateSpacing", "label": "Gate spacing", "min": 3.0, "max": 10.0, "step": 0.05,
+      "default": 4.0, "effect": "World distance between successive gates - close packs them into a dense tunnel, far strings them out as lone arches." },
+    { "uniform": "u_lanternGlow", "label": "Lantern glow", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.8, "effect": "Warmth of the faint light caught under each lintel and along the ankle mist." },
+    { "uniform": "u_fogDensity", "label": "Fog density", "min": 0.25, "max": 2.5, "step": 0.01,
+      "default": 0.7, "effect": "How many gates remain visible before the avenue dissolves into haze." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Gamelan",
+  "slug": "gamelan",
+  "family": "Knell",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "resonance", "bars", "ensemble", "decay"],
+  "description": "A rank of seven graded bronze bars rings in their free-bar standing-wave modes after hash-scheduled strikes, antinodes glowing while the nodal points stay pinned and dark, each bar decaying in place at its own length-keyed rate.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_strikeGap", "label": "Strike gap", "min": 3.0, "max": 24.0, "step": 1.0,
+      "default": 8.0, "effect": "Mean seconds between strikes on any one bar, from a gently busy ensemble to rare lone notes." },
+    { "uniform": "u_ringTime", "label": "Ring time", "min": 1.5, "max": 12.0, "step": 0.05,
+      "default": 5.0, "effect": "Scales every bar's sustain while keeping the short-bright to long-slow grading across the rank." },
+    { "uniform": "u_barWidth", "label": "Bar width", "min": 18.0, "max": 60.0, "step": 1.0,
+      "default": 34.0, "effect": "CSS-pixel width of each bar, from slender chimes to broad slabs filling the rank." },
+    { "uniform": "u_overtone", "label": "Overtone", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.4, "effect": "Level of the second free-bar mode, adding a short-lived three-lobed sparkle atop each strike." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Colossus",
+  "slug": "colossus",
+  "family": "Plinth",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "monument", "colossus", "fog", "parallax", "raymarch"],
+  "description": "Two colossal seated figures flank a narrow defile, abstracted to stacked stone primitives and mirrored across the path, with further pairs receding into altitude haze. A raymarched 3D solid scene where the camera cranes vertically — rising from among the knees until the faces emerge from the fog overhead, then settling on a long sinusoidal cycle. A faint rim catches where mass meets brighter fog; an ember glows in the crevice where each figure meets its plinth.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_craneSpeed", "label": "Crane speed", "min": 0.05, "max": 0.8, "step": 0.01,
+      "default": 0.2, "effect": "How fast the camera rises and settles along the figures' height." },
+    { "uniform": "u_craneRange", "label": "Crane range", "min": 0.3, "max": 1.5, "step": 0.01,
+      "default": 1.0, "effect": "How far the excursion travels — low hovers among the knees, high reaches the faces." },
+    { "uniform": "u_fogDensity", "label": "Fog density", "min": 0.25, "max": 2.5, "step": 0.05,
+      "default": 1.0, "effect": "How heavily altitude haze swallows the upper bodies and the deeper pairs." },
+    { "uniform": "u_emberGlow", "label": "Ember glow", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.6, "effect": "Warmth of the residual offering-light at the base of each figure." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

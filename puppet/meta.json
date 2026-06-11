@@ -1,0 +1,25 @@
+{
+  "name": "Puppet",
+  "slug": "puppet",
+  "family": "Umbra",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "shadow", "puppet", "theatre", "penumbra"],
+  "description": "A hand-shadow bird performs in a lamp's soft-edged oval throw on a near-black wall — head tilting, beak opening in silent speech, feather-fingers splaying and folding. Crisp at its core and soft at its extremities, with a physical penumbra blur that sharpens and melts as it leans toward the light.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_gestureSpeed", "label": "Gesture speed", "min": 0.05, "max": 0.6, "step": 0.01,
+      "default": 0.2, "effect": "Tempo of the head tilts, beak movement, and feather phrases." },
+    { "uniform": "u_splay", "label": "Splay", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "How widely the feather-finger lobes fan at the peak of each phrase." },
+    { "uniform": "u_throwSize", "label": "Throw size", "min": 180.0, "max": 560.0, "step": 1.0,
+      "default": 360.0, "effect": "CSS-pixel width of the lit oval the puppet performs in." },
+    { "uniform": "u_penumbra", "label": "Penumbra", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 1.0, "effect": "Strength of the graded blur from the figure's sharp core to its soft extremities." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

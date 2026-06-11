@@ -1,0 +1,25 @@
+{
+  "name": "Limn",
+  "slug": "limn",
+  "family": "Brink",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "fractal", "line", "coastline", "minimal"],
+  "description": "A single line of light: the coastline of a Julia set, located by a derivative-tracked distance estimate and drawn as one unbroken, infinitely wrinkled luminous contour on near-black. A hidden seed orbits, so the whole line continuously re-poses — tendrils extend, bays close, islands pinch off and rejoin — while the palette pours slowly around the figure.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_lineWidth", "label": "Line width", "min": 0.6, "max": 3.0, "step": 0.05,
+      "default": 1.2, "effect": "Core stroke width of the coastline in CSS pixels, from etched hairline to soft pen." },
+    { "uniform": "u_haloReach", "label": "Halo reach", "min": 6.0, "max": 48.0, "step": 1.0,
+      "default": 20.0, "effect": "Width in CSS pixels of the faint glow skirt around the core line, from bare ink to a misty corona." },
+    { "uniform": "u_writheSpeed", "label": "Writhe speed", "min": 0.0, "max": 0.2, "step": 0.01,
+      "default": 0.05, "effect": "Orbit speed of the hidden seed, i.e. how quickly the drawn line re-poses itself." },
+    { "uniform": "u_zoom", "label": "Zoom", "min": 0.7, "max": 2.0, "step": 0.05,
+      "default": 1.1, "effect": "Magnification about frame centre — higher values trade the whole figure for one long wandering stretch of line." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

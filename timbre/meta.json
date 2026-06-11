@@ -1,0 +1,36 @@
+{
+  "name": "Timbre",
+  "slug": "timbre",
+  "family": "Knell",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "resonance", "gong", "shimmer", "decay"],
+  "description": "A vast tam-tam nearly fills the frame: a hammered bronze disc a half-step above the void. Its brightness is the analytic sum of five fixed inharmonic partials — radial cosines at irrational wavenumber ratios times low-order angular factors at hashed orientations — so the antinode pattern is a mottled shimmer and its zero web an irregular lace of dark lines that never moves within a ring-down. Each partial owns a tint; near-ratio partials beat slowly against one another, regions waxing and waning while nothing travels. A hash-scheduled strike releases the full-spectrum shimmer and the partials decay at different rates, the fine mottle dissolving into the broad slow lobes of the fundamental, with occasional half-strength after-touches re-exciting only the lower partials.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_strikeGap", "label": "Strike gap", "min": 5.0, "max": 30.0, "step": 1.0, "default": 14.0, "effect": "Mean seconds between full strikes of the gong, with hashed after-touches scattered between." },
+    { "uniform": "u_ringTime", "label": "Ring time", "min": 2.5, "max": 15.0, "step": 0.05, "default": 9.0, "effect": "Overall sustain; long values let the coarsening from shimmer to slow lobes play out fully." },
+    { "uniform": "u_shimmer", "label": "Shimmer", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.65, "effect": "Level of the upper partials, from a dark fundamental swell to a bright crashing sparkle." },
+    { "uniform": "u_beatRate", "label": "Beat rate", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.35, "effect": "Detune between near-ratio partials, setting how fast regions of the gong wax and wane against each other; zero stills the beating entirely." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

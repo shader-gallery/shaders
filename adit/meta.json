@@ -1,0 +1,25 @@
+{
+  "name": "Adit",
+  "slug": "adit",
+  "family": "Delve",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "mine", "timber", "lamps", "rails", "depth"],
+  "description": "An off-axis glance down a timbered mine gallery: the black vanishing depth pinned in the lower-right third while sheared trapezoidal support frames - two posts and a cap beam - recede forever into it in an exponential scale series, each hung with one warm lamp. A pair of glowing rails crossed by dim sleepers converges on the same depth. Frames, rails and lamps all shrink away down the scale axis, the log-periodic wrap hidden under the edge fade at birth and the fog at death.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_descentSpeed", "label": "Descent speed", "min": 0.02, "max": 0.4, "step": 0.01,
+      "default": 0.1, "effect": "Scale-octaves per second the timber frames recede into the gallery." },
+    { "uniform": "u_frameDensity", "label": "Frame density", "min": 1.0, "max": 4.0, "step": 0.05,
+      "default": 2.0, "effect": "Timber frames per scale octave; higher reads as closely-set supports." },
+    { "uniform": "u_timberWidth", "label": "Timber width", "min": 2.0, "max": 10.0, "step": 0.05,
+      "default": 5.0, "effect": "Stroke width of the posts and cap beams, in CSS pixels." },
+    { "uniform": "u_lampGlow", "label": "Lamp glow", "min": 0.1, "max": 1.5, "step": 0.01,
+      "default": 0.9, "effect": "Brightness of the hanging lamp under each cap beam." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

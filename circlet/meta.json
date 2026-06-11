@@ -1,0 +1,36 @@
+{
+  "name": "Circlet",
+  "slug": "circlet",
+  "family": "Mercury",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "liquid", "metaball", "ring", "merge", "organic"],
+  "description": "Five beads of mercury ride a single invisible circular groove, summed and smooth-min iso-surfaced so closeness along the arc makes neighbours neck and wick into longer liquid arcs. Their spacing breathes on incommensurate offsets, so fusions wander around the ring; once per grand cycle all five fuse into one unbroken glowing annulus, then bead apart again. Dark mirror interiors, a doubled rim highlight on the outer edge, hue circulating by angle, and a colour-3 spark at every neck snap.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_ringRadius", "label": "Ring radius", "min": 90.0, "max": 300.0, "step": 1.0, "default": 180.0, "effect": "Radius of the invisible groove the beads ride, in css pixels." },
+    { "uniform": "u_flowSpeed", "label": "Flow speed", "min": 0.08, "max": 1.0, "step": 0.01, "default": 0.3, "effect": "How fast the beads circulate and how often the full annulus forms." },
+    { "uniform": "u_beadSize", "label": "Bead size", "min": 24.0, "max": 90.0, "step": 1.0, "default": 48.0, "effect": "Radius of each mercury bead in css pixels; larger beads fuse into arcs more readily and hold the annulus longer." },
+    { "uniform": "u_snapGlow", "label": "Snap glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0, "effect": "Brightness of the colour-3 spark at every neck snap; at zero fusions pass with rim light only." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

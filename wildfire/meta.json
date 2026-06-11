@@ -1,0 +1,61 @@
+{
+  "name": "Wildfire",
+  "slug": "wildfire",
+  "family": "Smolder",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "ember",
+    "fire",
+    "terrain",
+    "ring"
+  ],
+  "description": "A fire season seen from a night satellite: dark FBM terrain carrying two or three closed irregular ember rings at staggered ages, each an expanding conversion front graded warm-to-cool across its narrow stroke with hot knots strung along it. Interiors stay burned and pricked by cooling sparks; perimeters only grow, a fresh ring always kindling while an old one is still mid-frame.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spreadRate",
+      "label": "Spread rate",
+      "min": 0.03,
+      "max": 0.5,
+      "step": 0.01,
+      "default": 0.15,
+      "effect": "How fast each perimeter dilates outward."
+    },
+    {
+      "uniform": "u_lineWidth",
+      "label": "Line width",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "default": 8,
+      "effect": "Stroke width in CSS pixels of the glowing perimeter lines."
+    },
+    {
+      "uniform": "u_knotIntensity",
+      "label": "Knot intensity",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Brightness boost of the hot knots strung along the lines; zero evens the perimeters out."
+    },
+    {
+      "uniform": "u_terrainDrag",
+      "label": "Terrain drag",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "How strongly the unseen terrain distorts the rings; zero spreads them as clean circles."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

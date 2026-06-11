@@ -1,0 +1,25 @@
+{
+  "name": "Snare",
+  "slug": "snare",
+  "family": "Brink",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "fractal", "orbit-trap", "filigree", "cross"],
+  "description": "An orbit-trap Julia set: 40-step iteration grazing a thin rotating cross fills the dark with infinitely nested, warped ghost-images of that single unseen trap. The seed orbits inside the cardioid and the cross slowly turns, so the whole filigree re-inks itself in place — nothing travels, the boundary writhes.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_writheSpeed", "label": "Writhe speed", "min": 0.0, "max": 0.2, "step": 0.01,
+      "default": 0.05, "effect": "Orbit speed of the hidden seed, i.e. how quickly the whole filigree re-inks itself." },
+    { "uniform": "u_trapSpin", "label": "Trap spin", "min": 0.0, "max": 0.15, "step": 0.01,
+      "default": 0.025, "effect": "Rotation rate of the unseen cross — every echo in the frame shears and re-aims together as it turns." },
+    { "uniform": "u_trapThickness", "label": "Trap thickness", "min": 0.01, "max": 0.2, "step": 0.01,
+      "default": 0.06, "effect": "Arm thickness of the trap, from hairline crosses everywhere to soft fat blooms." },
+    { "uniform": "u_filigreeGain", "label": "Filigree gain", "min": 0.5, "max": 3.0, "step": 0.05,
+      "default": 1.4, "effect": "Brightness gain on the trapped-distance falloff, lifting more or fewer of the deep nested echoes into visibility." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

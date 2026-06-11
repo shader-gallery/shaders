@@ -1,0 +1,35 @@
+{
+  "name": "Toll",
+  "slug": "toll",
+  "family": "Knell",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "resonance", "rings", "bell", "decay"],
+  "description": "A great bronze drumhead seen dead-on: a circular disc nearly fills the frame, its rim a hairline of edge light. Its vibration is an analytic sum of concentric radial partials with a faint diametral rider; fixed nodal circles stay dark while annular antinode zones tremble with glow, hue keyed by radius across the palette. A hash-scheduled strike floods the modes and they ring down exponentially — the quartered shimmer melts into breathing rings, then the slow fundamental, then a faint residual figure.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_strikeGap", "label": "Strike gap", "min": 4.0, "max": 30.0, "step": 1.0, "default": 11.0, "effect": "Mean seconds between hash-scheduled strikes, from a busy bell to long contemplative silences over the residual figure." },
+    { "uniform": "u_ringTime", "label": "Ring time", "min": 2.0, "max": 14.0, "step": 0.05, "default": 6.5, "effect": "Exponential decay constant of the ring-down, from a damped thud to a long singing sustain." },
+    { "uniform": "u_modeRichness", "label": "Mode richness", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7, "effect": "Continuously fades the upper partials in, from a single breathing fundamental ring to the full quartered figure." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

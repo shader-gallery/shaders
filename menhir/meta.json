@@ -1,0 +1,25 @@
+{
+  "name": "Menhir",
+  "slug": "menhir",
+  "family": "Plinth",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "monument", "stones", "fog", "parallax", "raymarch"],
+  "description": "A plain of scattered standing stones receding into luminous haze, raymarched as true 3D solids: tapered, slightly leaning prisms strewn across a jittered field while the camera dollies forward down a sinuous cleared lane, near menhirs sweeping past in parallax as far ones dissolve into a glowing horizon band, each stone edged with a thin rim of light where it meets the fog behind it.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dollySpeed", "label": "Dolly speed", "min": 0.05, "max": 1.2, "step": 0.01,
+      "default": 0.3, "effect": "How fast the camera walks forward through the stone field." },
+    { "uniform": "u_fogDensity", "label": "Fog density", "min": 0.25, "max": 2.5, "step": 0.01,
+      "default": 1.0, "effect": "How quickly distance dissolves stones into the glowing haze - low shows many ranks, high swallows all but the nearest." },
+    { "uniform": "u_stoneSpacing", "label": "Stone spacing", "min": 2.5, "max": 7.0, "step": 0.05,
+      "default": 4.0, "effect": "World-space gap between stones - tight crowds the path, wide leaves lonely sentinels." },
+    { "uniform": "u_rimGlow", "label": "Rim glow", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.9, "effect": "Strength of the thin bright edge where a stone's silhouette meets the fog behind it." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

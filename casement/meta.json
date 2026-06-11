@@ -1,0 +1,53 @@
+{
+  "name": "Casement",
+  "slug": "casement",
+  "family": "Umbra",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "shadow", "window", "projection", "penumbra"],
+  "description": "A casement window's light thrown across an interior wall: one large bright trapezoid divided by the dark cross of mullion bars into four panes, sheared by projection from a light moving outside. As the source flattens the trapezoid leans and elongates toward a corner, the mullion shadows broaden and their penumbrae melt, then sharpen as it passes head-on — a leading rim of light tracing the edge it lands on first. The whole show is read in negative, looping with no visible reset through a grazing sliver.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_traverseSpeed",
+      "label": "Traverse speed",
+      "min": 0.05,
+      "max": 0.5,
+      "step": 0.01,
+      "default": 0.15,
+      "effect": "Speed of the outside light's arc, and hence of the trapezoid's glide across the wall."
+    },
+    {
+      "uniform": "u_shearRange",
+      "label": "Shear range",
+      "min": 0.2,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How steeply the projected window leans and stretches at the extremes of the traverse."
+    },
+    {
+      "uniform": "u_mullion",
+      "label": "Mullion width",
+      "min": 6,
+      "max": 30,
+      "step": 1,
+      "default": 12,
+      "effect": "CSS-pixel width of the dark mullion bars crossing the lit panes."
+    },
+    {
+      "uniform": "u_penumbra",
+      "label": "Penumbra",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "How far the mullion and frame edges blur at the flattest incidence of the traverse, from razor at 0 to fully melting at 2."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

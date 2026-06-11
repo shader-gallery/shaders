@@ -1,0 +1,36 @@
+{
+  "name": "Pendant",
+  "slug": "pendant",
+  "family": "Umbra",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "shadow", "mobile", "discs", "penumbra", "lamp"],
+  "description": "A hanging mobile turns in lamplight and the wall sees only its shadow — discs, a crescent, a slim bar — suspended at staggered heights from hairline threads. Each piece revolves about its thread axis so its projected shadow widens to a disc and thins to a bar; pieces hang at different distances so the top shapes hover blurry while the lowest nearly bites. The wall glow blends warm hues, penumbrae fringe cool, and the hot spot flares around each silhouette. Bodies emit nothing; the motion is read entirely in negative.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_turnSpeed", "label": "Turn speed", "min": 0.05, "max": 0.7, "step": 0.01, "default": 0.22, "effect": "How fast the pieces revolve about their hanging threads, driving the disc-to-bar morphs." },
+    { "uniform": "u_pieceSize", "label": "Piece size", "min": 30.0, "max": 120.0, "step": 1.0, "default": 64.0, "effect": "CSS-pixel diameter of the mobile's shapes." },
+    { "uniform": "u_penumbra", "label": "Penumbra", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.1, "effect": "Scales the per-piece blur tiers, from a uniformly crisp mobile at 0 to the upper shapes dissolving at 2." },
+    { "uniform": "u_sway", "label": "Sway", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.4, "effect": "Amplitude of the shared pendular drift of the whole mobile across the wall." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

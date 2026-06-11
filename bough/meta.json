@@ -1,0 +1,25 @@
+{
+  "name": "Bough",
+  "slug": "bough",
+  "family": "Umbra",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "shadow", "leaves", "organic", "penumbra", "lamp"],
+  "description": "The shadow of a potted bough thrown on an insomniac's wall: elliptical leaves hung on curved stems, drawn purely as occlusion of an unseen lamp's glow. Each leaf carries a hashed occluder distance that sets its edge softness, so near leaves bite crisp while far ones swell into soft grey breaths; the cluster pivots in a heater draft and every leaf nods on its own phase, animating the blur itself.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_swaySpeed", "label": "Sway speed", "min": 0.05, "max": 0.8, "step": 0.01,
+      "default": 0.25, "effect": "Rate of the cluster pivot and the per-leaf nodding that drives the shadow play." },
+    { "uniform": "u_leafSize", "label": "Leaf size", "min": 40.0, "max": 140.0, "step": 1.0,
+      "default": 80.0, "effect": "CSS-pixel length of the leaf ellipses, scaling the whole shadow cluster." },
+    { "uniform": "u_penumbra", "label": "Penumbra", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "Scales how much each leaf's hashed wall distance blurs its edge, from a uniformly crisp cluster at 0 to far leaves dissolving into breath at 2." },
+    { "uniform": "u_poolDepth", "label": "Pool depth", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.65, "effect": "How much darker overlapping soft shadows multiply where leaves cross." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}
