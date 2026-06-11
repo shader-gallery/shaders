@@ -157,7 +157,8 @@ void main() {
   // accumulated warp displaces the weave's sampling so threads bow around the
   // swellings; presence raises local contrast so the weave reads near a form.
   // ----------------------------------------------------------------------
-  float cell = WEAVE_CSS * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = WEAVE_CSS * refScale * pr;
   // sampling coords, displaced by the warp so threads bow around bulges
   vec2 wp = fc + warp * res.y;
   // slow, imperceptible vertical drift — never resets

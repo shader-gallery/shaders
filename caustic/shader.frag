@@ -77,7 +77,8 @@ void main() {
   vec3 col = BG;
 
   // cell size in device px; guard against a 0 param
-  float cell = max(u_cellCss, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = max(u_cellCss, 1.0) * refScale * pr;
   // normalized-ish coords so the web scales with resolution but keeps cell size
   vec2 p = (fc - ctr) / cell;
 

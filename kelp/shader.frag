@@ -65,7 +65,8 @@ void main() {
     c2 = vec3(0.133,0.827,0.933); c3 = vec3(0.957,0.247,0.369);
   }
 
-  float spacing  = SPACING_CSS * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = SPACING_CSS * refScale * pr;
   float floorH   = FLOOR_CSS * pr;
   // a kelp blade is a WIDE flat ribbon, not a wire: the param width is the
   // strap/frond control, but the body is scaled up so it reads as a broad blade

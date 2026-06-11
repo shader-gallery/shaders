@@ -58,7 +58,8 @@ void main() {
 
   vec3 col = BG;
 
-  float spacing = max(u_spacing, 6.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 6.0) * refScale * pr;
 
   // ---- cell constellation: a jittered grid reads as blue-noise seeding ----
   // We examine the 3x3 neighbourhood of grid cells so a nucleus near a border

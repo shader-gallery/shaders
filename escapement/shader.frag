@@ -61,7 +61,8 @@ void main() {
 
   // guard params so the full slider range is safe (uniforms are 0 if unfed)
   float tickRate = max(u_tickRate, 0.001);
-  float ringGap  = max(u_ringGap, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float ringGap = max(u_ringGap, 1.0) * refScale * pr;
   float snap     = clamp(u_snap, 0.1, 1.0);
   float line     = LINE_CSS * pr;
 

@@ -49,7 +49,8 @@ void main() {
   float t   = u_time;
 
   // guard params so the full slider range is safe
-  float cell   = max(u_cellSize, 8.0) * pr;     // antinode cell scale in px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = max(u_cellSize, 8.0) * refScale * pr;     // antinode cell scale in px
   float gap    = max(u_strikeGap, 1.0);         // mean seconds between strikes
   float ring   = max(u_ringTime, 0.5);          // ring-down time constant
 

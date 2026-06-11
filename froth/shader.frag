@@ -55,7 +55,8 @@ void main() {
   vec2  fc = gl_FragCoord.xy;
   float H  = max(u_resolution.y, 1.0);
 
-  float cellPx = max(u_cell, 8.0) * pr; // device px per cell unit (at frame bottom)
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cellPx = max(u_cell, 8.0) * refScale * pr; // device px per cell unit (at frame bottom)
 
   // Vertical domain compression: g(y) climbs slower than y, so a fixed-size
   // domain cell occupies more screen the higher it sits — bubbles stretch

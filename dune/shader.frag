@@ -98,7 +98,8 @@ void main() {
 
   // crest spacing in device px -> noise frequency. one ridge period across the
   // squashed x axis spans roughly u_spacing css px.
-  float spacing = max(u_spacing, 8.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 8.0) * refScale * pr;
   float freq    = 1.0 / spacing;        // noise units per device px (pre-aniso)
 
   // continuous downwind transport: the whole field slides along WINDDIR. one

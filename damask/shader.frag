@@ -125,8 +125,9 @@ void main() {
   }
 
   // --- sizes in device px ---
-  float pleatW = max(u_pleat, 1.0) * pr;       // pleat period across x
-  float tileW  = max(u_tile, 1.0) * pr;        // scrollwork brick size
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float pleatW = max(u_pleat, 1.0) * refScale * pr;       // pleat period across x
+  float tileW = max(u_tile, 1.0) * refScale * pr;        // scrollwork brick size
   float fold   = clamp(u_fold, 0.0, 2.0);      // pleat depth
 
   // vertical 0 at top, 1 at hem (bottom) — sway amplitude grows toward the hem

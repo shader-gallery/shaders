@@ -137,7 +137,8 @@ void main() {
   // ---- discrete birds: a dot grid sampled only where the body is present ---
   // countable hard dots, NOT a luminous pool. Dot cell ~ bird spacing.
   float dotCss = max(u_dotSize, 0.5);
-  float cell   = max(dotCss * 4.4, 3.0) * pr;       // spacing between birds
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = max(dotCss * 4.4, 3.0) * refScale * pr;       // spacing between birds
   // jitter the grid in flock-local space so dots don't read as a lattice
   vec2  gcoord = lp;                                 // already local px
   vec2  cid    = floor(gcoord / cell);

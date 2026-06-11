@@ -98,7 +98,8 @@ void main() {
   float t   = u_time;
 
   // guard params so the full slider range stays safe
-  float swell = max(u_swell, 40.0) * pr; // css-px wavelength -> device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float swell = max(u_swell, 40.0) * refScale * pr; // css-px wavelength -> device px
   float cross = clamp(u_cross, 0.0, 1.0);
   float speed = max(u_waveSpeed, 0.0);
   float travel = t * speed * 1.4; // phase advance of the travelling crests

@@ -215,7 +215,8 @@ void main() {
   vec2  cssP   = fragPx / pr;
   float t      = u_time;
 
-  float rowSp  = max(u_rowSpacing, 6.0) * pr;           // px between windrows
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float rowSp = max(u_rowSpacing, 6.0) * refScale * pr;           // px between windrows
   float frontPx = rowSp * 1.3;                          // graded front width (px)
   float flare  = clamp(u_flareIntensity, 0.0, 1.5);
 

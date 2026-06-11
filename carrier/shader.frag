@@ -62,7 +62,8 @@ void main() {
 
   // --- rack geometry ----------------------------------------------------------
   // ROW_GAP is a css-px distance; guard against 0 so we never divide by zero.
-  float rowGap = max(u_rowGap, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float rowGap = max(u_rowGap, 1.0) * refScale * pr;
   float line   = LINE_CSS * pr;
   float depth  = clamp(u_modDepth, 0.0, 1.0);
   float spd    = u_signalSpeed;

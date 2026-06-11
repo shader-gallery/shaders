@@ -65,7 +65,8 @@ void main() {
   // span the string a little past both edges so end flags aren't clipped oddly
   pA -= dir * span * 0.03;
 
-  float flagLen = max(u_flagSize, 8.0) * pr;       // pennant length (CSS px)
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float flagLen = max(u_flagSize, 8.0) * refScale * pr;       // pennant length (CSS px)
   float flagHalf = flagLen * 0.42;                 // half-width at the top
   // spacing so NFLAGS flags fill the span with a small gap between them
   float spacing = span / float(NFLAGS);

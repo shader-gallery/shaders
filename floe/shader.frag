@@ -69,7 +69,8 @@ void main() {
     c2 = vec3(0.133,0.827,0.933); c3 = vec3(0.957,0.247,0.369);
   }
 
-  float plateDev = max(u_plate, 40.0) * pr;  // device px per voronoi cell
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float plateDev = max(u_plate, 40.0) * refScale * pr;  // device px per voronoi cell
   vec2  p = fc / plateDev;
   vec2  n = floor(p);
   vec2  f = fract(p);

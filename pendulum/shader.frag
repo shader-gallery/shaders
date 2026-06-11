@@ -67,7 +67,8 @@ void main() {
   }
 
   // sizes in device px (css * pixelRatio), guarded so params=0 never NaN
-  float spacing = max(u_spacing, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 1.0) * refScale * pr;
   float swing   = max(u_swing, 0.0) * pr * 0.5;   // amplitude = half of full travel
   float railY   = res.y - RAIL_CSS * pr;          // rail near the top
   float bobR    = BOB_CSS * pr;

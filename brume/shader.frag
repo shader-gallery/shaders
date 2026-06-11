@@ -75,7 +75,8 @@ void main() {
   vec3 col = BG;
 
   // --- column lattice (vertical silhouettes, one rank across the frame) ---
-  float spacing = max(u_spacing, 20.0) * pr;     // guard against 0 → div-by-zero
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 20.0) * refScale * pr;     // guard against 0 → div-by-zero
   float halfSp  = spacing * 0.5;
   // position within the current column cell, centred on the column axis
   float cellX   = floor(fc.x / spacing);

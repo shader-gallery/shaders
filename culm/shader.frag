@@ -60,7 +60,8 @@ void main() {
     c2 = vec3(0.133,0.827,0.933); c3 = vec3(0.957,0.247,0.369);
   }
 
-  float spacing = max(u_spacing, 8.0) * pr;       // css-px cane spacing
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 8.0) * refScale * pr;       // css-px cane spacing
   float nodeLen = NODE_CSS * pr;                  // px between node rings
   float gust    = max(u_gustRate, 0.0001);
 

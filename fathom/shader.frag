@@ -112,7 +112,8 @@ void main() {
   depth = clamp(depth, 0.0, 1.0);
 
   // --- the fixed survey grid (never moves) ---------------------------------
-  float spacing = max(u_dotSpacing, 4.0) * pr;          // css px -> device px
+  float refScale = mn / (pr * 400.0);                   // P0-C: hold composition tile->fullsize
+  float spacing = max(u_dotSpacing, 4.0) * refScale * pr; // css px -> device px, frame-relative
   vec2  cellId  = floor(fc / spacing);
   vec2  cellCtr = (cellId + 0.5) * spacing;
   vec2  local   = fc - cellCtr;                         // px from this dot's centre

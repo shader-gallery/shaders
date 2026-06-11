@@ -69,7 +69,8 @@ void main() {
 
   vec3 col = BG;
 
-  float spacing = max(u_spacing, 4.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 4.0) * refScale * pr;
   float rest    = REST_CSS * pr;
   float maxLen  = MAX_LEN_CSS * pr;
   float thick   = STROKE_CSS * pr;

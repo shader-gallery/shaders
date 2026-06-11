@@ -76,7 +76,8 @@ void main() {
   vec3 col = BG;
 
   // --- vertical bearing rulings -----------------------------------------
-  float ruleGap = max(u_ruling, 8.0) * pr;          // css px -> device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float ruleGap = max(u_ruling, 8.0) * refScale * pr;          // css px -> device px
   // distance (in device px) to the nearest ruling, for a DPR-stable hairline
   float ruleD   = abs(fract(fc.x / ruleGap + 0.5) - 0.5) * ruleGap;
   float ruleLine = 1.0 - smoothstep(0.0, 0.9 * pr, ruleD); // hair-thin, AA'd

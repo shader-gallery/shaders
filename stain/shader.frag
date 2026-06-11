@@ -77,7 +77,8 @@ void main() {
   }
 
   float pr     = max(u_pixelRatio, 0.25);
-  float cellPx = max(u_pane, 40.0) * pr;       // pane diameter in device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cellPx = max(u_pane, 40.0) * refScale * pr;       // pane diameter in device px
   float leadPx = max(u_lead, 0.5) * pr;        // lead thickness in device px
   float t      = u_time;
 

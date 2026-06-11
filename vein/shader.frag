@@ -64,7 +64,8 @@ void main() {
   vec2  fc  = gl_FragCoord.xy;
   vec2  res = u_resolution;
 
-  float cellPx = max(u_cell, 8.0) * pr;        // cell diameter in device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cellPx = max(u_cell, 8.0) * refScale * pr;        // cell diameter in device px
   float wHalf  = max(u_vein, 0.25) * pr * 0.5; // line half-width in device px
   float aa     = max(pr * 0.7, 0.75);          // anti-alias ramp
 

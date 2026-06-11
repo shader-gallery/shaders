@@ -131,7 +131,8 @@ void main() {
   // ----- reflected neon smears inside the puddles ---------------------------
   // Columns of palette colour stretched downward (reflection), domain-warped so
   // they wobble side to side. Column index sets hue; width set by u_smearWidth.
-  float smearW = max(u_smearWidth, 4.0) * pr;       // CSS px width of a column
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float smearW = max(u_smearWidth, 4.0) * refScale * pr;       // CSS px width of a column
   // depth: 0 near the top of frame (close to the unseen sign), ~1 at the bottom
   float depth = clamp(0.62 - uv.y, 0.0, 1.0);
   // horizontal column coordinate (in column-widths), warped by a drifting field.

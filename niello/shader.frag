@@ -128,7 +128,8 @@ void main() {
 
   // ============== the stippled ground (scintillating punch marks) ============
   // punch grid spacing in device px (css convention)
-  float spacing = max(u_punch, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_punch, 1.0) * refScale * pr;
   vec2  gid  = floor(fc / spacing);          // which punch cell
   vec2  gc   = (gid + 0.5) * spacing;        // punch centre (device px)
   vec2  d    = fc - gc;

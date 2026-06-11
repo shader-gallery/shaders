@@ -56,7 +56,8 @@ void main() {
   vec3 col = BG;
 
   // guard the weave spacing away from zero so the gratings never blow up
-  float cells = max(u_weave, 0.5) * pr;   // px between threads in a layer
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cells = max(u_weave, 0.5) * refScale * pr;   // px between threads in a layer
 
   // pixel position relative to centre (so rotation pivots on screen centre)
   vec2 q = fc - ctr;
@@ -73,7 +74,7 @@ void main() {
   // (small u_weave) yields a smaller beat angle and thus wide, smooth fringes,
   // while a coarse weave (large u_weave) cranks the angle into tight, busy ones.
   float sp = u_shimmerSpeed;
-  float ref = 6.0 * pr;                       // reference thread spacing (default)
+  float ref = 6.0 * refScale * pr;                       // reference thread spacing (default)
   float wscale = (cells / ref) * (cells / ref);
   float ang = (0.018 + 0.016 * sin(t * 0.13 * sp + 0.7)
                      + 0.009 * sin(t * 0.077 * sp + 2.1)) * wscale;

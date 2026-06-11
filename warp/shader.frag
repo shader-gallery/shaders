@@ -49,9 +49,10 @@ void main() {
 
   vec3 col = vec3(BG, BG, 0.047);
 
-  float spacing = u_spacing * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = u_spacing * refScale * pr;
   float amp     = u_amp * pr;
-  float wavelen = WAVELEN_CSS * pr;
+  float wavelen = WAVELEN_CSS * refScale * pr;
   float thick   = THREAD_CSS * pr;
 
   // travelling ripple phase along y (periodic in t -> seamless loop)

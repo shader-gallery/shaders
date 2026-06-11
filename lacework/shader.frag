@@ -70,7 +70,8 @@ void main() {
   col += u_palette[3] * (0.16 * u_glow) * smoothstep(R * 0.35, 0.0, distance(fc, p3));
 
   // --- dot grid, in device pixels ---
-  float spacing = u_spacing * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = u_spacing * refScale * pr;
   vec2  cellId  = floor(fc / spacing);
   vec2  local   = (fc - (cellId + 0.5) * spacing);   // offset from this cell's centre
   vec2  dotCtr  = (cellId + 0.5) * spacing;

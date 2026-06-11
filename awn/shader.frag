@@ -130,7 +130,8 @@ void main() {
     float baseY = mix(0.46, 0.10, rk);           // root line
     float height = mix(0.15, 0.52, rk);          // stalk height
     float spCss  = u_spacing * mix(0.55, 1.0, rk); // far rank denser in css px
-    float spacing = max(spCss * pr, 4.0);
+    float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+    float spacing = max(spCss * refScale * pr, 4.0);
     float strokeW = mix(0.9, 1.7, rk) * pr;      // near stalks thicker
     float dimDepth = mix(0.42, 1.0, rk);         // far rank dimmer
     float rankPhase = (1.0 - rk) * 0.9;          // far struck a beat earlier

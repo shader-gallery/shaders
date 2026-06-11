@@ -65,7 +65,8 @@ void main() {
   float across = -p.x * sa + p.y * ca;  // perpendicular offset between lanes
 
   // Lane geometry. Guard spacing against 0 so min-slider never divides by zero.
-  float spacing = max(u_spacing, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 1.0) * refScale * pr;
   float laneF   = across / spacing;     // continuous lane coordinate
   float laneId  = floor(laneF + 0.5);   // nearest lane index
   float laneOff = (laneF - laneId) * spacing; // perpendicular dist to lane centre

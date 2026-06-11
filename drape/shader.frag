@@ -77,7 +77,8 @@ void main() {
   float t   = u_time;
 
   // guard params so the full slider range stays safe
-  float foldW = max(u_foldWidth, 24.0) * pr; // css-px fold width -> device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float foldW = max(u_foldWidth, 24.0) * refScale * pr; // css-px fold width -> device px
   float sway  = max(u_swaySpeed, 0.0);
   float sheen = max(u_sheen, 0.0);
 

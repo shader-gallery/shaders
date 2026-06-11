@@ -166,7 +166,8 @@ void main() {
     c2 = vec3(0.133, 0.827, 0.933); c3 = vec3(0.957, 0.247, 0.369);
   }
 
-  float spacing = max(u_spacing * pr, 4.0);
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing * refScale * pr, 4.0);
   float waterY  = res.y * (1.0 - WATER_FRAC); // device-px y of the waterline
 
   // --- night sky: a faint vertical grade carrying a whisper of the 4th colour ---

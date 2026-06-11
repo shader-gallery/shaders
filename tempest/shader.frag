@@ -92,7 +92,8 @@ void main() {
 
   // --- cloud bank -----------------------------------------------------------
   // detail scale: smaller u_detail (css-px) => finer scud => more noise cycles.
-  float detail = max(u_detail, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float detail = max(u_detail, 1.0) * refScale * pr;
   float scale  = res.y / detail;          // noise cycles across the frame height
   float roil   = max(u_roilSpeed, 0.0);
 

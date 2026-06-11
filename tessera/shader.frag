@@ -107,7 +107,8 @@ void main() {
     c2 = vec3(0.133,0.827,0.933); c3 = vec3(0.957,0.247,0.369);
   }
 
-  float cellPx  = max(u_cell, 8.0) * pr;          // parent tile size, device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cellPx = max(u_cell, 8.0) * refScale * pr;          // parent tile size, device px
   float childPx = cellPx / CHILD_SCALE;           // sub-tile size, device px
   float seamPx  = clamp(u_seam, 0.2, 8.0) * pr;   // grout thickness, device px
 

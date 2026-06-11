@@ -64,7 +64,8 @@ void main() {
     c2 = vec3(0.133, 0.827, 0.933); c3 = vec3(0.957, 0.247, 0.369);
   }
 
-  float cell    = max(u_stitchCss, 1.0) * pr;     // cross-stitch cell size in device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = max(u_stitchCss, 1.0) * refScale * pr;     // cross-stitch cell size in device px
   float speed   = max(u_sewSpeed, 0.001);
   float rowsLit = max(u_rows, 1.0);               // rows kept lit above the needle
 

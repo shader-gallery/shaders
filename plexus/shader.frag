@@ -89,7 +89,8 @@ void main() {
   vec3 col = BG;
 
   // grid spacing in device px (css * dpr). guard against a zero param.
-  float spacing = max(u_cell, 8.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_cell, 8.0) * refScale * pr;
   float line    = LINE_CSS * pr;
   float nodeR   = NODE_CSS * pr;
 

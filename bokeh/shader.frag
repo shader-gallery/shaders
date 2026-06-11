@@ -63,7 +63,8 @@ vec3 layer(vec2 fc, vec2 res, float pr, float t,
     c2 = vec3(0.133,0.827,0.933); c3 = vec3(0.957,0.247,0.369);
   }
 
-  float cell  = cellCss * pr;                 // grid pitch in device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = cellCss * refScale * pr;                 // grid pitch in device px
   float discR = u_discSize * 0.5 * pr * scale; // aperture circumradius, device px
 
   // sideways drift for this layer (parallax: near races, far crawls)

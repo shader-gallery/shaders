@@ -49,7 +49,8 @@ void main() {
 
   vec3 col = BG;
 
-  float spacing = u_spacing * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = u_spacing * refScale * pr;
   float round   = ROUND_CSS * pr;
   float line    = u_line * pr;
   // diamond radius (pre-round); corners reach toward the cell edges so the

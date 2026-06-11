@@ -60,7 +60,8 @@ void main() {
   }
 
   float pr      = max(u_pixelRatio, 0.25);
-  float scalePx = max(u_scale, 40.0) * pr;     // dominant feature size, device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float scalePx = max(u_scale, 40.0) * refScale * pr;     // dominant feature size, device px
   vec2  p       = gl_FragCoord.xy / scalePx;
   float t       = u_time * clamp(u_churnSpeed, 0.0, 4.0);
   float fold    = max(u_fold, 0.0);

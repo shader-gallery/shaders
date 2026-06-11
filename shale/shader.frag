@@ -58,7 +58,8 @@ void main() {
   }
 
   float pr = max(u_pixelRatio, 0.25);
-  float S  = max(u_plate, 8.0) * pr;   // plate diameter in device px (css * dpr)
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float S = max(u_plate, 8.0) * refScale * pr;   // plate diameter in device px (css * dpr)
   vec2  p  = gl_FragCoord.xy / S;      // cell-space coordinates
   float aa = 1.6 / S;                  // ~1.6 device px of smoothstep antialias
 

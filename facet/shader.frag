@@ -99,7 +99,8 @@ void main() {
 
   // FBM feature size in CSS px -> field frequency. Larger feature = lower freq.
   // guard against 0 so min-end of the slider can't blow up the frequency.
-  float featurePx = max(u_feature, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float featurePx = max(u_feature, 1.0) * refScale * pr;
   float freq      = (minDim * 1.9) / featurePx;  // cycles across the jewel diameter
   // FLOOR the frequency so the broad-lobe end never collapses into a single
   // featureless blob: the folded radius spans ~0..0.58, so keep >= ~3.0 cycles

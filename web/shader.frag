@@ -85,7 +85,8 @@ void main() {
   float dewR = 3.4 * pr;
 
   // ring gap (Archimedean pitch) from the css-px param
-  float ringGap = max(u_spacing, 6.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float ringGap = max(u_spacing, 6.0) * refScale * pr;
   // gentle low-amplitude wobble on the spiral radius so rings are not perfectly true
   float spiralWobble = (vnoise(vec2(ang * 1.7, r * 0.004)) - 0.5) * ringGap * 0.35;
 

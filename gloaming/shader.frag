@@ -133,7 +133,8 @@ void main() {
   // =========================================================
   // 3. STARS — blink on one by one at per-star hashed offsets in the cycle
   // =========================================================
-  float cell    = STAR_CELL_CSS * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = STAR_CELL_CSS * refScale * pr;
   vec2  gid     = floor(fc / cell);
   vec2  gloc    = fract(fc / cell);
   vec3  starAccum = vec3(0.0);

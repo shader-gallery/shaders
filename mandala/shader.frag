@@ -85,7 +85,8 @@ void main() {
   // guard params against catastrophic zeros at slider extremes
   float morphSpeed = max(u_morphSpeed, 0.0);
   float petals0    = max(u_petals, 3.0);
-  float spacing    = max(u_spacing, 8.0) * pr; // css px → device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 8.0) * refScale * pr; // css px → device px
   float breath     = clamp(u_breath, 0.0, 1.0);
 
   // polar coords about centre

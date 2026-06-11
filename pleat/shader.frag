@@ -49,7 +49,8 @@ void main() {
   vec2  uv = (fc - ctr) / max(res.y, 1.0);
 
   // ---- pleat coordinate along x, in panel units ----
-  float panelPx = max(u_pleatWidth, 8.0) * pr;        // guard against 0
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float panelPx = max(u_pleatWidth, 8.0) * refScale * pr;        // guard against 0
   float panels  = res.x / panelPx;                    // number of panels across
   // continuous panel coordinate (0 at left edge), so creases sit on integers
   float px = (fc.x / panelPx);

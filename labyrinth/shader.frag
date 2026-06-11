@@ -66,7 +66,8 @@ void main() {
 
   vec3 col = BG;
 
-  float cell  = max(u_cell, 8.0) * pr;        // cell size in device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = max(u_cell, 8.0) * refScale * pr;        // cell size in device px
   float line  = max(u_line, 0.3) * pr;        // wall half-thickness-ish
   float speed = max(u_shiftSpeed, 0.0);
 

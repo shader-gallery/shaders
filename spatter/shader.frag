@@ -70,7 +70,8 @@ void main() {
     c2 = vec3(0.133, 0.827, 0.933); c3 = vec3(0.957, 0.247, 0.369);
   }
 
-  float cell    = CELL_CSS * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = CELL_CSS * refScale * pr;
   float baseRad = max(u_splatSize, 0.5) * pr;  // guard: never 0
   float slide   = max(u_slide, 0.0) * pr;
 
@@ -78,7 +79,7 @@ void main() {
   // a sparse, very faint static stipple — single dim points, position-tinted.
   // Sized in CSS px and gated hard so the darkness reads textured, not dotted.
   {
-    float pitch = 13.0 * pr;
+    float pitch = 13.0 * refScale * pr;
     vec2 sc   = floor(fc / pitch);
     vec2 j    = hash22(sc);
     vec2 sp   = (sc + j) * pitch;

@@ -51,7 +51,8 @@ float fbm(vec2 p) {
 
 // one scrolling star layer; `scale`/`depth` set density + parallax brightness
 vec3 starLayer(vec2 fc, vec2 res, float t, float scale, float depth) {
-  float cell = CELL_CSS * u_pixelRatio * scale;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = CELL_CSS * refScale * u_pixelRatio * scale;
   vec2 drift = vec2(0.18, -1.0) * t * cell * 0.45; // diagonal rain; seamless
   vec2 uv    = (fc + drift) / cell;
   vec2 id    = floor(uv);

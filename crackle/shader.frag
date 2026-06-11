@@ -134,7 +134,8 @@ void main() {
   g0 = c0; g1 = c1; g2 = c2; g3 = c3;
 
   float pr      = max(u_pixelRatio, 0.25);
-  float shardPx = max(u_shard, 24.0) * pr;                 // css px -> device px
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float shardPx = max(u_shard, 24.0) * refScale * pr;                 // css px -> device px
   float minRes  = max(min(u_resolution.x, u_resolution.y), 1.0);
 
   vec2  px = gl_FragCoord.xy;

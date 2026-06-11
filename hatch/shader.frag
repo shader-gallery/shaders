@@ -110,7 +110,8 @@ void main() {
   float shade = clamp(0.44 + (tone - 0.5) * contrast, 0.0, 1.0);
 
   // hatch gap in device px (css-px semantics, scaled by pr); guard the slider min
-  float spacing = max(u_spacing, 1.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float spacing = max(u_spacing, 1.0) * refScale * pr;
   float aa = pr * 0.9;
 
   // Per-set line weight from the shade. First set fades in over the lighter half,

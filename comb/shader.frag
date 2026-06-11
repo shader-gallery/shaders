@@ -93,7 +93,8 @@ void main() {
   vec2  res    = u_resolution;
   float t      = u_time;
   float hexCss = max(u_hex, 4.0);          // guard: never divide by 0
-  float hexPx  = hexCss * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float hexPx = hexCss * refScale * pr;
 
   // --- strict hex tiling (offset-grid nearest-centre trick) ---
   vec2 uv = fc / hexPx;

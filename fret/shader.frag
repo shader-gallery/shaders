@@ -96,7 +96,8 @@ void main() {
   }
 
   float margin = MARGIN_CSS * pr;
-  float cell   = max(u_keySize, 8.0) * pr;     // guard against tiny/zero cell
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = max(u_keySize, 8.0) * refScale * pr;     // guard against tiny/zero cell
   float arm    = STROKE_CSS * pr;
   float depth  = cell * 0.62;                   // how far key teeth reach inward
 

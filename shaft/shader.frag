@@ -116,7 +116,8 @@ void main() {
 
   // across-beam axis in lattice cells (one cell = one beam + one gap),
   // normalised so a shaft is ~u_beam css px wide at mid-frame distance
-  float pitch = max(u_beam, 8.0) * pr * PITCH;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float pitch = max(u_beam, 8.0) * refScale * pr * PITCH;
   float u     = da * Rref / pitch + DRIFT * u_time;
 
   // 1D value noise over the across-beam axis, raised to a power:

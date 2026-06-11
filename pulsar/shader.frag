@@ -56,7 +56,8 @@ void main() {
 
   vec3 col = BG;
 
-  float cell = CELL_CSS * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = CELL_CSS * refScale * pr;
   float star = STAR_CSS * pr;
 
   // ---- field of irregular twinklers ----------------------------------------

@@ -62,7 +62,8 @@ void main() {
   float t   = u_time;
 
   // facet cell size in device px (guard against a 0 param)
-  float cell = max(u_facet, 8.0) * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cell = max(u_facet, 8.0) * refScale * pr;
   vec2  uv   = fc / cell;
 
   // --- Voronoi over a jittered point lattice: hard angular facets ----------

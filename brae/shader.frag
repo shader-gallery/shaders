@@ -108,7 +108,8 @@ void main() {
 
   float fHc   = max(u_fringeHeight, 2.0); // css fringe height (guards 0)
   float fH    = fHc * pr;                 // device px
-  float cellW = SPACING_CSS * pr;
+  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float cellW = SPACING_CSS * refScale * pr;
 
   float yC = crestY(fc.x);
   float d  = fc.y - yC;  // device px above the local crest line
