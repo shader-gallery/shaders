@@ -44,5 +44,6 @@
       "effect": "Hash-grid cell size in CSS pixels; smaller packs more fireflies into the meadow, larger thins the swarm to rare lonely sparks."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "exposure": 1.15, "contrast": 1.2, "saturation": 1.4 }
 }
