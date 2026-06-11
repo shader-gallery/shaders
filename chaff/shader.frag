@@ -167,14 +167,14 @@ void main() {
       // ballistic arc, downwind (to the right) with decelerating drift and a
       // gentle tumble. Position is a pure function of life & hashes. Motes are
       // carried well across the field so the downwind streaming is legible.
-      float launchSpd = (0.22 + 0.20 * hb) * drift;     // initial horizontal push
-      float lift      = (0.15 + 0.12 * hc) * drift;     // initial upward kick
+      float launchSpd = (0.26 + 0.24 * hb) * drift;     // initial horizontal push
+      float lift      = (0.34 + 0.22 * hc) * drift;     // stronger upward kick so motes fill the air column
       // ease-out so motes decelerate (hides the fade-out wrap)
       float eo = 1.0 - exp(-life * 1.25);
       float px = root.x + launchSpd * eo;
       // up then settle: rise on a sin-ish arc, never far above the lower quarter
       float arc = sin(min(lifeN, 1.0) * 2.05);          // up then easing back
-      float py = root.y + lift * arc + 0.022 * eo;      // small net rise
+      float py = root.y + lift * arc + 0.14 * eo;       // net rise carries motes up into the frame
       // feathery tumble wobble, scaled by remaining life
       float tw = (1.0 - lifeN);
       px += 0.014 * sin(life * 3.1 + hc * 6.2831) * tw;
@@ -269,13 +269,15 @@ void main() {
     // rim sits on the edge of the head mask (gradient of the mask ~ its rim)
     float rim = headMask * (1.0 - headMask) * 4.0;
     float bend01 = clamp(colBend, 0.0, 1.0);
-    col += rimTint * rim * bend01 * 0.16;
-    // a touch of cluster glow when strongly bent (seed-head catching light)
-    col += rimTint * cluster * bend01 * 0.05;
+    // steady resting rim + cluster glow so the seed-head rank always reads at the
+    // bottom (was near-black at rest), brightening as a gust bends it
+    col += rimTint * rim * (0.22 + bend01 * 0.85) * 0.20;
+    // a touch of cluster glow, always faintly lit (seed-head catching ground light)
+    col += rimTint * cluster * (0.09 + bend01 * 0.85) * 0.10;
   }
 
   // add the motes on top (they are the show)
-  col += moteAcc * 1.95;
+  col += moteAcc * 2.7;
 
   // gentle soft clamp so bright motes bloom without harsh clip
   col = col / (1.0 + col * 0.42);

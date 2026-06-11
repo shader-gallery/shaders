@@ -220,11 +220,12 @@ void main() {
       float headWid = strokeW * 1.6;
       float he = exp(-(along*along)/(headLen*headLen) - (across*across)/(headWid*headWid));
 
-      // awns: a tight fan of 4 hairline bristles spraying up from the head tip
+      // awns: a fan of 7 hairline bristles spraying up from the head tip — the
+      // fuzzy bristled seed-head is awn's signature texture (vs culm's bare cane)
       vec2 headTip = tip + stalkDir * headLen * 0.9;
       float awns = 0.0;
-      for (int aI = 0; aI < 4; aI++) {
-        float af = (float(aI) - 1.5) / 1.5;        // -1 .. 1 fan spread
+      for (int aI = 0; aI < 7; aI++) {
+        float af = (float(aI) - 3.0) / 3.0;        // -1 .. 1 fan spread
         // bristle direction = stalk dir rotated slightly outward; flex spreads
         float ang = af * (0.22 + headFlex * 0.10);
         float cs = cos(ang), sn = sin(ang);
@@ -246,18 +247,21 @@ void main() {
       col = mix(col, BG * 0.4, bodyDark);          // darken toward near-black
 
       // 2) rim glow on the stalk edges, scaling with flex (curvature->light).
-      // The thin sharp stroke catches most light; a soft edge halo adds bloom.
-      float rim = (stalk * 0.55 + edge * 0.45) * (0.05 + headFlex * 0.95) * dimDepth;
-      col += hue * rim * 0.55 * glow;
+      // raised resting term so the stalks always carry a soft glow (was a near-
+      // black charcoal that read as empty at the gallery's tile/poster scale).
+      float rim = (stalk * 0.55 + edge * 0.45) * (0.20 + headFlex * 0.85) * dimDepth;
+      col += hue * rim * 0.60 * glow;
 
-      // 3) seed head glow
-      col += hue * he * headLit * dimDepth * 0.9 * glow;
+      // 3) seed head glow — brighter resting baseline
+      float headLitB = 0.17 + headFlex * 0.88;
+      col += hue * he * headLitB * dimDepth * 1.0 * glow;
       // hotter core when strongly flexed, leaning to c3
       col += hotHue * he * headFlex * headFlex * dimDepth * 0.7 * glow;
 
-      // 4) awns: thin bright bristles, brightest at full flex
-      float awnLit = (0.04 + headFlex * 1.1);
-      col += mix(hue, hotHue, headFlex) * awns * awnLit * dimDepth * glow;
+      // 4) awns: thin bright bristles — fuller resting glow makes the fuzzy heads
+      // read at rest, the brightest at full flex
+      float awnLit = (0.22 + headFlex * 1.0);
+      col += mix(hue, hotHue, headFlex) * awns * awnLit * dimDepth * 1.15 * glow;
     }
   }
 

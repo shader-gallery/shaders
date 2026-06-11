@@ -148,7 +148,7 @@ void main() {
     // a soft vertical highlight down the centre gives the cane volume.
     float sheen = smoothstep(halfW, 0.0, abs(dxc));  // brighter toward centre line
     float face  = 0.35 + 0.65 * pow(sheen, 1.5);     // fills the whole column, brightest mid
-    col += caneCol * body * face * (0.10 + 0.18 * exc);
+    col += caneCol * body * face * (0.16 + 0.18 * exc);
 
     // both edges of the column get a thin rim so the cylinder reads, the
     // leading bent edge brightening when the cane is struck.
@@ -180,7 +180,11 @@ void main() {
       float lit = exp(-pow((climb - nyN) * 4.5, 2.0));
       // echo lights it again on the way down
       float litE = exp(-pow((echo - (1.0 - nyN)) * 4.5, 2.0)) * 0.5;
-      float fire = (lit + litE) * exc;
+      // steady resting glow on every joint (+ a slow per-node breath) so the
+      // jointed bamboo-cane structure is always visible — culm's signature vs
+      // awn's bristled heads — and the climb run brightens it on a gust strike.
+      float rest = 0.30 + 0.10 * sin(t * 0.6 + fn * 1.3 + fi);
+      float fire = (lit + litE) * exc + rest;
       glow += ringMask * fire;
     }
     // bend also drives how brightly each joint registers as the run climbs
