@@ -103,8 +103,8 @@ void main() {
   float floorStroke = (1.0 - smoothstep(0.0, aa*2.2, abs(uv.y - FLOOR_Y)))
                       * step(absXR, wallAt + aa*3.0);
   float etch = max(wallStroke, floorStroke);
-  // faint cool etching
-  col += mix(poolCol, vec3(0.6,0.7,0.9), 0.3) * etch * 0.16;
+  // etched glass vessel — brighter so the vessel reads as struck crystal
+  col += mix(poolCol, vec3(0.6,0.7,0.9), 0.3) * etch * 0.32;
 
   // ---- luminous pool fill ----
   float insideX = 1.0 - smoothstep(wallAt - aa, wallAt + aa, absXR); // 1 inside walls
@@ -126,8 +126,13 @@ void main() {
   // darker between drops — another face of DROP_RATE across the whole pool body.
   float depth = clamp((uv.y - FLOOR_Y) / max(localSurf - FLOOR_Y, 1e-3), 0.0, 1.0);
   float energy = mix(0.78, 1.35, clamp((rate - 0.3) / 2.7, 0.0, 1.0));
-  float poolBright = mix(0.18, 0.55, depth) * energy;
+  float poolBright = mix(0.30, 0.88, depth) * energy;
   col += poolCol * water * poolBright;
+  // caustic shimmer threading the water body — slow refracted light bands so the
+  // pool reads as living water with detail, not a flat luminous block
+  float caus = 0.5 + 0.5 * sin(xr / max(halfW,1e-3) * 9.0 + t * 0.9 + depth * 6.0);
+  caus *= 0.5 + 0.5 * sin(uv.y * 70.0 - t * 1.3);
+  col += mix(poolCol, dropCol, 0.3) * water * pow(caus, 2.0) * 0.14 * (0.4 + depth);
   // luminous surface line (meniscus) catches the most light
   float meniscus = (1.0 - smoothstep(0.0, aa*3.0, abs(uv.y - localSurf))) * insideX;
   col += mix(poolCol, dropCol, 0.4) * meniscus * (0.7 + 0.5 * siphonGlow);
