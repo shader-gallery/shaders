@@ -148,10 +148,10 @@ void main() {
     haloc = mix(haloc, c1, smoothstep(0.45, 0.78, hr));
     haloc = mix(haloc, c3, smoothstep(0.78, 1.10, hr));
     float emberGlow = alive * draw;
-    col += hotc  * core * 1.45 * emberGlow;
-    col += haloc * halo * 0.70 * emberGlow;
+    col += hotc  * core * 1.60 * emberGlow;
+    col += haloc * halo * 0.82 * emberGlow;
     // wide soft bloom seating the ember into the dark room
-    col += haloc * exp(-dEm / (emberR * 9.0)) * 0.16 * emberGlow;
+    col += haloc * exp(-dEm / (emberR * 9.0)) * 0.26 * emberGlow;
 
     // ---------- spark fleck popping off the cap (one-shot, occasional) ----------
     // a spark is born on a slow beat, rises a little, drifts, and guts out.
@@ -179,11 +179,15 @@ void main() {
         // sine + noise lateral displacement, widening and slowing as it rises
         float disp = sin(above / (22.0 * pr) - t * 1.1 + hph * TAU) * (3.0 + 9.0 * h) * pr
                    + (vnoise(vec2(hph * 30.0, above / (30.0 * pr) - t * 0.8)) - 0.5) * 16.0 * h * pr;
-        float sw = (1.1 + 4.4 * h) * pr;           // smoke half-width, widening
+        float sw = (1.6 + 6.0 * h) * pr;           // smoke half-width, widening
         float across = exp(-pow((dx - disp) / sw, 2.0));
         float fade = (1.0 - h) * smoothstep(0.0, 0.10, h); // rise from cap, fade out
+        // billowing turbulence so the plume carries visible swirl texture as it
+        // climbs, rather than reading as a thin clean thread
+        float turb = 0.55 + 0.55 * vnoise(vec2(dx / (16.0 * pr) + hph * 10.0,
+                                               above / (24.0 * pr) - t * 0.6));
         vec3 smokec = mix(c2, vec3(0.64, 0.64, 0.68), 0.50);
-        col += smokec * across * fade * 0.30 * alive * (0.6 + 0.4 * min(draw, 1.4));
+        col += smokec * across * fade * turb * 0.52 * alive * (0.6 + 0.4 * min(draw, 1.4));
       }
     }
   }

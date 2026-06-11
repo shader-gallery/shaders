@@ -11,10 +11,10 @@
       "default": 1.0, "effect": "Scales how fast each ember descends its stick." },
     { "uniform": "u_drawPulse", "label": "Draw pulse", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.5, "effect": "Amplitude of the ember's slow brighten-and-bank breathing; 0 holds a steady glow." },
-    { "uniform": "u_smokeReach", "label": "Smoke reach", "min": 0.0, "max": 240.0, "step": 1.0,
-      "default": 100.0, "effect": "How high in CSS px the smoke filament climbs before fading; 0 removes the smoke." },
-    { "uniform": "u_emberSize", "label": "Ember size", "min": 2.0, "max": 10.0, "step": 0.05,
-      "default": 4.0, "effect": "Radius in CSS px of the white-hot tip core." }
+    { "uniform": "u_smokeReach", "label": "Smoke reach", "min": 0.0, "max": 380.0, "step": 1.0,
+      "default": 260.0, "effect": "How high in CSS px the smoke filament climbs before fading; 0 removes the smoke." },
+    { "uniform": "u_emberSize", "label": "Ember size", "min": 2.0, "max": 12.0, "step": 0.05,
+      "default": 6.5, "effect": "Radius in CSS px of the white-hot tip core." }
   ],
   "defaultPalette": "midnight"
 }

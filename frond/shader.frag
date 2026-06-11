@@ -175,7 +175,9 @@ vec3 shadeLeaf(vec2 cssP, vec2 ctr, vec2 axis, float scl, float phase,
   float onChar = 1.0 - smoothstep(-rimPx * 0.35, rimPx * 0.15, sdPx);
   // membrane: a hair above background, only inside the leaf body
   float bodyIn = smoothstep(-0.02, 0.05, ed);
-  vec3 membrane = BG * (1.0 + 0.30 * bodyIn);
+  // a faint cool glow fills the intact lamina so the whole leaf reads as a
+  // luminous membrane, not a near-black void with a lit rim
+  vec3 membrane = BG * (1.0 + 0.30 * bodyIn) + mix(c2, c0, 0.5) * bodyIn * 0.06;
   vec3 charBase = BG * 0.55;
   vec3 col = mix(membrane, charBase, onChar) - BG; // work in additive space over shared BG
 
@@ -197,6 +199,10 @@ vec3 shadeLeaf(vec2 cssP, vec2 ctr, vec2 axis, float scl, float phase,
   // dim cooling vein glow on the char side only
   vec3 veinGlowCol = mix(c2, c0, 0.4) * 0.7 + c1 * 0.16;
   col += veinGlowCol * vein * onChar * cool * (0.08 + 2.7 * afterglow) * 1.0;
+  // always-on structural vein glow: the leaf skeleton reads as a luminous
+  // network even before the fire reaches it — frond's veined-leaf identity
+  // (vs char's burnt-paper crack field).
+  col += veinGlowCol * vein * bodyIn * 0.15;
   // a broad cooling-ember wash over the burned lamina, brightest just behind
   // the rim and fading deeper into the char; gated hard by afterglow so 0
   // snuffs the whole char side dark the instant the front passes
@@ -286,7 +292,7 @@ void main() {
   // leaf placement: diagonal across the frame, scaled to the shorter axis so
   // it fits with margin on either side. Two leaves on opposite diagonals.
   vec2 ctr  = resCss * 0.5;
-  float scl = min(resCss.x, resCss.y) * 0.46;       // leaf half-length in css px
+  float scl = min(resCss.x, resCss.y) * 0.54;       // leaf half-length in css px
   vec2 axisA = normalize(vec2( 0.80,  0.60));        // leaf A diagonal
   vec2 axisB = normalize(vec2(-0.80,  0.60));        // leaf B opposite diagonal
 

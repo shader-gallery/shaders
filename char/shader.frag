@@ -95,6 +95,19 @@ vec3 shadeLayer(vec2 fragPx, vec2 cssP, float phase, vec2 seed,
   // faint ember afterglow cooling off just behind the rim
   col += (c3 * 0.5 + c2 * 0.5) * 0.05 * bm * exp(-tau * 0.5);
 
+  // glowing ember-crack network veining the freshly charred paper behind the
+  // front: a ridged-noise crack pattern that cools with tau, so the whole burnt
+  // region reads as textured incandescent char rather than flat black — fills
+  // the frame and gives char its distinct burnt-paper texture (vs frond's leaf).
+  float crackN = fbm(cssP / 24.0 + seed * 2.3);
+  float crack  = 1.0 - smoothstep(0.0, 0.085, abs(crackN - 0.5)); // thin ridge lines
+  float crack2 = 1.0 - smoothstep(0.0, 0.05, abs(fbm(cssP / 11.0 + seed) - 0.5));
+  float emberFade = exp(-tau * 0.34);    // embers cool as the char ages
+  vec3  emberCol  = mix(c3, c1, 0.35);
+  col += emberCol * (crack * 0.55 + crack2 * 0.30) * bm * emberFade;
+  // broad dim ember bed glowing up through the mottled char
+  col += (c3 * 0.55 + c2 * 0.45) * bm * emberFade * 0.12 * (0.45 + 0.55 * crackN);
+
   // ---- incandescent rim: graded bands across its width.
   // q runs 0 at the leading edge (against virgin paper) to 1 at the trailing
   // side; hottest c3 first, cooling through c1 and c0 into c2.
