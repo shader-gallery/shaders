@@ -1,0 +1,53 @@
+{
+  "name": "Shore",
+  "slug": "shore",
+  "family": "Brink",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "fractal", "julia", "coastline", "organic"],
+  "description": "A single quadratic Julia coastline glows between two near-black domains: smooth escape bands hug the boundary and compress into self-similar filigree at every cape and inlet, while a hidden seed creeping along the Mandelbrot cardioid makes the whole frontier writhe into ever-different coastlines.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_writheSpeed",
+      "label": "Writhe speed",
+      "min": 0.0,
+      "max": 0.25,
+      "step": 0.01,
+      "default": 0.06,
+      "effect": "How fast the hidden seed creeps along the cardioid, i.e. how quickly the coastline becomes a different coastline (0 freezes a single coastline, still fully drawn)."
+    },
+    {
+      "uniform": "u_zoom",
+      "label": "Zoom",
+      "min": 0.6,
+      "max": 2.4,
+      "step": 0.01,
+      "default": 1.15,
+      "effect": "Magnification of the complex plane about frame centre — low values show the whole island chain, high values fill the frame with one stretch of coast."
+    },
+    {
+      "uniform": "u_glowReach",
+      "label": "Glow reach",
+      "min": 0.5,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.6,
+      "effect": "How many escape bands stay luminous before fading to black, widening or tightening the glowing margin around the coastline."
+    },
+    {
+      "uniform": "u_phaseSpread",
+      "label": "Phase spread",
+      "min": 0.25,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How quickly the four palette colours cycle across successive escape bands, from broad single-hue washes to fine multi-hue lamination."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Anvil",
+  "slug": "anvil",
+  "family": "Knell",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "resonance", "plate", "cymatic", "decay"],
+  "description": "A near-black steel plate rung by hashed hammer blows: each strike floods four Chladni modes weighted by their shape at the impact point, so every blow glows a different nodal figure — dark fixed zero-curves between palette-tinted antinode lobes — that melts toward the slowest cross as the modes decay, leaving a faint residual until the next strike.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_strikeGap",
+      "label": "Strike gap",
+      "min": 4,
+      "max": 30,
+      "step": 1,
+      "default": 10,
+      "effect": "Mean seconds between hashed hammer blows on the plate."
+    },
+    {
+      "uniform": "u_ringTime",
+      "label": "Ring time",
+      "min": 2,
+      "max": 12,
+      "step": 0.05,
+      "default": 5.5,
+      "effect": "How long each figure takes to decay toward the residual after a blow."
+    },
+    {
+      "uniform": "u_figureScale",
+      "label": "Figure scale",
+      "min": 0.6,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Continuously scales the mode wavenumbers, trading a few broad lobes for a finer many-lobed lattice."
+    },
+    {
+      "uniform": "u_glint",
+      "label": "Glint",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Brightness of the brief soft flash at the strike point, from invisible to a clear hammer spark."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231, 0.51, 0.965], [0.659, 0.333, 0.969], [0.133, 0.827, 0.933], [0.957, 0.247, 0.369]],
+    "witchlight": [[0.545, 0.361, 0.965], [0.925, 0.282, 0.6], [0.298, 0.733, 0.91], [0.984, 0.749, 0.141]],
+    "ember":      [[0.984, 0.451, 0.133], [0.957, 0.247, 0.369], [0.965, 0.62, 0.043], [0.561, 0.149, 0.305]]
+  },
+  "defaultPalette": "midnight"
+}

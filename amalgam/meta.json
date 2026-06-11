@@ -1,0 +1,53 @@
+{
+  "name": "Amalgam",
+  "slug": "amalgam",
+  "family": "Mercury",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "liquid", "metaball", "merge", "mercury", "organic"],
+  "description": "Two quicksilver pools hang in open darkness, drift to apogee, swing back in a slow magnetic approach, snap together in a hot bloom at the neck, ring with a damped elliptical wobble, then reluctantly pinch apart — one phase-continuous round of fusion and loss.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_poolScale",
+      "label": "Pool scale",
+      "min": 80,
+      "max": 260,
+      "step": 1,
+      "default": 170,
+      "effect": "Radius scale of both pools in CSS pixels, changing how much of the frame the duet occupies."
+    },
+    {
+      "uniform": "u_cycleSpeed",
+      "label": "Cycle speed",
+      "min": 0.1,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "How fast the approach, fusion, settle, and pinch-apart round runs."
+    },
+    {
+      "uniform": "u_rimGlow",
+      "label": "Rim glow",
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Brightness of the thin gradient-derived rim highlight on both bodies."
+    },
+    {
+      "uniform": "u_flashStrength",
+      "label": "Flash strength",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Intensity of the bright snap at the neck at fusion and pinch-apart; at zero the topology still changes, just without the flash."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

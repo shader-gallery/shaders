@@ -1,0 +1,53 @@
+{
+  "name": "Louver",
+  "slug": "louver",
+  "family": "Umbra",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "shadow", "blinds", "stripes", "penumbra", "lamp"],
+  "description": "A low off-screen lamp washes a plaster wall while the shadow of venetian blinds stripes it on a slight diagonal — bottom bars knife-sharp, top bars melting into grey breath as each slat hangs farther from the wall. The slats tilt on one long breathing cycle while the lamp drifts sideways, shearing and stretching the bars with no reset.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_slatGap",
+      "label": "Slat gap",
+      "min": 24,
+      "max": 120,
+      "step": 1,
+      "default": 56,
+      "effect": "Sets the CSS-pixel distance between successive shadow bars across the stack."
+    },
+    {
+      "uniform": "u_tiltRange",
+      "label": "Tilt range",
+      "min": 0.05,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "How far the slats tilt over a breath cycle, i.e. how much the dark bands widen and narrow."
+    },
+    {
+      "uniform": "u_penumbra",
+      "label": "Penumbra",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "Scales how strongly edge blur grows with each bar's implied distance from the wall, from razor bars at 0 to top bars nearly melting away at 2."
+    },
+    {
+      "uniform": "u_driftSpeed",
+      "label": "Drift speed",
+      "min": 0.05,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Speed of the lateral lamp drift that shears and stretches the band diagonal."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

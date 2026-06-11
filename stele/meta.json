@@ -1,0 +1,25 @@
+{
+  "name": "Stele",
+  "slug": "stele",
+  "family": "Plinth",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "monument", "grid", "slabs", "fog", "parallax", "raymarch"],
+  "description": "A memorial field of flat-topped slabs on a strict grid, raymarched from a high eye tilted steeply down: rank on rank of dim lit rectangles converge into haze while the camera glides diagonally across the field, dark mist pooling in the alleys and rare slabs carrying a glowing inscribed seam.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_glideSpeed", "label": "Glide speed", "min": 0.05, "max": 1.2, "step": 0.01,
+      "default": 0.35, "effect": "How fast the camera crosses the slab field." },
+    { "uniform": "u_slabSpacing", "label": "Slab spacing", "min": 2.0, "max": 6.0, "step": 0.05,
+      "default": 2.6, "effect": "Width of the lanes between slabs - narrow makes a dense necropolis, wide an open field." },
+    { "uniform": "u_heightVariance", "label": "Height variance", "min": 0.1, "max": 1.0, "step": 0.01,
+      "default": 0.35, "effect": "Spread of slab heights - low is a uniform terrace, high mixes stumps with towers." },
+    { "uniform": "u_seamGlow", "label": "Seam glow", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.7, "effect": "Brightness of the rare glowing seams inscribed on chosen slabs." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

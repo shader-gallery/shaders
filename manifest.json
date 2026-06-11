@@ -13,7 +13,15 @@
     "Burnish",
     "Noir",
     "Omen",
-    "Trace"
+    "Trace",
+    "Brink",
+    "Delve",
+    "Knell",
+    "Mercury",
+    "Plinth",
+    "Smolder",
+    "Sough",
+    "Umbra"
   ],
   "shaders": [
     "lacework",
@@ -38,6 +46,14 @@
     "kintsugi",
     "bead",
     "corona",
-    "orrery"
+    "orrery",
+    "shore",
+    "nautilus",
+    "anvil",
+    "amalgam",
+    "stele",
+    "char",
+    "brae",
+    "louver"
   ]
 }

@@ -1,0 +1,61 @@
+{
+  "name": "Char",
+  "slug": "char",
+  "family": "Smolder",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "ember",
+    "fire",
+    "paper",
+    "organic"
+  ],
+  "description": "A sheet of near-black paper consumed by a creeping ember edge: an irregular incandescent front eats across on a slow diagonal, graded hot-to-cool through the palette across its width, leaving darker char salted with brief cooling sparks. Staggered burn sheets crossfade while featureless, so the consumption never visibly resets.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_frontSpeed",
+      "label": "Front speed",
+      "min": 0.05,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the burn front eats across the sheet."
+    },
+    {
+      "uniform": "u_rimWidth",
+      "label": "Rim width",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "default": 14,
+      "effect": "Width in CSS pixels of the colour-graded incandescent rim."
+    },
+    {
+      "uniform": "u_sparkDensity",
+      "label": "Spark density",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "Fraction of char-side cells that carry a brief cooling spark; zero removes sparks entirely."
+    },
+    {
+      "uniform": "u_edgeRaggedness",
+      "label": "Edge raggedness",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Scales the FBM perturbation of the front, from a nearly smooth contour to deep bays and racing fingers."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}
