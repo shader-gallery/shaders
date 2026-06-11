@@ -12,7 +12,7 @@
     "minimal",
     "depth"
   ],
-  "description": "A stone well heard rather than seen: thin, perfectly circular wavefront rings procession inward like a dropped pebble's sound returning, sitting at exact log-spaced stations on a near-black wall. Each ring is born faint at the rim, swells to full glow at mid-depth, then drowns in the dark well before a pure-black pupil at the center, tinted through the palette by depth. The procession marches down the scale axis forever — equal spacing maintained, no ring arriving, nothing rotating or translating.",
+  "description": "A stone well whose echo returns from every wall at once: thin circular wavefronts procession inward at log-spaced stations, but each ring is broken into a shimmering bead-row of arcs by a slowly counter-rotating angular standing wave — the sound scattered off the rough throat, louder from some bearings than others. Rings fill nearly the whole frame, tinted through the palette by depth, fading only at a small off-centre pupil and the extreme corners. The descent and the turning scatter beat against each other into a dense returning chorus, with no visible start or wrap.",
   "entry": "shader.frag",
   "params": [
     {
@@ -30,17 +30,17 @@
       "min": 1,
       "max": 7,
       "step": 1,
-      "default": 3,
+      "default": 4,
       "effect": "Wavefront rings per scale octave — low gives lonely echoes, high a dense procession."
     },
     {
-      "uniform": "u_lineWidth",
-      "label": "Line width",
-      "min": 1,
-      "max": 6,
-      "step": 1,
-      "default": 2,
-      "effect": "Stroke width of each wavefront ring in CSS pixels."
+      "uniform": "u_scatter",
+      "label": "Scatter",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Depth of the angular bead modulation — 0 leaves clean circles, 1 shatters each ring into shimmering scattered arcs."
     },
     {
       "uniform": "u_haloGlow",

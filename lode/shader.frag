@@ -139,7 +139,7 @@ void main() {
   // faint stone tint that cycles with depth phase (rings shift hue as they fall)
   vec3 rockTint = palMix(c0, c1, c2, c3, depth * 0.18 + 0.5);
   // ambient (un-lit) wall: dim but visibly grainy and ringed
-  col += rockTint * rock * 0.16;
+  col += rockTint * rock * 0.23;
 
   // ---- the stationary lamp band: fixed SCREEN radius, no motion ----
   // a TIGHT warm ring of illumination at r = u_lampDepth; brightness events
@@ -190,10 +190,11 @@ void main() {
       }
     }
   }
-  // glints are present in shadow and flare bright through the lamp band
-  float glintLit = 0.8 + 2.4 * band;
+  // glints are present in shadow and flare bright through the lamp band —
+  // raised base so the ore sparkle reads across the dim wall, not just at the lamp
+  float glintLit = 1.6 + 2.4 * band;
   col += glintCol * glintLit;
-  col += vec3(glintAcc) * (0.30 + band * 0.30);   // hard glint highlight
+  col += vec3(glintAcc) * (0.50 + band * 0.35);   // hard glint highlight
 
   // ---- ore veins: continuous glowing curves whose centreline angle wanders
   // WITH log-depth, so each vein snakes radially as it descends rather than
@@ -235,7 +236,7 @@ void main() {
   col *= mix(0.50, 1.0, vign);
 
   // gentle tonemap to keep accents luminous without blowing out
-  col = col / (1.0 + col * 0.55);
+  col = col / (1.0 + col * 0.44);
 
   gl_FragColor = vec4(col, 1.0);
 }
