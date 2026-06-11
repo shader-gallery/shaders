@@ -1,5 +1,12 @@
 {
-  "categories": ["Loom", "Veil", "Bloom", "Wake", "Abyss"],
+  "categories": [
+    "Loom",
+    "Veil",
+    "Bloom",
+    "Wake",
+    "Abyss",
+    "Mosaic"
+  ],
   "shaders": [
     "lacework",
     "warp",
@@ -7,6 +14,14 @@
     "gossamer",
     "lantern",
     "undertow",
-    "starfall"
+    "starfall",
+    "tessera",
+    "crackle",
+    "comb",
+    "stain",
+    "vein",
+    "shale",
+    "floe",
+    "froth"
   ]
 }

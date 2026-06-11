@@ -1,0 +1,49 @@
+{
+  "name": "Vein",
+  "slug": "vein",
+  "family": "Mosaic",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "voronoi", "network", "web", "growth"],
+  "description": "Only the seams of a voronoi partition — thin capillary lines on a near-black field that continuously rewire: edges fade in along their length, dock into junctions with a soft glint, stand a while, then thin and retract, each seam tinted by its two neighbouring cells.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "key": "u_cell",
+      "label": "Cell size",
+      "min": 60,
+      "max": 240,
+      "default": 130,
+      "effect": "Diameter of the cells whose boundaries form the network; small cells give a dense capillary mesh, large cells a sparse arterial map."
+    },
+    {
+      "key": "u_rewireRate",
+      "label": "Rewire rate",
+      "min": 0.05,
+      "max": 1,
+      "default": 0.3,
+      "effect": "How quickly edges grow in and retract — from slow lichen-paced turnover to a web visibly knitting itself."
+    },
+    {
+      "key": "u_coverage",
+      "label": "Coverage",
+      "min": 0.3,
+      "max": 0.95,
+      "default": 0.7,
+      "effect": "Fraction of the network standing at any moment; low values leave sparse exploring threads, high values an almost-complete web with rare gaps."
+    },
+    {
+      "key": "u_vein",
+      "label": "Vein width",
+      "min": 0.75,
+      "max": 4,
+      "default": 1.5,
+      "effect": "Thickness of the capillary lines in CSS pixels; hairline veins recede into the dark, thick veins make the graph the subject."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}
