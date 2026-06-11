@@ -26,7 +26,7 @@ uniform float u_punch;       // stipple spacing in CSS px            (default 4.
 uniform float u_figure;      // how fully the strapwork kills shimmer (default 0.8)
 
 const vec3  BG          = vec3(0.030, 0.030, 0.038); // near-black niello alloy
-const float STILL_DIM   = 0.10;  // residual stipple brightness when rate -> 0
+const float STILL_DIM   = 0.16;  // residual stipple brightness when rate -> 0
 const float STRAP_CSS   = 150.0; // strapwork interlace cell size (css px)
 
 // --- hashes (no textures; pure arithmetic) ---
@@ -124,7 +124,13 @@ void main() {
   // is stronger and the sheen more pronounced than before so the figure reads
   // as the subject at the shipped default without touching params.
   col -= BG * strap * 0.9 * fig;
-  col += strapTint * strap * (0.045 + 0.16 * pow(sheen, 2.5)) * fig;
+  // burnished silver: the interlace reads as the bright worked-metal SUBJECT, a
+  // strong specular gradient catching lamplight, so the figure is legible at a
+  // glance rather than dissolving into the stippled ground.
+  col += strapTint * strap * (0.10 + 0.40 * pow(sheen, 2.0)) * fig;
+  // a crisp specular highlight running along the strapwork crests
+  float strapHi = pow(sheen, 6.0) * strap;
+  col += mix(strapTint, vec3(0.92, 0.94, 1.0), 0.5) * strapHi * 0.45 * fig;
 
   // ============== the stippled ground (scintillating punch marks) ============
   // punch grid spacing in device px (css convention)
@@ -164,10 +170,12 @@ void main() {
   float speed  = 0.6 + 2.4 * seed;           // varied so no two match
   float phase  = seed * 6.2831 + t * speed * rate;
   // sharp spark: a narrow peak of the sine, raised to a power for an instant
-  float spark  = pow(max(0.0, sin(phase)), 18.0);
+  // (widened a touch so more punches catch light at once → a denser coal-dust
+  // glitter rather than a few lonely dots)
+  float spark  = pow(max(0.0, sin(phase)), 11.0);
   // gate the spark population by the tide (rarer/denser swells) — widened range
   // so quiet regions go noticeably sparse and bright regions noticeably dense.
-  float gateThr = mix(0.74, 0.10, tide);     // tide lowers threshold -> denser
+  float gateThr = mix(0.56, 0.05, tide);     // tide lowers threshold -> denser
   float gate   = step(gateThr, seed * 0.55 + hash11(floor(t * 0.5 + seed * 50.0)) * 0.45);
   // also dim the spark amplitude in quiet regions so the tide reads as
   // brightness swell, not just population change.
