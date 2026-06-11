@@ -23,9 +23,10 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_cyclePeriod;  // seconds per full dusk-to-dusk cycle (default 180)
-uniform float u_glowHeight;   // horizon glow band height, css px     (default 200)
-uniform float u_starDensity;  // fraction of stars that blink on       (default 0.6)
+uniform float u_cyclePeriod;   // seconds per full dusk-to-dusk cycle  (default 150)
+uniform float u_glowHeight;    // horizon glow band height, css px      (default 230)
+uniform float u_glowIntensity; // horizon glow brightness, 0..2         (default 1)
+uniform float u_starDensity;   // fraction of stars that blink on       (default 0.7)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float STAR_CELL_CSS = 38.0;  // css px per star cell (one star candidate each)
@@ -112,23 +113,42 @@ void main() {
   vec3  sky = BG + skyHi * skyGrad * 0.11 * (0.30 + 0.70 * dayCurve);
 
   // =========================================================
-  // 2. HORIZON GLOW BAND — warm-to-indigo broad gradient, lower frame
+  // 2. HORIZON LANDSCAPE — a low rolling hill silhouette across the bottom third.
+  // Computed BEFORE the glow so the glow band can sit just above the ridge. This
+  // anchors the frame as a real twilight scene (rule-of-thirds horizon) and
+  // separates gloaming hard from starfall's uniform dot-field.
   // =========================================================
-  float glowH = max(u_glowHeight, 1.0) * pr / max(res.y, 1.0); // band height (y-norm)
-  // broad soft band rising from the bottom edge
-  float band  = exp(-y / max(glowH, 1e-3));
-  // a whisper of FBM haze softening the band (slowly breathing, no translation)
+  // ridge line height (y-normalized), gently rolling via low-freq FBM.
+  float ridge = 0.10
+    + 0.050 * fbm(vec2(uv.x * 1.7 + 4.0, 2.0))
+    + 0.024 * fbm(vec2(uv.x * 4.3 - 1.0, 9.0));
+  // a second, nearer hill mass for depth on the left third
+  float ridge2 = 0.06 + 0.07 * fbm(vec2(uv.x * 1.1 - 2.0, 21.0));
+  float hill = max(ridge, ridge2 * smoothstep(0.55, -0.1, uv.x)); // nearer mass left
+  float ax   = 1.2 / max(res.y, 1.0);
+  float land = smoothstep(hill + ax, hill - ax, y);   // 1 below ridge, 0 above
+
+  // =========================================================
+  // 3. HORIZON GLOW BAND — warm-to-indigo glow, brightest AT the ridge line and
+  // fading up into the sky (so it lights the horizon, not the ground beneath it).
+  // =========================================================
+  float gi    = clamp(u_glowIntensity, 0.0, 2.0);
+  float glowH = max(u_glowHeight, 1.0) * pr / max(res.y, 1.0);      // band height (y-norm)
+  float aboveRidge = max(y - hill, 0.0);
+  float band  = exp(-aboveRidge / max(glowH, 1e-3));
   float haze  = fbm(vec2(uv.x * 3.0, y * 4.0 + 13.0) + vec2(0.0, t * 0.01));
-  band *= 0.78 + 0.30 * haze;
-  // colour of the glow: warm at dusk, cooling to indigo as the light sinks,
-  // then a faint dawn tint (star/cyan-warm mix) rises during the rinse.
-  vec3 duskCol = mix(cool, warm, dayCurve);            // warm when lit, indigo when sunk
+  band *= 0.80 + 0.28 * haze;
+  // colour: warm amber at dusk, cooling to indigo as the light sinks, with a
+  // faint dawn tint rising during the pre-dawn rinse.
+  vec3 duskCol = mix(cool, warm, dayCurve);
   vec3 dawnCol = mix(duskCol, mix(warm, star, 0.5), dawnSide * 0.5 * (1.0 - dayCurve));
-  vec3 glowCol = dawnCol;
-  // glow intensity follows the day curve (bright at dusk, near-gone at night,
-  // a soft return at pre-dawn)
-  float glowAmt = band * (0.10 + 0.66 * dayCurve + 0.12 * dawnSide * (1.0 - dayCurve));
-  sky += glowCol * glowAmt;
+  float glowAmt = band * (0.22 + 1.35 * dayCurve + 0.20 * dawnSide * (1.0 - dayCurve)) * gi;
+  // sky glow lights only the sky (above the ridge), never the hill silhouette
+  sky += dawnCol * glowAmt * (1.0 - land);
+
+  // warm glowing rim exactly along the ridge crest (brightest at dusk)
+  float rim = exp(-pow((y - hill) / 0.010, 2.0)) * (0.30 + 0.90 * dayCurve);
+  vec3  rimCol = mix(cool, warm, clamp(dayCurve + 0.2, 0.0, 1.0));
 
   // =========================================================
   // 3. STARS — blink on one by one at per-star hashed offsets in the cycle
@@ -144,8 +164,11 @@ void main() {
     for (int ox = -1; ox <= 1; ox++) {
       vec2 nid = gid + vec2(float(ox), float(oy));
       vec2 rnd = hash22(nid);
-      // does this cell host a star at all? density gates how many ignite.
-      float exists = step(rnd.x, clamp(u_starDensity, 0.0, 1.0));
+      // does this cell host a star at all? density gates how many ignite, and
+      // rises toward the base so the field thickens above the glowing horizon
+      // (a rising swarm) rather than reading as a uniform sheet like starfall.
+      float densGrad = mix(1.5, 0.45, smoothstep(0.04, 0.85, y));
+      float exists = step(rnd.x, clamp(u_starDensity * densGrad, 0.0, 1.0));
       // jittered position within the cell
       vec2  spos = vec2(float(ox), float(oy)) + clamp(hash22(nid + 3.1), 0.12, 0.88);
       vec2  d    = gloc - spos;
@@ -186,6 +209,14 @@ void main() {
   // stars dimmed within the bright horizon band (washed out by the glow)
   float horizonWash = 1.0 - 0.75 * band * (0.3 + 0.7 * dayCurve);
   sky += starAccum * 1.15 * horizonWash;
+
+  // =========================================================
+  // composite the landscape OVER the sky+stars: dark hill mass that occludes the
+  // lower frame, with the warm glowing ridge rim on top.
+  // =========================================================
+  vec3 landCol = BG * 0.6 + skyHi * 0.012; // near-black silhouette, faint cool cast
+  sky = mix(sky, landCol, land);
+  sky += rimCol * rim * (1.0 - land * 0.0) * gi;
 
   // =========================================================
   // 4. finishing — gentle vignette top corners, clamp

@@ -8,11 +8,13 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_cyclePeriod", "label": "Cycle period", "min": 20.0, "max": 600.0, "step": 1.0,
-      "default": 180.0, "effect": "Seconds per full dusk-to-dusk cycle; short values make the day breathe visibly, long values make the change subliminal." },
+      "default": 150.0, "effect": "Seconds per full dusk-to-dusk cycle; short values make the day breathe visibly, long values make the change subliminal." },
     { "uniform": "u_glowHeight", "label": "Glow height", "min": 60.0, "max": 500.0, "step": 1.0,
-      "default": 200.0, "effect": "Vertical extent of the horizon glow band in CSS pixels, from a thin distant rim of light to a tall luminous haze." },
+      "default": 230.0, "effect": "Vertical extent of the horizon glow band in CSS pixels, from a thin distant rim of light to a tall luminous haze rising off the hills." },
+    { "uniform": "u_glowIntensity", "label": "Glow intensity", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 1.0, "effect": "Brightness of the warm horizon glow and the ridge rim; 0 leaves a bare dark horizon, 2 a vivid dusk afterglow." },
     { "uniform": "u_starDensity", "label": "Star density", "min": 0.15, "max": 1.0, "step": 0.01,
-      "default": 0.6, "effect": "How many stars blink on as night deepens, from a handful of lone points to a crowded night sky." }
+      "default": 0.7, "effect": "How many stars blink on as night deepens, denser toward the horizon so the field thickens above the hills." }
   ],
   "defaultPalette": "midnight",
   "post": { "exposure": 1.12, "contrast": 1.14, "saturation": 1.35, "vignette": 0.35 }
