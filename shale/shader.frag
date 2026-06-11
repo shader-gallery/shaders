@@ -128,8 +128,18 @@ void main() {
   vec3 tint  = mix(c0, c2, hueA);
   tint       = mix(tint, c1, 0.30 * hash1(mg + 5.37));
   vec3 slate = mix(vec3(dot(tint, vec3(0.299, 0.587, 0.114))), tint, 0.45);
-  vec3 facet = vec3(0.030, 0.031, 0.040)
-             + slate * (0.045 + 0.55 * dif * dif + 0.10 * dif);
+  vec3 facet = vec3(0.034, 0.035, 0.045)
+             + slate * (0.058 + 0.62 * dif * dif + 0.12 * dif);
+
+  // ---- sedimentary bedding: fine parallel laminations along one near-
+  //      horizontal bedding plane that crosses EVERY slab (a global field the
+  //      plates are cut from), faintly faulted per-plate. This layered-rock
+  //      grain is shale's signature vs floe's smooth translucent ice. --------
+  vec2  bedAxis = vec2(0.16, 1.0);                 // beds tilt a few degrees
+  float bed = dot(gl_FragCoord.xy / S, bedAxis) * 6.5 + hash1(mg + 8.8) * 0.7;
+  float lam = 0.5 + 0.5 * sin(bed * TAU);
+  lam = pow(lam, 2.2);                             // crisp bedding partings
+  facet *= 0.80 + 0.34 * lam;                      // dark/light strata banding
 
   // ---- ember light in the gaps, brightest where they run widest --------
   vec3 emberBody = c3;

@@ -143,12 +143,18 @@ void main() {
   vec2  prel = -mr;                       // position on the plate (drifts with it)
 
   float pv    = 0.82 + 0.36 * ph1;        // per-plate value variation
-  float shade = 1.0 + 0.26 * dot(prel, vec2(0.6, 0.8)); // faint moonlit grade
+  float shade = 1.0 + 0.42 * dot(prel, vec2(0.6, 0.8)); // moonlit grade across the plate
 
-  // dim blue-grey body, gently tinted by the palette's cool pair
-  vec3 tint = c0 * 0.60 + c2 * 0.40;
+  // PALE moonlit ice body — floe is the BRIGHT member of the plate pair (vs
+  // shale's dark matte stone). A luminous blue-white plate with a cool
+  // subsurface gradient, lit well above the void so the ice reads translucent.
+  vec3 tint = c0 * 0.55 + c2 * 0.45;
   tint /= max(max(tint.r, max(tint.g, tint.b)), 1e-3);
-  vec3 iceCol = BG + (vec3(0.30) + tint * 0.70) * (0.094 * pv * shade);
+  vec3 iceCol = BG + (vec3(0.62) + tint * 0.55) * (0.30 * pv * shade);
+  // subsurface scatter: a soft cool glow pooling toward the plate interior, as
+  // if moonlight is diffusing through the ice rather than sitting on a surface
+  float subs = smoothstep(0.0, 0.30, inIce);
+  iceCol += mix(c2, vec3(0.85, 0.92, 1.0), 0.4) * subs * 0.12 * pv;
 
   // subtle pressure ridges, tinted by the other palette colours: thin raised
   // lines crossing each plate in its own direction, broken along their length

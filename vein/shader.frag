@@ -161,10 +161,18 @@ void main() {
     }
   }
 
+  // faint plasma pooling inside each cell: a slow per-cell breath glowing from
+  // the seed outward, kept well below the seam brightness so the web still
+  // reads as edges-on-void — just living membrane rather than dead black.
+  float cellR  = sqrt(dBest);
+  float pool   = 1.0 - smoothstep(0.0, 0.6, cellR);
+  float cpulse = 0.55 + 0.45 * sin(u_time * 0.45 + hash12(idA + 3.3) * 6.2831);
+  acc += colA * pool * 0.05 * cpulse;
+
   // gentle vignette; soft-knee tone map keeps junction pileups from blowing out
   vec2  uv  = (fc - 0.5 * res) / max(res.y, 1.0);
   float vig = 1.0 - 0.42 * smoothstep(0.42, 1.0, length(uv));
-  vec3  lit = 1.0 - exp(-acc * 1.35);
+  vec3  lit = 1.0 - exp(-acc * 1.6);
   vec3  col = BG + lit * vig;
 
   gl_FragColor = vec4(col, 1.0);

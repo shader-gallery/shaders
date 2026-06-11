@@ -20,7 +20,7 @@
       "label": "Cell size",
       "min": 60,
       "max": 240,
-      "default": 130,
+      "default": 100,
       "effect": "Diameter of the cells whose boundaries form the network; small cells give a dense capillary mesh, large cells a sparse arterial map.",
       "step": 1
     },
@@ -38,7 +38,7 @@
       "label": "Coverage",
       "min": 0.3,
       "max": 0.95,
-      "default": 0.7,
+      "default": 0.82,
       "effect": "Fraction of the network standing at any moment; low values leave sparse exploring threads, high values an almost-complete web with rare gaps.",
       "step": 0.01
     },

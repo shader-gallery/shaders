@@ -12,7 +12,7 @@
     "ember",
     "facets"
   ],
-  "description": "Fractured stone plates fill the frame, each shaded as one flat slate facet under a slowly wandering raking light, while the fissures between them glow ember from below — easing apart and reseating with tectonic patience, brightest where the gaps run widest.",
+  "description": "Fractured stone plates fill the frame, each shaded as one flat slate facet under a slowly wandering raking light and grained with fine sedimentary bedding laminations that cross every slab like layered rock, while the fissures between them glow ember from below — easing apart and reseating with tectonic patience, brightest where the gaps run widest.",
   "entry": "shader.frag",
   "params": [
     {
