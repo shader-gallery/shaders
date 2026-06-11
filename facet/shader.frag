@@ -92,39 +92,6 @@ void main() {
   float a      = mod(fang, wedge);
   a            = abs(a - wedge * 0.5);
 
-  // rebuild a folded position; sample the FBM in this folded space so the field
-  // repeats with perfect n-fold symmetry and mirror seams. Bias the radius up a
-  // touch so the very centre still has structure (folded p never collapses to 0).
-  vec2 fp = vec2(cos(a), sin(a)) * (r + 0.08);
-
-  // FBM feature size in CSS px -> field frequency. Larger feature = lower freq.
-  // guard against 0 so min-end of the slider can't blow up the frequency.
-  float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
-  float featurePx = max(u_feature, 1.0) * refScale * pr;
-  float freq      = (minDim * 1.9) / featurePx;  // cycles across the jewel diameter
-  // FLOOR the frequency so the broad-lobe end never collapses into a single
-  // featureless blob: the folded radius spans ~0..0.58, so keep >= ~3.0 cycles
-  // there (~1.5 across the visible radius) to preserve faint mirrored structure.
-  freq = max(freq, 5.2);
-
-  // unbounded straight drift path: FBM input slides forever, never wraps -> no
-  // possible reset frame. Two slightly different drift vectors layer the motion.
-  vec2 drift1 = vec2(0.137, 0.071) * (t * u_drift);
-  vec2 drift2 = vec2(-0.061, 0.119) * (t * u_drift);
-
-  float f1 = fbm(fp * freq + drift1);
-  float f2 = fbm(fp * freq * 1.61 + drift2 + 19.3);
-  float field = f1 * 0.65 + f2 * 0.35;
-
-  // shape the field into luminous lobes: lift contrast so most stays dark and
-  // only the crests glow, with smoothstep edges for clean anti-aliasing
-  float glow = smoothstep(0.44, 0.78, field);
-  glow = glow * glow;
-
-  // seam kiss: brighten right at the mirror seam (a near 0 and near wedge*0.5)
-  float seam = 1.0 - smoothstep(0.0, wedge * 0.22, a);
-  float kiss = seam * smoothstep(0.36, 0.72, field);
-
   // Theme colours from u_palette with the house fallback (headless contexts can
   // leave the vec3[] zeroed; fall back to midnight so a poster never renders black).
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
@@ -133,30 +100,78 @@ void main() {
     c2 = vec3(0.133, 0.827, 0.933); c3 = vec3(0.957, 0.247, 0.369);
   }
 
-  // colour blends by field value and radius (no dynamic array indexing). The
-  // wheel position rolls slowly with the field and radius so hues vary across the
-  // rings and drift gently without a visible loop.
-  float k  = field * 1.4 + r * 1.7 + t * 0.01;
-  float s  = fract(k) * 4.0;
+  // --- cut-gem faceting in the folded (angle, radius) space ----------------
+  // The jewel is partitioned into hard diamond facets: concentric facet rings,
+  // each subdivided into angular wedgelets, with alternate rings half-offset so
+  // cells read as cut diamonds. Each facet is one FLAT crystal face — a hashed
+  // normal catching a slowly-turning raking light — and the cut lines between
+  // facets glint sharp and bright. No soft FBM glow: this is the hard, angular
+  // member of the pair, vs mandala's soft floral petals.
+  float refScale  = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
+  float featurePx = max(u_feature, 1.0) * refScale * pr;
+  // facet ring count scales inversely with feature size (smaller feature = more,
+  // finer facets). Floored so the gem never collapses to one ring.
+  float rings = max(floor((minDim * 0.9) / featurePx), 3.0);
+
+  float rr = r * rings;              // radius in facet-ring units
+  float ri = floor(rr);
+  float rf = fract(rr);
+
+  // wedgelets per folded half-wedge; alternate rings brick-offset for diamonds
+  const float ANGFAC = 3.0;
+  float aw  = a / max(wedge * 0.5, 1e-4);     // 0..1 across the folded half-wedge
+  float off = mod(ri, 2.0) * 0.5;
+  float au  = aw * ANGFAC + off;
+  float ai  = floor(au);
+  float af  = fract(au);
+
+  vec2  cid = vec2(ai, ri) + 17.0;            // facet cell id (folded space)
+
+  // flat-facet shading: hashed surface normal + a low raking light whose angle
+  // wanders, so neighbouring facets sit a stop apart and twinkle as light moves.
+  vec2  tilt = (vec2(hash21(cid * 1.91), hash21(cid * 2.73 + 5.0)) - 0.5) * 1.7;
+  vec3  nrm  = normalize(vec3(tilt, 1.0));
+  float la   = t * (0.10 + 0.25 * max(u_drift, 0.0)) + 0.7 * sin(t * 0.05);
+  vec3  L    = normalize(vec3(cos(la), sin(la), 0.55));
+  float dif  = clamp(dot(nrm, L), 0.0, 1.0);
+  float spark = pow(dif, 3.0);                 // tight crystal glint per facet
+
+  // per-facet hue: flat across the cell (constant), rolling with ring + a hash
+  float kk  = hash21(cid * 0.53) * 0.6 + ri / max(rings, 1.0) * 1.3 + t * 0.012;
+  float s   = fract(kk) * 4.0;
   float w0 = wheelW(s, 0.0), w1 = wheelW(s, 1.0), w2 = wheelW(s, 2.0), w3 = wheelW(s, 3.0);
-  vec3  jewel = (c0 * w0 + c1 * w1 + c2 * w2 + c3 * w3) / max(w0 + w1 + w2 + w3, 0.001);
+  vec3  faceCol = (c0 * w0 + c1 * w1 + c2 * w2 + c3 * w3) / max(w0 + w1 + w2 + w3, 0.001);
 
-  // gentle radial vignette: luminous centre fading into near-black corners. Wide
-  // and soft so the jewel fills the frame and only the extreme corners go dark.
-  float vign = 1.0 - smoothstep(0.46, 1.02, r);
+  // sharp cut lines: distance to the nearest facet border, AA'd to a thin glint
+  float angPx = max(wedge * 0.5 / ANGFAC * r * minDim, 1.0); // facet ang. width, px
+  float ew    = 1.6 / max(angPx, 1.0);
+  float edgeA = min(af, 1.0 - af);
+  float edgeR = min(rf, 1.0 - rf);
+  float cut   = (1.0 - smoothstep(0.0, 0.10 + ew, edgeA))
+              + (1.0 - smoothstep(0.0, 0.10 + ew, edgeR));
+  cut = clamp(cut, 0.0, 1.0);
 
-  // lift the outer rings: without this the brightness piles up in the small
-  // central disc and the spokes fade out fast. A radial gain that grows with r
-  // (then tapers under the vignette) pushes the ornament out toward a 16:9 hero.
-  float outerGain = 1.0 + 1.2 * smoothstep(0.10, 0.55, r);
+  // radial vignette so the gem fills a 16:9 hero, dark toward the corners
+  float vign = 1.0 - smoothstep(0.42, 1.02, r);
 
-  // compose: the soft symmetric lobes, plus a brighter kiss along the seams
-  col += jewel * glow * 2.4 * vign * outerGain;
-  col += jewel * kiss * 1.1 * vign * outerGain;
+  // per-facet value: many faces sit deep in shadow, a few catch the light, so
+  // the jewel reads as cut crystal with depth — not a flat stained-glass wheel.
+  float facetVal = 0.25 + 0.75 * hash21(cid * 3.17 + 9.0);
 
-  // a faint central bloom so the jewel core reads as the brightest point
-  float core = exp(-r * r * 7.0) * (0.30 + 0.60 * smoothstep(0.3, 0.9, field));
-  col += jewel * core * 0.7;
+  // compose: DARK flat crystal faces (dim base, strong per-facet light contrast),
+  // then sharp cut-line glints and tight sparkles as the bright accents on top.
+  vec3 face = faceCol * (0.045 + 0.42 * dif * dif + 0.55 * spark) * facetVal;
+  col += face * vign;
+  // cut lines catch the light — near-white only where a facet actually sparkles
+  vec3 cutCol = mix(faceCol, vec3(0.95, 0.96, 1.0), 0.35 + 0.45 * spark);
+  col += cutCol * cut * (0.10 + 0.85 * spark) * vign;
+
+  // a tight central table facet so the core reads as the jewel's culet
+  float core = exp(-r * r * 16.0);
+  col += mix(faceCol, vec3(1.0), 0.3) * core * (0.18 + 0.5 * spark);
+
+  // soft-knee tone map keeps the brightest sparkles from clipping to flat white
+  col = BG + (1.0 - exp(-(col - BG) * 1.25));
 
   gl_FragColor = vec4(col, 1.0);
 }

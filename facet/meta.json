@@ -3,16 +3,16 @@
   "slug": "facet",
   "family": "Rosette",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "kaleidoscope", "symmetry", "organic", "jewel"],
-  "description": "A kaleidoscope jewel: the angle around centre is mirror-folded into N wedges and a slowly drifting FBM glow field is sampled in the folded space, producing soft luminous lobes with perfect n-fold symmetry, brightest where mirrored features kiss along the seams and fading into a near-black vignette toward the corners.",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "symmetry", "crystal", "jewel"],
+  "description": "A cut-crystal jewel: the angle around centre is mirror-folded into N wedges and the folded space is partitioned into hard diamond facets — concentric facet rings of brick-offset wedgelets, each a flat crystal face catching a slowly-turning raking light, with sharp bright cut-lines glinting between them. Most faces sit deep in shadow while a few sparkle, so the gem twinkles as the light wanders, dark toward the corners.",
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_folds", "label": "Folds", "min": 4, "max": 12, "step": 1,
-      "default": 8, "effect": "Number of mirror wedges in the kaleidoscope; low values give broad cathedral-like sectors, high values a tight snowflake." },
-    { "uniform": "u_drift", "label": "Drift", "min": 0.05, "max": 0.8, "step": 0.01,
-      "default": 0.22, "effect": "Speed the source glow field slides beneath the folds — directly sets how fast features merge and split at the seams." },
-    { "uniform": "u_feature", "label": "Feature size", "min": 140, "max": 440, "step": 1,
-      "default": 320, "effect": "Characteristic blob size of the FBM field in CSS px; small makes intricate fractured detail, large makes broad soft lobes." }
+      "default": 8, "effect": "Number of mirror wedges in the kaleidoscope; low values give broad cathedral-like facets, high values a tight snowflake cut." },
+    { "uniform": "u_drift", "label": "Sparkle rate", "min": 0.05, "max": 0.8, "step": 0.01,
+      "default": 0.22, "effect": "Speed the raking light turns across the facets — how fast the crystal faces twinkle and trade their glints." },
+    { "uniform": "u_feature", "label": "Facet size", "min": 140, "max": 440, "step": 1,
+      "default": 300, "effect": "Characteristic facet size in CSS px; small cuts the gem into many fine facets, large into a few broad crystal faces." }
   ],
   "defaultPalette": "midnight"
 }
