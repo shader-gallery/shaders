@@ -130,7 +130,7 @@ void main() {
   float n2   = n * n;
   // value-noise ^ 4 carves bright shafts and dark gaps; the small linear
   // term is a ghost of the full fan so a dying beam fades to a faint trace
-  float beam = n2 * n2 * 1.9 + n * 0.06;
+  float beam = n2 * n2 * 2.5 + n * 0.10;
 
   // internal striation + a slow slosh of volume travelling along the beams
   beam *= 0.72 + 0.42 * vnoise(u * 4.3 + 31.0);
@@ -151,13 +151,13 @@ void main() {
   vec3 acc = tint * (beam * fanEnv * distFall * nearCalm);
 
   // faint directional haze filling the fan, and a soft glow at the source
-  acc += keyCol * hazeEnv * exp(-rn * 1.3) * 0.06;
+  acc += keyCol * hazeEnv * exp(-rn * 1.3) * 0.10;
   acc += mix(keyCol, tint, 0.5) * hazeEnv * exp(-rn * 3.2) * 0.40;
 
   // gentle vignette; soft-knee tone map keeps shaft cores from blowing out
   vec2  uv  = (fc - 0.5 * res) / mn;
   float vig = 1.0 - 0.30 * smoothstep(0.50, 1.05, length(uv));
-  vec3  col = BG + (1.0 - exp(-acc * 1.5)) * vig;
+  vec3  col = BG + (1.0 - exp(-acc * 2.8)) * vig;
 
   // ~1-LSB hash dither breaks 8-bit banding in the broad soft gradients
   col += (hash12(fc) - 0.5) * (1.6 / 255.0);

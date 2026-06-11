@@ -120,12 +120,12 @@ void main() {
   // thin lane near the horizon (perspective convergence). Path half-width in uv:
   float nearHalf = (pathW * 0.5) / res.x;               // bottom half-width (uv.x)
   // full width at the bottom (near), converging to a sliver at the horizon
-  float pathHalf = nearHalf * mix(1.0, 0.06, yb);
+  float pathHalf = nearHalf * mix(1.0, 0.11, yb);
   float halfCells = max(pathHalf * aspect, 0.001);
 
   // horizontal cell index across the path; cell size scales so ~same count of
   // glints per row regardless of width (anisotropic, stretched horizontally).
-  float colsPerRow = 11.0;                              // glints across the lane
+  float colsPerRow = 16.0;                              // glints across the lane (denser)
   float u2 = (uv.x - colX) * aspect;                    // centred, aspect-corrected
   float colNorm = u2 / max(halfCells, 1e-3);            // -1..1 inside the lane
   float colCoord = (colNorm * 0.5 + 0.5) * colsPerRow;  // 0..colsPerRow
@@ -177,7 +177,8 @@ void main() {
               + swell * 1.6;                            // swell modulates phase
   // raised-sine envelope that passes through 0 each cycle (hides repositioning)
   float flick = sin(phase) * 0.5 + 0.5;
-  flick = smoothstep(0.0, 1.0, flick);                  // ease, but still reach 0
+  flick = smoothstep(0.0, 1.0, flick);                  // ease
+  flick = 0.32 + 0.68 * flick;                          // floor so glints never fully vanish
 
   // brightness fades with depth a touch (far glints fainter) but horizon stays
   // dense so it still reads as a band
@@ -210,9 +211,9 @@ void main() {
   col += moonHue * bgSwell * 0.012 * waterMask * (1.0 - insideLane * 0.6);
 
   // ---- composite glints ----------------------------------------------------
-  col += glintCol * glint * 2.3;
+  col += glintCol * glint * 2.7;
   // a soft bloom under each bright glint
-  col += glintCol * exp(-gd * 0.5) * flick * insideLane * waterMask * depthFade * 0.28;
+  col += glintCol * exp(-gd * 0.5) * flick * insideLane * waterMask * depthFade * 0.36;
 
   // gentle vignette to keep frame edges dark and composed
   vec2  vp = (uv - vec2(0.5, 0.5));

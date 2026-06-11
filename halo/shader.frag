@@ -97,7 +97,11 @@ void main() {
   // own radius so the aperture genuinely hangs high and its whole rim shows.
   // gl_FragCoord.y increases upward, so ADD the lift to push the disc toward the top.
   float lift = baseR * DISC_LIFT_FRAC;
-  vec2 ctr = vec2(res.x * 0.5, res.y * 0.5 + lift);
+  // bias the aperture off-centre (rule-of-thirds) so the composition reads
+  // composed rather than a dead-centred disc — a slow horizontal drift keeps it
+  // alive without ever resetting.
+  float offX = res.x * (0.38 + 0.03 * sin(t * 0.05));
+  vec2 ctr = vec2(offX, res.y * 0.5 + lift);
   vec2 d   = fc - ctr;
   float r  = length(d);
   float ang = atan(d.y, d.x); // -pi..pi

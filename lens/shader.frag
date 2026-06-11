@@ -63,10 +63,19 @@ vec3 background(vec2 uvc, float t, vec3 ca, vec3 cb) {
   float w = fbm(uvc * 2.1 + vec2(t * 0.05, -t * 0.03));
   w = smoothstep(0.45, 0.95, w);
   vec3 tint = mix(ca, cb, g);
-  // keep it faint — wisps and gradient ride just above the dark base
+  // caustic ripple web threaded through the field so the lenses have visible
+  // structure to magnify and smear — the refractive read (vs halo's emissive
+  // aperture) and the texture the benchmark calls for.
+  float warp = fbm(uvc * 1.7 + vec2(-t * 0.04, t * 0.06));
+  float cau = sin((uvc.x * 11.0 + warp * 5.0) - t * 0.18)
+            + sin((uvc.y * 9.5 - uvc.x * 3.0 + warp * 6.0) + t * 0.13);
+  cau = 0.5 + 0.25 * cau;             // 0..1
+  cau = pow(clamp(cau, 0.0, 1.0), 2.4);
+  // keep it faint — wisps, ripples and gradient ride above the dark base
   vec3 col = BG;
-  col += tint * (0.045 + 0.10 * g);   // dim diagonal wash
-  col += tint * w * 0.13;             // dim threaded wisps
+  col += tint * (0.05 + 0.11 * g);    // dim diagonal wash
+  col += tint * w * 0.14;             // dim threaded wisps
+  col += mix(ca, cb, 0.5) * cau * 0.16; // caustic ripple light
   return col;
 }
 
