@@ -3,18 +3,55 @@
   "slug": "wax",
   "family": "Mercury",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "liquid", "metaball", "wax", "rise", "merge"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "liquid",
+    "metaball",
+    "wax",
+    "rise",
+    "merge"
+  ],
   "description": "A lava lamp without the lamp: a dark liquid pool clings to the bottom of the frame while two or three molten wax bodies pinch off it, rise through the column with a bright snap, stall, and reluctantly sink back to be reabsorbed.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_riseSpeed", "label": "Rise speed", "min": 0.1, "max": 1.0, "step": 0.01,
-      "default": 0.3, "effect": "How fast the wax bodies climb, stall, and sink through their loops." },
-    { "uniform": "u_blobSize", "label": "Blob size", "min": 50.0, "max": 160.0, "step": 1.0,
-      "default": 95.0, "effect": "Radius of the rising wax bodies in css pixels." },
-    { "uniform": "u_poolDepth", "label": "Pool depth", "min": 0.08, "max": 0.35, "step": 0.01,
-      "default": 0.18, "effect": "Fraction of the frame height filled by the basal pool." },
-    { "uniform": "u_wobble", "label": "Wobble", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "Amplitude of the settling wobble that runs along the pool crest after each detach and rejoin; at zero the crest stays glassy calm." }
+    {
+      "uniform": "u_riseSpeed",
+      "label": "Rise speed",
+      "min": 0.1,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the wax bodies climb, stall, and sink through their loops."
+    },
+    {
+      "uniform": "u_blobSize",
+      "label": "Blob size",
+      "min": 50.0,
+      "max": 160.0,
+      "step": 1.0,
+      "default": 95.0,
+      "effect": "Radius of the rising wax bodies in css pixels."
+    },
+    {
+      "uniform": "u_poolDepth",
+      "label": "Pool depth",
+      "min": 0.08,
+      "max": 0.35,
+      "step": 0.01,
+      "default": 0.18,
+      "effect": "Fraction of the frame height filled by the basal pool."
+    },
+    {
+      "uniform": "u_wobble",
+      "label": "Wobble",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Amplitude of the settling wobble that runs along the pool crest after each detach and rejoin; at zero the crest stays glassy calm."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "ember"
 }

@@ -3,7 +3,16 @@
   "slug": "solder",
   "family": "Mercury",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "liquid", "metaball", "merge", "molten", "seam"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "liquid",
+    "metaball",
+    "merge",
+    "molten",
+    "seam"
+  ],
   "description": "Four molten beads ride a gently bowed weld seam, summed and smooth-min iso-surfaced so neighbours bulge, neck, and wick into longer liquid slugs. Merges propagate left-to-right down the line like solder drawn by heat, the slug reluctantly re-pinches back into four beads, and the peristaltic round repeats phase-continuously. Bead hue blends from colour 0 at the left to colour 1 at the right with a cool colour-2 sheen on each bead's upper edge.",
   "entry": "shader.frag",
   "params": [
@@ -44,5 +53,5 @@
       "effect": "Strength of the cool interior sheen on each bead's upper edge; at zero the beads read as pure dark mirror."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "sodium"
 }

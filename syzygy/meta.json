@@ -3,14 +3,55 @@
   "slug": "syzygy",
   "family": "Mercury",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "liquid", "metaball", "merge", "alignment", "organic"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "liquid",
+    "metaball",
+    "merge",
+    "alignment",
+    "organic"
+  ],
   "description": "Three quicksilver pools in a strict 3:2:1 radius grading hang far apart across a wide, slowly shearing triangle. Built as a summed 2D metaball field iso-surfaced through smooth-min, bodies bulge toward each other, neck, snap into a lopsided peanut, then pinch reluctantly back to distance. Once per grand cycle all three thread into a single elongated body — the full syzygy — before pinching back to three. Each pool owns one palette colour in its rim; fusions blend the hue and flash colour 3.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_spread", "label": "Spread", "min": 140.0, "max": 420.0, "step": 1.0, "default": 340.0, "effect": "Overall scale of the three pools' triangle in css pixels; the high default keeps the resting state reading as a spread constellation." },
-    { "uniform": "u_tempo", "label": "Tempo", "min": 0.1, "max": 1.2, "step": 0.01, "default": 0.4, "effect": "How fast the pairwise cycles run and how often the full syzygy comes around." },
-    { "uniform": "u_rimWidth", "label": "Rim width", "min": 1.0, "max": 6.0, "step": 0.05, "default": 2.0, "effect": "Thickness of the bright rim highlight in css pixels, from hairline mirror edge to soft halo." },
-    { "uniform": "u_flashStrength", "label": "Flash strength", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.1, "effect": "Brightness of the colour-3 snap at every fusion and pinch; at zero alignments pass without fanfare." }
+    {
+      "uniform": "u_spread",
+      "label": "Spread",
+      "min": 140.0,
+      "max": 420.0,
+      "step": 1.0,
+      "default": 340.0,
+      "effect": "Overall scale of the three pools' triangle in css pixels; the high default keeps the resting state reading as a spread constellation."
+    },
+    {
+      "uniform": "u_tempo",
+      "label": "Tempo",
+      "min": 0.1,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "How fast the pairwise cycles run and how often the full syzygy comes around."
+    },
+    {
+      "uniform": "u_rimWidth",
+      "label": "Rim width",
+      "min": 1.0,
+      "max": 6.0,
+      "step": 0.05,
+      "default": 2.0,
+      "effect": "Thickness of the bright rim highlight in css pixels, from hairline mirror edge to soft halo."
+    },
+    {
+      "uniform": "u_flashStrength",
+      "label": "Flash strength",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.1,
+      "effect": "Brightness of the colour-3 snap at every fusion and pinch; at zero alignments pass without fanfare."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "peacock"
 }

@@ -3,7 +3,16 @@
   "slug": "mitosis",
   "family": "Mercury",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "liquid", "metaball", "division", "merge", "organic"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "liquid",
+    "metaball",
+    "division",
+    "merge",
+    "organic"
+  ],
   "description": "A single dark-liquid cell divides: it necks and snaps into two mirror daughters along one axis, each splitting again along the perpendicular axis into an exact equal-spaced 2x2 quad, then the cascade runs in reverse and all the liquid fuses back to one body — forever, on a palindromic eased phase.",
   "entry": "shader.frag",
   "params": [
@@ -35,5 +44,5 @@
       "effect": "Amplitude of the damped ringing after each snap; at zero divisions land without aftershock."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "mint"
 }

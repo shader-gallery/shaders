@@ -3,7 +3,16 @@
   "slug": "amalgam",
   "family": "Mercury",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "liquid", "metaball", "merge", "mercury", "organic"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "liquid",
+    "metaball",
+    "merge",
+    "mercury",
+    "organic"
+  ],
   "description": "Two quicksilver pools hang in open darkness, drift to apogee, swing back in a slow magnetic approach, snap together in a hot bloom at the neck, ring with a damped elliptical wobble, then reluctantly pinch apart — one phase-continuous round of fusion and loss.",
   "entry": "shader.frag",
   "params": [
@@ -44,5 +53,5 @@
       "effect": "Intensity of the bright snap at the neck at fusion and pinch-apart; at zero the topology still changes, just without the flash."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "coral"
 }

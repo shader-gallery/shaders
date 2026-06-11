@@ -135,18 +135,31 @@ void main() {
   float aa = 1.5;
   float body = smoothstep(aa, -aa, d);
 
-  // interior: near-black liquid mirror with a faint cool sheen + depth falloff
+  // interior: a translucent living cytoplasm — tinted membrane fill with a cool
+  // sheen and a depth glow pooling inward, so each daughter reads as a filled
+  // cell rather than an empty outline.
   float yrel = pc.y / max(S, 1.0);
   float sheen = smoothstep(0.9, -1.1, yrel);
   float inner = exp(min(d, 0.0) / (0.20 * S));
-  vec3 interior = bg * 0.82 + c2 * (0.05 * sheen + 0.05 * inner * sheen + 0.012);
+  vec3 interior = bg * 0.78
+                + hue * (0.10 + 0.14 * inner)
+                + c2 * (0.07 * sheen + 0.06 * inner * sheen + 0.02);
   col = mix(col, interior, body);
 
-  // thin bright gradient-derived rim, lit from upper-left — the brightest element
+  // nucleus: a bright condensed core glowing at every kernel centre — the
+  // genetic material the division is actually moving. Concentrated cubes of the
+  // per-kernel falloffs keep it tight at the centres, gated to the cell body.
+  float nuc = e0*e0*e0 + e1*e1*e1 + e2*e2*e2 + e3*e3*e3;
+  vec3  nucCol = mix(hue, vec3(0.95, 0.97, 1.0), 0.35);
+  col += nucCol * nuc * body * 0.55;
+  // faint chromatin halo around each nucleus
+  col += hue * (e0*e0 + e1*e1 + e2*e2 + e3*e3) * body * 0.10;
+
+  // thin bright gradient-derived rim (membrane), lit from upper-left
   float lightAmt = max(dot(n, normalize(vec2(-0.40, 0.88))), 0.0);
   float specW = 0.28 + 0.72 * lightAmt * lightAmt;
   float rim = exp(-(d * d) / (2.5 * 2.5));
-  col += hue * rim * specW * 1.25;
+  col += hue * rim * specW * 1.45;
 
   // soft halo so the surrounding dark breathes
   float halo = exp(-max(d, 0.0) / (0.32 * S)) * (1.0 - body);
