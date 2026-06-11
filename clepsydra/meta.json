@@ -1,0 +1,38 @@
+{
+  "name": "Clepsydra",
+  "slug": "clepsydra",
+  "family": "Trace",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "water", "drops", "clock", "ripples"],
+  "description": "A water clock rendered in light: a glowing drop detaches from a spout on an exact beat and falls with gravity easing into a faint etched vessel, where a luminous pool flashes a splash ring at each impact and climbs drop by drop — then a smooth siphon draws the level down to nearly empty and the cycle begins again, the drain itself the clock's chime.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dropRate", "label": "Drop rate", "min": 0.3, "max": 3.0, "step": 0.05, "default": 1.0,
+      "effect": "Drops per second — slow settings feel like a patient temple clock with long dark pauses, fast settings become a glittering trickle." },
+    { "uniform": "u_fillPeriod", "label": "Fill period", "min": 10.0, "max": 60.0, "step": 1.0, "default": 24.0,
+      "effect": "Seconds for one full rise-and-siphon cycle — how slowly the pool level climbs and how often the draining chime arrives." },
+    { "uniform": "u_vessel", "label": "Vessel width", "min": 200.0, "max": 640.0, "step": 1.0, "default": 380.0,
+      "effect": "Width of the vessel in CSS pixels, from a narrow column of caught light to a broad shallow basin spanning most of the frame." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

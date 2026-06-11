@@ -1,0 +1,38 @@
+{
+  "name": "Curdle",
+  "slug": "curdle",
+  "family": "Gyre",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "ink", "tendrils", "flow", "episodic"],
+  "description": "A pale drop falls into dark tea: a bright blob blooms at a hashed position, then its crisp boundary is stretched and folded by accumulating curl-noise warp, winding into high-contrast filament tendrils that coil back into themselves before dissolving to ghost threads on near-black. Two drops run on staggered half-cycle phases so the frame is never empty.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dropPeriod", "label": "Drop period", "min": 6.0, "max": 40.0, "step": 1.0, "default": 16.0,
+      "effect": "Seconds per drop life cycle — short keeps lively overlapping blooms, long lets each drop wind out in near-stillness." },
+    { "uniform": "u_fold", "label": "Fold strength", "min": 0.2, "max": 2.5, "step": 0.05, "default": 1.4,
+      "effect": "Strength of the accumulated warp — low drops merely wobble and fade, high ones shred into tightly coiled tendrils." },
+    { "uniform": "u_dropSize", "label": "Drop size", "min": 60.0, "max": 400.0, "step": 1.0, "default": 220.0,
+      "effect": "CSS-pixel radius of a fresh drop, setting the scale of everything its tendrils become." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

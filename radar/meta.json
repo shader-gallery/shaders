@@ -1,0 +1,25 @@
+{
+  "name": "Radar",
+  "slug": "radar",
+  "family": "Trace",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "radar", "waterfall", "scroll", "blips"],
+  "description": "A bearing/time radar waterfall: the newest return is written along the top edge and the whole record feeds slowly downward like chart paper. Persistent contacts stack into luminous streaks that snake left and right as they descend and cool through the palette, while faint clutter dissolves into grain between hair-thin vertical bearing rulings.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_feedSpeed", "label": "Feed speed", "min": 0.2, "max": 2.0, "step": 0.05,
+      "default": 0.7, "effect": "Rate the record scrolls downward — slow settings hold contacts on screen like patient surveillance, fast settings stream the history past like rushing chart paper." },
+    { "uniform": "u_persist", "label": "Persistence", "min": 0.1, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "How far down the record contact streaks survive before fading into the dark — bright only near the write line at min, luminous trails reaching nearly the bottom edge at max." },
+    { "uniform": "u_blip", "label": "Blip width", "min": 4.0, "max": 18.0, "step": 0.5,
+      "default": 8.0, "effect": "Width of contact returns in CSS pixels, from hairline etched threads to soft prominent ribbons." },
+    { "uniform": "u_ruling", "label": "Ruling gap", "min": 60.0, "max": 200.0, "step": 1.0,
+      "default": 110.0, "effect": "Distance between the faint vertical bearing rulings in CSS pixels, setting how finely the record is graduated." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

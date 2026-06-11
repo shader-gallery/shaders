@@ -1,0 +1,25 @@
+{
+  "name": "Mandala",
+  "slug": "mandala",
+  "family": "Rosette",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "radial", "petals", "metamorphosis", "ornament"],
+  "description": "A single centred mandala of nested polar petal rings, drawn as thin luminous strokes over near-black. Every ring's petals slowly remold among teardrop, almond, trefoil, and thorn silhouettes on an unbounded per-ring phase — the ornament is always mid-transformation, never spinning, never repeating.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_morphSpeed", "label": "Morph speed", "min": 0.02, "max": 0.5, "step": 0.01,
+      "default": 0.1, "effect": "Rate of the petal metamorphosis; at minimum a petal takes most of a minute to remold from one archetype to the next, at maximum the ornament visibly melts between forms." },
+    { "uniform": "u_petals", "label": "Petals", "min": 5.0, "max": 12.0, "step": 1.0,
+      "default": 8.0, "effect": "Petal count of the innermost ring (outer rings scale up proportionally); higher reads lacier, lower bolder." },
+    { "uniform": "u_spacing", "label": "Ring spacing", "min": 50.0, "max": 140.0, "step": 1.0,
+      "default": 88.0, "effect": "Radial distance between petal rings in CSS px; smaller packs many fine rings into the frame, larger yields a few bold rings with bigger petals." },
+    { "uniform": "u_breath", "label": "Breath", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.3, "effect": "Amplitude of the slow radial breathing of each ring; 0 pins the rings perfectly still (petal morphing alone carries the motion), 1 lets rings visibly swell and relax against their neighbours." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

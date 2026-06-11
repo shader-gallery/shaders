@@ -1,0 +1,23 @@
+{
+  "name": "Gloaming",
+  "slug": "gloaming",
+  "family": "Abyss",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "sky", "stars", "gradient", "slow"],
+  "description": "Blue hour deepening to night across the whole frame: a warm-to-indigo horizon glow fades and cools as fixed stars blink on one by one, until full night holds and a faint dawn tint rises to rinse them away. One imperceptibly slow closed colour cycle; nothing translates, all motion is luminance and hue.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cyclePeriod", "label": "Cycle period", "min": 20.0, "max": 600.0, "step": 1.0,
+      "default": 180.0, "effect": "Seconds per full dusk-to-dusk cycle; short values make the day breathe visibly, long values make the change subliminal." },
+    { "uniform": "u_glowHeight", "label": "Glow height", "min": 60.0, "max": 500.0, "step": 1.0,
+      "default": 200.0, "effect": "Vertical extent of the horizon glow band in CSS pixels, from a thin distant rim of light to a tall luminous haze." },
+    { "uniform": "u_starDensity", "label": "Star density", "min": 0.15, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "How many stars blink on as night deepens, from a handful of lone points to a crowded night sky." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

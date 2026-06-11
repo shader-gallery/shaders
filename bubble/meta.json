@@ -1,0 +1,36 @@
+{
+  "name": "Bubble",
+  "slug": "bubble",
+  "family": "Bloom",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "rings", "rising", "pop"],
+  "description": "Sparse thin glassy ring outlines rise through open darkness, growing slightly as they climb and carrying a single brighter highlight arc that suggests curved glass. At a hash-determined height each bubble pops — a quick expanding flash that dissolves into a soft fading glow — before re-seeding below the frame. Only the outlines and pop flashes emit light; interiors stay near-black.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_riseSpeed", "label": "Rise speed", "min": 0.1, "max": 1.5, "step": 0.01, "default": 0.5, "effect": "Climb rate of every bubble; pop events arrive proportionally more often as it increases." },
+    { "uniform": "u_size", "label": "Bubble size", "min": 12.0, "max": 70.0, "step": 1.0, "default": 30.0, "effect": "Base ring radius in CSS pixels at launch; rings grow about 30% beyond this by pop height." },
+    { "uniform": "u_waver", "label": "Waver", "min": 0.0, "max": 60.0, "step": 1.0, "default": 18.0, "effect": "Horizontal waver amplitude of each rise path in CSS pixels — 0 rises dead straight, 60 weaves drunkenly." },
+    { "uniform": "u_popFlash", "label": "Pop flash", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0, "effect": "Brightness and spread of the pop burst — 0 makes bubbles silently dissolve, 2 gives bright soft detonations." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

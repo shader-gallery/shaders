@@ -1,0 +1,25 @@
+{
+  "name": "Nerve",
+  "slug": "nerve",
+  "family": "Omen",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "neural", "cascade", "pulse", "organic"],
+  "description": "A living neural culture: dim nuclei seeded blue-noise across a near-black dish. Excitation waves start at hash-random cells and roll node-to-node as curved wavefronts of point-flashes, each fired cell blooming in a position-keyed hue then slumping into a darker-than-rest refractory shadow. No lines are ever drawn — the wiring is invisible and the light hops cell to cell.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_fireRate", "label": "Fire rate", "min": 0.1, "max": 1.0, "step": 0.01,
+      "default": 0.35, "effect": "How often new excitation waves start; min leaves long quiet spells between cascades, max keeps several wavefronts crossing the dish at once." },
+    { "uniform": "u_spreadSpeed", "label": "Spread speed", "min": 0.05, "max": 1.0, "step": 0.01,
+      "default": 0.3, "effect": "Propagation rate of the cell-to-cell cascade; min takes most of a minute to cross the frame, max a few seconds." },
+    { "uniform": "u_spacing", "label": "Cell spacing", "min": 24, "max": 120, "step": 1,
+      "default": 56, "effect": "Characteristic spacing of the cell bodies in CSS pixels — small seeds a dense fine-grained culture, large a sparse field of bold nuclei." },
+    { "uniform": "u_afterglow", "label": "Afterglow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.45, "effect": "How long each fired cell's ember and refractory shadow linger behind the wavefront; 0 snaps cells straight back to rest, 1 leaves long cooling wakes." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

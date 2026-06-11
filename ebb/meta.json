@@ -1,0 +1,23 @@
+{
+  "name": "Ebb",
+  "slug": "ebb",
+  "family": "Wake",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "water", "tide", "pools", "organic"],
+  "description": "A falling tide leaves a scatter of glowing pools stranded across dark wet sand, each a mirror-bright fill rimmed by a thin meniscus. Over a long cycle the tide retreats and pools drain one by one, until a single luminous up-sweep rolls through and refills them all at once.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cycleSpeed", "label": "Cycle speed", "min": 0.1, "max": 1.5, "step": 0.05,
+      "default": 0.4, "effect": "Rate of the whole retreat-and-refill cycle; higher values shorten the long ebb and bring the refill sweep around sooner." },
+    { "uniform": "u_poolSize", "label": "Pool size", "min": 20.0, "max": 120.0, "step": 1.0,
+      "default": 55.0, "effect": "Characteristic CSS-pixel radius of the stranded pools; larger pools merge into ragged connected shallows." },
+    { "uniform": "u_drainStagger", "label": "Drain stagger", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "Spread of per-pool drain timing: 0 dims every pool in unison, 1 strings them out one by one across the ebb." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

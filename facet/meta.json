@@ -1,0 +1,23 @@
+{
+  "name": "Facet",
+  "slug": "facet",
+  "family": "Rosette",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "symmetry", "organic", "jewel"],
+  "description": "A kaleidoscope jewel: the angle around centre is mirror-folded into N wedges and a slowly drifting FBM glow field is sampled in the folded space, producing soft luminous lobes with perfect n-fold symmetry, brightest where mirrored features kiss along the seams and fading into a near-black vignette toward the corners.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_folds", "label": "Folds", "min": 4, "max": 12, "step": 1,
+      "default": 8, "effect": "Number of mirror wedges in the kaleidoscope; low values give broad cathedral-like sectors, high values a tight snowflake." },
+    { "uniform": "u_drift", "label": "Drift", "min": 0.05, "max": 0.8, "step": 0.01,
+      "default": 0.22, "effect": "Speed the source glow field slides beneath the folds — directly sets how fast features merge and split at the seams." },
+    { "uniform": "u_feature", "label": "Feature size", "min": 140, "max": 440, "step": 1,
+      "default": 320, "effect": "Characteristic blob size of the FBM field in CSS px; small makes intricate fractured detail, large makes broad soft lobes." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

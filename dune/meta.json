@@ -1,0 +1,23 @@
+{
+  "name": "Dune",
+  "slug": "dune",
+  "family": "Strata",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "dunes", "terrain", "organic", "drift"],
+  "description": "A sand sea from directly above at night: long sinuous crest lines lit asymmetrically, a bright moonlit windward face falling off into a short dark slip face. The whole ridge system translates and reshapes downwind with geological patience.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_wind", "label": "Wind", "min": 0.0, "max": 0.6, "step": 0.01,
+      "default": 0.12, "effect": "Downwind transport and reshaping rate of the ridge system; 0 becalms the sand entirely." },
+    { "uniform": "u_spacing", "label": "Crest spacing", "min": 60.0, "max": 320.0, "step": 1.0,
+      "default": 150.0, "effect": "Ridge wavelength in CSS pixels, from fine ripple sand to vast widely-spaced draa." },
+    { "uniform": "u_relief", "label": "Relief", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Asymmetry strength between lit and slip faces; low flattens crests to faint lines, high cuts deep moonlit relief." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

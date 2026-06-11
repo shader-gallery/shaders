@@ -1,0 +1,23 @@
+{
+  "name": "Brine",
+  "slug": "brine",
+  "family": "Shoal",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "ice", "water", "crystal", "vertical"],
+  "description": "A brinicle: an icy finger of descending supercold brine hangs off-centre from the top, a faceted translucent column glinting and breathing frost feathers, ending above a faintly glowing frosted patch of seabed in near-black still water.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_streamSpeed", "label": "Stream speed", "min": 0.0, "max": 1.5, "step": 0.05,
+      "default": 0.4, "effect": "Rate of the downward interior shimmer and the sinking wisp, pacing the facet glints along the column." },
+    { "uniform": "u_column", "label": "Column width", "min": 24.0, "max": 140.0, "step": 1.0,
+      "default": 64.0, "effect": "CSS-pixel width of the icy column, from a delicate hanging needle to a thick frozen pillar." },
+    { "uniform": "u_feather", "label": "Frost feathers", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "Extent of the frost feathers fanning from the column's flanks — 0 leaves a bare glassy finger, 2 grows wide lacy crystalline fans." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

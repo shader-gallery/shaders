@@ -1,0 +1,25 @@
+{
+  "name": "Neon",
+  "slug": "neon",
+  "family": "Noir",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "neon", "flicker", "city", "minimal"],
+  "description": "A single elegant neon tube hangs centered on a near-black wall, white-hot core in a wide coloured halo with a dim splash on the wall behind. It stutters to life, hums steady, falters once, relaxes dark, then re-ignites in the next palette colour over a four-cycle loop.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cyclePeriod", "label": "Cycle period", "min": 4.0, "max": 30.0, "step": 1.0,
+      "default": 12.0, "effect": "Duration in seconds of one ignite-hum-falter-dark cycle; short feels like a faulty sign, long like patient breathing signage." },
+    { "uniform": "u_flicker", "label": "Flicker", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "Raggedness of the startup stutter and the mid-hum falter; 0 fades smoothly like a dimmer, 1 sputters violently before catching." },
+    { "uniform": "u_tubeWidth", "label": "Tube width", "min": 2.0, "max": 10.0, "step": 0.05,
+      "default": 4.0, "effect": "Thickness in CSS pixels of the neon tube's hot core." },
+    { "uniform": "u_halo", "label": "Halo", "min": 10.0, "max": 120.0, "step": 1.0,
+      "default": 50.0, "effect": "Radius in CSS pixels of the coloured glow around the tube and its wall splash, from a tight line of light to a room-filling aura." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Lissajous",
+  "slug": "lissajous",
+  "family": "Trace",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "oscilloscope", "phosphor", "curve", "resonance"],
+  "description": "A single bright phosphor dot traces a Lissajous figure on a near-black oscilloscope screen, trailing a tail of dimmer, wider samples. The frequency ratio drifts on a slow ~60s super-cycle, smearing into a woven knot then snapping into a simple resonance that holds steady before drifting on.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_traceSpeed", "label": "Trace speed", "min": 0.2, "max": 3.0, "step": 0.05,
+      "default": 1.0, "effect": "Multiplies how fast the dot travels around the figure; high reads as a near-solid drawn curve, low as a lone wandering spark." },
+    { "uniform": "u_persist", "label": "Persistence", "min": 0.1, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "How far back along the path the tail reaches before fading out — a short comet at min, almost the whole closed figure in afterglow at max." },
+    { "uniform": "u_figure", "label": "Figure size", "min": 240.0, "max": 900.0, "step": 1.0,
+      "default": 520.0, "effect": "Half-extent of the Lissajous bounding box in CSS pixels, scaling the whole figure from a small centred emblem to nearly full-bleed." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

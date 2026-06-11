@@ -1,0 +1,23 @@
+{
+  "name": "Escapement",
+  "slug": "escapement",
+  "family": "Trace",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "gears", "ticks", "clockwork", "rings"],
+  "description": "Concentric toothed rings — the wheel train of a pocket watch seen face-on — advance in discrete ticks rather than smooth rotation, faster inner wheels shimmering while the outer turns with slow gravity. At a fixed pallet point on each ring the engaging tooth flares at the instant of the tick, its phosphor afterglow decaying until the next step. The gallery's only strictly stepped, discontinuous tempo.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_tickRate", "label": "Tick rate", "min": 0.5, "max": 4.0, "step": 0.05,
+      "default": 1.0, "effect": "Ticks per second on the driving wheel; slow settings feel like a longcase clock, fast settings like a watch balance buzzing." },
+    { "uniform": "u_ringGap", "label": "Ring gap", "min": 50.0, "max": 160.0, "step": 1.0,
+      "default": 62.0, "effect": "Radial gap between toothed rings in CSS pixels, trading a dense nested gear-train for a few large airy wheels." },
+    { "uniform": "u_snap", "label": "Snap", "min": 0.1, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Sharpness of the step easing — near min the rings ooze between teeth almost smoothly, near max they hold dead still and snap instantaneously with a brighter tick flare." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Wisp",
+  "slug": "wisp",
+  "family": "Bloom",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "organic", "flame", "wander"],
+  "description": "Two or three pale teardrop flames wander weightlessly over dark marsh water, their FBM-flickered bodies dragging thin fading filaments that trace the quasi-periodic path each one just travelled. A barely-there mist band breathes along the bottom edge; each flame carries a slightly different cool palette tint and the composite never visibly repeats.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_wanderSpeed",
+      "label": "Wander speed",
+      "min": 0.1,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "How quickly the flames travel their meandering paths; pauses and swerves compress or stretch with it."
+    },
+    {
+      "uniform": "u_flameSize",
+      "label": "Flame size",
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "default": 45,
+      "effect": "Height of each teardrop flame in CSS pixels; width and halo scale proportionally."
+    },
+    {
+      "uniform": "u_flicker",
+      "label": "Flicker",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Amplitude of the FBM interior flicker; 0 is a calm steady glow, 2 gutters like a flame in wind."
+    },
+    {
+      "uniform": "u_trailLength",
+      "label": "Trail length",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How far back along its path each flame's fading filament reaches; 0 removes the trail entirely, 1 draws a long ghostly thread."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

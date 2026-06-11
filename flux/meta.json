@@ -1,0 +1,53 @@
+{
+  "name": "Flux",
+  "slug": "flux",
+  "family": "Strata",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "fieldlines", "dipole", "arcs", "rainbow"],
+  "description": "Two opposite magnetic poles hang in dark space, each a small soft core, and the analytic 2D dipole stream function is contoured into fine luminous field-line arcs sweeping pole to pole. Arcs compress into dense bright bundles where they dive into each core and relax into wide lazy curves at midfield, hue blending through the palette by arc index from the inner bundle outward. The poles orbit their common centre about once every ninety seconds while a slow contour-phase crawl slides each line along its own length — arcs continuously budding at one flank and absorbed at the other.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_orbitSpeed",
+      "label": "Orbit speed",
+      "min": 0.0,
+      "max": 0.6,
+      "step": 0.01,
+      "default": 0.15,
+      "effect": "Angular speed of the two poles around their common centre; 0 holds the dipole still while the lines keep crawling."
+    },
+    {
+      "uniform": "u_lineCount",
+      "label": "Line count",
+      "min": 8.0,
+      "max": 48.0,
+      "step": 1.0,
+      "default": 24.0,
+      "effect": "Number of contour levels of the stream function — how many arcs span between the poles."
+    },
+    {
+      "uniform": "u_crawl",
+      "label": "Crawl",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Speed lines slide along their own length from pole to pole via the contour phase offset."
+    },
+    {
+      "uniform": "u_lineWidth",
+      "label": "Line width",
+      "min": 0.5,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.1,
+      "effect": "Stroke width of the arcs in CSS pixels; the bundles near the poles brighten as strokes overlap."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

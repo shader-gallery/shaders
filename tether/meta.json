@@ -1,0 +1,23 @@
+{
+  "name": "Tether",
+  "slug": "tether",
+  "family": "Wake",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "water", "sparse", "arcs"],
+  "description": "A handful of mooring lights ride at anchor on black water, each a small glowing buoy with a dim reflection streak, held by one thin tether to its own fixed anchor. An unseen current veers slowly, so every light weathervanes around its anchor in lazy arcs — tethers straightening taut and bright at the moment of turning, then bowing slack again.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_veerSpeed", "label": "Veer speed", "min": 0.05, "max": 1.0, "step": 0.01,
+      "default": 0.25, "effect": "Rate at which the current's heading wanders, and so how briskly the moored lights swing through their arcs." },
+    { "uniform": "u_tetherLength", "label": "Tether length", "min": 40.0, "max": 220.0, "step": 1.0,
+      "default": 110.0, "effect": "CSS-pixel length of each mooring line, setting the radius of the arc its light swings through." },
+    { "uniform": "u_buoyGlow", "label": "Buoy glow", "min": 3.0, "max": 16.0, "step": 0.05,
+      "default": 7.0, "effect": "CSS-pixel radius of each buoy's glow core and its reflection streak's width." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

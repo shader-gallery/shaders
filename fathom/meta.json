@@ -1,0 +1,53 @@
+{
+  "name": "Fathom",
+  "slug": "fathom",
+  "family": "Strata",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "ocean", "depth", "stipple", "halftone"],
+  "description": "A bathymetric survey rendered as soundings, not lines: a fixed grid of small glowing depth dots whose size and brightness fall with the water depth beneath them, so the chart reads as a calm stipple field swallowed by one wandering abyssal void and a couple of lesser deeps. Dot hue slides through the palette with depth; the grid never moves while the hidden trench migrates and the deepest dots shimmer.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_trenchDrift",
+      "label": "Trench drift",
+      "min": 0.0,
+      "max": 0.6,
+      "step": 0.01,
+      "default": 0.15,
+      "effect": "Speed the abyssal trench migrates across the chart, from anchored at 0 to restless wandering at max."
+    },
+    {
+      "uniform": "u_dotSpacing",
+      "label": "Dot spacing",
+      "min": 14,
+      "max": 48,
+      "step": 1,
+      "default": 26,
+      "effect": "Spacing of the survey grid in CSS pixels; tight reads as a fine halftone, wide as sparse lone soundings."
+    },
+    {
+      "uniform": "u_depthFade",
+      "label": "Depth fade",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How strongly dots shrink and dim with depth; 0 lights the whole grid evenly, max lets the deeps swallow dots entirely."
+    },
+    {
+      "uniform": "u_shimmer",
+      "label": "Shimmer",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "default": 0.4,
+      "effect": "Rate the deepest surviving dots flicker at the void's rim; 0 leaves the depths perfectly still."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Sprite",
+  "slug": "sprite",
+  "family": "Omen",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "lightning", "atmospheric", "episodic", "branching"],
+  "description": "Upper-atmosphere sprites over a night horizon: faint violet-to-rose streamers descend from the top edge in rare branching episodes, then dissolve before mid-frame, leaving only a whisper of airglow between events.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_episodeRate", "label": "Episode rate", "min": 0.1, "max": 1.0, "step": 0.01,
+      "default": 0.3, "effect": "How often streamer clusters fire; min leaves long pregnant gaps of quiet sky, max keeps some cluster alight almost continuously." },
+    { "uniform": "u_reach", "label": "Reach", "min": 120.0, "max": 520.0, "step": 1.0,
+      "default": 300.0, "effect": "How far the streamers reach down from the top edge (in CSS pixels) before fully dissolving." },
+    { "uniform": "u_tendrils", "label": "Tendrils", "min": 0.2, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "Number and branching of tendrils per cluster, from two or three lone threads to a dense forking fan." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

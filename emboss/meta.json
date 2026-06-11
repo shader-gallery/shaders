@@ -1,0 +1,23 @@
+{
+  "name": "Emboss",
+  "slug": "emboss",
+  "family": "Burnish",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "metal", "relief", "shading"],
+  "description": "A full field of low-relief medallion bosses — concentric petal ridges shaded against one fixed oblique lamp. Each boss runs its own hash-staggered strike cycle, swelling up from flat metal with a brief glint as the die lands, holding in relief, then subsiding, so shadows deepen and drain across the field while the lamp never moves.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_strikePeriod", "label": "Strike period", "min": 6.0, "max": 40.0, "step": 1.0,
+      "default": 18.0, "effect": "Length in seconds of one medallion's full swell-hold-subside cycle; short keeps the field restless with overlapping strikes, long lets each boss rise and settle like a slow breath." },
+    { "uniform": "u_relief", "label": "Relief", "min": 0.2, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "Apparent depth at full strike — scales the heightfield gradient so shading runs from a whisper of low relief to deep crisp chiaroscuro." },
+    { "uniform": "u_motif", "label": "Motif size", "min": 70.0, "max": 260.0, "step": 1.0,
+      "default": 140.0, "effect": "Size of each embossed medallion in CSS pixels — a field of small studded bosses at the minimum, a few monumental reliefs at the maximum." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

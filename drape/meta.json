@@ -1,0 +1,23 @@
+{
+  "name": "Drape",
+  "slug": "drape",
+  "family": "Veil",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "cloth", "silk", "organic", "rainbow"],
+  "description": "Heavy silk fills the frame in smooth vertical folds, lit with analytic normals so every crest carries a luminous specular sheen while valleys fall to near-black. Crest highlights blend the palette by horizontal position so neighbouring folds glow in different restrained hues, and the cloth sways slowly as if hung at an open window.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_foldWidth", "label": "Fold width", "min": 80.0, "max": 420.0, "step": 1.0,
+      "default": 200.0, "effect": "CSS-pixel width of one silk fold; smaller packs more, narrower folds with tighter highlight ridges, larger gives a few broad cinematic folds." },
+    { "uniform": "u_swaySpeed", "label": "Sway speed", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.5, "effect": "Scales how fast fold positions lean and wrinkles drift, from near-still hanging cloth to a steady draught." },
+    { "uniform": "u_sheen", "label": "Sheen", "min": 0.1, "max": 1.5, "step": 0.01,
+      "default": 0.7, "effect": "Strength and tightness of the specular crest highlights, from matte wool at the low end to liquid silk at the high end." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

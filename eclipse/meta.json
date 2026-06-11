@@ -1,0 +1,25 @@
+{
+  "name": "Eclipse",
+  "slug": "eclipse",
+  "family": "Abyss",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "space", "moon", "slow", "organic"],
+  "description": "A minutes-long lunar eclipse: a softly mottled moon hangs in a near-black starfield while a warm-edged umbral shadow slides across it, smouldering ember-red and graded toward the trailing limb at brief totality before light returns from the opposite limb.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_period", "label": "Eclipse period", "min": 30.0, "max": 360.0, "step": 1.0,
+      "default": 150.0, "effect": "Seconds for the full shadow transit cycle; the whole event compresses to half a minute or stretches to six." },
+    { "uniform": "u_radius", "label": "Moon radius", "min": 70.0, "max": 320.0, "step": 1.0,
+      "default": 160.0, "effect": "Radius of the moon disc in CSS pixels, from a distant small moon to a frame-filling close-up." },
+    { "uniform": "u_ember", "label": "Ember", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "Warm tint strength of the shadowed portion and totality glow, from near-black occlusion to a deep smouldering red disc." },
+    { "uniform": "u_mottle", "label": "Mottle", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "Contrast of the FBM maria texture on the disc, from a smooth porcelain moon to strongly marked dark seas." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

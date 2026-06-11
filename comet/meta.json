@@ -1,0 +1,25 @@
+{
+  "name": "Comet",
+  "slug": "comet",
+  "family": "Abyss",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "space", "trail", "orbit", "minimal"],
+  "description": "A single comet on a long elliptical orbit inside a dark void: a bright nucleus with a tight coma and an ion tail that always streams anti-sunward, flaring long through the fast perihelion whip and shrinking to a stub on the slow aphelion crawl, with a faint dust trail decaying along the recently travelled arc.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_orbitPeriod", "label": "Orbit period", "min": 10.0, "max": 120.0, "step": 1.0,
+      "default": 36.0, "effect": "Seconds per full orbit; short values keep the perihelion whip coming, long values stretch the quiet aphelion crawl." },
+    { "uniform": "u_eccentricity", "label": "Eccentricity", "min": 0.3, "max": 0.9, "step": 0.01,
+      "default": 0.7, "effect": "How stretched the ellipse is: low values give a rounder orbit with gentler pacing, high values an extreme dive-and-whip with a long slow far arc." },
+    { "uniform": "u_tail", "label": "Tail length", "min": 80.0, "max": 700.0, "step": 1.0,
+      "default": 320.0, "effect": "Ion-tail length at perihelion in CSS pixels, from a stubby smudge to a streak spanning much of the frame." },
+    { "uniform": "u_trail", "label": "Dust trail", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.45, "effect": "Persistence of the dust trail along the orbit: 0 leaves no trace behind the nucleus, 1 keeps a faint glowing ghost of nearly the whole ellipse." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

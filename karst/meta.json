@@ -1,0 +1,25 @@
+{
+  "name": "Karst",
+  "slug": "karst",
+  "family": "Strata",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "mountains", "water", "reflection", "silhouette"],
+  "description": "A Li River nocturne: a rank of rim-lit karst-tower silhouettes stands across the frame and hangs mirrored in dark still water, the reflection dimmer and broken by slow ripple shimmer, a breathing mist band veiling the towers' waists as the whole skyline drifts past at a slow boat's pace.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 0.5, "step": 0.01,
+      "default": 0.08, "effect": "Lateral travel speed of the skyline, as if poling slowly downriver; 0 moors the scene." },
+    { "uniform": "u_ripple", "label": "Ripple", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.45, "effect": "Amplitude of the ripple wobble smearing the reflection, from a dead-calm perfect mirror to a restless broken one." },
+    { "uniform": "u_mist", "label": "Mist", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "Density of the mist band crossing the towers' middles and the depth of its slow breathing; 0 clears the air." },
+    { "uniform": "u_spacing", "label": "Tower width", "min": 80.0, "max": 360.0, "step": 1.0,
+      "default": 180.0, "effect": "Width and spacing of the karst towers in CSS pixels, from a dense pinnacle forest to a few grand monoliths." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

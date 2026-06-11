@@ -1,0 +1,36 @@
+{
+  "name": "Nebula",
+  "slug": "nebula",
+  "family": "Abyss",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "space", "clouds", "silhouette", "organic"],
+  "description": "The Pillars of Creation as a backdrop — two or three towering dark gas columns rise from the bottom against a softly glowing emission backdrop whose hue drifts across the palette with height. An unseen star above the frame lights each pillar's tip and edge with a thin photoevaporation rim while faint wisps peel off the crowns and dissolve downwind. Structure-first: dark vertical towers, not an amorphous cloud, with zero points of light.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.3, "effect": "Scales the backdrop billowing and the wisp streaming speed; 0 freezes the scene, high values make the gas visibly flow off the pillar tips." },
+    { "uniform": "u_pillarWidth", "label": "Pillar width", "min": 60.0, "max": 360.0, "step": 1.0, "default": 150.0, "effect": "Base width of the dark columns in CSS pixels, from slender spires to massive trunks filling the lower frame." },
+    { "uniform": "u_rim", "label": "Rim", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6, "effect": "Brightness of the photoevaporation rim on tips and lit edges, from plain unlit silhouettes to fiercely lit crowns." },
+    { "uniform": "u_erosion", "label": "Erosion", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5, "effect": "FBM raggedness of the pillar silhouettes, from clean smooth columns to deeply gnawed, wispy-edged towers." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

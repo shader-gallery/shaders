@@ -1,0 +1,23 @@
+{
+  "name": "Caustic",
+  "slug": "caustic",
+  "family": "Shoal",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "caustics", "web", "water", "organic"],
+  "description": "The pool-bottom light net: two jittered Voronoi cell layers multiply into a sharp filament web with hot knots where lines cross, on near-black ground. The layers shear and each cell's jitter point orbits slowly, so the net fattens, thins and rewires continuously while the four palette colours read as regional tints.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_shearSpeed", "label": "Shear speed", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.3, "effect": "Relative drift rate between the two cell layers — how fast the light net rewires itself." },
+    { "uniform": "u_cellCss", "label": "Cell size", "min": 70.0, "max": 340.0, "step": 1.0,
+      "default": 160.0, "effect": "CSS-pixel size of the web's cells, from a fine dense mesh to a few large open loops." },
+    { "uniform": "u_filament", "label": "Filament sharpness", "min": 0.5, "max": 4.0, "step": 0.05,
+      "default": 2.0, "effect": "Sharpness exponent on the ridge falloff — high gives crisp hairline filaments, low gives fat soft strands of light." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

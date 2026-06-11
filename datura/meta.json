@@ -1,0 +1,25 @@
+{
+  "name": "Datura",
+  "slug": "datura",
+  "family": "Rosette",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "flower", "hanging", "sway", "night"],
+  "description": "Angel's-trumpet datura at night: two or three pendant trumpet blooms hang from an unseen branch along the top edge, glowing corolla outlines over faint translucent membranes, each long bell tapering to a five-pointed flared rim with a warm pool of light in its throat. The blooms sway on their own slow eased pendulums while throat glows breathe and fine pollen motes drift upward through the dark.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_sway", "label": "Sway", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.4, "effect": "Pendulum amplitude of the hanging blooms; 0 hangs them dead still so throat breathing and rising motes carry the motion, 1 swings them in slow visible arcs." },
+    { "uniform": "u_breezeSpeed", "label": "Breeze speed", "min": 0.05, "max": 0.5, "step": 0.01,
+      "default": 0.15, "effect": "Rate of the sway pendulums and their noise gusts; minimum is a barely-felt night stillness, maximum a restless evening wind." },
+    { "uniform": "u_bloomLen", "label": "Bloom length", "min": 180.0, "max": 480.0, "step": 1.0,
+      "default": 300.0, "effect": "Length of each trumpet bloom in CSS px from branch to flared rim; sets how far the bells reach down into the frame." },
+    { "uniform": "u_blooms", "label": "Blooms", "min": 1.0, "max": 5.0, "step": 1.0,
+      "default": 3.0, "effect": "Number of hanging blooms along the top edge; one reads as a lone night flower, five as a laden branch." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

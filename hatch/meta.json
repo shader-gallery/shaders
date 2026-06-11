@@ -1,0 +1,23 @@
+{
+  "name": "Hatch",
+  "slug": "hatch",
+  "family": "Burnish",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "etched", "crosshatch", "smoke", "organic"],
+  "description": "A full-bleed crosshatch engraving whose line weight is carved by an invisible drifting FBM plume, so density alone reads as the tonal shading of smoke that is never drawn. The hatching never moves; a low raking light precesses across the static engraving like a coin tilted under lamplight.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.35, "effect": "Speed of the invisible plume's drift through the hatching; 0 holds a frozen still-life of shading, 2 sends the ghost form billowing visibly across the frame." },
+    { "uniform": "u_spacing", "label": "Hatch gap", "min": 3.0, "max": 14.0, "step": 1.0,
+      "default": 7.0, "effect": "Distance between hatch lines in CSS pixels — dense plate-engraving texture at the minimum, open sketchy strokes at the maximum." },
+    { "uniform": "u_ink", "label": "Ink", "min": 0.2, "max": 1.5, "step": 0.01,
+      "default": 0.8, "effect": "How strongly the ghost field modulates line weight; low yields near-uniform faint hatching, high carves deep chiaroscuro with bare paper-dark highlights and heavy black masses." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

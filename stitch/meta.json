@@ -1,0 +1,36 @@
+{
+  "name": "Stitch",
+  "slug": "stitch",
+  "family": "Loom",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "embroidery", "cross-stitch", "sampler", "handmade"],
+  "description": "Tiny glowing cross-stitches are planted one cell at a time by a bright needle glint working back and forth across a band of the frame. Each completed row carries a hashed folk-sampler motif tinted from one palette colour; the finished cloth drifts slowly up-frame and dims into the dark, like work receding into memory.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_sewSpeed", "label": "Sew speed", "min": 0.2, "max": 2.0, "step": 0.05, "default": 0.6, "effect": "Scales the needle's travel and stitch-planting rate, with the fabric scroll keeping pace; low is patient row-by-row needlework, high a brisk clatter of filling rows." },
+    { "uniform": "u_stitchCss", "label": "Stitch size", "min": 6.0, "max": 24.0, "step": 1.0, "default": 12.0, "effect": "Cell size of the cross-stitch grid in CSS px; small reads as fine dense tapestry bands, large as bold chunky folk stitches." },
+    { "uniform": "u_rows", "label": "Lit rows", "min": 4.0, "max": 24.0, "step": 1.0, "default": 10.0, "effect": "How many completed rows stay lit above the needle before dimming away; few keeps a narrow luminous band in mostly dark cloth, many fills most of the frame with banded embroidery." },
+    { "uniform": "u_complexity", "label": "Sampler complexity", "min": 1.0, "max": 8.0, "step": 1.0, "default": 4.0, "effect": "Biases the hashed per-row band patterns; low keeps simple running stripes and zigzags, high works dense diamond, check, and bordered medallion samplers." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

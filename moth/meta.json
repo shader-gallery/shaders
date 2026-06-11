@@ -1,0 +1,25 @@
+{
+  "name": "Moth",
+  "slug": "moth",
+  "family": "Omen",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "silhouette", "window", "organic", "occlusion"],
+  "description": "A lit window at night: one broad arch-shouldered pane of soft warm light stands off-centre on a near-black field while dark moth silhouettes crawl, perch, and flit against the glass — everything bright is static, everything that moves is darkness.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_moths", "label": "Moths", "min": 1, "max": 7, "step": 1,
+      "default": 4, "effect": "Number of silhouettes at the window, from a single lonely visitor to a busy pane of seven." },
+    { "uniform": "u_wanderSpeed", "label": "Wander speed", "min": 0.1, "max": 1.2, "step": 0.05,
+      "default": 0.4, "effect": "Pace of the crawling, perching, and flitting traffic across the glass; min is sleepy, max agitated." },
+    { "uniform": "u_window", "label": "Window width", "min": 160, "max": 560, "step": 1,
+      "default": 300, "effect": "Width of the lit pane in CSS pixels, setting both the bright region and the arena the moths inhabit." },
+    { "uniform": "u_flutter", "label": "Flutter", "min": 0.2, "max": 2, "step": 0.05,
+      "default": 1, "effect": "Wing-beat speed of the silhouettes; low values glide, high values shiver." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

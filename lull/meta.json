@@ -1,0 +1,35 @@
+{
+  "name": "Lull",
+  "slug": "lull",
+  "family": "Wake",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "water", "minimal", "ambient", "slow"],
+  "description": "A faint static seascape — dim horizontal bands of dark water layered toward a barely-visible horizon, salted with a few sparse glints, rendered just above the threshold of visibility. Nothing within the scene moves; the entire field rides at anchor in a slow coupled sway-and-heave while a broad brightness tilt rocks across the frame in counterphase, like lamplight shifting across a deck.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_rockSpeed", "label": "Rock speed", "min": 0.02, "max": 0.5, "step": 0.01, "default": 0.08, "effect": "Rate of the whole-field rocking; even at maximum it stays slow, at minimum it is almost subliminal." },
+    { "uniform": "u_sway", "label": "Sway amplitude", "min": 4.0, "max": 60.0, "step": 1.0, "default": 18.0, "effect": "CSS-pixel amplitude of the field's coupled horizontal sway and vertical heave." },
+    { "uniform": "u_tiltDepth", "label": "Tilt depth", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.45, "effect": "Strength of the rocking brightness tilt across the frame, from none to a pronounced lamplight lean." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}

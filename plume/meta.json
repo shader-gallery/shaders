@@ -1,0 +1,23 @@
+{
+  "name": "Plume",
+  "slug": "plume",
+  "family": "Gyre",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "smoke", "rising", "flow", "organic"],
+  "description": "A single slender column of dye rises from bottom-center, FBM-textured and glowing warmest at its dense base, cooling as it climbs, widens, and dissipates into the near-black upper frame; a height-increasing cross-current shears it into a smooth bow that sheds faint wisps off its downstream edge.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_riseSpeed", "label": "Rise speed", "min": 0.1, "max": 1.5, "step": 0.01,
+      "default": 0.45, "effect": "Upward scroll rate of the dye — incense-slow at min, a brisk thermal at max." },
+    { "uniform": "u_shear", "label": "Shear", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.8, "effect": "Strength of the height-increasing side current — zero rises dead straight, max bends the column hard toward the frame edge." },
+    { "uniform": "u_width", "label": "Base width", "min": 20.0, "max": 200.0, "step": 1.0,
+      "default": 70.0, "effect": "CSS-pixel width of the column at its base — a pencil line of smoke up to a broad soft pillar." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

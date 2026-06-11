@@ -1,0 +1,53 @@
+{
+  "name": "Web",
+  "slug": "web",
+  "family": "Loom",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "spider", "radial", "beads", "tremble"],
+  "description": "A single orb-weaver's web hung across the dark from an off-centre hub: a dozen-odd irregular radial spokes crossed by a slightly wonky Archimedean spiral. Hairline silk barely glows while dew beads at the crossings glint awake in slow travelling sequence around the web, their colour wandering through a restrained rainbow, the whole structure trembling a few pixels in the night air.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spokes",
+      "label": "Spokes",
+      "min": 7,
+      "max": 24,
+      "step": 1,
+      "default": 13,
+      "effect": "Number of radial silk spokes, and therefore dew beads per ring; low is a sparse broken-looking web, high a fine dense wheel."
+    },
+    {
+      "uniform": "u_spacing",
+      "label": "Ring spacing",
+      "min": 18,
+      "max": 64,
+      "step": 1,
+      "default": 34,
+      "effect": "Radial gap between spiral passes in CSS px; tight spacing gives many close rings crowded with dew, wide gives a few sweeping rings."
+    },
+    {
+      "uniform": "u_tremble",
+      "label": "Tremble",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Amplitude of the night-air shiver displacing the whole web; 0 hangs it dead still, max makes the silk visibly quiver."
+    },
+    {
+      "uniform": "u_glintSpeed",
+      "label": "Glint speed",
+      "min": 0.1,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Rate at which dew beads light up in sequence around the web, from one slow circuit per half-minute to a lively sparkle chase."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

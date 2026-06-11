@@ -1,0 +1,25 @@
+{
+  "name": "Labyrinth",
+  "slug": "labyrinth",
+  "family": "Rosette",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "maze", "lines", "architecture", "shifting"],
+  "description": "A full-frame orthogonal labyrinth of faintly glowing etched walls on a near-black plan. Wall segments slide along their grid axes on staggered eased schedules, perpetually rewiring the maze's topology, with soft glints blooming as walls dock into junctions.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_shiftSpeed", "label": "Shift speed", "min": 0.05, "max": 0.6, "step": 0.01,
+      "default": 0.15, "effect": "Rate of the wall reconfiguration — from a wall sliding somewhere every few seconds to the whole plan in constant gentle churn." },
+    { "uniform": "u_cell", "label": "Cell size", "min": 40, "max": 140, "step": 1,
+      "default": 70, "effect": "Maze cell size in CSS px — small gives a dense intricate plan with many sliding walls, large gives a few bold corridors." },
+    { "uniform": "u_line", "label": "Line width", "min": 1, "max": 4, "step": 0.05,
+      "default": 1.5, "effect": "Stroke width of the wall lines in CSS px — thicker reads as heavy masonry, thinner as a fine engraved blueprint." },
+    { "uniform": "u_glint", "label": "Glint", "min": 0, "max": 1, "step": 0.01,
+      "default": 0.45, "effect": "Brightness of the brief glint when a sliding wall docks into a junction — 0 lets walls move silently, 1 punctuates every dock with a visible bloom." }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

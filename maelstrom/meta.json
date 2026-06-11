@@ -1,0 +1,52 @@
+{
+  "name": "Maelstrom",
+  "slug": "maelstrom",
+  "family": "Gyre",
+  "author": "Erin Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "vortex",
+    "spiral",
+    "flow",
+    "slow"
+  ],
+  "description": "One vast log-spiral vortex sits centred just off the lower-right corner, its dye arms barely a step brighter than the near-black ground until they tighten and warm toward a glowing core. The whole spiral rotates rigidly and extremely slowly — a full turn takes one to two minutes — while a subtle FBM shimmer drifts along the arms so it never reads frozen.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spinSpeed",
+      "label": "Spin speed",
+      "min": 0.01,
+      "max": 0.4,
+      "step": 0.01,
+      "default": 0.06,
+      "effect": "Angular velocity of the vortex — at min it is nearly still (a full revolution takes minutes), at max it completes a rotation in well under a minute."
+    },
+    {
+      "uniform": "u_twist",
+      "label": "Twist",
+      "min": 1.0,
+      "max": 8.0,
+      "step": 0.05,
+      "default": 3.5,
+      "effect": "Log-spiral tightness — low gives open sweeping arms, high winds the arms into a dense coil near the core."
+    },
+    {
+      "uniform": "u_core",
+      "label": "Core radius",
+      "min": 80,
+      "max": 600,
+      "step": 1,
+      "default": 260,
+      "effect": "CSS-pixel radius of the warm bright core region where the palette heats up through its third and fourth colours and the glow pools."
+    }
+  ],
+  "palettes": {
+    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "midnight"
+}

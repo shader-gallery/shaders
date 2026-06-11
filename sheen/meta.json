@@ -1,0 +1,35 @@
+{
+  "name": "Sheen",
+  "slug": "sheen",
+  "family": "Veil",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "gauze", "moire", "interference", "rainbow"],
+  "description": "Two layers of sheer woven gauze lie over a dark field, one rotated a hair and sliding against the other so their fine thread grids beat into broad luminous moiré fringes — soft curving rivers of tinted interference, with no light source anywhere. Inside each bright fringe the micro-weave resolves into visible threads, and successive fringe orders take different palette hues. The upper gauze drifts and minutely rotates on slow incommensurate sines, so the whole pattern continuously sweeps and re-spaces itself.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_weave", "label": "Weave fineness", "min": 3.0, "max": 14.0, "step": 1.0, "default": 6.0, "effect": "CSS-pixel spacing of the gauze threads; finer weave yields broader, smoother fringes, coarser weave makes tighter, busier interference." },
+    { "uniform": "u_shimmerSpeed", "label": "Shimmer speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.35, "effect": "How fast the upper layer drifts and rotates, scaling how quickly the moiré fringes sweep and reshape — from near-still shimmer to flowing watered silk." },
+    { "uniform": "u_fringeGlow", "label": "Fringe glow", "min": 0.1, "max": 1.5, "step": 0.01, "default": 0.8, "effect": "Brightness of the interference fringes, from a ghostly suggestion over black to bold ribbons of light." }
+  ],
+  "palettes": {
+    "midnight": [
+      [0.231, 0.510, 0.965],
+      [0.659, 0.333, 0.969],
+      [0.133, 0.827, 0.933],
+      [0.957, 0.247, 0.369]
+    ],
+    "witchlight": [
+      [0.545, 0.361, 0.965],
+      [0.925, 0.282, 0.600],
+      [0.298, 0.733, 0.910],
+      [0.984, 0.749, 0.141]
+    ],
+    "ember": [
+      [0.984, 0.451, 0.133],
+      [0.957, 0.247, 0.369],
+      [0.965, 0.620, 0.043],
+      [0.561, 0.149, 0.305]
+    ]
+  },
+  "defaultPalette": "midnight"
+}
