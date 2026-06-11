@@ -92,18 +92,25 @@ void main() {
     // the curtains stay calm rather than busy); soft floor so they read
     float ribbon = sin((p.x * (1.6 + fl * 1.1) + n * 3.0 + phase) * TAU * 0.5);
     ribbon = 0.5 + 0.5 * ribbon;                 // 0..1, rounded crests
-    ribbon = smoothstep(u_gap, 1.0, ribbon);     // thinner, gappier curtains
-    float curtain = ribbon * smoothstep(0.4, 0.85, n);  // only where noise is dense
+    ribbon = smoothstep(u_gap * 0.7, 1.0, ribbon); // curtains read more broadly
+    // fine vertical ray striations within each curtain — the aurora "rays" that
+    // give the sheet visible structure instead of a soft blur
+    float rays = 0.74 + 0.26 * sin(p.x * (70.0 + fl * 34.0) + n * 6.0);
+    // lower the noise-density gate so curtains fill more of the frame
+    float curtain = ribbon * smoothstep(0.30, 0.74, n) * rays;
 
     // gentle vertical falloff: brightest hanging from the top, fading to the
     // horizon; a slow shimmer drifts the band over the loop
     float lift    = 0.08 * sin(t * w * 0.5 + fl * 1.3);
     float falloff = smoothstep(-0.15, 0.6 + lift, uv.y) * smoothstep(1.2, 0.82, uv.y);
+    // bright lower hem: auroras glow hottest along their trailing bottom edge
+    float hem = smoothstep(0.55, 0.18, uv.y) * smoothstep(0.0, 0.3, n);
     curtain *= falloff * (0.85 + fl * 0.15);
+    curtain += ribbon * smoothstep(0.34, 0.74, n) * rays * hem * 0.5;
 
     // colour: blend across the palette, low-frequency so hues stay coherent
     float mixA = fract(uv.x * 0.35 + n * 0.25 + fl * 0.3 + driftB * 0.04);
-    col += paletteRamp(mixA) * curtain * (1.05 - fl * 0.12) * u_glow;
+    col += paletteRamp(mixA) * curtain * (1.85 - fl * 0.20) * u_glow;
   }
 
   // soft low haze so the curtains feel anchored above the horizon
@@ -114,8 +121,9 @@ void main() {
   float grain = hash(gl_FragCoord.xy + floor(t * 12.0)) - 0.5;
   col += grain * 0.012;
 
-  // soft tone curve: glowing but not blown out
-  col = col / (1.0 + col * 0.55);
+  // soft tone curve: glowing but not blown out (gentler knee so the brighter
+  // curtains keep their luminosity instead of compressing back to dim)
+  col = col / (1.0 + col * 0.38);
 
   gl_FragColor = vec4(col, 1.0);
 }

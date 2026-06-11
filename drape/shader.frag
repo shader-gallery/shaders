@@ -131,14 +131,24 @@ void main() {
   float w0 = wheelW(s, 0.0), w1 = wheelW(s, 1.0), w2 = wheelW(s, 2.0), w3 = wheelW(s, 3.0);
   vec3  hue = (c0 * w0 + c1 * w1 + c2 * w2 + c3 * w3) / max(w0 + w1 + w2 + w3, 0.001);
 
+  // vertical warp-thread grain running DOWN the folds — fine ribs in css px so
+  // the silk reads as woven hanging cloth (the vertical identity vs billow's
+  // horizontal weave). modulated weakly by lean so threads follow the sway.
+  float warp = 0.5 + 0.5 * sin((fc.x / pr) * 2.3 + h * 3.0);
+  float rib  = mix(0.86, 1.10, warp);
+  // deepen the valleys into fold-shadow: square the valley term so the gaps
+  // between hanging folds read as real occluded depth, not a flat dark wash
+  float occ = valley * valley;
+
   // --- compose the lit silk ---
   vec3 col = BG;
   // dark cloth body: a low diffuse wash in the fold hue, valleys near-black
-  col += hue * diff * mix(0.05, 0.20, crest) * valley;
+  col += hue * diff * mix(0.05, 0.21, crest) * occ * rib;
   // soft ambient so the body isn't pure black between crests
-  col += hue * (0.010 + 0.040 * crest) * valley;
-  // the luminous specular sheen ridge along the crests — the silk's signature
-  col += hue * spec * (0.35 + 0.65 * crest) * 1.35;
+  col += hue * (0.009 + 0.040 * crest) * occ;
+  // the luminous specular sheen ridge along the crests — the silk's signature,
+  // broken into fine vertical thread glints by the warp ribs
+  col += hue * spec * (0.35 + 0.65 * crest) * 1.40 * rib;
   // a tighter white-ish glint core at the very top of the sheen for liquid silk
   col += vec3(1.0) * pow(spec, 1.4) * crest * 0.35 * clamp(sheen / 1.5, 0.0, 1.0);
 

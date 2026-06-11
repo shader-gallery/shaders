@@ -60,7 +60,10 @@ float billowHeight(vec2 p, float swell, float cross, float travel) {
   float k = 6.2831853 / swell;             // angular wavenumber
   // main wave-train: travels along a shallow diagonal (mostly rightward, a
   // little downward). project position onto its direction of travel.
-  vec2  d1 = normalize(vec2(0.92, 0.39));
+  // main wave-train travels mostly DOWNWARD (a little rightward), so its
+  // wavefronts read as broad near-HORIZONTAL swells stacked up the frame — the
+  // signature that sets billow apart from drape's vertical hanging folds.
+  vec2  d1 = normalize(vec2(0.26, 0.97));
   float ph1 = dot(p, d1) * k - travel;
   float w1  = sin(ph1);
   // gentle second harmonic on the same train sharpens crests a touch without
@@ -70,7 +73,7 @@ float billowHeight(vec2 p, float swell, float cross, float travel) {
   // counter-angled second wave-train: crosses the main one at a shallow angle,
   // travelling the other way so the two interfere into dappled billows. its
   // wavelength is slightly longer (incommensurate) so the pattern never repeats.
-  vec2  d2 = normalize(vec2(0.62, -0.78));
+  vec2  d2 = normalize(vec2(-0.74, 0.67));
   float ph2 = dot(p, d2) * (k * 0.83) + travel * 0.85;
   float w2  = sin(ph2);
 
@@ -154,18 +157,27 @@ void main() {
   float w0 = wheelW(s, 0.0), w1 = wheelW(s, 1.0), w2 = wheelW(s, 2.0), w3 = wheelW(s, 3.0);
   vec3  hue = (c0 * w0 + c1 * w1 + c2 * w2 + c3 * w3) / max(w0 + w1 + w2 + w3, 0.001);
 
+  // fine warp+weft weave grain (css-px) so the lit sheet reads as woven cloth
+  // rather than a smooth gradient — threads catch slightly more or less sheen.
+  // ride a 45deg rotation so the weave doesn't align with the screen axes.
+  vec2  wuv = fc / pr;
+  vec2  rw  = vec2(wuv.x + wuv.y, wuv.x - wuv.y) * 0.5;
+  float weave = 0.5 + 0.5 * sin(rw.x * 1.15) * sin(rw.y * 1.15);
+  float thread = mix(0.80, 1.16, weave);
+
   // --- compose the lit billowing sheet ---
   vec3 col = BG;
   // dark cloth body: a diffuse wash in the local hue, gated up by crest height
   // so troughs fall to near-black and crests carry the colour
-  col += hue * diff * (0.09 + 0.30 * crest);
+  col += hue * diff * (0.10 + 0.36 * crest);
   // soft ambient so the body between crests isn't pure black
-  col += hue * (0.022 + 0.038 * crest);
+  col += hue * (0.020 + 0.040 * crest);
   // the luminous sheen ridge sliding along the wavefront crests — the signature.
-  // ride the bright crest band so it reads as a continuous moving stripe of light
-  col += hue * spec * (0.22 + 0.62 * ridge) * 0.78;
+  // ride the bright crest band so it reads as a continuous moving stripe of light,
+  // textured by the weave so the highlight breaks into thread glints
+  col += hue * spec * (0.24 + 0.70 * ridge) * 0.85 * thread;
   // a tighter near-white glint core at the very top of the sheen for liquid cloth
-  col += vec3(1.0) * pow(spec, 1.7) * ridge * 0.10;
+  col += vec3(1.0) * pow(spec, 1.7) * ridge * 0.12 * thread;
 
   // radial vignette to compose the framing and keep edges dark
   float vign = 1.0 - smoothstep(0.55, 1.28, length((fc - ctr) / res));
