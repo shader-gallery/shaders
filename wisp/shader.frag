@@ -23,12 +23,13 @@ uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_wanderSpeed;  // path travel speed              (default 0.4)
-uniform float u_flameSize;    // teardrop height, css px        (default 45)
+uniform float u_flameSize;    // teardrop height, css px        (default 66)
+uniform float u_count;        // how many flames wander, 2..6   (default 5)
 uniform float u_flicker;      // FBM interior flicker amplitude (default 0.8)
-uniform float u_trailLength;  // filament reach along the path  (default 0.5)
+uniform float u_trailLength;  // beaded filament reach          (default 0.6)
 
 const vec3  BG       = vec3(0.030, 0.032, 0.040); // near-black marsh base
-const float NFLAMES  = 3.0;                        // literal loop bound
+const float NFLAMES  = 6.0;                        // literal loop bound
 
 // ---- hash / value noise / fbm -------------------------------------------
 float hash21(vec2 p) {
@@ -124,8 +125,9 @@ void main() {
   }
 
   // accumulate flames + their trailing filaments
-  for (int fi = 0; fi < 3; fi++) {
+  for (int fi = 0; fi < 6; fi++) {
     float f = float(fi);
+    if (f > u_count - 0.5) continue;   // u_count gates how many wander
 
     // each flame a slightly different cool tint, mixed from the (cool) palette
     float tk = fract(0.18 + f * 0.31);
@@ -135,7 +137,7 @@ void main() {
 
     // ---- current head position (css px, screen space) ----
     vec2 pn   = wanderPath(f, ptBase);
-    vec2 head = pn * vec2(span * 0.5, span * 0.34); // screen-space offset (css)
+    vec2 head = pn * vec2(span * 0.54, span * 0.40); // screen-space offset (css)
 
     // long private brightness cycle (breathing swell), per flame
     float swell = 0.55 + 0.45 * sin(t * (0.16 + 0.05 * f) + f * 2.3);
@@ -149,7 +151,7 @@ void main() {
       // start the trail just behind the head so it reads as leaving the base.
       float back = fs * (0.04 + 0.115 * u_trailLength);
       vec2  qn   = wanderPath(f, ptBase - back);
-      vec2  q    = qn * vec2(span * 0.5, span * 0.34);
+      vec2  q    = qn * vec2(span * 0.54, span * 0.40);
       // anchor the filament near the base of the flame, not its tip
       q += vec2(0.0, -0.18 * flameHc);
       float dseg = length(P - q);
@@ -158,7 +160,10 @@ void main() {
       float thin = flameHc * (0.075 + 0.022 * u_trailLength);
       float fade = (1.0 - fs / 28.0);
       fade *= fade;
-      trail += exp(-dseg * dseg / (thin * thin)) * fade;
+      // beaded texture: brightness pulses along the trail (droplets of cold
+      // fire strung on the thread) rather than a flat filament.
+      float bead = 0.45 + 0.55 * pow(0.5 + 0.5 * sin(fs * 1.4 - t * 1.6 + f * 2.0), 2.2);
+      trail += exp(-dseg * dseg / (thin * thin)) * fade * bead;
     }
     // normalise vs step density, then scale by length & breathing brightness
     trail *= u_trailLength * (0.8 + 0.4 * swell);
@@ -200,11 +205,11 @@ void main() {
     float bright = swell;
 
     // compose this flame (cool tint body + whiter hot core + faint halo)
-    col += tint * body * 1.15 * bright;
-    col += mix(tint, vec3(1.0), 0.55) * body * core * 0.9 * bright;
-    col += tint * halo * 0.18 * bright;
-    // filament trail in the same tint, dimmer than the body but readable
-    col += tint * trail * 0.85;
+    col += tint * body * 1.45 * bright;
+    col += mix(tint, vec3(1.0), 0.6) * body * core * 1.15 * bright;
+    col += tint * halo * 0.24 * bright;
+    // beaded filament trail in the same tint, dimmer than the body but readable
+    col += tint * trail * 1.0;
   }
 
   // ---- barely-there mist band along the bottom edge ----
