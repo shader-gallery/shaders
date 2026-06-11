@@ -17,13 +17,16 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
-const float BG          = 0.039;   // #0A -> ~0.04
-const float SPACING_CSS = 30.0;    // px between dots
-const float DOT_CSS     = 1.5;     // dot radius
-const float ARM_CSS     = 4.0;     // cross arm length at full morph
-const float THICK_CSS   = 1.2;     // cross thickness at full morph
-const float WAVELEN_CSS = 220.0;   // radial wavelength
-const float WAVE_SPEED  = 0.6;
+// tweakable params (see meta.json; the runtime feeds defaults)
+uniform float u_spacing;     // px between dots            (default 30)
+uniform float u_wavelength;  // radial wavelength, css px  (default 220)
+uniform float u_waveSpeed;   // wave travel speed          (default 0.6)
+uniform float u_glow;        // blob glow multiplier       (default 1)
+
+const float BG        = 0.039;   // #0A -> ~0.04
+const float DOT_CSS   = 1.5;     // dot radius
+const float ARM_CSS   = 4.0;     // cross arm length at full morph
+const float THICK_CSS = 1.2;     // cross thickness at full morph
 
 float sdCircle(vec2 p, float r) {
   return length(p) - r;
@@ -61,20 +64,20 @@ void main() {
   vec2 p2 = vec2(res.x * (0.20 + 0.15 * sin(t * 0.4)), res.y * (0.70 + 0.10 * cos(t * 0.9)));
   vec2 p3 = vec2(res.x * (0.75 + 0.10 * sin(t * 0.5)), res.y * (0.20 + 0.10 * cos(t * 0.7)));
   float R = max(res.x, res.y);
-  col += u_palette[0] * 0.30 * smoothstep(R * 0.60, 0.0, distance(fc, p0));
-  col += u_palette[1] * 0.25 * smoothstep(R * 0.55, 0.0, distance(fc, p1));
-  col += u_palette[2] * 0.20 * smoothstep(R * 0.45, 0.0, distance(fc, p2));
-  col += u_palette[3] * 0.16 * smoothstep(R * 0.35, 0.0, distance(fc, p3));
+  col += u_palette[0] * (0.30 * u_glow) * smoothstep(R * 0.60, 0.0, distance(fc, p0));
+  col += u_palette[1] * (0.25 * u_glow) * smoothstep(R * 0.55, 0.0, distance(fc, p1));
+  col += u_palette[2] * (0.20 * u_glow) * smoothstep(R * 0.45, 0.0, distance(fc, p2));
+  col += u_palette[3] * (0.16 * u_glow) * smoothstep(R * 0.35, 0.0, distance(fc, p3));
 
   // --- dot grid, in device pixels ---
-  float spacing = SPACING_CSS * pr;
+  float spacing = u_spacing * pr;
   vec2  cellId  = floor(fc / spacing);
   vec2  local   = (fc - (cellId + 0.5) * spacing);   // offset from this cell's centre
   vec2  dotCtr  = (cellId + 0.5) * spacing;
 
   // radial wave -> morph amount m in 0..1
   float dCtr = distance(dotCtr, ctr);
-  float wave = sin((dCtr / (WAVELEN_CSS * pr)) * 6.2831853 - t * WAVE_SPEED);
+  float wave = sin((dCtr / (u_wavelength * pr)) * 6.2831853 - t * u_waveSpeed);
   float m    = max(0.0, wave);
 
   // shape morph: shrinking dot blended into a growing cross
@@ -98,7 +101,7 @@ void main() {
   col += dotCol * mask * opacity * (0.85 + 0.45 * m);
 
   // faint smooth glow along the wavefront so the crest reads between dots
-  float wavePix = sin((distance(fc, ctr) / (WAVELEN_CSS * pr)) * 6.2831853 - t * WAVE_SPEED);
+  float wavePix = sin((distance(fc, ctr) / (u_wavelength * pr)) * 6.2831853 - t * u_waveSpeed);
   float crest   = smoothstep(0.90, 1.0, wavePix);
   col += paletteRamp(fract(hue + 0.5)) * crest * 0.045;
 

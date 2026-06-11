@@ -7,8 +7,10 @@
   "description": "A dark field of stitches — dots that morph into crosses as a radial wave passes through them, lit by four drifting glow blobs and tinted by angle into a faint rainbow.",
   "entry": "shader.frag",
   "params": [
-    { "key": "WAVE_SPEED", "label": "Wave speed", "min": 0.0, "max": 2.0, "default": 0.6 },
-    { "key": "SPACING_CSS", "label": "Dot spacing", "min": 16.0, "max": 60.0, "default": 30.0 }
+    { "uniform": "u_waveSpeed", "label": "Wave speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.6 },
+    { "uniform": "u_spacing", "label": "Dot spacing", "min": 16.0, "max": 60.0, "step": 1.0, "default": 30.0 },
+    { "uniform": "u_wavelength", "label": "Wavelength", "min": 80.0, "max": 500.0, "step": 5.0, "default": 220.0 },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 }
   ],
   "palettes": {
     "midnight": [

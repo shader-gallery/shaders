@@ -6,7 +6,12 @@
   "tags": ["dark", "starfield", "cosmic", "parallax", "glow", "rainbow", "organic", "loop"],
   "description": "A deep drifting starfield — three parallax layers of hash-placed stars raining down on a diagonal, each twinkling on its own phase, the brightest tinted from the palette, over a faint breathing nebula wash.",
   "entry": "shader.frag",
-  "params": [],
+  "params": [
+    { "uniform": "u_speed", "label": "Fall speed", "min": 0.0, "max": 3.0, "step": 0.01, "default": 1.0 },
+    { "uniform": "u_density", "label": "Star density", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5 },
+    { "uniform": "u_size", "label": "Star size", "min": 0.5, "max": 2.0, "step": 0.01, "default": 1.0 },
+    { "uniform": "u_nebula", "label": "Nebula", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.3 }
+  ],
   "palettes": {
     "midnight": [
       [0.231, 0.510, 0.965],

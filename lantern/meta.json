@@ -6,7 +6,13 @@
   "tags": ["dark", "orbs", "bloom", "glow", "rainbow", "organic", "deep-sea", "loop"],
   "description": "Bioluminescent orbs — soft radial glow lanterns in palette colours drifting slowly over dark water, added together so overlaps bloom brighter, each gently breathing in size and brightness.",
   "entry": "shader.frag",
-  "params": [],
+  "params": [
+    { "uniform": "u_speed", "label": "Drift speed", "min": 0.0, "max": 3.0, "step": 0.01, "default": 1.0 },
+    { "uniform": "u_size", "label": "Orb size", "min": 0.5, "max": 2.0, "step": 0.01, "default": 1.0 },
+    { "uniform": "u_count", "label": "Orbs", "min": 1.0, "max": 6.0, "step": 1.0, "default": 6.0 },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 1.0 }
+  ],
   "palettes": {
     "midnight": [
       [0.231, 0.510, 0.965],

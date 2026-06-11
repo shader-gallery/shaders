@@ -13,6 +13,12 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
+// tweakable params (see meta.json; the runtime feeds defaults)
+uniform float u_speed;    // fall/twinkle speed multiplier  (default 1)
+uniform float u_density;  // star density, 0..1            (default 0.5)
+uniform float u_size;     // star size multiplier           (default 1)
+uniform float u_nebula;   // nebula wash strength           (default 0.3)
+
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near #09090B
 const float CELL_CSS = 38.0;  // average star spacing (px) at base layer
 
@@ -62,8 +68,10 @@ vec3 starLayer(vec2 fc, vec2 res, float t, float scale, float depth) {
       float d  = length(g - pos);
 
       float seed = hash21(cid * 2.13 - 4.0);
-      float present = smoothstep(0.78, 0.97, seed); // sparse: most cells empty
-      float size = mix(0.018, 0.07, hash21(cid + 19.0)) * (0.7 + depth);
+      // density slides the presence threshold; default 0.5 keeps 0.78..0.97
+      float th = 0.78 - (u_density - 0.5) * 0.3;
+      float present = smoothstep(th, th + 0.19, seed); // sparse: most cells empty
+      float size = mix(0.018, 0.07, hash21(cid + 19.0)) * (0.7 + depth) * u_size;
 
       // per-star twinkle, strictly positive (negatives would punch black specks)
       float ph  = rnd.x * 6.2831853;
@@ -93,7 +101,7 @@ vec3 starLayer(vec2 fc, vec2 res, float t, float scale, float depth) {
 void main() {
   vec2  fc  = gl_FragCoord.xy;
   vec2  res = u_resolution;
-  float t   = u_time;
+  float t   = u_time * u_speed;
   vec2  uvn = (fc - 0.5 * res) / res.y; // aspect-correct, centered
   vec3  col = BG;
 
@@ -107,7 +115,7 @@ void main() {
   neb       = mix(neb, u_palette[2], smoothstep(0.4, 0.85, n1) * 0.7);
   neb       = mix(neb, u_palette[3], smoothstep(0.55, 0.95, n0 * n1) * 0.6);
   float density = pow(smoothstep(0.25, 0.85, n0 * 0.6 + n1 * 0.4), 1.6);
-  col += neb * density * radial * 0.3;
+  col += neb * density * radial * u_nebula;
 
   // --- three parallax star layers, far -> near (dim/dense to bright/sparse)
   col += starLayer(fc, res, t, 1.6, 0.45);

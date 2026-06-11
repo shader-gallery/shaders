@@ -6,7 +6,13 @@
   "tags": ["dark", "ripples", "interference", "waves", "glow", "rainbow", "organic", "loop"],
   "description": "Concentric ripples from three drifting sources interfere into a standing wave field, rendered as glowing contour bands over a deep dark base and tinted by phase and position into a restrained rainbow.",
   "entry": "shader.frag",
-  "params": [],
+  "params": [
+    { "uniform": "u_speed", "label": "Drift speed", "min": 0.0, "max": 3.0, "step": 0.01, "default": 1.0 },
+    { "uniform": "u_wavelength", "label": "Wavelength", "min": 60.0, "max": 300.0, "step": 5.0, "default": 150.0 },
+    { "uniform": "u_bands", "label": "Contour density", "min": 0.5, "max": 4.0, "step": 0.05, "default": 1.6 },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 1.0 }
+  ],
   "palettes": {
     "midnight": [
       [0.231, 0.510, 0.965],

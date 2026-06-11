@@ -7,8 +7,10 @@
   "description": "A loom's warp — thin bright vertical threads on a near-black field that ripple side to side as a slow sinusoidal wave travels down them, with soft glow nodes blooming where a sweeping horizontal weft crosses, tinted across the palette by thread position.",
   "entry": "shader.frag",
   "params": [
-    { "key": "DRIFT", "label": "Ripple drift", "min": 0.0, "max": 1.0, "default": 0.30 },
-    { "key": "SPACING_CSS", "label": "Thread spacing", "min": 18.0, "max": 60.0, "default": 34.0 }
+    { "uniform": "u_drift", "label": "Ripple drift", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.3 },
+    { "uniform": "u_amp", "label": "Ripple amplitude", "min": 0.0, "max": 20.0, "step": 0.1, "default": 7.0 },
+    { "uniform": "u_spacing", "label": "Thread spacing", "min": 18.0, "max": 60.0, "step": 1.0, "default": 34.0 },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 }
   ],
   "palettes": {
     "midnight": [

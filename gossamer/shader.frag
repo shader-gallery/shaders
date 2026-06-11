@@ -17,6 +17,12 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
+// tweakable params (see meta.json; the runtime feeds defaults)
+uniform float u_speed;  // drift speed multiplier      (default 1)
+uniform float u_gap;    // curtain gap threshold       (default 0.35)
+uniform float u_glow;   // curtain glow multiplier     (default 1)
+uniform float u_haze;   // low-horizon haze strength   (default 0.10)
+
 const float TAU = 6.28318530718;
 const float PERIOD = 24.0;   // loop period (s); all motion is sin/cos(t*w)
 
@@ -62,7 +68,7 @@ void main() {
   vec2  uv  = gl_FragCoord.xy / res;          // 0..1
   float asp = res.x / res.y;
   vec2  p   = vec2(uv.x * asp, uv.y);
-  float t   = u_time;
+  float t   = u_time * u_speed;
   float w   = TAU / PERIOD;                    // base angular speed for the loop
 
   // looping drift phases (continuous, period-aligned -> no jump at wrap)
@@ -86,7 +92,7 @@ void main() {
     // the curtains stay calm rather than busy); soft floor so they read
     float ribbon = sin((p.x * (1.6 + fl * 1.1) + n * 3.0 + phase) * TAU * 0.5);
     ribbon = 0.5 + 0.5 * ribbon;                 // 0..1, rounded crests
-    ribbon = smoothstep(0.35, 1.0, ribbon);      // thinner, gappier curtains
+    ribbon = smoothstep(u_gap, 1.0, ribbon);     // thinner, gappier curtains
     float curtain = ribbon * smoothstep(0.4, 0.85, n);  // only where noise is dense
 
     // gentle vertical falloff: brightest hanging from the top, fading to the
@@ -97,11 +103,11 @@ void main() {
 
     // colour: blend across the palette, low-frequency so hues stay coherent
     float mixA = fract(uv.x * 0.35 + n * 0.25 + fl * 0.3 + driftB * 0.04);
-    col += paletteRamp(mixA) * curtain * (1.05 - fl * 0.12);
+    col += paletteRamp(mixA) * curtain * (1.05 - fl * 0.12) * u_glow;
   }
 
   // soft low haze so the curtains feel anchored above the horizon
-  float haze = smoothstep(0.6, 0.0, uv.y) * 0.10;
+  float haze = smoothstep(0.6, 0.0, uv.y) * u_haze;
   col += mix(u_palette[2], u_palette[0], uv.x) * haze;
 
   // faint fine grain to break banding (subtle, stays calm)

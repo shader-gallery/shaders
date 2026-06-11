@@ -7,8 +7,10 @@
   "description": "A delicate ornamental lattice — a grid of thin glowing rounded-diamond outlines that pulse brighter in slow waves rolling across the field, like etched metal lacework catching light. Cell interiors stay near-black; the outlines trace palette colours by position.",
   "entry": "shader.frag",
   "params": [
-    { "key": "WAVE_SPEED", "label": "Wave speed", "min": 0.0, "max": 2.0, "default": 0.45 },
-    { "key": "SPACING_CSS", "label": "Lattice spacing", "min": 24.0, "max": 80.0, "default": 46.0 }
+    { "uniform": "u_waveSpeed", "label": "Wave speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.45 },
+    { "uniform": "u_spacing", "label": "Lattice spacing", "min": 24.0, "max": 80.0, "step": 1.0, "default": 46.0 },
+    { "uniform": "u_line", "label": "Line weight", "min": 0.5, "max": 3.0, "step": 0.05, "default": 1.1 },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 }
   ],
   "palettes": {
     "midnight": [

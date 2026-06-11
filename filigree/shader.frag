@@ -17,12 +17,15 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
+// tweakable params (see meta.json; the runtime feeds defaults)
+uniform float u_spacing;    // px between lattice nodes  (default 46)
+uniform float u_line;       // outline half-thickness    (default 1.1)
+uniform float u_waveSpeed;  // brightness wave speed     (default 0.45)
+uniform float u_glow;       // lace glow multiplier      (default 1)
+
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const float SPACING_CSS = 46.0;   // px between lattice nodes
 const float ROUND_CSS   = 4.0;    // corner rounding radius of each diamond
-const float LINE_CSS    = 1.1;    // outline half-thickness
 const float WAVELEN_CSS = 380.0;  // wavelength of the rolling brightness wave
-const float WAVE_SPEED  = 0.45;
 
 // rounded-diamond signed distance: an L1 (diamond) of radius rad, rounded by r
 float sdRoundDiamond(vec2 p, float rad, float r) {
@@ -46,9 +49,9 @@ void main() {
 
   vec3 col = BG;
 
-  float spacing = SPACING_CSS * pr;
+  float spacing = u_spacing * pr;
   float round   = ROUND_CSS * pr;
-  float line    = LINE_CSS  * pr;
+  float line    = u_line * pr;
   // diamond radius (pre-round); corners reach toward the cell edges so the
   // diamonds nearly touch and read as one continuous lace net
   float rad     = spacing * 0.5 - round - line - pr * 0.5;
@@ -65,9 +68,9 @@ void main() {
 
   // --- slow brightness wave rolling diagonally across the field ---
   float diag  = dot(node - ctr, normalize(vec2(0.8, 0.6)));
-  float wave  = 0.5 + 0.5 * sin(diag / (WAVELEN_CSS * pr) * 6.2831853 - t * WAVE_SPEED);
+  float wave  = 0.5 + 0.5 * sin(diag / (WAVELEN_CSS * pr) * 6.2831853 - t * u_waveSpeed);
   // a second, slower cross-wave so the pulse never reads as a single sweep
-  float wave2 = 0.5 + 0.5 * sin(length(node - ctr) / (WAVELEN_CSS * 1.7 * pr) * 6.2831853 + t * WAVE_SPEED * 0.6);
+  float wave2 = 0.5 + 0.5 * sin(length(node - ctr) / (WAVELEN_CSS * 1.7 * pr) * 6.2831853 + t * u_waveSpeed * 0.6);
   float pulse = mix(0.22, 1.0, wave * 0.7 + wave2 * 0.3);
 
   // Theme colours come from u_palette. Some headless poster contexts can't bind
@@ -94,12 +97,12 @@ void main() {
   // radial vignette keeps the edges dark and the centre luminous
   float vign = 1.0 - smoothstep(0.25, 1.05, length((fc - ctr) / res));
 
-  col += lace * stroke * pulse * 0.95 * vign;
-  col += lace * jewel * 0.55 * vign;
+  col += lace * stroke * pulse * 0.95 * u_glow * vign;
+  col += lace * jewel * 0.55 * u_glow * vign;
 
   // a whisper of outline bloom so the etched metal catches light
   float bloom = exp(-abs(sd) / (line * 5.0)) * pulse;
-  col += lace * bloom * 0.18 * vign;
+  col += lace * bloom * 0.18 * u_glow * vign;
 
   gl_FragColor = vec4(col, 1.0);
 }

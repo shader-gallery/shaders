@@ -18,10 +18,15 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
-const float BG          = 0.039;   // deep dark base ~ #0A
-const float WAVELEN_CSS = 150.0;   // ripple wavelength in css px (large, calm rings)
-const float BANDS       = 1.6;     // contour bands per wave cycle (sparse, restrained)
-const float TAU         = 6.2831853;
+// tweakable params (see meta.json; the runtime feeds defaults)
+uniform float u_speed;       // drift/tick speed multiplier      (default 1)
+uniform float u_wavelength;  // ripple wavelength, css px        (default 150)
+uniform float u_bands;       // contour bands per wave cycle     (default 1.6)
+uniform float u_glow;        // contour-line glow multiplier     (default 1)
+uniform float u_mouseInfluence; // mouse ripple strength, 0=off  (default 1)
+
+const float BG  = 0.039;   // deep dark base ~ #0A
+const float TAU = 6.2831853;
 
 // one expanding-ring source: returns a signed wave height in -1..1
 float ripple(vec2 fc, vec2 src, float wavelen, float phase, float t) {
@@ -36,8 +41,8 @@ void main() {
   vec2  fc  = gl_FragCoord.xy;
   vec2  res = u_resolution;
   vec2  ctr = res * 0.5;
-  float t   = u_time;
-  float wl  = WAVELEN_CSS * pr;
+  float t   = u_time * u_speed;
+  float wl  = u_wavelength * pr;
   float R   = max(res.x, res.y);
 
   // --- three sources orbiting on closed loops (seamless) + a mouse nudge ---
@@ -55,10 +60,10 @@ void main() {
   h += ripple(fc, s0, wl, 0.0,        t * 0.9);
   h += ripple(fc, s1, wl, 2.1,        t * 1.1);
   h += ripple(fc, s2, wl, 4.2,        t * 0.8);
-  h += ripple(fc, sm, wl * 0.7, 1.0,  t * 1.3) * 0.8;
+  h += ripple(fc, sm, wl * 0.7, 1.0,  t * 1.3) * 0.8 * u_mouseInfluence;
 
   // contour bands: fold the summed height into repeating glowing lines
-  float bandPhase = h * BANDS;
+  float bandPhase = h * u_bands;
   float ridge = abs(fract(bandPhase) - 0.5) * 2.0;       // 0 between lines, 1 at line centre
   float line  = smoothstep(0.78, 1.0, ridge);            // thin bright contour, lots of gap
   // soft fill between lines keeps it from reading as bare wireframe
@@ -87,7 +92,7 @@ void main() {
   // --- compose: dark base + faint fill glow + bright contour lines ---
   vec3 col = vec3(BG, BG, 0.047);
   col += tint * fill * 0.06;                             // restrained between-line wash
-  col += tint * line * (0.65 + 0.45 * radial);          // glowing contour bands
+  col += tint * line * (0.65 + 0.45 * radial) * u_glow; // glowing contour bands
 
   // gentle source halos so the emitters read as luminous points
   col += pal0 * 0.10 * smoothstep(R * 0.30, 0.0, distance(fc, s0));
