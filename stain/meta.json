@@ -3,47 +3,122 @@
   "slug": "stain",
   "family": "Mosaic",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "voronoi", "stained-glass", "bloom", "rainbow"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "voronoi",
+    "stained-glass",
+    "bloom",
+    "rainbow"
+  ],
   "description": "A stained-glass window of large irregular panes, each holding a palette colour pulled down to barely above black behind bright leading. Nothing crosses the glass — panes take turns blooming from within on long overlapping cycles, leaning toward a neighbouring hue at the peak.",
   "entry": "shader.frag",
   "params": [
     {
-      "key": "u_pane",
+      "uniform": "u_pane",
       "label": "Pane size",
       "min": 100,
       "max": 400,
       "default": 220,
-      "effect": "Average pane diameter in CSS pixels; smaller panes feel like dense chapel glass, larger panes like a grand rose-window detail."
+      "effect": "Average pane diameter in CSS pixels; smaller panes feel like dense chapel glass, larger panes like a grand rose-window detail.",
+      "step": 1
     },
     {
-      "key": "u_bloomRate",
+      "uniform": "u_bloomRate",
       "label": "Bloom rate",
       "min": 0.02,
       "max": 0.5,
       "default": 0.1,
-      "effect": "Pace of the panes' bloom cycles, from devotional near-stillness to a window restless with colour."
+      "effect": "Pace of the panes' bloom cycles, from devotional near-stillness to a window restless with colour.",
+      "step": 0.01
     },
     {
-      "key": "u_litFraction",
+      "uniform": "u_litFraction",
       "label": "Lit fraction",
       "min": 0.05,
       "max": 0.5,
       "default": 0.15,
-      "effect": "Roughly what fraction of panes are lit at any moment — a lone bloom or two, or half the window awake at once."
+      "effect": "Roughly what fraction of panes are lit at any moment — a lone bloom or two, or half the window awake at once.",
+      "step": 0.01
     },
     {
-      "key": "u_lead",
+      "uniform": "u_lead",
       "label": "Lead thickness",
       "min": 1.5,
       "max": 8,
       "default": 3.5,
-      "effect": "Thickness of the bright leading lines between panes; heavy lead makes the partition graphic, fine lead lets colour dominate."
+      "effect": "Thickness of the bright leading lines between panes; heavy lead makes the partition graphic, fine lead lets colour dominate.",
+      "step": 0.05
     }
   ],
   "palettes": {
-    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
-    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
-    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+    "midnight": [
+      [
+        0.231,
+        0.51,
+        0.965
+      ],
+      [
+        0.659,
+        0.333,
+        0.969
+      ],
+      [
+        0.133,
+        0.827,
+        0.933
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ]
+    ],
+    "witchlight": [
+      [
+        0.545,
+        0.361,
+        0.965
+      ],
+      [
+        0.925,
+        0.282,
+        0.6
+      ],
+      [
+        0.298,
+        0.733,
+        0.91
+      ],
+      [
+        0.984,
+        0.749,
+        0.141
+      ]
+    ],
+    "ember": [
+      [
+        0.984,
+        0.451,
+        0.133
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ],
+      [
+        0.965,
+        0.62,
+        0.043
+      ],
+      [
+        0.561,
+        0.149,
+        0.305
+      ]
+    ]
   },
   "defaultPalette": "midnight"
 }

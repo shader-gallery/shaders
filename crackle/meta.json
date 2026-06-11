@@ -3,47 +3,122 @@
   "slug": "crackle",
   "family": "Mosaic",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "voronoi", "shards", "refraction", "aurora"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "voronoi",
+    "shards",
+    "refraction",
+    "aurora"
+  ],
   "description": "A static two-scale fracture web over a deep, slow-creeping aurora — no crack is ever drawn. Each shard refracts the colour field through its own slowly wandering offset and tilt, so hue and brightness jump cleanly at every seam while fine crazing shears the gradient in miniature inside each shard.",
   "entry": "shader.frag",
   "params": [
     {
-      "key": "u_shard",
+      "uniform": "u_shard",
       "label": "Shard size",
       "min": 80,
       "max": 320,
       "default": 160,
-      "effect": "Size of the coarse fracture cells in CSS pixels; smaller shards make a busy crazed glaze, larger shards a few grand fractures."
+      "effect": "Size of the coarse fracture cells in CSS pixels; smaller shards make a busy crazed glaze, larger shards a few grand fractures.",
+      "step": 1
     },
     {
-      "key": "u_fieldSpeed",
+      "uniform": "u_fieldSpeed",
       "label": "Field speed",
       "min": 0.02,
       "max": 0.6,
       "default": 0.12,
-      "effect": "Creep rate of the colour field behind the glaze; at the low end it is near-still and only the refraction shimmer moves."
+      "effect": "Creep rate of the colour field behind the glaze; at the low end it is near-still and only the refraction shimmer moves.",
+      "step": 0.01
     },
     {
-      "key": "u_shatter",
+      "uniform": "u_shatter",
       "label": "Shatter",
       "min": 0,
       "max": 1,
       "default": 0.55,
-      "effect": "Magnitude of each shard's sample offset as a fraction of its size — 0 heals the glaze into one unbroken field, 1 scrambles neighbours far apart."
+      "effect": "Magnitude of each shard's sample offset as a fraction of its size — 0 heals the glaze into one unbroken field, 1 scrambles neighbours far apart.",
+      "step": 0.01
     },
     {
-      "key": "u_fineMix",
+      "uniform": "u_fineMix",
       "label": "Fine crazing",
       "min": 0,
       "max": 1,
       "default": 0.5,
-      "effect": "Strength of the nested hairline layer's micro-offsets inside each shard — 0 leaves only the coarse shatter, 1 fills shards with fine crazing shear."
+      "effect": "Strength of the nested hairline layer's micro-offsets inside each shard — 0 leaves only the coarse shatter, 1 fills shards with fine crazing shear.",
+      "step": 0.01
     }
   ],
   "palettes": {
-    "midnight":   [[0.231, 0.510, 0.965], [0.659, 0.333, 0.969], [0.133, 0.827, 0.933], [0.957, 0.247, 0.369]],
-    "witchlight": [[0.545, 0.361, 0.965], [0.925, 0.282, 0.600], [0.298, 0.733, 0.910], [0.984, 0.749, 0.141]],
-    "ember":      [[0.984, 0.451, 0.133], [0.957, 0.247, 0.369], [0.965, 0.620, 0.043], [0.561, 0.149, 0.305]]
+    "midnight": [
+      [
+        0.231,
+        0.51,
+        0.965
+      ],
+      [
+        0.659,
+        0.333,
+        0.969
+      ],
+      [
+        0.133,
+        0.827,
+        0.933
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ]
+    ],
+    "witchlight": [
+      [
+        0.545,
+        0.361,
+        0.965
+      ],
+      [
+        0.925,
+        0.282,
+        0.6
+      ],
+      [
+        0.298,
+        0.733,
+        0.91
+      ],
+      [
+        0.984,
+        0.749,
+        0.141
+      ]
+    ],
+    "ember": [
+      [
+        0.984,
+        0.451,
+        0.133
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ],
+      [
+        0.965,
+        0.62,
+        0.043
+      ],
+      [
+        0.561,
+        0.149,
+        0.305
+      ]
+    ]
   },
   "defaultPalette": "midnight"
 }

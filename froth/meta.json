@@ -3,21 +3,113 @@
   "slug": "froth",
   "family": "Mosaic",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "voronoi", "foam", "iridescent", "rising"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "voronoi",
+    "foam",
+    "iridescent",
+    "rising"
+  ],
   "description": "A wall of soap-foam cells rising slowly out of the dark: near-black bubbles with thin iridescent membranes whose colour follows the wall angle like an interference film. Cells stretch taller as they climb, and near the top they flash and burst into black before drifting off the frame.",
   "entry": "shader.frag",
   "params": [
-    { "key": "u_cell", "label": "Cell size", "min": 30, "max": 140, "default": 70,
-      "effect": "Average bubble diameter in CSS pixels; small cells read as fine champagne froth, large cells as lazy bath foam." },
-    { "key": "u_riseSpeed", "label": "Rise speed", "min": 0.05, "max": 0.8, "default": 0.2,
-      "effect": "Upward scroll rate of the foam wall, from an almost-still settle to a steady climb." },
-    { "key": "u_popRate", "label": "Pop rate", "min": 0.0, "max": 1.0, "default": 0.4,
-      "effect": "How often cells near the top flash and go black; 0 means no cell ever pops, 1 leaves the upper rows mostly burst." }
+    {
+      "uniform": "u_cell",
+      "label": "Cell size",
+      "min": 30,
+      "max": 140,
+      "default": 70,
+      "effect": "Average bubble diameter in CSS pixels; small cells read as fine champagne froth, large cells as lazy bath foam.",
+      "step": 1
+    },
+    {
+      "uniform": "u_riseSpeed",
+      "label": "Rise speed",
+      "min": 0.05,
+      "max": 0.8,
+      "default": 0.2,
+      "effect": "Upward scroll rate of the foam wall, from an almost-still settle to a steady climb.",
+      "step": 0.01
+    },
+    {
+      "uniform": "u_popRate",
+      "label": "Pop rate",
+      "min": 0,
+      "max": 1,
+      "default": 0.4,
+      "effect": "How often cells near the top flash and go black; 0 means no cell ever pops, 1 leaves the upper rows mostly burst.",
+      "step": 0.01
+    }
   ],
   "palettes": {
-    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
-    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
-    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+    "midnight": [
+      [
+        0.231,
+        0.51,
+        0.965
+      ],
+      [
+        0.659,
+        0.333,
+        0.969
+      ],
+      [
+        0.133,
+        0.827,
+        0.933
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ]
+    ],
+    "witchlight": [
+      [
+        0.545,
+        0.361,
+        0.965
+      ],
+      [
+        0.925,
+        0.282,
+        0.6
+      ],
+      [
+        0.298,
+        0.733,
+        0.91
+      ],
+      [
+        0.984,
+        0.749,
+        0.141
+      ]
+    ],
+    "ember": [
+      [
+        0.984,
+        0.451,
+        0.133
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ],
+      [
+        0.965,
+        0.62,
+        0.043
+      ],
+      [
+        0.561,
+        0.149,
+        0.305
+      ]
+    ]
   },
   "defaultPalette": "midnight"
 }

@@ -3,47 +3,122 @@
   "slug": "tessera",
   "family": "Mosaic",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "voronoi", "glass", "tiles", "subdivision"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "voronoi",
+    "glass",
+    "tiles",
+    "subdivision"
+  ],
   "description": "An irregular wall of dark glass tiles drawn by hairline grout seams, each pane faintly tinted from the palette. The tiling itself is alive: tiles shatter into smaller tesserae and clutches of chips fuse back into broad panes, newborn seams flashing softly as the wall forever re-tessellates itself.",
   "entry": "shader.frag",
   "params": [
     {
-      "key": "u_cell",
+      "uniform": "u_cell",
       "label": "Tile size",
       "min": 40,
       "max": 200,
       "default": 90,
-      "effect": "Average diameter of a parent tile in CSS pixels; small values give dense mosaic chips, large values give broad panes."
+      "effect": "Average diameter of a parent tile in CSS pixels; small values give dense mosaic chips, large values give broad panes.",
+      "step": 1
     },
     {
-      "key": "u_splitRate",
+      "uniform": "u_splitRate",
       "label": "Split rate",
       "min": 0.05,
       "max": 1,
       "default": 0.25,
-      "effect": "How quickly an individual split or fuse plays out — from slow crystalline growth to a busy reshuffling of the wall."
+      "effect": "How quickly an individual split or fuse plays out — from slow crystalline growth to a busy reshuffling of the wall.",
+      "step": 0.01
     },
     {
-      "key": "u_seam",
+      "uniform": "u_seam",
       "label": "Seam width",
       "min": 0.75,
       "max": 4,
       "default": 1.5,
-      "effect": "Thickness of the bright grout lines between tiles; wider seams make the web dominate, hairline seams let the glass fills lead."
+      "effect": "Thickness of the bright grout lines between tiles; wider seams make the web dominate, hairline seams let the glass fills lead.",
+      "step": 0.05
     },
     {
-      "key": "u_churn",
+      "uniform": "u_churn",
       "label": "Churn",
       "min": 0.05,
       "max": 0.6,
       "default": 0.2,
-      "effect": "Fraction of the wall in mid-transition at any moment; low values leave a calm wall with rare splits, high values keep the tessellation visibly boiling."
+      "effect": "Fraction of the wall in mid-transition at any moment; low values leave a calm wall with rare splits, high values keep the tessellation visibly boiling.",
+      "step": 0.01
     }
   ],
   "palettes": {
-    "midnight":   [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
-    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
-    "ember":      [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+    "midnight": [
+      [
+        0.231,
+        0.51,
+        0.965
+      ],
+      [
+        0.659,
+        0.333,
+        0.969
+      ],
+      [
+        0.133,
+        0.827,
+        0.933
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ]
+    ],
+    "witchlight": [
+      [
+        0.545,
+        0.361,
+        0.965
+      ],
+      [
+        0.925,
+        0.282,
+        0.6
+      ],
+      [
+        0.298,
+        0.733,
+        0.91
+      ],
+      [
+        0.984,
+        0.749,
+        0.141
+      ]
+    ],
+    "ember": [
+      [
+        0.984,
+        0.451,
+        0.133
+      ],
+      [
+        0.957,
+        0.247,
+        0.369
+      ],
+      [
+        0.965,
+        0.62,
+        0.043
+      ],
+      [
+        0.561,
+        0.149,
+        0.305
+      ]
+    ]
   },
   "defaultPalette": "midnight"
 }
