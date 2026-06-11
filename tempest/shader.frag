@@ -27,7 +27,7 @@ uniform float u_afterglow;    // post-flash glow decay length, seconds  (default
 uniform float u_detail;       // css-px scale of dominant billows       (default 420)
 
 const vec3  BG     = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const vec3  CHARC  = vec3(0.058, 0.060, 0.074); // charcoal cloud, a half-step up
+const vec3  CHARC  = vec3(0.090, 0.094, 0.116); // charcoal cloud, readable at rest
 
 // --- hash + value-noise + fbm ----------------------------------------------
 float hash21(vec2 p) {
@@ -107,10 +107,18 @@ void main() {
   float bankBot = smoothstep(0.0, 0.18, uvn.y);    // slight thinning at floor
   float bank    = bankTop * mix(0.55, 1.0, bankBot);
   // shape density into a cloud mass (0..1), modulated by bank envelope
-  float mass = smoothstep(0.44, 0.72, dens) * bank;
+  float mass = smoothstep(0.40, 0.70, dens) * bank;
 
-  // base look: charcoal mass over near-black sky, barely visible at rest
+  // base look: charcoal mass over near-black sky, readable even between strikes
   vec3 col = mix(BG, CHARC, mass);
+  // faint cool storm-light tint on the cloud body + self-shadowed troughs, so
+  // the billows have form at rest rather than reading as a flat black field
+  float relief = smoothstep(0.34, 0.78, dens) * bank;
+  col += mix(c2, c1, 0.45) * relief * 0.075;
+  col += mix(c1, c3, 0.30) * (1.0 - relief) * mass * 0.018;
+  // distant storm glow pooling along the horizon (ever-present light pollution)
+  float horizon = smoothstep(0.46, 0.0, uvn.y) * bankBot;
+  col += mix(c1, c3, 0.35) * horizon * 0.05;
   // faint vertical sky gradient so the top isn't dead flat
   col += BG * (1.0 - uvn.y) * 0.15;
 

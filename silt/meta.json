@@ -3,18 +3,58 @@
   "slug": "silt",
   "family": "Gyre",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "sediment", "flow", "grain", "calm"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "sediment",
+    "flow",
+    "grain",
+    "calm"
+  ],
   "description": "A riverbed current along the frame's floor: stretched FBM laminations form fine sediment streaks in the palette's cooler colours, dense at the bottom and thinning to a soft boundary, while sparse bright grains ride the current and catch the light. The upper two thirds stay a calm, faintly tinted near-black that breathes over ~20 seconds.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_currentSpeed", "label": "Current speed", "min": 0.1, "max": 2.0, "step": 0.05,
-      "default": 0.55, "effect": "Horizontal drift rate of streaks and grains — a lazy seep at min, a brisk underflow at max." },
-    { "uniform": "u_bedHeight", "label": "Bed height", "min": 0.15, "max": 0.6, "step": 0.01,
-      "default": 0.33, "effect": "Fraction of frame height the sediment band occupies, from a thin floor strip to over half the frame." },
-    { "uniform": "u_grain", "label": "Grain", "min": 2.0, "max": 18.0, "step": 1.0,
-      "default": 7.0, "effect": "CSS-pixel thickness of the sediment streaks and riding grains — silky fine lamination up to coarse strands." },
-    { "uniform": "u_sparkle", "label": "Sparkle", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.5, "effect": "Density and brightness of the bright riding grains — zero is pure streaks, max scatters glints all along the bed." }
+    {
+      "uniform": "u_currentSpeed",
+      "label": "Current speed",
+      "min": 0.1,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.55,
+      "effect": "Horizontal drift rate of streaks and grains — a lazy seep at min, a brisk underflow at max."
+    },
+    {
+      "uniform": "u_bedHeight",
+      "label": "Bed height",
+      "min": 0.15,
+      "max": 0.6,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Fraction of frame height the sediment band occupies, from a thin floor strip to over half the frame."
+    },
+    {
+      "uniform": "u_grain",
+      "label": "Grain",
+      "min": 2.0,
+      "max": 18.0,
+      "step": 1.0,
+      "default": 7.0,
+      "effect": "CSS-pixel thickness of the sediment streaks and riding grains — silky fine lamination up to coarse strands."
+    },
+    {
+      "uniform": "u_sparkle",
+      "label": "Sparkle",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Density and brightness of the bright riding grains — zero is pure streaks, max scatters glints all along the bed."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "exposure": 1.08,
+    "saturation": 1.08
+  }
 }

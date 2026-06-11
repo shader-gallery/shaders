@@ -103,9 +103,9 @@ void main() {
   // core resolution: structure (and brightness) resolves only toward the core.
   // far field dissolves to faint traces, upper-left stays nearly empty.
   float coreT = 1.0 - smoothstep(0.0, core, rcss);          // 1 at centre → 0 out
-  float farFade = mix(0.10, 1.0, 1.0 - smoothstep(core, core * 4.5, rcss));
+  float farFade = mix(0.28, 1.0, 1.0 - smoothstep(core, core * 4.5, rcss));
   // overall arm visibility: faint far out, resolving in toward the core
-  float vis = mix(0.10, 1.0, coreT) * farFade;
+  float vis = mix(0.26, 1.0, coreT) * farFade;
 
   // tighten the bands toward the core: extra high-frequency ridges only resolve
   // inside the core region, so the coil reads denser at the heart.
@@ -134,13 +134,13 @@ void main() {
   vec3 col = BG;
 
   // dye arms laid onto the near-black ground
-  col += dye * arm * vis * 0.85;
+  col += dye * arm * vis * 1.25;
 
   // soft warm glow pooling inside the defined core radius
   float glow = exp(-rcss / (core * 0.6));
-  col += mix(c2, c3, 0.5) * glow * 0.55;
+  col += mix(c2, c3, 0.5) * glow * 0.75;
   // a tighter inner bloom so the very heart is luminous
-  col += c3 * exp(-rcss / (core * 0.28)) * 0.30;
+  col += c3 * exp(-rcss / (core * 0.28)) * 0.42;
 
   // gentle overall vignette toward the upper-left empty quadrant keeps that
   // region calm (purely subtractive of stray noise, never darkens the core)

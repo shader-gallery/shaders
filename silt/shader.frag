@@ -87,9 +87,19 @@ void main() {
   // ---------------------------------------------------------------
   float breathe = 0.5 + 0.5 * sin(t * 6.2831853 / 20.0);
   vec3 upperTint = mix(coolB, coolA, 0.35);
-  // gradient: a touch brighter low (near the bed) fading to black at the top
-  float upGrad = pow(max(0.0, 1.0 - ny), 1.6);
-  col += upperTint * upGrad * (0.018 + 0.010 * breathe);
+  // gradient: brighter low (near the bed) fading toward the top, but never to
+  // dead black — the water column stays faintly lit so the frame isn't split.
+  float upGrad = pow(max(0.0, 1.0 - ny), 1.4);
+  col += upperTint * (upGrad * (0.032 + 0.018 * breathe) + 0.010);
+
+  // suspended turbidity: slow large-scale sediment clouds drifting through the
+  // whole water column so the upper frame carries faint texture, not void.
+  vec2 tp;
+  tp.x = (fc.x + t * u_currentSpeed * 30.0 * pr) / max(res.y, 1.0) * 2.2;
+  tp.y = fc.y / max(res.y, 1.0) * 3.4 + t * 0.02;
+  float turb = fbm(tp);
+  turb = smoothstep(0.45, 0.95, turb);
+  col += mix(coolA, coolB, 0.5) * turb * (0.05 + 0.03 * (1.0 - ny));
 
   // ---------------------------------------------------------------
   // Bottom band: the sediment current.
@@ -139,7 +149,7 @@ void main() {
   float hueMix = 0.5 + 0.5 * sin((fc.x + drift) * scaleY * 0.06 + bed * 2.0);
   vec3 sedCol = mix(coolA, coolB, hueMix);
 
-  col += sedCol * streakAmt * 0.85;
+  col += sedCol * streakAmt * 1.35;
 
   // ---------------------------------------------------------------
   // Bright riding grains — sparse hash sparkles on the streaks that drift
