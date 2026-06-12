@@ -41,6 +41,20 @@ vec2 hash22(vec2 p) {
   return fract(vec2(n, n * 1.37));
 }
 
+// value noise + small fbm for the frothy foam substrate
+float vnoise(vec2 p) {
+  vec2 i = floor(p), f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  float a = hash21(i), b = hash21(i + vec2(1.0, 0.0));
+  float c = hash21(i + vec2(0.0, 1.0)), d = hash21(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+}
+float fbm(vec2 p) {
+  float s = 0.0, a = 0.5;
+  for (int o = 0; o < 4; o++) { s += a * vnoise(p); p = p * 2.03 + vec2(7.3, 1.1); a *= 0.5; }
+  return s;
+}
+
 // cyclic triangular weight for a palette entry centred at c on a 0..4 wheel
 float wheelW(float s, float c) {
   float d = abs(s - c);
@@ -107,11 +121,11 @@ void main() {
       vec2 bscreen = bSamp + dr;
 
       // raft membership: keep a bubble only if its hash is under local density.
-      float bd0 = exp(-dot(bscreen - r0, bscreen - r0) / (ra * ra * 0.045));
-      float bd1 = exp(-dot(bscreen - r1, bscreen - r1) / (ra * ra * 0.052));
-      float bd2 = exp(-dot(bscreen - r2, bscreen - r2) / (ra * ra * 0.038));
-      float bdens = clamp(bd0 * 1.05 + bd1 * 1.0 + bd2 * 0.95, 0.0, 1.4);
-      if (hk > bdens * 0.95) continue;
+      float bd0 = exp(-dot(bscreen - r0, bscreen - r0) / (ra * ra * 0.078));
+      float bd1 = exp(-dot(bscreen - r1, bscreen - r1) / (ra * ra * 0.088));
+      float bd2 = exp(-dot(bscreen - r2, bscreen - r2) / (ra * ra * 0.066));
+      float bdens = clamp(bd0 * 1.05 + bd1 * 1.0 + bd2 * 0.95, 0.0, 1.5);
+      if (hk > bdens * 1.18) continue;
 
       // size class: small rings brightest, large dimmer & rarer
       float sizeF  = mix(0.5, 1.5, hs * hs);   // biased toward smaller
@@ -191,12 +205,23 @@ void main() {
 
   vec3 foam = c0 * hueI.x + c1 * hueI.y + c2 * hueI.z + c3 * hueI.w;
 
+  // raft density field (also used to gate the frothy substrate)
+  float d0 = exp(-dot(fc - r0, fc - r0) / (ra * ra * 0.078));
+  float d1 = exp(-dot(fc - r1, fc - r1) / (ra * ra * 0.088));
+  float d2 = exp(-dot(fc - r2, fc - r2) / (ra * ra * 0.066));
+  float raftDens = clamp(d0 * 1.05 + d1 * 1.0 + d2 * 0.95, 0.0, 1.5);
+
+  // frothy foam substrate: a soft cellular fbm bed inside the rafts so the
+  // bubbles sit on a churning mass of foam and the rafts read as froth, not a
+  // scatter of lonely rings on black. Drifts with the field (samp coords).
+  float froTex = fbm(samp / (cell * 1.1) + 3.0);
+  froTex = pow(clamp(froTex * froTex + 0.15 * fbm(samp / (cell * 0.45)), 0.0, 1.0), 1.3);
+  float froth = froTex * smoothstep(0.12, 0.9, raftDens);
+  vec3  frothCol = mix(c2, c0, 0.4);
+  col += mix(frothCol, vec3(1.0), 0.25) * froth * 0.22;
+
   // faint dark-water sheen beneath the rafts so foam reads as resting on glass
-  float d0 = exp(-dot(fc - r0, fc - r0) / (ra * ra * 0.045));
-  float d1 = exp(-dot(fc - r1, fc - r1) / (ra * ra * 0.052));
-  float d2 = exp(-dot(fc - r2, fc - r2) / (ra * ra * 0.038));
-  float raftDens = clamp(d0 * 1.05 + d1 * 1.0 + d2 * 0.95, 0.0, 1.4);
-  col += (c2 * 0.45 + c0 * 0.55) * raftDens * 0.045;
+  col += (c2 * 0.45 + c0 * 0.55) * raftDens * 0.05;
 
   col += foam;
 
