@@ -16,5 +16,6 @@
     { "uniform": "u_ruling", "label": "Ruling gap", "min": 60.0, "max": 200.0, "step": 1.0,
       "default": 110.0, "effect": "Distance between the faint vertical bearing rulings in CSS pixels, setting how finely the record is graduated." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "preset": "hologram" }
 }
