@@ -1,0 +1,23 @@
+{
+  "name": "Relief",
+  "slug": "relief",
+  "family": "Facet",
+  "author": "Erin Carter",
+  "tags": ["contour", "topographic", "emboss", "relief", "geometric", "loop"],
+  "description": "A slowly morphing topographic relief — elevation shaded by hillshade so the terrain reads as carved, threaded with crisp contour lines and heavier index lines. A premium embossed map, geometry from a height field.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Terrain scale", "min": 0.5, "max": 3.0, "step": 0.01, "default": 1.4,
+      "effect": "Feature scale of the terrain; low is broad landforms, high is fine ridged detail." },
+    { "uniform": "u_lines", "label": "Contours", "min": 5.0, "max": 30.0, "step": 1.0, "default": 14.0,
+      "effect": "How many contour lines band the elevation; low is bold, high a fine survey." },
+    { "uniform": "u_emboss", "label": "Emboss", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "Strength of the carved hillshade relief; 0 is flat tinted bands, high is deeply embossed." },
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.25,
+      "effect": "How fast the terrain morphs; 0 holds it still." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pushes the terrain up beneath it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "clay",
+  "post": { "grain": 0.05, "vignette": 0.3, "contrast": 1.06, "saturation": 1.04 }
+}

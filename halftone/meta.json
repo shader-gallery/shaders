@@ -1,0 +1,23 @@
+{
+  "name": "Halftone",
+  "slug": "halftone",
+  "family": "Moiré",
+  "author": "Erin Carter",
+  "tags": ["halftone", "dots", "crisp", "print", "screen", "geometric", "loop"],
+  "description": "A rotated print-screen of crisp dots whose size swells and shrinks with a drifting tone field — fat where the light pools, fine where it thins, tinted across the palette left to right. Clean, graphic, high-contrast.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dots", "label": "Dot count", "min": 12.0, "max": 90.0, "step": 1.0, "default": 38.0,
+      "effect": "How many dots span the frame; low is bold and chunky, high is a fine screen." },
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.3,
+      "effect": "Drift speed of the tone field that swells the dots; 0 holds the pattern still." },
+    { "uniform": "u_contrast", "label": "Contrast", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "How hard the dots clip on and off; high is sharp ink-on-paper, low is soft." },
+    { "uniform": "u_angle", "label": "Screen angle", "min": 0.0, "max": 1.57, "step": 0.01, "default": 0.4,
+      "effect": "Rotation of the dot screen, like a print halftone angle." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer swells the dots toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "neon",
+  "post": { "grain": 0.04, "vignette": 0.3, "contrast": 1.06, "saturation": 1.08 }
+}

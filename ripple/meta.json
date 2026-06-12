@@ -1,0 +1,23 @@
+{
+  "name": "Ripple",
+  "slug": "ripple",
+  "family": "Moiré",
+  "author": "Erin Carter",
+  "tags": ["dots", "grid", "ripple", "wave", "crisp", "geometric", "loop"],
+  "description": "A grid of dots rippling like an LED matrix under water — concentric waves from two sources swell and shrink each dot as they pass and cross, crests brightening through the palette while troughs sink to near-black. Crisp, kinetic, rhythmic.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dots", "label": "Dot count", "min": 12.0, "max": 64.0, "step": 1.0, "default": 30.0,
+      "effect": "How many dots span the frame; low is a bold matrix, high a fine grid." },
+    { "uniform": "u_speed", "label": "Ripple speed", "min": 0.0, "max": 3.0, "step": 0.01, "default": 1.4,
+      "effect": "How fast the waves travel through the grid; 0 freezes them." },
+    { "uniform": "u_wavelength", "label": "Wavelength", "min": 0.2, "max": 2.5, "step": 0.01, "default": 1.0,
+      "effect": "Spacing between wave crests; low is tight rings, high broad swells." },
+    { "uniform": "u_amp", "label": "Pulse", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "How hard the dots swell and shrink with the wave; 0 is a steady grid." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer acts as a third ripple source; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "tide",
+  "post": { "grain": 0.04, "vignette": 0.32, "contrast": 1.05, "saturation": 1.07 }
+}

@@ -23,7 +23,9 @@
     "Sough",
     "Umbra",
     "Aura",
-    "Molten"
+    "Molten",
+    "Moiré",
+    "Facet"
   ],
   "shaders": [
     "lacework",
@@ -202,6 +204,22 @@
     "gild",
     "rime",
     "quench",
-    "nacre"
+    "nacre",
+    "halftone",
+    "beat",
+    "grille",
+    "benday",
+    "dither",
+    "floret",
+    "ripple",
+    "tally",
+    "honeycomb",
+    "stride",
+    "cubit",
+    "chevron",
+    "relief",
+    "rondel",
+    "lattice",
+    "parquet"
   ]
 }

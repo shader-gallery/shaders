@@ -1,0 +1,23 @@
+{
+  "name": "Stride",
+  "slug": "stride",
+  "family": "Facet",
+  "author": "Erin Carter",
+  "tags": ["stripes", "diagonal", "bevel", "ridge", "geometric", "crisp", "loop"],
+  "description": "Bold diagonal bars sliding across the frame, each a beveled ridge with a lit chamfer and shadowed trailing edge so they read as extruded 3D slats. Confident, architectural, kinetic.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_bars", "label": "Bar count", "min": 3.0, "max": 24.0, "step": 1.0, "default": 9.0,
+      "effect": "How many bars span the frame; low is bold and massive, high a fine louvre." },
+    { "uniform": "u_speed", "label": "Slide speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.35,
+      "effect": "How fast the bars slide; 0 holds them still." },
+    { "uniform": "u_bevel", "label": "Bevel", "min": 0.05, "max": 0.49, "step": 0.01, "default": 0.4,
+      "effect": "Width of the chamfered edges; low is a flat slat, high a fully rounded ridge." },
+    { "uniform": "u_angle", "label": "Angle", "min": -1.2, "max": 1.2, "step": 0.01, "default": 0.6,
+      "effect": "Diagonal tilt of the bars." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer tilts the bars; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "wine",
+  "post": { "grain": 0.04, "vignette": 0.3, "contrast": 1.06, "saturation": 1.06 }
+}

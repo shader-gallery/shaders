@@ -1,0 +1,23 @@
+{
+  "name": "Benday",
+  "slug": "benday",
+  "family": "Moiré",
+  "author": "Erin Carter",
+  "tags": ["benday", "dots", "comic", "pop-art", "high-key", "crisp", "loop"],
+  "description": "Pop-art Ben-Day dots — a regular screen of bold flat dots over a light newsprint ground, each dot taking its colour from a drifting field underneath so colour blocks roll across the grid. Bright, graphic, comic-book.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_dots", "label": "Dot count", "min": 12.0, "max": 70.0, "step": 1.0, "default": 30.0,
+      "effect": "How many dots span the frame; low is bold and chunky, high is a fine comic screen." },
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.3,
+      "effect": "Drift speed of the colour blocks rolling across the dots; 0 holds them still." },
+    { "uniform": "u_size", "label": "Dot size", "min": 0.25, "max": 0.95, "step": 0.01, "default": 0.62,
+      "effect": "Dot coverage; low leaves an airy grid on the ground, high nearly fills it solid." },
+    { "uniform": "u_ink", "label": "Ground", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "Background tone — 0 is light newsprint (high-key), 1 a dark ground for neon dots." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pushes the colour field; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "prism",
+  "post": { "grain": 0.04, "vignette": 0.16, "contrast": 1.05, "saturation": 1.12 }
+}

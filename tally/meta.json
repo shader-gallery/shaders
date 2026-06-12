@@ -1,0 +1,23 @@
+{
+  "name": "Tally",
+  "slug": "tally",
+  "family": "Moiré",
+  "author": "Erin Carter",
+  "tags": ["led", "dot-matrix", "equalizer", "board", "crisp", "geometric", "loop"],
+  "description": "An LED dot-matrix board running like a spectrum meter — columns of round LEDs bouncing to their own rhythm with peak-hold caps, lit dots grading cool-to-warm by height over a faint dark grid of off pixels. Crisp, rhythmic, electronic.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cols", "label": "Columns", "min": 10.0, "max": 56.0, "step": 1.0, "default": 28.0,
+      "effect": "Number of LED columns; low is a chunky board, high a fine matrix." },
+    { "uniform": "u_speed", "label": "Speed", "min": 0.0, "max": 3.0, "step": 0.01, "default": 1.0,
+      "effect": "How fast the bars bounce; 0 freezes the board." },
+    { "uniform": "u_dotSize", "label": "LED size", "min": 0.3, "max": 0.95, "step": 0.01, "default": 0.7,
+      "effect": "Size of each LED dot; low is pinpoint, high nearly fills its cell." },
+    { "uniform": "u_glowOff", "label": "Off glow", "min": 0.0, "max": 0.4, "step": 0.01, "default": 0.12,
+      "effect": "Brightness of the unlit grid dots; 0 hides them, higher shows the whole panel." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer drives its column to full height; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "sodium",
+  "post": { "grain": 0.04, "vignette": 0.34, "contrast": 1.06, "saturation": 1.08 }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Lattice",
+  "slug": "lattice",
+  "family": "Facet",
+  "author": "Erin Carter",
+  "tags": ["grid", "perspective", "wireframe", "synthwave", "neon", "geometric", "loop"],
+  "description": "A neon wireframe grid rushing toward a glowing horizon, a banded sun sitting on the skyline — the classic perspective floor receding to a vanishing point, lines fading into the dark. Bold, retro, kinetic.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_speed", "label": "Speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.6,
+      "effect": "How fast the grid rushes toward you; 0 holds it still." },
+    { "uniform": "u_density", "label": "Grid density", "min": 4.0, "max": 24.0, "step": 1.0, "default": 10.0,
+      "effect": "How many grid lines cross the plane; low is bold and wide, high a fine mesh." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.7,
+      "effect": "Neon glow on the grid lines and horizon; 0 is flat lines." },
+    { "uniform": "u_sun", "label": "Sun", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.7,
+      "effect": "Size and brightness of the banded horizon sun; 0 leaves a bare skyline." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer steers the vanishing point; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "neon",
+  "post": { "grain": 0.04, "vignette": 0.34, "contrast": 1.06, "saturation": 1.1 }
+}

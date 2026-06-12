@@ -1,0 +1,23 @@
+{
+  "name": "Beat",
+  "slug": "beat",
+  "family": "Moiré",
+  "author": "Erin Carter",
+  "tags": ["moire", "rings", "interference", "crisp", "geometric", "glow", "loop"],
+  "description": "Two concentric ring patterns beating against each other — a slow moiré rosette blooming and folding as the centres drift apart, crisp bright bands threading through near-black. Pure interference, hypnotic and graphic.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_freq", "label": "Ring frequency", "min": 8.0, "max": 60.0, "step": 1.0, "default": 26.0,
+      "effect": "How tightly the rings are spaced; low is bold wide rings, high a fine weave." },
+    { "uniform": "u_detune", "label": "Detune", "min": 0.0, "max": 0.4, "step": 0.005, "default": 0.12,
+      "effect": "Scale mismatch between the two patterns; this is what creates the moiré — 0 nearly cancels it." },
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.4,
+      "effect": "How far and fast the two centres wander; 0 holds the rosette still." },
+    { "uniform": "u_crisp", "label": "Crispness", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Sharpness of the moiré bands; high is hard-edged, low is soft." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls one ring centre; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "peacock",
+  "post": { "grain": 0.04, "vignette": 0.34, "contrast": 1.05, "saturation": 1.06 }
+}

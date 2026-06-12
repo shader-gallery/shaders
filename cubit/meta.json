@@ -1,0 +1,23 @@
+{
+  "name": "Cubit",
+  "slug": "cubit",
+  "family": "Facet",
+  "author": "Erin Carter",
+  "tags": ["isometric", "cubes", "3d", "geometric", "crisp", "loop"],
+  "description": "A field of isometric cubes rising and falling like a block cityscape — each cube three shaded faces meeting at crisp seams, taller blocks catching more light. Confident hard-edged 3D geometry from flat shapes.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cells", "label": "Cube count", "min": 4.0, "max": 16.0, "step": 1.0, "default": 8.0,
+      "effect": "How many cubes span the frame; low is big bold blocks, high a dense field." },
+    { "uniform": "u_rise", "label": "Height", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "How much the cubes brighten as they rise; 0 holds them an even height." },
+    { "uniform": "u_speed", "label": "Speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.5,
+      "effect": "How fast cubes rise and fall; 0 freezes the cityscape." },
+    { "uniform": "u_contrast", "label": "Face contrast", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "Shading difference between the three cube faces; high reads boldly three-dimensional." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer raises nearby cubes; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "nocturne",
+  "post": { "grain": 0.04, "vignette": 0.34, "contrast": 1.06, "saturation": 1.05 }
+}
