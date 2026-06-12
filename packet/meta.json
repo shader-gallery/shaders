@@ -1,0 +1,23 @@
+{
+  "name": "Packet",
+  "slug": "packet",
+  "family": "Glitch",
+  "author": "Erin Carter",
+  "tags": ["data", "hex", "stream", "bus", "digital", "loop"],
+  "description": "A live data bus — rows of byte cells streaming sideways at their own rates, values re-rolling as they pass, bright packet bursts travelling through the dim traffic while a read cursor sweeps the columns. Horizontal data flow, all signal.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cols", "label": "Byte cells", "min": 10.0, "max": 56.0, "step": 1.0, "default": 26.0,
+      "effect": "How many byte cells span a row; low is chunky data, high a dense bus." },
+    { "uniform": "u_speed", "label": "Stream speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.5,
+      "effect": "How fast the rows scroll; 0 freezes the data. Each row varies around this." },
+    { "uniform": "u_burst", "label": "Packet density", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "How many bright packet bursts travel through the traffic; 0 is quiet, high is busy." },
+    { "uniform": "u_churn", "label": "Value churn", "min": 0.0, "max": 10.0, "step": 0.5, "default": 2.0,
+      "effect": "How fast the byte values re-roll; 0 freezes them, high keeps the data changing." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer lights its row; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "spectral",
+  "post": { "grain": 0.05, "vignette": 0.34, "contrast": 1.07, "saturation": 1.08 }
+}

@@ -224,6 +224,11 @@
     "parquet",
     "rupture",
     "cathode",
-    "cipher"
+    "cipher",
+    "matrix",
+    "ascii",
+    "glyphic",
+    "tracking",
+    "packet"
   ]
 }

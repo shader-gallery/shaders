@@ -1,0 +1,23 @@
+{
+  "name": "Glyphic",
+  "slug": "glyphic",
+  "family": "Glitch",
+  "author": "Erin Carter",
+  "tags": ["glyphs", "text-mode", "density", "ascii-art", "digital", "loop"],
+  "description": "A drifting image rendered in characters — each cell a glyph whose density tracks the brightness beneath it, so soft blobs of light resolve into denser symbols while the dark thins to sparse marks. The whole scene re-typed as text-mode art.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cols", "label": "Columns", "min": 14.0, "max": 60.0, "step": 1.0, "default": 34.0,
+      "effect": "How many character columns fill the frame; low is chunky text, high a fine terminal." },
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.35,
+      "effect": "Drift speed of the underlying image the characters trace; 0 holds it still." },
+    { "uniform": "u_contrast", "label": "Contrast", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "How sharply brightness maps to glyph density; high makes stark light/dark text." },
+    { "uniform": "u_churn", "label": "Type churn", "min": 0.0, "max": 10.0, "step": 0.1, "default": 2.0,
+      "effect": "How fast the characters re-roll; 0 freezes the symbols, high keeps retyping." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer brightens the image beneath it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "neon",
+  "post": { "grain": 0.04, "vignette": 0.34, "contrast": 1.08, "saturation": 1.08 }
+}

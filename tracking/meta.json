@@ -1,0 +1,23 @@
+{
+  "name": "Tracking",
+  "slug": "tracking",
+  "family": "Glitch",
+  "author": "Erin Carter",
+  "tags": ["vhs", "tracking", "analog", "chroma-bleed", "glitch", "loop"],
+  "description": "Bad VHS tracking — soft colour bands wobbling with tape jitter, chroma bleeding into red and blue ghosts, and a tracking-error band of snow rolling slowly up the picture while the bottom edge drops out. Warm analog decay.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_warp", "label": "Wobble", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Horizontal tape jitter and wavy warp; 0 is a steady picture, high is heavy wow and flutter." },
+    { "uniform": "u_bleed", "label": "Chroma bleed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "How far the colour channels smear into red/blue ghosts." },
+    { "uniform": "u_tracking", "label": "Tracking error", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Severity of the rolling desync band of snow; 0 removes it, high tears the picture." },
+    { "uniform": "u_rollSpeed", "label": "Roll", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.3,
+      "effect": "How fast the tracking band rolls through the frame; 0 holds it still." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer disturbs tracking at its row; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "amethyst",
+  "post": { "grain": 0.08, "vignette": 0.3, "contrast": 1.06, "saturation": 1.08 }
+}

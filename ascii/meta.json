@@ -1,0 +1,23 @@
+{
+  "name": "ASCII",
+  "slug": "ascii",
+  "family": "Glitch",
+  "author": "Erin Carter",
+  "tags": ["ascii", "data-grid", "terminal", "digital", "readout", "loop"],
+  "description": "A live ASCII terminal — a grid of character cells flickering their values, a diagonal read-out sweep lighting cells bright as it crosses and fading behind, the rest holding a dim amber standby. A console mid-computation, all text.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cols", "label": "Columns", "min": 10.0, "max": 50.0, "step": 1.0, "default": 26.0,
+      "effect": "How many cells span the grid; low is a chunky readout, high a dense data wall." },
+    { "uniform": "u_sweep", "label": "Sweep speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.4,
+      "effect": "Speed of the diagonal read-out scan; 0 holds it, high races across the grid." },
+    { "uniform": "u_flicker", "label": "Flicker", "min": 0.0, "max": 20.0, "step": 0.5, "default": 6.0,
+      "effect": "How fast cell values re-roll; 0 freezes the symbols, high is a busy scramble." },
+    { "uniform": "u_density", "label": "Live cells", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "Fraction of cells lit at once; low is a sparse standby, high a fully active panel." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer lights the region around it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "sodium",
+  "post": { "grain": 0.05, "vignette": 0.36, "contrast": 1.08, "saturation": 1.08 }
+}
