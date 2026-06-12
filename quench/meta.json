@@ -1,0 +1,23 @@
+{
+  "name": "Quench",
+  "slug": "quench",
+  "family": "Molten",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "metal", "molten", "liquid", "heightfield", "reflection", "loop"],
+  "description": "A sea of molten metal stretching to a horizon — a raymarched wavy surface that mirrors a hot forge sky, with emissive lava pooling in the troughs between cooling crests and sharp glints riding the swell. A flowing metal surface rather than an object.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.4,
+      "effect": "Speed the molten waves travel; 0 freezes the surface." },
+    { "uniform": "u_swell", "label": "Swell", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Wave height and chop; low is a near-flat mirror, high a rolling molten sea." },
+    { "uniform": "u_heat", "label": "Heat", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.7,
+      "effect": "Glow of the molten lava pooling in the troughs; 0 leaves cool mirror metal." },
+    { "uniform": "u_polish", "label": "Polish", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "Mirror finish — sharpness of the sun glints riding the crests." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the camera over the sea; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "ember",
+  "post": { "grain": 0.05, "vignette": 0.36, "contrast": 1.07, "saturation": 1.08 }
+}

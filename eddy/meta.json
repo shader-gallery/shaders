@@ -1,0 +1,23 @@
+{
+  "name": "Eddy",
+  "slug": "eddy",
+  "family": "Aura",
+  "author": "Erin Carter",
+  "tags": ["gradient", "mesh", "swirl", "spiral", "galaxy", "grain", "glow", "loop"],
+  "description": "A slow galactic swirl — colour poles smeared into spiral arms by a differential rotation that winds tighter toward a luminous off-centre core, inter-arm dust darkening between them. A drifting colour-field with a sense of rotation rather than a still gradient.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spin", "label": "Spin", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.35,
+      "effect": "Rotation speed of the whole swirl; 0 holds it still." },
+    { "uniform": "u_twist", "label": "Wind", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.7,
+      "effect": "How tightly the arms wind with radius; low is open and lazy, high coils them in." },
+    { "uniform": "u_core", "label": "Core glow", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.7,
+      "effect": "Brightness of the luminous galactic core; 0 leaves an even swirl." },
+    { "uniform": "u_softness", "label": "Blob size", "min": 0.5, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Influence radius of the colour poles before they smear into arms." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls the field toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "spectral",
+  "post": { "grain": 0.06, "vignette": 0.38, "saturation": 1.12 }
+}

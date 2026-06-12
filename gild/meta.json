@@ -1,0 +1,23 @@
+{
+  "name": "Gild",
+  "slug": "gild",
+  "family": "Molten",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "metal", "gold", "rings", "torus", "specular", "reflection", "loop"],
+  "description": "Interlocking metal rings turning slowly on three axes — raymarched gold tori with mirror reflections of a palette-tinted studio, crisp speculars and grazing fresnel. A premium polished-metal object filling the frame.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spin", "label": "Spin", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.45,
+      "effect": "Rotation speed of the rings on their separate axes; 0 holds them still." },
+    { "uniform": "u_thick", "label": "Tube", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.3,
+      "effect": "Thickness of the ring tubes; low gives slender wire rings, high fat bands." },
+    { "uniform": "u_polish", "label": "Polish", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.75,
+      "effect": "Mirror finish — sharpness and brightness of the speculars, from satin to high-gloss." },
+    { "uniform": "u_metalTint", "label": "Tint", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.45,
+      "effect": "How strongly the metal takes the palette colour; low is near-neutral chrome, high is saturated gold/colour." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the camera; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "sodium",
+  "post": { "grain": 0.05, "aberration": 0.0018, "vignette": 0.36, "contrast": 1.06, "saturation": 1.06 }
+}

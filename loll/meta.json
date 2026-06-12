@@ -1,0 +1,23 @@
+{
+  "name": "Loll",
+  "slug": "loll",
+  "family": "Aura",
+  "author": "Erin Carter",
+  "tags": ["gradient", "mesh", "warm", "shadows", "rolling", "grain", "glow", "loop"],
+  "description": "A warm lit field with big soft shadows rolling slowly across it — like sunlight through drifting cloud, the brightest glow held off-centre while broad dark lobes sweep over and cool the tone as they pass. Calm, golden, unhurried.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_driftSpeed", "label": "Roll speed", "min": 0.0, "max": 0.7, "step": 0.01, "default": 0.15,
+      "effect": "How fast the shadows roll across the field; 0 holds them still." },
+    { "uniform": "u_depth", "label": "Shadow depth", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "How dark and cool the rolling shadows get; 0 leaves an even lit field." },
+    { "uniform": "u_softness", "label": "Shadow size", "min": 0.5, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Size of the drifting shadow lobes; low breaks into smaller patches, high into broad sweeps." },
+    { "uniform": "u_warp", "label": "Distortion", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.6,
+      "effect": "Organic distortion of the shadow edges; low is smooth, high adds billowing folds." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls the shadows toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "sodium",
+  "post": { "grain": 0.055, "vignette": 0.26, "exposure": 1.03, "saturation": 1.06 }
+}

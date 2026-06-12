@@ -1,0 +1,23 @@
+{
+  "name": "Bauble",
+  "slug": "bauble",
+  "family": "Molten",
+  "author": "Erin Carter",
+  "tags": ["3d", "glass", "crystal", "refraction", "fresnel", "specular", "glow", "loop"],
+  "description": "A single crystal ball filling the frame — a glass sphere refracting and reflecting a palette-tinted environment, its heart clouded with slow swirling smoke, a crisp studio highlight and a bright fresnel rim where the edge catches light. Reads as a real rendered glass orb.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_swirl", "label": "Swirl", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Speed of the smoke drifting inside the orb; 0 holds the interior still." },
+    { "uniform": "u_density", "label": "Cloud", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.7,
+      "effect": "Thickness of the interior swirl; 0 is clear glass, high fills the heart with cloud." },
+    { "uniform": "u_polish", "label": "Polish", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "Surface gloss — sharpness and brightness of the studio highlight." },
+    { "uniform": "u_size", "label": "Orb size", "min": 0.5, "max": 1.4, "step": 0.01, "default": 1.0,
+      "effect": "How much of the frame the orb fills; high crops in close, low pulls it back into the field." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the view; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "amethyst",
+  "post": { "grain": 0.05, "aberration": 0.0035, "vignette": 0.34, "contrast": 1.05, "saturation": 1.08 }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Nacre",
+  "slug": "nacre",
+  "family": "Molten",
+  "author": "Erin Carter",
+  "tags": ["3d", "glass", "iridescent", "soap-film", "thin-film", "fresnel", "glow", "loop"],
+  "description": "A soap bubble caught in the light — a thin transparent film over a single sphere, swirling with thin-film interference colours that shift toward the rim and churn slowly across the surface, finished with a sharp highlight. Mostly see-through, all iridescence.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_flow", "label": "Churn", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.45,
+      "effect": "How fast the film thickness swirls across the bubble; 0 holds the pattern still." },
+    { "uniform": "u_iridescence", "label": "Iridescence", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.8,
+      "effect": "Strength of the thin-film colour; low is near-clear glass, high is saturated soap-film rainbow." },
+    { "uniform": "u_bands", "label": "Bands", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.6,
+      "effect": "Frequency of the interference bands; low is broad colour sweeps, high tight oily rings." },
+    { "uniform": "u_size", "label": "Bubble size", "min": 0.5, "max": 1.4, "step": 0.01, "default": 1.0,
+      "effect": "How much of the frame the bubble fills; high crops in close, low pulls it back." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the view; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "prism",
+  "post": { "grain": 0.05, "aberration": 0.004, "vignette": 0.3, "saturation": 1.12 }
+}

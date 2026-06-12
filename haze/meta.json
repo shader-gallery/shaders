@@ -1,0 +1,23 @@
+{
+  "name": "Haze",
+  "slug": "haze",
+  "family": "Aura",
+  "author": "Erin Carter",
+  "tags": ["gradient", "mesh", "posterize", "stepped", "haze", "grain", "glow", "loop"],
+  "description": "A soft colour field quantised into stepped bands — a drifting haze posterised into discrete tones with a fine ordered-dither stipple softening the edges, like a low-bit gradient catching light. Calm, slightly retro, grainy.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_driftSpeed", "label": "Drift speed", "min": 0.0, "max": 0.7, "step": 0.01, "default": 0.13,
+      "effect": "How fast the haze drifts; 0 holds it nearly still." },
+    { "uniform": "u_steps", "label": "Colour bands", "min": 2.0, "max": 16.0, "step": 1.0, "default": 7.0,
+      "effect": "How many discrete tone bands the field is posterised into; low is chunky and graphic, high is nearly smooth." },
+    { "uniform": "u_softness", "label": "Blob size", "min": 0.5, "max": 2.0, "step": 0.01, "default": 1.1,
+      "effect": "Influence radius of the colour poles; low keeps tight pools, high spreads broad banks." },
+    { "uniform": "u_dither", "label": "Dither", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Ordered-dither stipple on the band edges; 0 gives hard posterised contours, high dissolves them into grain." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls the field toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "dusk",
+  "post": { "grain": 0.06, "vignette": 0.22, "saturation": 1.04 }
+}
