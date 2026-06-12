@@ -25,7 +25,8 @@
     "Aura",
     "Molten",
     "Moiré",
-    "Facet"
+    "Facet",
+    "Glitch"
   ],
   "shaders": [
     "lacework",
@@ -220,6 +221,9 @@
     "relief",
     "rondel",
     "lattice",
-    "parquet"
+    "parquet",
+    "rupture",
+    "cathode",
+    "cipher"
   ]
 }

@@ -1,0 +1,23 @@
+{
+  "name": "Cipher",
+  "slug": "cipher",
+  "family": "Glitch",
+  "author": "Erin Carter",
+  "tags": ["matrix", "code-rain", "glyphs", "digital", "terminal", "loop"],
+  "description": "Falling code rain — columns of flickering glyph cells streaming downward, each drop a bright leading character with a long fading trail, the symbols re-rolling as they fall. Classic terminal cascade in the palette's hue.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cols", "label": "Columns", "min": 12.0, "max": 64.0, "step": 1.0, "default": 30.0,
+      "effect": "How many glyph columns fill the frame; low is chunky, high a dense terminal." },
+    { "uniform": "u_speed", "label": "Fall speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.7,
+      "effect": "How fast the rain falls; 0 freezes it. Each column varies around this." },
+    { "uniform": "u_trail", "label": "Trail", "min": 0.05, "max": 1.0, "step": 0.01, "default": 0.45,
+      "effect": "Length of the fading trail behind each leading glyph; low is short sparks, high long streamers." },
+    { "uniform": "u_flicker", "label": "Flicker", "min": 0.0, "max": 20.0, "step": 0.5, "default": 8.0,
+      "effect": "How fast the glyph symbols re-roll; 0 freezes the characters, high is a busy scramble." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer brightens columns near it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "viridian",
+  "post": { "grain": 0.05, "vignette": 0.36, "contrast": 1.08, "saturation": 1.1 }
+}

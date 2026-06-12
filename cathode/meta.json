@@ -1,0 +1,23 @@
+{
+  "name": "Cathode",
+  "slug": "cathode",
+  "family": "Glitch",
+  "author": "Erin Carter",
+  "tags": ["crt", "scanlines", "phosphor", "retro", "digital", "loop"],
+  "description": "An old CRT tube — colour test-bars scrolling behind a barrel-curved screen, fine scanlines and an RGB aperture-grille mask over everything, a vsync roll bar sweeping down and the picture flickering inside a dark bezel. Retro, electronic, alive.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_curve", "label": "Curvature", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "Barrel bow of the screen; 0 is flat, high bulges the tube and pulls in the bezel." },
+    { "uniform": "u_scanline", "label": "Scanlines", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Darkening of alternate scan rows; 0 is a clean picture, high is heavy line structure." },
+    { "uniform": "u_phosphor", "label": "Phosphor", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "Strength of the RGB aperture-grille colour mask; high gives a visible phosphor triad." },
+    { "uniform": "u_roll", "label": "Roll", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.4,
+      "effect": "Speed of the vsync roll bar sweeping down the screen; 0 holds it still." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer brightens the tube near it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "prism",
+  "post": { "grain": 0.07, "vignette": 0.2, "contrast": 1.08, "saturation": 1.08 }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Rupture",
+  "slug": "rupture",
+  "family": "Glitch",
+  "author": "Erin Carter",
+  "tags": ["glitch", "datamosh", "rgb-split", "digital", "crisp", "loop"],
+  "description": "A corrupted signal — blocky colour content torn into horizontal bands that jump and shuffle on discrete glitch frames, channels split into red/blue ghosts, bright scan tears and black dropouts flickering through. Digital, broken, kinetic.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_glitch", "label": "Corruption", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Overall intensity of the tearing, shuffling and dropouts; 0 settles the signal, 1 is heavy datamosh." },
+    { "uniform": "u_rate", "label": "Glitch rate", "min": 1.0, "max": 20.0, "step": 1.0, "default": 7.0,
+      "effect": "How many new glitch frames hit per second; low is occasional jolts, high a constant scramble." },
+    { "uniform": "u_split", "label": "Channel split", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "How far the red and blue channels separate into chromatic ghosts." },
+    { "uniform": "u_blocks", "label": "Block size", "min": 4.0, "max": 40.0, "step": 1.0, "default": 14.0,
+      "effect": "Coarseness of the underlying block field; low is big slabs, high a fine mosaic." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer tears the band at its row; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "fuchsia",
+  "post": { "grain": 0.06, "aberration": 0.004, "vignette": 0.3, "contrast": 1.08, "saturation": 1.1 }
+}
