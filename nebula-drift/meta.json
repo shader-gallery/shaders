@@ -1,0 +1,21 @@
+{
+  "name": "Nebula Drift",
+  "slug": "nebula-drift",
+  "family": "Abyss",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "nebula", "gas", "dust", "texture", "depth", "organic"],
+  "description": "A Nebula variation seen edge-on: a deep volumetric emission field of drifting palette-hued gas, threaded by serpentine dark dust lanes and Bok globules that silhouette against the backlight, and laced with thin bright ionization filaments. Two parallaxing depth layers and an off-centre luminous heart give real front-to-back depth.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.3,
+      "effect": "Speed of the gas billow and the parallax between depth layers; 0 holds the cloud almost still." },
+    { "uniform": "u_dust", "label": "Dust lanes", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Darkness and coverage of the dust lanes and Bok globules silhouetted against the glow; 0 clears them for open gas." },
+    { "uniform": "u_filament", "label": "Filaments", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.7,
+      "effect": "Brightness of the thin ionization filaments threading the densest gas." },
+    { "uniform": "u_scale", "label": "Gas scale", "min": 0.4, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall feature scale of the gas and dust; low spreads into broad banks, high packs in fine turbulent structure." }
+  ],
+  "defaultPalette": "midnight",
+  "post": { "grain": 0.06, "vignette": 0.3, "saturation": 1.12 }
+}
