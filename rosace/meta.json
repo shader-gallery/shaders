@@ -1,0 +1,21 @@
+{
+  "name": "Rosace",
+  "slug": "rosace",
+  "family": "Burnish",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "guilloche", "engraving", "rosette", "metal", "texture"],
+  "description": "A rose-engine guilloché: two families of concentric rosette curves, their petal lobes precessing with radius into a spirograph weave, engraved as fine bright hairlines into a dark burnished-metal ground. Where the families cross they interleave into the dense barleycorn moiré guilloché is prized for, the crests catching a rolling specular glint. The whole rose turns slowly on its lathe while the lobe phases drift, so the engraving shimmers and breathes without ever freezing — the engine still cutting.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_petals", "label": "Petals", "min": 4, "max": 24, "step": 1,
+      "default": 11, "effect": "Number of lobes per rosette ring — low gives a broad scalloped rose, high a fine many-pointed star." },
+    { "uniform": "u_lineFreq", "label": "Line density", "min": 10, "max": 48, "step": 1,
+      "default": 26, "effect": "How many concentric engraved lines cross the medallion — low reads as bold grooves, high as a fine hairline weave." },
+    { "uniform": "u_waveAmp", "label": "Lobe depth", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "Depth of the petal modulation — 0 gives plain concentric rings, 1 swings the lobes into deep spirograph waves." },
+    { "uniform": "u_turnSpeed", "label": "Lathe speed", "min": 0.0, "max": 1.2, "step": 0.01,
+      "default": 0.3, "effect": "Rate the rose turns and its lobe phases drift — how fast the engine-turned shimmer rolls across the engraving." }
+  ],
+  "post": { "vignette": 0.3 },
+  "defaultPalette": "sodium"
+}
