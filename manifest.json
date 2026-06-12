@@ -26,7 +26,8 @@
     "Molten",
     "Moiré",
     "Facet",
-    "Glitch"
+    "Glitch",
+    "Kaleido"
   ],
   "shaders": [
     "lacework",
@@ -229,6 +230,14 @@
     "ascii",
     "glyphic",
     "tracking",
-    "packet"
+    "packet",
+    "teleido",
+    "vitrail",
+    "chamber",
+    "dichroic",
+    "harlequin",
+    "mandorla",
+    "tumbler",
+    "anthelion"
   ]
 }

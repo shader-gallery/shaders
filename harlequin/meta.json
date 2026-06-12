@@ -1,0 +1,17 @@
+{
+  "name": "Harlequin",
+  "slug": "harlequin",
+  "family": "Kaleido",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "facet", "crystal", "symmetry"],
+  "description": "A cut-crystal mandala of hard, flat facets. Where the rest of the family blurs, this keeps knife-sharp mirror seams: the folded field is quantised into diamond facets, each flat-shaded a single jewel hue with a bright bevel glinting at its edges. Inner and outer rings counter-rotate, so the diamond pattern shears and reshuffles as the stone slowly turns.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_segments", "label": "Segments", "min": 4.0, "max": 18.0, "step": 1.0, "default": 14.0, "effect": "Number of mirror-fold wedges (floored in-shader) — sets the facet count around the ring." },
+    { "uniform": "u_facets", "label": "Facet rings", "min": 2.0, "max": 12.0, "step": 1.0, "default": 6.0, "effect": "Concentric rings of facets from the crystal table out to the rim." },
+    { "uniform": "u_counterSpin", "label": "Counter-spin", "min": 0.0, "max": 0.6, "step": 0.01, "default": 0.18, "effect": "Speed the inner and outer rings counter-rotate; at 0 the stone holds still and only shimmers." },
+    { "uniform": "u_bevel", "label": "Bevel", "min": 0.2, "max": 2.5, "step": 0.01, "default": 1.0, "effect": "Sharpness and width of the bright facet bevels — low for fat soft edges, high for fine cut glints." }
+  ],
+  "post": { "bloom": 0.35, "bloomRadius": 2.0, "dither": 1.0, "saturation": 1.05, "contrast": 1.04 },
+  "defaultPalette": "amethyst"
+}

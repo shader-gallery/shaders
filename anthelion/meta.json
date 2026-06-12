@@ -1,0 +1,17 @@
+{
+  "name": "Anthelion",
+  "slug": "anthelion",
+  "family": "Kaleido",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "halo", "light", "symmetry"],
+  "description": "Named for the mirrored counter-sun halo — the luminous, higher-key end of the family. A blazing multi-hue core throws a corona of mirror-folded rays of uneven length, long spikes between short ones like a real sun corona, crossed by a finer counter-rotating spark fan and ringed by concentric arcs broken into glowing beads. Pure bent light rather than cut glass, radiant on a deep dusk-blue sky.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_rays", "label": "Rays", "min": 4.0, "max": 24.0, "step": 1.0, "default": 16.0, "effect": "Number of light spokes (mirror-fold count, floored in-shader)." },
+    { "uniform": "u_haloSpeed", "label": "Halo speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.6, "effect": "Speed the concentric halo rings bloom outward; at 0 the arcs hold their radii." },
+    { "uniform": "u_spin", "label": "Spin", "min": 0.0, "max": 0.6, "step": 0.01, "default": 0.1, "effect": "Rotation speed of the whole ray fan." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.3, "max": 1.8, "step": 0.01, "default": 1.0, "effect": "Overall luminosity of rays, haloes and core." }
+  ],
+  "post": { "bloom": 0.7, "bloomRadius": 4.5, "dither": 1.0, "exposure": 1.02, "saturation": 1.05 },
+  "defaultPalette": "prism"
+}

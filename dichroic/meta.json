@@ -1,0 +1,17 @@
+{
+  "name": "Dichroic",
+  "slug": "dichroic",
+  "family": "Kaleido",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "iridescent", "prismatic", "symmetry"],
+  "description": "Dichroic glass: the mirror-fold is sampled at a slightly different angle per colour channel, so every reflected edge splits into an oil-slick iridescence — cyan on one flank, magenta on the other. Concentric shard bands swirl through the wedge and the seams flare with colour fringes where they cross, jewel-bright and restless on near-black.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_segments", "label": "Segments", "min": 4.0, "max": 16.0, "step": 1.0, "default": 8.0, "effect": "Number of mirror-fold wedges (floored in-shader)." },
+    { "uniform": "u_split", "label": "Iridescence", "min": 0.0, "max": 2.5, "step": 0.01, "default": 1.0, "effect": "Strength of the per-channel angular split; at 0 the glass is a clean single hue, high pushes a wide prismatic fringe." },
+    { "uniform": "u_spin", "label": "Spin", "min": 0.0, "max": 0.8, "step": 0.01, "default": 0.2, "effect": "Rotation speed of the shard bands through the wedge." },
+    { "uniform": "u_bands", "label": "Shard bands", "min": 2.0, "max": 12.0, "step": 0.1, "default": 5.0, "effect": "Density of the concentric shard rings — few for broad blades, many for fine slivers." }
+  ],
+  "post": { "bloom": 0.45, "bloomRadius": 3.0, "aberration": 0.0, "dither": 1.0, "saturation": 1.12 },
+  "defaultPalette": "neon"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Mandorla",
+  "slug": "mandorla",
+  "family": "Kaleido",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "guilloche", "lace", "symmetry"],
+  "description": "An ornate guilloche rosette — the lacework end of the family, drawn in light rather than filled cells. Dozens of fine wavy rose-curves of different petal counts interweave into engraved lace, jewel nodes flaring where the threads cross. The whole rosette breathes as the curve amplitudes swell and ease, and turns slowly so the moire of crossing threads shimmers like a spun mandala.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_petals", "label": "Petals", "min": 4.0, "max": 16.0, "step": 1.0, "default": 9.0, "effect": "Base petal count of the rose-curves (floored in-shader); each layer steps up from this for the interweave." },
+    { "uniform": "u_tiers", "label": "Threads", "min": 2.0, "max": 8.0, "step": 1.0, "default": 8.0, "effect": "Number of interwoven curve layers — few for an open figure, many for dense lace." },
+    { "uniform": "u_breathSpeed", "label": "Breath", "min": 0.05, "max": 1.6, "step": 0.01, "default": 0.5, "effect": "Rate the curve amplitudes swell and ease, opening and tightening the lace." },
+    { "uniform": "u_bloom", "label": "Glow", "min": 0.3, "max": 2.0, "step": 0.01, "default": 1.0, "effect": "Brightness of the glowing threads and crossing nodes." }
+  ],
+  "post": { "bloom": 0.7, "bloomRadius": 4.0, "dither": 1.0, "saturation": 1.1 },
+  "defaultPalette": "witchlight"
+}

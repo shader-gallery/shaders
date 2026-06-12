@@ -1,0 +1,17 @@
+{
+  "name": "Tumbler",
+  "slug": "tumbler",
+  "family": "Kaleido",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "shards", "symmetry", "jewel"],
+  "description": "The feel of turning the tube: angular glass shards in the object cell that each tumble on their own axis while the mirror-fold reflects them. As the chips rotate and slide, the reflected figure keeps re-locking into fresh symmetric arrangements — the characteristic click-and-reshuffle of a kaleidoscope being turned, hard-edged chips of colour on near-black.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_segments", "label": "Segments", "min": 3.0, "max": 16.0, "step": 1.0, "default": 7.0, "effect": "Number of mirror-fold wedges (floored in-shader)." },
+    { "uniform": "u_tumbleSpeed", "label": "Tumble", "min": 0.0, "max": 2.5, "step": 0.01, "default": 1.0, "effect": "How fast each shard spins on its own axis; at 0 the chips only slide, the figure still reshuffles." },
+    { "uniform": "u_shardScale", "label": "Shard size", "min": 0.4, "max": 2.5, "step": 0.01, "default": 1.0, "effect": "Size of the glass chips — small for a fine confetti, large for bold blades." },
+    { "uniform": "u_rotateSpeed", "label": "Rotation", "min": 0.0, "max": 0.5, "step": 0.01, "default": 0.12, "effect": "Speed the whole tube turns under the tumbling chips." }
+  ],
+  "post": { "bloom": 0.4, "bloomRadius": 2.5, "dither": 1.0, "saturation": 1.08 },
+  "defaultPalette": "peacock"
+}

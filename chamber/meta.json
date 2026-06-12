@@ -1,0 +1,17 @@
+{
+  "name": "Chamber",
+  "slug": "chamber",
+  "family": "Kaleido",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "mirror", "symmetry", "tiling", "wallpaper"],
+  "description": "The three-mirror tube seen as wallpaper: a real kaleidoscope's triangular mirror chamber tiles the whole plane with reflected copies of one triangle, so the frame fills edge-to-edge with a repeating jewelled honeycomb instead of a single radial star. Coloured glass motes drift through the fundamental triangle while the lattice slowly slides and turns; cut-glass glints run the mirror seams.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Tiling", "min": 1.5, "max": 7.0, "step": 0.1, "default": 3.5, "effect": "How many reflected triangles span the frame — low for big bold cells, high for a fine mosaic." },
+    { "uniform": "u_driftSpeed", "label": "Drift", "min": 0.0, "max": 2.5, "step": 0.01, "default": 1.0, "effect": "Rate the glass motes breathe toward and away from each triangle's centre, pulsing the honeycomb." },
+    { "uniform": "u_turnSpeed", "label": "Turn", "min": 0.0, "max": 0.4, "step": 0.01, "default": 0.08, "effect": "Speed the whole lattice rotates; at 0 the wallpaper only breathes." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.3, "max": 1.8, "step": 0.01, "default": 1.0, "effect": "Overall strength of the glass glow and seam glints." }
+  ],
+  "post": { "bloom": 0.4, "bloomRadius": 2.5, "dither": 1.0, "saturation": 1.08 },
+  "defaultPalette": "prism"
+}

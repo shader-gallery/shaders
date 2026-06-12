@@ -1,0 +1,17 @@
+{
+  "name": "Teleido",
+  "slug": "teleido",
+  "family": "Kaleido",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "mirror", "symmetry", "jewel"],
+  "description": "The archetypal kaleidoscope: a single wedge of soft jewel-light blobs mirror-folded around the centre and slowly rotated, so the figure endlessly reshuffles as the unseen object cell drifts through the tube. Jewel hues bloom on near-black with a faint rim of light running the mirror seams, brightest at the luminous core and falling to a dark rim.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_segments", "label": "Segments", "min": 3.0, "max": 16.0, "step": 1.0, "default": 6.0, "effect": "Number of mirror-fold wedges (floored in-shader); few reads as broad reflected sweeps, many as a fine jewelled star." },
+    { "uniform": "u_rotateSpeed", "label": "Rotation", "min": 0.0, "max": 0.6, "step": 0.01, "default": 0.15, "effect": "How fast the whole tube turns; at 0 the figure still breathes from the drifting object cell." },
+    { "uniform": "u_zoom", "label": "Zoom", "min": 0.4, "max": 2.5, "step": 0.01, "default": 1.0, "effect": "Scale of the object cell — low zooms out to many small chips, high enlarges a few broad jewels." },
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 2.5, "step": 0.01, "default": 1.0, "effect": "Rate the glass chips tumble through the cell, driving how quickly the reflected pattern reshuffles." }
+  ],
+  "post": { "bloom": 0.55, "bloomRadius": 3.5, "dither": 1.0, "saturation": 1.08 },
+  "defaultPalette": "prism"
+}
