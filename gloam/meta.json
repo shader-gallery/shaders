@@ -19,5 +19,5 @@
       "effect": "How strongly the pointer pulls the field toward it; 0 ignores the mouse." }
   ],
   "defaultPalette": "nocturne",
-  "post": { "grain": 0.11, "vignette": 0.40, "saturation": 1.10 }
+  "post": { "grain": 0.055, "vignette": 0.40, "saturation": 1.10 }
 }

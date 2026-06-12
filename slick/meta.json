@@ -19,5 +19,5 @@
       "effect": "How strongly the pointer pulls the colour field toward it; 0 ignores the mouse." }
   ],
   "defaultPalette": "peacock",
-  "post": { "grain": 0.12, "vignette": 0.28, "saturation": 1.12, "contrast": 1.04 }
+  "post": { "grain": 0.06, "vignette": 0.28, "saturation": 1.12, "contrast": 1.04 }
 }
