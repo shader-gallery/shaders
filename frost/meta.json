@@ -1,0 +1,23 @@
+{
+  "name": "Frost",
+  "slug": "frost",
+  "family": "Molten",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "glass", "frosted", "refraction", "fresnel", "glow", "loop"],
+  "description": "A cluster of frosted-glass forms drifting and merging — raymarched 3D glass that refracts and reflects a soft palette-tinted environment, its surface scattering light into a milky translucence with a broad satin sheen. Reads as real rendered glass filling the frame.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 1.2, "step": 0.01, "default": 0.4,
+      "effect": "How fast the glass forms drift and merge; 0 holds them still." },
+    { "uniform": "u_merge", "label": "Merge", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "Softness of the welds where forms meet; high fuses them into smooth glass bridges." },
+    { "uniform": "u_frost", "label": "Frost", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.45,
+      "effect": "Surface roughness — from clear polished glass at 0 to a milky scattering frost at 1." },
+    { "uniform": "u_spread", "label": "Spread", "min": 0.2, "max": 1.4, "step": 0.01, "default": 0.9,
+      "effect": "How far the forms roam from the centre; low packs a tight knot, high scatters them." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the camera; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "glacier",
+  "post": { "grain": 0.05, "aberration": 0.003, "vignette": 0.3, "exposure": 1.03, "saturation": 1.06 }
+}

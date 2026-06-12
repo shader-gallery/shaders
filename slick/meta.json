@@ -1,0 +1,23 @@
+{
+  "name": "Slick",
+  "slug": "slick",
+  "family": "Aura",
+  "author": "Erin Carter",
+  "tags": ["gradient", "mesh", "iridescent", "oil-slick", "grain", "glow", "organic", "loop"],
+  "description": "An iridescent oil-slick color field — broad palette poles fold and churn through one another like thin film on water, thin-film bands sweeping slow rainbows across the surface. Pure soft color, no hard structure, dusted with film grain.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_driftSpeed", "label": "Drift speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.22,
+      "effect": "How fast the slick churns and the colour bands sweep; 0 holds it nearly still." },
+    { "uniform": "u_warp", "label": "Folding", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.05,
+      "effect": "Depth of the liquid domain-warp; low is broad smooth banks, high is tight oily folds." },
+    { "uniform": "u_scale", "label": "Blob scale", "min": 0.4, "max": 3.0, "step": 0.01, "default": 1.5,
+      "effect": "Feature scale of the colour poles; low spreads two or three huge blobs, high packs in more." },
+    { "uniform": "u_sheen", "label": "Iridescence", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.65,
+      "effect": "Sharpness and frequency of the thin-film rainbow bands." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls the colour field toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "peacock",
+  "post": { "grain": 0.12, "vignette": 0.28, "saturation": 1.12, "contrast": 1.04 }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Suffuse",
+  "slug": "suffuse",
+  "family": "Aura",
+  "author": "Erin Carter",
+  "tags": ["gradient", "mesh", "pastel", "iridescent", "high-key", "grain", "glow", "loop"],
+  "description": "A pastel wash that bleeds into itself — wide soft poles of opal blue, lilac, rose and mint drift so slowly they read as one suffused field, with a faint soap-bubble shimmer sweeping through. The softest, dreamiest member of the family.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_driftSpeed", "label": "Drift speed", "min": 0.0, "max": 0.6, "step": 0.01, "default": 0.12,
+      "effect": "How slowly the pastel poles wander; 0 holds the wash almost still." },
+    { "uniform": "u_softness", "label": "Bleed", "min": 0.6, "max": 2.5, "step": 0.01, "default": 1.35,
+      "effect": "How wide the poles bleed; high merges everything into one soft wash, low keeps colour regions distinct." },
+    { "uniform": "u_shimmer", "label": "Shimmer", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Strength of the iridescent soap-bubble sheen riding over the colour." },
+    { "uniform": "u_warp", "label": "Drift warp", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.6,
+      "effect": "Organic distortion of the colour edges; low is glassy, high adds gentle folds." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls the field toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "opal",
+  "post": { "grain": 0.10, "vignette": 0.16, "exposure": 1.05, "saturation": 1.04 }
+}

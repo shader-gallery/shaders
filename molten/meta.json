@@ -1,0 +1,23 @@
+{
+  "name": "Molten",
+  "slug": "molten",
+  "family": "Molten",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "chrome", "metal", "liquid", "specular", "reflection", "glow", "loop"],
+  "description": "A cluster of liquid-chrome blobs merging and parting like mercury — raymarched 3D metal with mirror reflections of a palette-tinted studio environment, crisp specular highlights and grazing fresnel. Fills the frame as a close-up of flowing metal.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "How fast the metal flows and the blobs merge and part; 0 freezes the cluster." },
+    { "uniform": "u_viscosity", "label": "Merge", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.55,
+      "effect": "Softness of the blob welds; low keeps distinct beads, high fuses them into smooth liquid bridges." },
+    { "uniform": "u_spread", "label": "Spread", "min": 0.2, "max": 1.6, "step": 0.01, "default": 0.55,
+      "effect": "How far the blobs roam from the centre; low packs a tight knot, high scatters them across the frame." },
+    { "uniform": "u_polish", "label": "Polish", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "Mirror finish — sharpness and brightness of the specular highlights, from satin to high-gloss chrome." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the camera around the cluster; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "mercury",
+  "post": { "grain": 0.04, "aberration": 0.0025, "vignette": 0.34, "contrast": 1.06, "saturation": 1.05 }
+}

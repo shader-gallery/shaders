@@ -21,7 +21,9 @@
     "Plinth",
     "Smolder",
     "Sough",
-    "Umbra"
+    "Umbra",
+    "Aura",
+    "Molten"
   ],
   "shaders": [
     "lacework",
@@ -184,6 +186,14 @@
     "schist",
     "rosace",
     "nebula-drift",
-    "warp-current"
+    "warp-current",
+    "slick",
+    "bask",
+    "welter",
+    "suffuse",
+    "gloam",
+    "molten",
+    "frost",
+    "ingot"
   ]
 }

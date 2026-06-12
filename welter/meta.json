@@ -1,0 +1,23 @@
+{
+  "name": "Welter",
+  "slug": "welter",
+  "family": "Aura",
+  "author": "Erin Carter",
+  "tags": ["gradient", "mesh", "warm", "lava-lamp", "molten", "grain", "glow", "loop"],
+  "description": "A boiling warm color field — molten poles of rust, ember and amber rise and roll through one another with turbulent edges, hot cores glowing brighter as blobs merge. A grainy lava-lamp churn rather than a still gradient.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_driftSpeed", "label": "Churn speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.30,
+      "effect": "How vigorously the molten blobs rise and roll; 0 freezes the churn." },
+    { "uniform": "u_softness", "label": "Blob size", "min": 0.4, "max": 2.0, "step": 0.01, "default": 0.85,
+      "effect": "Influence radius of each pole; low breaks into many small globs, high merges into broad banks." },
+    { "uniform": "u_warp", "label": "Turbulence", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.95,
+      "effect": "How much the blob edges roil and tear; 0 gives clean rounded blobs." },
+    { "uniform": "u_heat", "label": "Heat", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "Depth and glow of the hot cores; high deepens the troughs and lights merging blobs." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls the field toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "rust",
+  "post": { "grain": 0.12, "vignette": 0.34, "saturation": 1.14, "contrast": 1.06 }
+}

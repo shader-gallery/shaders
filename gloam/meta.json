@@ -1,0 +1,23 @@
+{
+  "name": "Gloam",
+  "slug": "gloam",
+  "family": "Aura",
+  "author": "Erin Carter",
+  "tags": ["gradient", "mesh", "dark", "twilight", "cool", "grain", "glow", "loop"],
+  "description": "A deep twilight color field — cool indigo and slate poles drift through near-black while one luminous pole blooms off-centre like the last light low in the sky. The dark anchor of the family: grainy, moody, glowing.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_driftSpeed", "label": "Drift speed", "min": 0.0, "max": 0.7, "step": 0.01, "default": 0.14,
+      "effect": "How fast the twilight poles drift; 0 holds the dusk almost still." },
+    { "uniform": "u_softness", "label": "Blob size", "min": 0.4, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Influence radius of the poles; low keeps tight colour pools, high spreads broad banks." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.4, "step": 0.01, "default": 0.7,
+      "effect": "Brightness of the luminous pole blooming through the dark; 0 leaves an even twilight." },
+    { "uniform": "u_warp", "label": "Drift warp", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.6,
+      "effect": "Organic distortion of the colour edges; low is smooth, high adds folds." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer pulls the field toward it; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "nocturne",
+  "post": { "grain": 0.11, "vignette": 0.40, "saturation": 1.10 }
+}
