@@ -105,10 +105,15 @@ void main() {
   // into shadow — the classic receding-sea read.
   float depthFade = exp(-max(depth, 0.0) * 2.3);
   float crest = smoothstep(0.55, 0.95, water);
-  float bandLum = (0.05 + 0.55 * crest) * depthFade;
+  // finer surface detail: a second higher-frequency crest layer adds woven wave
+  // texture to the water (static, so the "scene at anchor" conceit holds).
+  float crest2 = smoothstep(0.58, 0.92, fbm(wp * vec2(2.1, 2.6) + vec2(40.0, 9.0)));
+  float bandLum = (0.08 + 0.85 * crest + 0.30 * crest2) * depthFade;
 
-  // horizon glow: a thin bright seam where sea meets sky
-  float horizonGlow = exp(-abs(depth) * 26.0) * 0.9;
+  // horizon glow: a brighter seam where sea meets sky
+  float horizonGlow = exp(-abs(depth) * 22.0) * 1.5;
+  // broad sky glow rising above the horizon so the upper frame isn't a dead void
+  float skyGlow = exp(-max(-depth, 0.0) * 3.2) * (1.0 - smoothstep(0.0, 0.012, depth));
 
   // sparse glints: a few salt-bright specular points on the far water. Built
   // from a high-threshold product of two fbms so only a handful survive.
@@ -132,11 +137,13 @@ void main() {
 
   vec3 col = BG;
   // water bands
-  col += bandCol * bandLum * isWater * 0.9;
+  col += bandCol * bandLum * isWater * 1.15;
   // horizon seam (sky-side gets a cool bandCol tint too)
-  col += bandCol * horizonGlow * 0.5;
+  col += mix(bandCol, c2, 0.3) * horizonGlow * 0.8;
+  // broad sky glow above the horizon filling the upper void
+  col += mix(bandCol, c2, 0.35) * skyGlow * 0.22;
   // glints (slightly warmer/brighter mix of palette)
-  col += mix(bandCol, c2, 0.4) * glint * 0.85;
+  col += mix(bandCol, c2, 0.4) * glint * 1.1;
 
   // --- the rocking brightness tilt, in COUNTERPHASE with the ride ---
   // a broad linear luminance lean across the frame that rocks left<->right,
