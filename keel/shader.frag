@@ -126,6 +126,15 @@ void main() {
   float d2    = (shell - ec) / (2.0 + 1.5 * reach);
   float rim   = exp(-d2 * d2) * (1.0 - smoothstep(0.97, 1.0, en));
 
+  // interior keel-lines: faint creased structure INSIDE the dark hull, so keel
+  // reads as a textured solid mass — its identity vs limn's hollow neon outline
+  // and shore's bright fill. Driven by fold energy + the final orbit position so
+  // the creases sit where the burning-ship folding bunched up.
+  float interiorMask = smoothstep(0.93, 1.0, en);            // 1 deep inside hull
+  float orbitTex = 0.5 + 0.5 * sin(escAcc * 2.6 + z.x * 4.0 - z.y * 3.4);
+  orbitTex = pow(orbitTex, 2.2);
+  float interior = interiorMask * (0.12 + 0.55 * orbitTex);
+
   // --- palette blended by escape phase mixed with local fold parity ---
   // At fold==1 the lit pixels of the thin rim all sit near the same escape
   // shell, so escape count alone collapses the hue to a single slice of the
@@ -175,9 +184,11 @@ void main() {
   // --- composite onto near-black ---
   vec3 col = BG;
   // soft luminous boundary glow hugging the coastline filigree
-  col += hue * band * 3.8 * crease;
-  // hot coastline filament
-  col += hue * rim * 1.5 * crease;
+  col += hue * band * 4.4 * crease;
+  // hot coastline filament (brighter so the rim reads clearly)
+  col += hue * rim * 2.4 * crease;
+  // faint interior keel-line texture, tinted cool toward the hull body
+  col += mix(hue, c0, 0.4) * interior * 0.34 * crease;
 
   // soft tone-map to tame the hot filament without clipping to flat white,
   // keeping the near-black base intact
