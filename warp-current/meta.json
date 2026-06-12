@@ -1,0 +1,21 @@
+{
+  "name": "Warp Current",
+  "slug": "warp-current",
+  "family": "Loom",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "threads", "weave", "flow", "texture", "organic"],
+  "description": "A Warp variation: a whole warp of fine fibres combed into a flowing current. Hundreds of thin bright threads sweep across the frame, bent by a shared domain-warped flow so they gather and part like silk under water, taking palette hues by flow angle and bunching into luminous off-centre bands. Two parallaxing depth layers of fibre.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_flowSpeed", "label": "Flow speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.4,
+      "effect": "Speed of the combing current that sweeps the fibres; 0 holds the weave nearly still." },
+    { "uniform": "u_threadCount", "label": "Thread count", "min": 30.0, "max": 180.0, "step": 1.0, "default": 90.0,
+      "effect": "Density of fibres across the frame, from a coarse banded weave to fine dense hair." },
+    { "uniform": "u_swirl", "label": "Swirl", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.6,
+      "effect": "Strength of the flow warp that bends the threads; 0 leaves near-straight warp threads, high churns them into sweeping currents." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Emission of the fibres." }
+  ],
+  "defaultPalette": "midnight",
+  "post": { "grain": 0.05, "vignette": 0.28 }
+}
