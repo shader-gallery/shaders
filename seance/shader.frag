@@ -22,8 +22,9 @@ uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_emergeSpeed; // press-through / dissolve cycle speed  (default 0.25)
-uniform float u_formSize;    // swelling diameter, css px            (default 280)
-uniform float u_presence;    // peak contrast + warp depth a form reaches (default 0.6)
+uniform float u_formSize;    // swelling diameter, css px            (default 360)
+uniform float u_presence;    // peak contrast + warp depth a form reaches (default 0.9)
+uniform float u_striations;  // ring/ray striation detail in the emanation, 0..1 (default 0.45)
 
 const vec3  BG        = vec3(0.030, 0.030, 0.038); // near-black cloth base
 const float WEAVE_CSS = 3.4;   // base cell size of the weave, css px
@@ -90,9 +91,11 @@ void main() {
   // weave around the bulge), and a halo colour gathered from the palette.
   // ----------------------------------------------------------------------
   float field  = 0.0;        // 0..1 local presence under this pixel
+  float glowAcc = 0.0;       // emission field, modulated by ring/ray striations
   vec2  warp   = vec2(0.0);  // local displacement of the weave around bulges
   vec3  halo   = vec3(0.0);  // gathered palette glow
   float haloW  = 0.0;        // halo weight for normalisation
+  float striae = clamp(u_striations, 0.0, 1.0);
 
   float cycle  = 10.0 / speed;          // seconds per full visitation cycle
   float radius = formCss / res.y * pr;  // form radius in y-normalised units
@@ -128,6 +131,21 @@ void main() {
 
     field += pf;
 
+    // ring/ray striations radiating through the emanation — fine concentric
+    // rings crossed by radial rays, so the form reads as a structured spirit-
+    // emanation rather than a plain soft blob. Modulates emission only (not the
+    // relief warp), strongest mid-body and softening at the very centre/rim.
+    float rayCount  = 4.0 + floor(hash11(fk * 2.1 + epoch) * 4.0);
+    float ringCount = 3.0 + floor(hash11(fk * 4.7 + epoch * 0.7) * 4.0);
+    float nrm  = clamp(dist / max(rr, 1e-3), 0.0, 1.0);     // 0 centre .. 1 rim
+    float rays  = 0.5 + 0.5 * sin(ang * rayCount + epoch * 1.3 + fk * 2.0);
+    float rings = 0.5 + 0.5 * sin(nrm * ringCount * 3.14159 - t * 0.6 + fk);
+    // fade striations out toward the rim so they radiate from the core, not a
+    // full-field interference grid; keep amplitude gentle to avoid moire.
+    float strFade = 1.0 - smoothstep(0.35, 0.95, nrm);
+    float strTex = mix(1.0, mix(1.0, (0.6 + 0.5 * rays) * (0.6 + 0.5 * rings), strFade), striae);
+    glowAcc += pf * strTex;
+
     // push the weave outward around the bulge (a gentle local bow, not a
     // radial blast) — strongest in a shell near the rim so threads bend over it
     vec2 dir = d / max(dist, 1e-3);
@@ -150,6 +168,7 @@ void main() {
   }
 
   field = clamp(field, 0.0, 1.0);
+  float glowField = clamp(glowAcc, 0.0, 1.0);
   halo  = halo / max(haloW, 1e-3);
 
   // ----------------------------------------------------------------------
@@ -185,8 +204,8 @@ void main() {
   float lift = field * pres;
   // weave: very dim everywhere at rest, threads catching light brighten under
   // the bulge so the swelling reads as relief in the cloth itself
-  float baseGain = 0.16;                  // resting weave thread luminosity
-  float weaveLum = cloth * (baseGain + lift * 1.6);
+  float baseGain = 0.21;                  // resting weave thread luminosity
+  float weaveLum = cloth * (baseGain + lift * 1.9);
   // deepen the troughs under a form a touch so the bulge has tactile relief
   weaveLum *= mix(1.0, 0.5 + 0.9 * cloth, lift * 0.8);
 
@@ -204,13 +223,12 @@ void main() {
   vec3 clothTint = mix(restTint, halo, clamp(lift * 1.1, 0.0, 0.85));
   col += clothTint * weaveLum;
 
-  // the gathered halo — a soft palette glow blooming around emergent forms,
-  // strongest just inside the threshold, smoothstep-soft at the rim
-  float rim  = field * field;
-  float glow = rim * pres;
-  col += halo * glow * 0.9;
+  // the gathered halo — a soft palette glow blooming around emergent forms, now
+  // carrying the ring/ray striations so the emanation reads as structured light
+  float glow = glowField * pres;
+  col += halo * glow * 1.35;
   // a faint outer corona so a form gathers light before it is legible
-  col += halo * field * (1.0 - field) * pres * 0.5;
+  col += halo * field * (1.0 - field) * pres * 0.7;
 
   // keep the deepest darks alive but truly dark (never grey-washed)
   // gentle filmic-ish knee

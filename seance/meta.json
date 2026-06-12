@@ -9,10 +9,12 @@
   "params": [
     { "uniform": "u_emergeSpeed", "label": "Emerge speed", "min": 0.05, "max": 1.0, "step": 0.01,
       "default": 0.25, "effect": "Speed of the press-through and dissolve cycle; low makes each visitation a half-minute swell, high an uneasy steady churn." },
-    { "uniform": "u_formSize", "label": "Form size", "min": 120.0, "max": 520.0, "step": 1.0,
-      "default": 280.0, "effect": "Characteristic diameter of the pressing swellings in CSS pixels, from fist-sized knots to frame-dominating presences." },
-    { "uniform": "u_presence", "label": "Presence", "min": 0.2, "max": 1.0, "step": 0.01,
-      "default": 0.6, "effect": "Peak contrast and warp depth a form reaches before dissolving — how close to legibility the apparitions come." }
+    { "uniform": "u_formSize", "label": "Form size", "min": 120.0, "max": 560.0, "step": 1.0,
+      "default": 360.0, "effect": "Characteristic diameter of the pressing swellings in CSS pixels, from fist-sized knots to frame-dominating presences." },
+    { "uniform": "u_presence", "label": "Presence", "min": 0.2, "max": 1.2, "step": 0.01,
+      "default": 0.9, "effect": "Peak contrast and brightness a form reaches before dissolving — how close to legibility the apparitions come." },
+    { "uniform": "u_striations", "label": "Striations", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.45, "effect": "Amount of concentric-ring and radial-ray detail woven through each emanation; 0 leaves a soft blob, 1 a finely-striated spirit halo." }
   ],
   "defaultPalette": "midnight"
 }
