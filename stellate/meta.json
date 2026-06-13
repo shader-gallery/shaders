@@ -1,0 +1,23 @@
+{
+  "name": "Stellate",
+  "slug": "stellate",
+  "family": "Polytope",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "stellation", "tetrahedron", "star", "geometry", "spike", "glow", "loop"],
+  "description": "A stella octangula — two tetrahedra driven through each other into an eight-pointed star — turning slowly with its spike tips glowing hot, the whole compound breathing its points in and out.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spike", "label": "Spike", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.55,
+      "effect": "Length and sharpness of the eight points; low is a stout star, high draws long thin spikes." },
+    { "uniform": "u_pulse", "label": "Pulse", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.45,
+      "effect": "How much the star breathes — the spikes growing and shrinking in a slow cycle." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Heat of the glowing spike tips and edge rim." },
+    { "uniform": "u_spin", "label": "Spin", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Tumble speed of the star." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the camera around the star; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "ember",
+  "post": { "grain": 0.04, "aberration": 0.0026, "vignette": 0.38, "contrast": 1.08, "saturation": 1.12, "bloom": 0.3, "bloomRadius": 3.0 }
+}

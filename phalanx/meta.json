@@ -1,0 +1,23 @@
+{
+  "name": "Phalanx",
+  "slug": "phalanx",
+  "family": "Polytope",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "lattice", "octahedron", "field", "geometry", "depth", "fog", "loop"],
+  "description": "A regiment of small octahedra marching out of the fog toward you — an endless lattice of solids, each cell tumbling on its own, dimming into depth so the field reads as deep parallax rather than a flat grid.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_density", "label": "Density", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "How tightly packed the lattice is; low spaces the solids out, high crowds the frame." },
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Speed the field flows toward the camera; 0 freezes the formation." },
+    { "uniform": "u_fog", "label": "Fog", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.55,
+      "effect": "Depth haze — low keeps far solids crisp, high swallows them so only the front rank shows." },
+    { "uniform": "u_tilt", "label": "Tilt", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.4,
+      "effect": "Per-cell tumble and camera lean, from a rigid grid to a loose, animated swarm." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer steers the camera through the field; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "tide",
+  "post": { "grain": 0.04, "aberration": 0.0022, "vignette": 0.4, "contrast": 1.06, "saturation": 1.08, "bloom": 0.16, "bloomRadius": 2.6 }
+}

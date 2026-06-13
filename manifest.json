@@ -24,10 +24,11 @@
     "Umbra",
     "Aura",
     "Molten",
-    "Moiré",
+    "Moir\u00e9",
     "Facet",
     "Glitch",
-    "Kaleido"
+    "Kaleido",
+    "Polytope"
   ],
   "shaders": [
     "lacework",
@@ -238,6 +239,14 @@
     "harlequin",
     "mandorla",
     "tumbler",
-    "anthelion"
+    "anthelion",
+    "hedron",
+    "strut",
+    "cast",
+    "lapidary",
+    "phalanx",
+    "armature",
+    "stellate",
+    "prism"
   ]
 }

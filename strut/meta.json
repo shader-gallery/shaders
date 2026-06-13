@@ -1,0 +1,23 @@
+{
+  "name": "Strut",
+  "slug": "strut",
+  "family": "Polytope",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "wireframe", "icosahedron", "polyhedron", "geometry", "neon", "glow", "loop"],
+  "description": "A single icosahedron drawn as a cage of glowing edge-tubes — see-through, so the far edges shine faintly through the near ones as it tumbles. All thirty edges accumulated volumetrically from the solid's face planes, neon on deep dark.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_gauge", "label": "Gauge", "min": 0.1, "max": 1.0, "step": 0.01, "default": 0.45,
+      "effect": "Thickness of the edge-tubes; low draws hairline wire, high swells them toward fat glowing bars." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.7,
+      "effect": "Overall brightness and bloom of the cage." },
+    { "uniform": "u_depth", "label": "Depth", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "How much the far edges dim relative to the near ones; 0 is a flat even cage, high is deep parallax." },
+    { "uniform": "u_spin", "label": "Spin", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Tumble speed of the cage." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the camera around the cage; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "neon",
+  "post": { "grain": 0.05, "aberration": 0.004, "vignette": 0.4, "contrast": 1.1, "saturation": 1.12, "bloom": 0.22, "bloomRadius": 3.0 }
+}

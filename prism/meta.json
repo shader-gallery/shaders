@@ -1,0 +1,23 @@
+{
+  "name": "Prism",
+  "slug": "prism",
+  "family": "Polytope",
+  "author": "Erin Carter",
+  "tags": ["3d", "raymarch", "glass", "octahedron", "refraction", "dispersion", "geometry", "iridescent", "loop"],
+  "description": "A solid of clear glass — an octahedron you see straight through, the palette environment bending and splitting into spectral colour as it refracts twice through the stone, with a bright fresnel rim where the surface turns away.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_index", "label": "Index", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "Refractive strength — how hard the glass bends what is behind it, from near-water to dense crystal." },
+    { "uniform": "u_dispersion", "label": "Dispersion", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5,
+      "effect": "How far the colours split as they pass through, from colourless glass to a full prism rainbow." },
+    { "uniform": "u_clarity", "label": "Clarity", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.6,
+      "effect": "Clear versus tinted body; low gives the glass a palette-coloured stain, high keeps it transparent." },
+    { "uniform": "u_spin", "label": "Spin", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.4,
+      "effect": "Tumble speed of the glass." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.0,
+      "effect": "How strongly the pointer parallaxes the camera around the glass; 0 ignores the mouse." }
+  ],
+  "defaultPalette": "opal",
+  "post": { "grain": 0.035, "aberration": 0.0035, "vignette": 0.34, "contrast": 1.06, "saturation": 1.12, "bloom": 0.18, "bloomRadius": 2.8 }
+}
