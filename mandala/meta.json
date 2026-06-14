@@ -3,18 +3,19 @@
   "slug": "mandala",
   "family": "Rosette",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "radial", "petals", "metamorphosis", "ornament"],
-  "description": "A single centred mandala of nested polar petal rings, drawn as thin luminous strokes over near-black. Every ring's petals slowly remold among teardrop, almond, trefoil, and thorn silhouettes on an unbounded per-ring phase — the ornament is always mid-transformation, never spinning, never repeating.",
+  "tags": ["glow", "loop", "radial", "petals", "ornament", "symmetry", "mandala"],
+  "description": "A dense, multi-layered concentric mandala: many nested rings of glowing scalloped petals (alternating N and 2N symmetry per ring) laced together by radial spokes and studded with jewel dots, building an intricate ornament that fills the frame and breathes slowly. The line-work glows and takes graded palette hues by ring.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_morphSpeed", "label": "Morph speed", "min": 0.02, "max": 0.5, "step": 0.01,
-      "default": 0.1, "effect": "Rate of the petal metamorphosis; at minimum a petal takes most of a minute to remold from one archetype to the next, at maximum the ornament visibly melts between forms." },
-    { "uniform": "u_petals", "label": "Petals", "min": 5.0, "max": 12.0, "step": 1.0,
-      "default": 8.0, "effect": "Petal count of the innermost ring (outer rings scale up proportionally); higher reads lacier, lower bolder." },
-    { "uniform": "u_spacing", "label": "Ring spacing", "min": 50.0, "max": 140.0, "step": 1.0,
-      "default": 88.0, "effect": "Radial distance between petal rings in CSS px; smaller packs many fine rings into the frame, larger yields a few bold rings with bigger petals." },
-    { "uniform": "u_breath", "label": "Breath", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.3, "effect": "Amplitude of the slow radial breathing of each ring; 0 pins the rings perfectly still (petal morphing alone carries the motion), 1 lets rings visibly swell and relax against their neighbours." }
+    { "uniform": "u_petals", "label": "Petals", "min": 6.0, "max": 24.0, "step": 1.0,
+      "default": 12.0, "effect": "Base symmetry of the mandala - the petal count of the inner rings (outer rings alternate to double this); low reads bold and graphic, high a fine lacy rose-window." },
+    { "uniform": "u_rings", "label": "Rings", "min": 3.0, "max": 13.0, "step": 1.0,
+      "default": 9.0, "effect": "Number of concentric ornament rings stacked from the centre out; few is a simple medallion, many a deep richly-layered mandala filling the frame." },
+    { "uniform": "u_breath", "label": "Breath", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.5, "effect": "Speed of the slow breathing and rotation; 0 holds a perfectly still figure, higher lets the whole mandala pulse and turn gently." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 1.1, "effect": "Brightness of the glowing line-work and jewels; low is a quiet etched ornament, high a luminous stained-glass rose window." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.75, "bloomRadius": 4.5, "backdrop": 0.4, "backdropScale": 1.1, "saturation": 1.12, "contrast": 1.04, "dither": 1.0 },
+  "defaultPalette": "spectral"
 }
