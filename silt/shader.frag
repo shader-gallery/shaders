@@ -90,7 +90,7 @@ void main() {
   // gradient: brighter low (near the bed) fading toward the top, but never to
   // dead black — the water column stays faintly lit so the frame isn't split.
   float upGrad = pow(max(0.0, 1.0 - ny), 1.4);
-  col += upperTint * (upGrad * (0.032 + 0.018 * breathe) + 0.010);
+  col += upperTint * (upGrad * (0.050 + 0.028 * breathe) + 0.016);
 
   // suspended turbidity: slow large-scale sediment clouds drifting through the
   // whole water column so the upper frame carries faint texture, not void.
@@ -99,7 +99,7 @@ void main() {
   tp.y = fc.y / max(res.y, 1.0) * 3.4 + t * 0.02;
   float turb = fbm(tp);
   turb = smoothstep(0.45, 0.95, turb);
-  col += mix(coolA, coolB, 0.5) * turb * (0.05 + 0.03 * (1.0 - ny));
+  col += mix(coolA, coolB, 0.5) * turb * (0.10 + 0.06 * (1.0 - ny));
 
   // ---------------------------------------------------------------
   // Bottom band: the sediment current.
@@ -180,6 +180,18 @@ void main() {
   col += sparkCol * sparkAmt * 1.9;
   // a bloom halo around the brightest grains so they catch the light
   col += sparkCol * grainHere * exp(-gd * gd * 2.0) * twink * 0.30 * clamp(u_sparkle, 0.0, 1.0);
+
+  // suspended silt motes drifting through the whole water column so the upper
+  // frame reads as a lit underwater volume (in-shader fill replacing the backdrop).
+  vec2  mco   = vec2(fc.x + drift * 0.5, fc.y - t * u_currentSpeed * 8.0 * pr);
+  float mcw   = grainPx * 15.0, mch = grainPx * 15.0;
+  vec2  mcell = floor(vec2(mco.x / mcw, mco.y / mch));
+  vec2  mfrac = fract(vec2(mco.x / mcw, mco.y / mch)) - 0.5;
+  float mh    = hash21(mcell + 31.0);
+  float md    = length(mfrac);
+  float mote  = exp(-md * md * 16.0) * step(0.80, mh)
+              * (0.5 + 0.5 * sin(t * (0.7 + mh) + mh * 30.0));
+  col += mix(coolA, sparkCol, 0.4) * mote * 0.55;
 
   // gentle bottom-edge darkening vignette on the very floor to ground the band
   float floorV = smoothstep(0.0, 0.04, ny);
