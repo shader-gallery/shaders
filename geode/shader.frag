@@ -121,7 +121,7 @@ void main() {
   // the lit window is a SMALL fraction of the cycle so only a handful of facets
   // are ever alive at once; the rest of the period the facet sits dark mineral.
   float atk     = 0.012;                                     // attack fraction (sharp)
-  float dec     = mix(0.04, 0.22, clamp(u_afterglow, 0.0, 1.0)); // decay fraction
+  float dec     = mix(0.12, 0.42, clamp(u_afterglow, 0.0, 1.0)); // decay fraction (longer -> more alive)
   float env     = 0.0;
   if (phase < atk) {
     float a = phase / atk;
@@ -154,7 +154,7 @@ void main() {
 
   // dim cold facet fill: a whisper of mineral colour, modulated by the flat
   // shading so the angular planes are felt without lifting the base off black.
-  col += mineral * (0.020 + 0.030 * facetShade);
+  col += mineral * (0.11 + 0.16 * facetShade);
 
   // faint mineral seam line tracing every facet edge
   col += mineral * seam * 0.13;
