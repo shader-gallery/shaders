@@ -17,5 +17,5 @@
       "default": 0.45, "effect": "Amount of concentric-ring and radial-ray detail woven through each emanation; 0 leaves a soft blob, 1 a finely-striated spirit halo." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.5 }
+  "post": { "bloom": 0.6 }
 }

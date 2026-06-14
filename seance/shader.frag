@@ -204,7 +204,7 @@ void main() {
   float lift = field * pres;
   // weave: very dim everywhere at rest, threads catching light brighten under
   // the bulge so the swelling reads as relief in the cloth itself
-  float baseGain = 0.21;                  // resting weave thread luminosity
+  float baseGain = 0.275;                 // resting weave thread luminosity
   float weaveLum = cloth * (baseGain + lift * 1.9);
   // deepen the troughs under a form a touch so the bulge has tactile relief
   weaveLum *= mix(1.0, 0.5 + 0.9 * cloth, lift * 0.8);
@@ -219,7 +219,7 @@ void main() {
   // forms), warming toward a form's gathered halo as it presses through.
   vec3 paletteMean = (c0 + c1 + c2 + c3) * 0.25;
   vec3 restTint = mix(vec3(dot(paletteMean, vec3(0.299, 0.587, 0.114))),
-                      paletteMean, 0.65) * 1.15;
+                      paletteMean, 0.65) * 1.32;
   vec3 clothTint = mix(restTint, halo, clamp(lift * 1.1, 0.0, 0.85));
   col += clothTint * weaveLum;
 
@@ -237,7 +237,7 @@ void main() {
 
   // radial vignette — ritual composure, edges sink into black
   float vign = 1.0 - smoothstep(0.55, 1.18, length((fc - ctr) / res) * 1.35);
-  col *= mix(0.55, 1.0, vign);
+  col *= mix(0.68, 1.0, vign);
 
   // subtle dither to kill banding in the near-black gradients
   float dith = (hash21(fc + fract(t) * 17.0) - 0.5) / 255.0;
