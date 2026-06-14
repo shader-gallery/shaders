@@ -91,14 +91,19 @@ void main() {
   // --- the invisible ghost field: an FBM plume that drifts but is never drawn ---
   // Domain in CSS-ish units (divide out pr so the form is DPR-independent).
   // Larger denominator -> bigger, more readable smoke masses.
-  vec2 q = (fc - ctr) / (pr * 330.0);
+  vec2 q = (fc - ctr) / (pr * 255.0);
   // phase-continuous translation: up and sideways, never wrapping.
   vec2 flow = vec2(0.18, 0.62) * (t * u_drift * 0.45);
-  // two octave layers offset so the plume billows and re-forms organically
+  // three octave layers offset so the plume billows and re-forms organically;
+  // the extra finer layer seeds MORE, more-frequent lit clusters across the frame
+  // (the Phase-3 ask: more of the frame must carry weight, not two corner blooms).
   float g = fbm(q + flow);
   g = mix(g, fbm(q * 1.7 - flow * 0.7 + vec2(3.1, 1.2)), 0.5);
-  // shape into a smoky tonal field 0..1 (0 = light paper, 1 = deep shadow)
-  float tone = smoothstep(0.30, 0.92, g);
+  g = mix(g, fbm(q * 2.9 + flow * 0.45 + vec2(7.4, 2.8)), 0.28);
+  // shape into a smoky tonal field 0..1 (0 = light paper, 1 = deep shadow); the
+  // lower thresholds push more area up into the lit/dense band so clusters recur
+  // across the whole frame rather than huddling at two edges.
+  float tone = smoothstep(0.24, 0.84, g);
 
   // INK controls how hard the ghost carves: low -> faint near-uniform hatching,
   // high -> deep chiaroscuro (bare highlights, heavy black masses). It both
@@ -176,8 +181,10 @@ void main() {
   // (darker-tone) regions glow a little harder so the smoke mass reads, while
   // the floor stays low so bare paper sits near-black and only the grazed band
   // glints.
-  float dens = smoothstep(0.2, 0.95, shade);
-  float lumin = mix(0.18, 0.95, rake) * mix(0.55, 1.45, dens) + sheen * 0.85;
+  float dens = smoothstep(0.10, 0.85, shade);
+  // brighter raking floor (the dim side no longer falls to near-black) and a
+  // higher base density-glow so even the faint background hatch carries colour.
+  float lumin = mix(0.36, 1.08, rake) * mix(0.74, 1.58, dens) + sheen * 0.9;
 
   // compose: dark engraving on near-black, glow only in the inked lines
   vec3 line = ink_col * lumin;

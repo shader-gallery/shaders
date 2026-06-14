@@ -12,7 +12,8 @@
     { "uniform": "u_spacing", "label": "Hatch gap", "min": 3.0, "max": 14.0, "step": 1.0,
       "default": 7.0, "effect": "Distance between hatch lines in CSS pixels — dense plate-engraving texture at the minimum, open sketchy strokes at the maximum." },
     { "uniform": "u_ink", "label": "Ink", "min": 0.2, "max": 1.5, "step": 0.01,
-      "default": 0.8, "effect": "How strongly the ghost field modulates line weight; low yields near-uniform faint hatching, high carves deep chiaroscuro with bare paper-dark highlights and heavy black masses." }
+      "default": 1.05, "effect": "How strongly the ghost field modulates line weight; low yields near-uniform faint hatching, high carves deep chiaroscuro with bare paper-dark highlights and heavy black masses." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "backdrop": 0.6, "backdropScale": 1.15, "saturation": 1.1, "contrast": 1.05, "dither": 1.0 },
+  "defaultPalette": "peacock"
 }
