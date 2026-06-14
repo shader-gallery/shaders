@@ -106,7 +106,7 @@ void main() {
   vec2 uvc = (fc - ctr) / max(res.y, 1.0);
   float clump = vnoise(uvc * 2.3 + 11.0) * 0.6
               + 0.4 * exp(-length(uvc - vec2(0.28, 0.10)) * 1.6); // lobe ~⅓ right/up
-  clump = clamp(clump, 0.0, 1.0);
+  clump = clamp(clump + 0.22, 0.16, 1.0);
 
   // ---- transient splats: scan a 3x3 neighbourhood of hash cells ----
   vec2 baseCell = floor(fc / cell);
@@ -123,7 +123,7 @@ void main() {
       // per-cell density gate: clump field × coverage decides whether this cell
       // ever paints. Heavier clump + higher coverage -> denser field.
       float cellClump = clamp(clump + (vnoise(cid * 0.5) - 0.5) * 0.5, 0.0, 1.0);
-      float live = step(h0, mix(0.18, 1.0, cover) * (0.4 + 0.8 * cellClump));
+      float live = step(h0, mix(0.38, 1.0, cover) * (0.5 + 0.7 * cellClump));
       if (live < 0.5) continue;
 
       // randomized period: splats land faster as splatRate rises
@@ -201,7 +201,7 @@ void main() {
   col += accum;
 
   // gentle vignette: keep edges calm
-  float vign = 1.0 - 0.40 * smoothstep(0.40, 1.20, length((fc - ctr) / res));
+  float vign = 1.0 - 0.28 * smoothstep(0.45, 1.25, length((fc - ctr) / res));
   col *= vign;
 
   // soft filmic-ish clamp so dense overlaps roll off instead of hard-clipping
