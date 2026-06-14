@@ -3,14 +3,21 @@
   "slug": "cradle",
   "family": "Loom",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "lines", "geometric", "threads", "minimal"],
-  "description": "A cat's-cradle of taut glowing chords strung corner-to-corner across the dark. Each straight string is a thin bright core with a soft halo, palette-tinted along its length, with glint beads sliding down it; where strings cross, the intersection brightens. On staggered schedules the anchors glide to new perimeter positions, so the figure forever re-strings itself one chord at a time.",
+  "tags": ["glow", "loop", "lines", "geometric", "threads", "string-art"],
+  "description": "Anchored string art: a ring of bright cradle-point anchors sits right on the screen edges, and from each anchor a fan of chords is strung to its neighbours k steps away. The overlapping chord families trace smooth glowing envelope curves - the cardioid, nephroid and rose shapes of classic string art - with glint beads sliding the strings and the anchor nodes burning brightest. The whole figure breathes and slowly re-strings itself.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_morphSpeed", "label": "Morph speed", "min": 0.1, "max": 1.5, "step": 0.01, "default": 0.4, "effect": "Cadence and glide rate of anchors trading places — low is a meditative slow re-stringing, high keeps several chords visibly swinging to new positions at once." },
-    { "uniform": "u_chords", "label": "Chords", "min": 4.0, "max": 16.0, "step": 1.0, "default": 9.0, "effect": "Number of strung lines — low is a stark minimal figure, high is a dense layered string-art web with many crossings." },
-    { "uniform": "u_line", "label": "Line weight", "min": 0.8, "max": 3.0, "step": 0.05, "default": 1.4, "effect": "Core thickness of each chord in CSS px, with halo scaling alongside — thin reads as hairline wire, thick as soft neon string." },
-    { "uniform": "u_glintSpeed", "label": "Glint speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.7, "effect": "Travel speed of the bright beads sliding along the chords — at 0 they rest as fixed highlights, at max light visibly courses down every string." }
+    { "uniform": "u_anchors", "label": "Anchors", "min": 3.0, "max": 24.0, "step": 1.0,
+      "default": 11.0, "effect": "Number of cradle-point anchors around the ring - few gives a stark angular star, many a finely sampled envelope that reads as smooth curves." },
+    { "uniform": "u_linesPer", "label": "Lines / anchor", "min": 1.0, "max": 12.0, "step": 1.0,
+      "default": 5.0, "effect": "How many chords fan out from each anchor (to neighbours 1..k steps away); each step adds another nested envelope family, so more lines build a denser layered web." },
+    { "uniform": "u_morphSpeed", "label": "Morph speed", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.3, "effect": "Rate the anchor ring breathes and rotates; 0 freezes a single crisp figure, higher slowly swings the whole envelope as the anchors glide." },
+    { "uniform": "u_line", "label": "Line weight", "min": 0.8, "max": 3.0, "step": 0.05,
+      "default": 1.4, "effect": "Core thickness of each chord in CSS px, with halo scaling alongside - thin reads as hairline wire, thick as soft neon string." },
+    { "uniform": "u_glintSpeed", "label": "Glint speed", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.7, "effect": "Travel speed of the bright beads sliding along the chords; at 0 they rest as fixed highlights, at max light visibly courses down every string." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.85, "bloomRadius": 5.0, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "defaultPalette": "witchlight"
 }
