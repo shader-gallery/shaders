@@ -220,7 +220,7 @@ void main() {
   // ---- compose ----
   vec3  stitchCol = rowCol;
   // brightness: stitches glow; pop adds a swell; older rows dim via fade
-  float bright    = 0.85 + 0.6 * pop;
+  float bright    = 1.12 + 0.7 * pop;
   col += stitchCol * xMask * bright * fade;
 
   // faint underglow on the cloth within lit rows so bands read as fabric
@@ -236,8 +236,8 @@ void main() {
 
   // subtle vignette to compose the framing
   vec2  uvc  = (fc - res * 0.5) / res;
-  float vign = 1.0 - smoothstep(0.45, 1.0, length(uvc));
-  col *= mix(0.7, 1.0, vign);
+  float vign = 1.0 - smoothstep(0.55, 1.15, length(uvc));
+  col *= mix(0.85, 1.0, vign);
 
   gl_FragColor = vec4(col, 1.0);
 }
