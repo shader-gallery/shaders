@@ -44,5 +44,6 @@
       "effect": "How densely the paint clumps across the frame, from a sparse scatter to a heavily built-up wall."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "backdrop": 0.5 }
 }

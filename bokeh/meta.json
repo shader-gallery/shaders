@@ -16,5 +16,6 @@
     { "uniform": "u_blinkRate", "label": "Blink rate", "min": 0.0, "max": 2.0, "step": 0.05,
       "default": 0.6, "effect": "How frequently individual discs flicker and switch like far-off signage; 0 leaves every light steady." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "backdrop": 0.5 }
 }

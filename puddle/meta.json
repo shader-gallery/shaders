@@ -15,5 +15,5 @@
       "default": 32.0, "effect": "Width in CSS pixels of the reflected neon columns, from thin distant signs to broad close-up signage washes." }
   ],
   "defaultPalette": "midnight",
-  "post": { "exposure": 1.22, "contrast": 1.15, "saturation": 1.45, "vignette": 0.3 }
+  "post": { "exposure": 1.22, "contrast": 1.15, "saturation": 1.45, "vignette": 0.3, "bloom": 0.6, "backdrop": 0.5 }
 }
