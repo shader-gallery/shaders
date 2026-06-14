@@ -185,7 +185,7 @@ void main() {
       vec2  d  = uv - cp;
       float lamp = blob(d / max(w*1.3,1e-4), 1.0);
       float amt = lamp * present * (1.0 - gH) * brake;
-      glow += queueCol * amt;
+      glow += queueCol * amt * 1.45;
       // reflection beneath each idling lamp
       vec2 dr = uv - vec2(qx, 2.0*J.y - laneY - 0.015);
       float refl = blob(vec2(dr.x, dr.y/ max(w*3.0,1e-4)*1.0) / max(w*1.3,1e-4), 1.0);
@@ -238,7 +238,7 @@ void main() {
       vec2  d  = uv - cp;
       float lamp = blob(d / max(w*1.3,1e-4), 1.0);
       float amt = lamp * present * (1.0 - gV) * brake;
-      glow += queueCol * amt;
+      glow += queueCol * amt * 1.45;
       vec2 dr = uv - vec2(laneX, 2.0*J.y - qy - 0.015);
       float refl = blob(dr / max(w*2.2,1e-4), 1.0);
       glow += queueCol * refl * present * (1.0 - gV) * brake * 0.4;
@@ -267,14 +267,14 @@ void main() {
   // brighter as traffic rises (distant city signage filling up) ----
   for (int bi = 0; bi < 7; bi++) {
     float fb = float(bi);
-    vec2 bp = vec2( (hash11(fb*1.7)-0.5)*aspect*1.1, 0.12 + hash11(fb*4.2)*0.34 );
+    vec2 bp = vec2( (hash11(fb*1.7)-0.5)*aspect*1.18, 0.04 + hash11(fb*4.2)*0.44 );
     float br = 0.025 + hash11(fb*2.3)*0.035;
     float tw = 0.7 + 0.3*sin(t*0.6 + fb*2.0);
     // higher-index orbs only light up at higher traffic
     float bThresh = fb / 7.0;
     float bPresent = smoothstep(bThresh + 0.2, bThresh - 0.1, 1.0 - dens);
     vec3 bc = mix(coolCol, warmCol, hash11(fb*5.5));
-    glow += bc * blob((uv-bp)/max(br,1e-4),1.0) * 0.13 * tw * (0.4 + 0.6*bPresent);
+    glow += bc * blob((uv-bp)/max(br,1e-4),1.0) * 0.20 * tw * (0.6 + 0.4*bPresent);
   }
 
   // motion-blur road wash: the active flowing axis throws a smeared band of
@@ -302,7 +302,7 @@ void main() {
 
   // vignette: dark corners, luminous junction low-centre
   float vign = 1.0 - smoothstep(0.45, 1.15, length(uv * vec2(0.9,1.0)));
-  col *= mix(0.55, 1.0, vign);
+  col *= mix(0.70, 1.0, vign);
 
   // gentle filmic-ish tone so bright cores don't clip harshly
   col = col / (col + vec3(0.85)) * 1.85;

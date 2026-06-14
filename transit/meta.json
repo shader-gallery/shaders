@@ -17,5 +17,5 @@
       "default": 2.5, "effect": "Thickness in CSS pixels of each trail's bright core; bloom, queue lamps, and reflections scale with it." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.5 }
+  "post": { "bloom": 0.6 }
 }
