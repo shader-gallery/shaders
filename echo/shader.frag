@@ -17,7 +17,7 @@
 // Uniforms provided by the runtime:
 //   u_time        seconds, monotonically increasing
 //   u_resolution  drawing-buffer size in device pixels
-//   u_mouse       pointer in device pixels (0,0 when absent) — unused here
+//   u_mouse       pointer in device pixels (0,0 when absent)
 //   u_pixelRatio  devicePixelRatio used for the buffer
 //   u_palette[4]  four theme colours, 0..1 rgb
 precision highp float;
@@ -33,6 +33,9 @@ uniform float u_descentSpeed; // scale-octaves per second the wavefronts sink (d
 uniform float u_ringDensity;  // wavefront rings per scale octave             (default 4)
 uniform float u_scatter;      // depth of the angular bead modulation, 0..1   (default 0.6)
 uniform float u_haloGlow;     // softness/reach of the glow halo, 0..1        (default 0.5)
+uniform float u_centerX;      // focal x offset, short-axis units (off-centre) (default -0.17)
+uniform float u_centerY;      // focal y offset, short-axis units             (default 0.13)
+uniform float u_mouseShift;   // pointer depth-parallax on the outer rings     (default 0.35)
 
 const vec3  BG     = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float TAU    = 6.28318530718;
@@ -100,10 +103,16 @@ void main() {
   float halo  = clamp(u_haloGlow, 0.0, 1.0);
   float lw    = 2.0 * pr;   // fixed hairline stroke, css px → device px
 
-  // compose off-centre: bias the well mouth up-and-left of dead-centre (≈⅓)
-  // so the frame reads composed rather than a symmetric bullseye.
-  vec2  ctr = vec2(0.5 * res.x - 0.085 * mn, 0.5 * res.y + 0.065 * mn);
-  vec2  v   = fc - ctr;
+  // off-centre focal point (now a movable param; default reproduces the original
+  // bias) + r-weighted mouse depth parallax: outer rings slide toward the pointer
+  // while the deep pupil holds — a look-around into the well.
+  vec2  mraw = u_mouse;
+  if (dot(mraw, mraw) < 1.0) mraw = 0.5 * res;
+  vec2  mN   = (mraw - 0.5 * res) / (0.5 * mn);
+  vec2  ctr  = 0.5 * res + vec2(u_centerX, u_centerY) * (0.5 * mn);
+  vec2  v0   = fc - ctr;
+  float r0n  = length(v0) / (0.5 * mn);
+  vec2  v    = v0 - mN * (0.16 * max(u_mouseShift, 0.0)) * (0.5 * mn) * smoothstep(0.0, 0.9, r0n);
   float r   = max(length(v), 1e-3);
   float ang = atan(v.y, v.x);
 

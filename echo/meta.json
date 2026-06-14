@@ -50,7 +50,13 @@
       "step": 0.01,
       "default": 0.5,
       "effect": "Softness and reach of the glow halo around each ring; 0 leaves crisp bare circles."
-    }
+    },
+    { "uniform": "u_centerX", "label": "Focal X", "min": -0.5, "max": 0.5, "step": 0.01,
+      "default": -0.17, "effect": "Horizontal offset of the well's pupil — off-centre by default so the field reads composed rather than a symmetric bullseye." },
+    { "uniform": "u_centerY", "label": "Focal Y", "min": -0.5, "max": 0.5, "step": 0.01,
+      "default": 0.13, "effect": "Vertical offset of the well's pupil out of dead-centre." },
+    { "uniform": "u_mouseShift", "label": "Mouse parallax", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.35, "effect": "How far the outer rings slide toward the pointer for a depth look-around (the deep pupil holds; no effect on the static poster)." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.7, "backdrop": 0.6 }
