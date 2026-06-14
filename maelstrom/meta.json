@@ -44,5 +44,5 @@
     }
   ],
   "defaultPalette": "midnight",
-  "post": { "exposure": 1.08, "contrast": 1.05, "saturation": 1.06, "bloom": 0.6, "backdrop": 0.6 }
+  "post": { "exposure": 1.08, "contrast": 1.05, "saturation": 1.06, "bloom": 0.6 }
 }

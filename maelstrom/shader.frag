@@ -103,9 +103,9 @@ void main() {
   // core resolution: structure (and brightness) resolves only toward the core.
   // far field dissolves to faint traces, upper-left stays nearly empty.
   float coreT = 1.0 - smoothstep(0.0, core, rcss);          // 1 at centre → 0 out
-  float farFade = mix(0.28, 1.0, 1.0 - smoothstep(core, core * 4.5, rcss));
+  float farFade = mix(0.55, 1.0, 1.0 - smoothstep(core, core * 5.5, rcss));
   // overall arm visibility: faint far out, resolving in toward the core
-  float vis = mix(0.26, 1.0, coreT) * farFade;
+  float vis = mix(0.55, 1.0, coreT) * farFade;
 
   // tighten the bands toward the core: extra high-frequency ridges only resolve
   // inside the core region, so the coil reads denser at the heart.
@@ -132,9 +132,12 @@ void main() {
   vec3 dye = mix(coolMix, warmMix, warm);
 
   vec3 col = BG;
+  // faint tinted-water base so the inter-arm void reads as swirling fluid (in-shader
+  // fill replacing the backdrop); brightest toward the core, never pure black.
+  col += mix(c0, c1, 0.5 + 0.5 * sin(spiral)) * (0.020 + 0.030 * farFade);
 
   // dye arms laid onto the near-black ground
-  col += dye * arm * vis * 1.25;
+  col += dye * arm * vis * 1.35;
 
   // soft warm glow pooling inside the defined core radius
   float glow = exp(-rcss / (core * 0.6));
@@ -145,7 +148,7 @@ void main() {
   // gentle overall vignette toward the upper-left empty quadrant keeps that
   // region calm (purely subtractive of stray noise, never darkens the core)
   float ul = 1.0 - smoothstep(0.2, 1.3, length((fc - ctr) / res));
-  col *= mix(0.85, 1.0, ul);
+  col *= mix(0.94, 1.0, ul);
 
   // faint global glow lift inside the core so the warm pool reads as light, not
   // just coloured arms
