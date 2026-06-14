@@ -17,5 +17,5 @@
       "effect": "Overall feature scale of the gas and dust; low spreads into broad banks, high packs in fine turbulent structure." }
   ],
   "defaultPalette": "midnight",
-  "post": { "grain": 0.06, "vignette": 0.3, "saturation": 1.12 }
+  "post": { "grain": 0.06, "vignette": 0.3, "saturation": 1.12, "bloom": 0.5 }
 }

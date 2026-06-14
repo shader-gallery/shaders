@@ -14,5 +14,6 @@
     { "uniform": "u_filament", "label": "Filament", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.5, "effect": "FBM raggedness of the shell rim: 0 is a clean smooth ring, 1 a torn filamentary supernova remnant." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.7, "backdrop": 0.6 }
 }

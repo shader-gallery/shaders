@@ -16,5 +16,6 @@
     { "uniform": "u_trail", "label": "Dust trail", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.45, "effect": "Persistence of the dust trail along the orbit: 0 leaves no trace behind the nucleus, 1 keeps a faint glowing ghost of nearly the whole ellipse." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6 }
 }

@@ -17,5 +17,5 @@
       "default": 0.7, "effect": "How many stars blink on as night deepens, denser toward the horizon so the field thickens above the hills." }
   ],
   "defaultPalette": "midnight",
-  "post": { "exposure": 1.12, "contrast": 1.14, "saturation": 1.35, "vignette": 0.35 }
+  "post": { "exposure": 1.12, "contrast": 1.14, "saturation": 1.35, "vignette": 0.35, "bloom": 0.4 }
 }
