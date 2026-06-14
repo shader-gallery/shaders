@@ -3,18 +3,19 @@
   "slug": "damask",
   "family": "Burnish",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "fabric", "ornament", "pleats", "scrollwork"],
-  "description": "A heavy damask curtain fills the frame: brick-tiled foliate scrollwork woven into cloth that hangs in soft vertical pleats, each crest catching a fixed satin sheen while its valleys drown to black. The light is bolted down and the cloth does the moving — a draft sways the pleats side-to-side, deepening toward the hem on a sum of incommensurate slow sines, so no band ever travels across the wall.",
+  "tags": ["gold", "glow", "loop", "ornament", "brocade", "symmetry", "texture"],
+  "description": "A brocade wallpaper of mirror-symmetric foliate medallions on a half-drop repeat. Each cell folds a noise field through an N-fold dihedral kaleidoscope into an ornate, perfectly symmetric motif; the deep jewel ground carries the pattern tone-on-tone like real damask while gold filigree outlines the ornament. Lit evenly across the whole frame, no dark midriff.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_swaySpeed", "label": "Sway speed", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 0.35, "effect": "Multiplies the draft driving the curtain; 0 hangs the cloth perfectly still (pleats lit but frozen), 2 sets the whole wall gently billowing." },
-    { "uniform": "u_pleat", "label": "Pleat width", "min": 60.0, "max": 320.0, "step": 1.0,
-      "default": 150.0, "effect": "Width of each vertical pleat in CSS pixels — many narrow candlestick folds at the minimum, a few broad theatrical waves at the maximum." },
-    { "uniform": "u_tile", "label": "Scroll size", "min": 80.0, "max": 280.0, "step": 1.0,
-      "default": 160.0, "effect": "Size of each scrollwork brick in CSS pixels — a fine wallpaper of many small motifs at the minimum, a few grand scrolls at the maximum." },
-    { "uniform": "u_fold", "label": "Fold depth", "min": 0.2, "max": 1.5, "step": 0.01,
-      "default": 0.8, "effect": "Depth of the pleating — scales both the sway relief and the crest-to-valley contrast, from a nearly flat softly shaded hanging to deep folds whose valleys drown in black." }
+    { "uniform": "u_scale", "label": "Motif size", "min": 60.0, "max": 320.0, "step": 2.0,
+      "default": 150.0, "effect": "Size of each repeating medallion in CSS pixels - a dense small-figured brocade at the minimum, a few grand damask medallions at the maximum." },
+    { "uniform": "u_fold", "label": "Symmetry", "min": 4.0, "max": 16.0, "step": 1.0,
+      "default": 8.0, "effect": "Order of the dihedral kaleidoscope folding each motif; low gives a bold few-petalled rosette, high a finely spoked lace medallion." },
+    { "uniform": "u_detail", "label": "Ornament", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "Complexity of the foliate filigree; low is a clean simple motif, high crowds each medallion with intricate scrollwork." },
+    { "uniform": "u_drift", "label": "Shimmer", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.4, "effect": "Speed of the gold shimmer travelling the filigree; 0 holds a still woven cloth, higher lets light roll slowly across the metal thread." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "saturation": 1.1, "contrast": 1.06, "dither": 1.0 },
+  "defaultPalette": "wine"
 }
