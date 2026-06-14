@@ -7,10 +7,11 @@
   "description": "A dark field of stitches — dots that morph into crosses as a radial wave passes through them, lit by four drifting glow blobs and tinted by angle into a faint rainbow.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_waveSpeed", "label": "Wave speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.6 },
-    { "uniform": "u_spacing", "label": "Dot spacing", "min": 16.0, "max": 60.0, "step": 1.0, "default": 30.0 },
-    { "uniform": "u_wavelength", "label": "Wavelength", "min": 80.0, "max": 500.0, "step": 5.0, "default": 220.0 },
-    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 }
+    { "uniform": "u_waveSpeed", "label": "Wave speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.6, "effect": "Speed the radial wave travels out from the centre, morphing dots into crosses as it passes; 0 freezes the pattern mid-morph." },
+    { "uniform": "u_spacing", "label": "Dot spacing", "min": 12.0, "max": 60.0, "step": 1.0, "default": 22.0, "effect": "Distance between dots in CSS px - a dense fine halftone lace at the minimum, an open sparse grid at the maximum." },
+    { "uniform": "u_wavelength", "label": "Wavelength", "min": 80.0, "max": 500.0, "step": 5.0, "default": 220.0, "effect": "Spacing of the concentric morph rings; short packs many dot-to-cross bands across the frame, long sweeps one broad wave." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.85, "effect": "Brightness of the four drifting glow blobs that light the lace from behind; low keeps the crisp dots dominant, high floods soft colour through the grid." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.4, "bloomRadius": 3.5, "backdrop": 0.45, "backdropScale": 1.15, "saturation": 1.1, "contrast": 1.06, "dither": 1.0 },
+  "defaultPalette": "neon"
 }

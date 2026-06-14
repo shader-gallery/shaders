@@ -24,9 +24,9 @@ uniform float u_waveSpeed;   // wave travel speed          (default 0.6)
 uniform float u_glow;        // blob glow multiplier       (default 1)
 
 const float BG        = 0.039;   // #0A -> ~0.04
-const float DOT_CSS   = 1.5;     // dot radius
-const float ARM_CSS   = 4.0;     // cross arm length at full morph
-const float THICK_CSS = 1.2;     // cross thickness at full morph
+const float DOT_CSS   = 2.2;     // dot radius
+const float ARM_CSS   = 5.2;     // cross arm length at full morph
+const float THICK_CSS = 1.6;     // cross thickness at full morph
 
 float sdCircle(vec2 p, float r) {
   return length(p) - r;
@@ -96,10 +96,10 @@ void main() {
   float hue     = fract((atan(d.y, d.x) + 3.14159265) / 6.2831853 + t * 0.015);
   vec3  rainbow = 0.55 + 0.45 * cos(6.2831853 * hue + vec3(0.0, 2.094, 4.188));
   vec3  dotCol  = mix(rainbow, paletteRamp(hue), 0.45);
-  float radial  = 0.38 - (dCtr / length(ctr)) * 0.10;
-  float opacity = clamp(radial + m * 0.42, 0.0, 1.0);
+  float radial  = 0.60 - (dCtr / length(ctr)) * 0.08;
+  float opacity = clamp(radial + m * 0.40, 0.0, 1.0);
 
-  col += dotCol * mask * opacity * (0.85 + 0.45 * m);
+  col += dotCol * mask * opacity * (1.05 + 0.6 * m);
 
   // faint smooth glow along the wavefront so the crest reads between dots
   float wavePix = sin((distance(fc, ctr) / (u_wavelength * pr)) * 6.2831853 - t * u_waveSpeed);
