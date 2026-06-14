@@ -22,16 +22,16 @@
       "min": 20,
       "max": 120,
       "step": 1,
-      "default": 66,
+      "default": 82,
       "effect": "Height of each teardrop flame in CSS pixels; width and halo scale proportionally."
     },
     {
       "uniform": "u_count",
       "label": "Wisps",
       "min": 2,
-      "max": 6,
+      "max": 14,
       "step": 1,
-      "default": 5,
+      "default": 10,
       "effect": "How many flames wander the marsh at once, from a lonely pair to a crowded drift filling the frame."
     },
     {

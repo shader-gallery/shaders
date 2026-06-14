@@ -29,7 +29,7 @@ uniform float u_flicker;      // FBM interior flicker amplitude (default 0.8)
 uniform float u_trailLength;  // beaded filament reach          (default 0.6)
 
 const vec3  BG       = vec3(0.030, 0.032, 0.040); // near-black marsh base
-const float NFLAMES  = 6.0;                        // literal loop bound
+const float NFLAMES  = 14.0;                       // literal loop bound
 
 // ---- hash / value noise / fbm -------------------------------------------
 float hash21(vec2 p) {
@@ -61,18 +61,24 @@ float fbm(vec2 p) {
 // produces pauses + swerves. Returns a position the trail can re-sample.
 vec2 wanderPath(float fi, float pt) {
   float seed = fi * 17.123;
-  // incommensurate angular frequencies (irrational-ish ratios)
+  // local wander (smaller amplitude so flames roam around their home, not all to
+  // the centre) — incommensurate angular frequencies so it never visibly repeats
   float x =
-      sin(pt * 0.31 + seed * 1.7) * 0.34
-    + sin(pt * 0.53 + seed * 0.9) * 0.18
-    + sin(pt * 0.127 + seed * 2.3) * 0.22;
+      sin(pt * 0.31 + seed * 1.7) * 0.16
+    + sin(pt * 0.53 + seed * 0.9) * 0.09
+    + sin(pt * 0.127 + seed * 2.3) * 0.11;
   float y =
-      sin(pt * 0.37 + seed * 2.1) * 0.20
-    + sin(pt * 0.181 + seed * 1.3) * 0.16
-    + cos(pt * 0.089 + seed * 0.6) * 0.10;
-  // bias each flame to its own zone and keep them in frame
-  float zone = (fi / max(NFLAMES - 1.0, 1.0) - 0.5);
-  return vec2(x + zone * 0.46, y + 0.04);
+      sin(pt * 0.37 + seed * 2.1) * 0.12
+    + sin(pt * 0.181 + seed * 1.3) * 0.09
+    + cos(pt * 0.089 + seed * 0.6) * 0.06;
+  // each flame HOMES on a jittered 4-column grid so the drift spreads evenly over
+  // the whole frame instead of clumping (pure hashing clustered them)
+  float cols = 4.0, rows = 4.0;
+  float gx = mod(fi, cols);
+  float gy = floor(fi / cols);
+  float hx = (gx + 0.5) / cols - 0.5 + (hash21(vec2(fi, 1.7)) - 0.5) * 0.16;
+  float hy = (gy + 0.5) / rows - 0.5 + (hash21(vec2(fi, 4.3)) - 0.5) * 0.16;
+  return vec2(x + hx * 1.92, y + hy * 1.74);
 }
 
 // teardrop / flame field: a rounded bulb at the bottom tapering to a tip at the
@@ -125,7 +131,7 @@ void main() {
   }
 
   // accumulate flames + their trailing filaments
-  for (int fi = 0; fi < 6; fi++) {
+  for (int fi = 0; fi < 14; fi++) {
     float f = float(fi);
     if (f > u_count - 0.5) continue;   // u_count gates how many wander
 
@@ -137,7 +143,7 @@ void main() {
 
     // ---- current head position (css px, screen space) ----
     vec2 pn   = wanderPath(f, ptBase);
-    vec2 head = pn * vec2(span * 0.54, span * 0.40); // screen-space offset (css)
+    vec2 head = pn * vec2(res.x / pr * 0.52, res.y / pr * 0.46); // screen-space offset (css)
 
     // long private brightness cycle (breathing swell), per flame
     float swell = 0.55 + 0.45 * sin(t * (0.16 + 0.05 * f) + f * 2.3);
@@ -151,7 +157,7 @@ void main() {
       // start the trail just behind the head so it reads as leaving the base.
       float back = fs * (0.04 + 0.115 * u_trailLength);
       vec2  qn   = wanderPath(f, ptBase - back);
-      vec2  q    = qn * vec2(span * 0.54, span * 0.40);
+      vec2  q    = qn * vec2(res.x / pr * 0.52, res.y / pr * 0.46);
       // anchor the filament near the base of the flame, not its tip
       q += vec2(0.0, -0.18 * flameHc);
       float dseg = length(P - q);
@@ -205,7 +211,7 @@ void main() {
     float bright = swell;
 
     // compose this flame (cool tint body + whiter hot core + faint halo)
-    col += tint * body * 1.45 * bright;
+    col += tint * body * 1.7 * bright;
     col += mix(tint, vec3(1.0), 0.6) * body * core * 1.15 * bright;
     col += tint * halo * 0.24 * bright;
     // beaded filament trail in the same tint, dimmer than the body but readable
