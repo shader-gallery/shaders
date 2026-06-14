@@ -14,5 +14,6 @@
     { "uniform": "u_drainStagger", "label": "Drain stagger", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.6, "effect": "Spread of per-pool drain timing: 0 dims every pool in unison, 1 strings them out one by one across the ebb." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4 }
 }

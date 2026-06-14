@@ -14,5 +14,6 @@
     { "uniform": "u_driftSpeed", "label": "Drift speed", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.3, "effect": "Rate of the rafts' current-loop drift and shear; at 0 the rafts hold station while bubbles still swell and pop in place." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4 }
 }

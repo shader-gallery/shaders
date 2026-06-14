@@ -14,5 +14,6 @@
     { "uniform": "u_buoyGlow", "label": "Buoy glow", "min": 3.0, "max": 16.0, "step": 0.05,
       "default": 7.0, "effect": "CSS-pixel radius of each buoy's glow core and its reflection streak's width." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4, "backdrop": 0.7, "backdropScale": 1.3 }
 }
