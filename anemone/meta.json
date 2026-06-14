@@ -11,7 +11,7 @@
     { "uniform": "u_bloomSize", "label": "Bloom size", "min": 60.0, "max": 320.0, "step": 1.0, "default": 150.0, "effect": "Base radius of each anemone in CSS pixels; larger blooms with the same density fill more boldly." },
     { "uniform": "u_lobeCount", "label": "Lobe count", "min": 6.0, "max": 24.0, "step": 1.0, "default": 13.0, "effect": "Base number of tentacle lobes per organism (varied a little per bloom); few reads as broad petals, many as a fine fringed fan." },
     { "uniform": "u_density", "label": "Density", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.8, "effect": "How tightly the anemone bed packs; higher shrinks the spacing so more blooms overlap and fill the frame." },
-    { "uniform": "u_twist", "label": "Twist", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.3, "effect": "Spiral twist of the tentacles, from straight radial lobes to a swirling pinwheel." }
+    { "uniform": "u_twist", "label": "Twist", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.15, "effect": "Spiral twist of the tentacles, from straight radial lobes to a swirling pinwheel." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.8 }

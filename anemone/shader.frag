@@ -64,18 +64,23 @@ vec3 anemoneBloom(vec2 p, float reach, float lobes, float breathPh, float twist,
   float sway = sin(t * bs * 0.32 + lobeId * 1.7) * lobeHalf * 0.35;
 
   float lobeC = (lobeId + 0.5) / lobes;
-  float rN    = r / max(reachPx, 1.0);
-  // spiral twist: rotate the lobe axis progressively with radius
+  // gentle per-lobe variation so the tentacles aren't an identical rigid pinwheel
+  float lhash  = hash21(vec2(lobeId, floor(hueOff * 6.0) + 3.0));
+  float lhash2 = hash21(vec2(lobeId, floor(hueOff * 6.0) + 11.0));
+  float reachL = reachPx * mix(0.85, 1.12, lhash);   // slightly uneven lengths
+  float rN    = r / max(reachL, 1.0);
+  // soft twist + a subtle per-lobe wave so each arm curls a touch differently
   float dAng  = (a01 - lobeC);
   dAng -= floor(dAng + 0.5);
-  dAng = dAng * TWO_PI + sway + rN * twist * 2.2;
+  dAng = dAng * TWO_PI + sway + rN * twist * 1.6
+       + sin(rN * 3.6 + lobeId * 1.7) * 0.10;
 
   float perp   = abs(sin(dAng)) * r;
-  float reachM = 1.0 - smoothstep(0.90, 1.04, rN);
+  float reachM = 1.0 - smoothstep(0.90, 1.05, rN);
 
-  float gapPx   = lobeHalf * reachPx;
+  float gapPx   = lobeHalf * reachL;
   float fat     = sin(clamp(rN, 0.0, 1.0) * 3.14159265);
-  float widthPx = gapPx * (0.16 + 0.80 * fat);
+  float widthPx = gapPx * (0.16 + 0.80 * fat) * mix(0.86, 1.16, lhash2);
   float aa      = 2.0 * pr;
 
   float sideM = (1.0 - smoothstep(widthPx - aa, widthPx + aa, perp)) * reachM;
