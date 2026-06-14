@@ -52,5 +52,6 @@
       "effect": "How strongly the unseen terrain distorts the rings; zero spreads them as clean circles."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.7 }
 }

@@ -16,5 +16,6 @@
     { "uniform": "u_cordWaviness", "label": "Cord waviness", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.5, "effect": "How far the cords bow away from straight lines; 0 lays them perfectly straight." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.7, "backdrop": 0.7, "backdropScale": 1.3 }
 }

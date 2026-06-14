@@ -16,5 +16,6 @@
     { "uniform": "u_ashEmber", "label": "Ash ember", "min": 0.0, "max": 0.5, "step": 0.01,
       "default": 0.12, "effect": "Residual ember level left glowing in the seam behind the front; 0 cools it to pure black." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

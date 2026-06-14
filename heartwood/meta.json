@@ -16,5 +16,6 @@
     { "uniform": "u_preheat", "label": "Preheat", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.4, "effect": "Brightness of the hairline ring that lights each growth ring just before consumption; 0 disables the preview." }
   ],
-  "defaultPalette": "ember"
+  "defaultPalette": "ember",
+  "post": { "bloom": 0.6, "backdrop": 0.5 }
 }

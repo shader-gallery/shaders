@@ -52,5 +52,6 @@
       "effect": "Scales the FBM perturbation of the front, from a nearly smooth contour to deep bays and racing fingers."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.5 }
 }

@@ -52,5 +52,6 @@
       "effect": "How many cooling sparks lie along the charred rows behind the line."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }

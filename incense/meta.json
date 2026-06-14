@@ -16,5 +16,6 @@
     { "uniform": "u_emberSize", "label": "Ember size", "min": 2.0, "max": 12.0, "step": 0.05,
       "default": 6.5, "effect": "Radius in CSS px of the white-hot tip core." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }
