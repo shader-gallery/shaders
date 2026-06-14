@@ -56,12 +56,15 @@ void main() {
   float t   = u_time;
 
   // position relative to dome centre (the oculus), aspect-corrected to circular
-  // movable focal point + smooth mouse parallax (absent pointer -> centred)
+  // static movable focal, then a real DEPTH parallax from the mouse: outer (near)
+  // coffers slide toward the pointer while the deep oculus holds.
   vec2  mraw = u_mouse;
   if (dot(mraw, mraw) < 1.0) mraw = ctr;
   vec2  mN    = (mraw - ctr) / min(res.x, res.y);
-  vec2  focal = vec2(u_centerX, u_centerY) + mN * (0.12 * max(u_mouseShift, 0.0));
-  vec2 p = (fc - ctr) / min(res.x, res.y) - focal;
+  vec2  p0 = (fc - ctr) / min(res.x, res.y) - vec2(u_centerX, u_centerY);
+  float r0 = length(p0);
+  vec2  parallax = mN * (0.15 * max(u_mouseShift, 0.0));
+  vec2 p = p0 - parallax * smoothstep(0.0, 0.45, r0);
   float r = length(p);
   float ang = atan(p.y, p.x); // -PI..PI
 
