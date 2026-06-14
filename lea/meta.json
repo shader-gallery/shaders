@@ -16,6 +16,5 @@
     { "uniform": "u_tipGlow", "label": "Tip glow", "min": 0.2, "max": 2, "step": 0.05,
       "default": 1, "effect": "Brightness of the leaning tips, controlling how vividly a front reads against the calm." }
   ],
-  "defaultPalette": "midnight",
-  "post": { "bloom": 0.3, "exposure": 1.1, "saturation": 1.25, "backdrop": 0.4 }
+  "defaultPalette": "midnight"
 }
