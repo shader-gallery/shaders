@@ -3,16 +3,54 @@
   "slug": "niello",
   "family": "Burnish",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "metal", "stipple", "glitter", "negative-space"],
-  "description": "A niello panel read in negative: a black alloy ground stippled edge-to-edge with tiny punch marks that scintillate in palette-tinted sparks, while a burnished strapwork interlace stays perfectly still and unlit — an ornament made of absence, disclosed by where the shimmer is not.",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "metal",
+    "stipple",
+    "glitter",
+    "negative-space"
+  ],
+  "description": "A niello panel read in negative: a black alloy ground stippled edge-to-edge with tiny punch marks that scintillate in palette-tinted sparks, while a burnished strapwork interlace stays perfectly still and unlit \u2014 an ornament made of absence, disclosed by where the shimmer is not.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_twinkleRate", "label": "Twinkle rate", "min": 0.0, "max": 3.0, "step": 0.05,
-      "default": 1.0, "effect": "Frequency of the punch-mark glints; 0 calms the ground to a dim constant stipple (the figure stays legible), 3 boils it into restless glitter." },
-    { "uniform": "u_punch", "label": "Punch spacing", "min": 2.0, "max": 9.0, "step": 0.05,
-      "default": 4.5, "effect": "Spacing of the stipple punches in CSS pixels — fine coal-dust grain at the minimum, coarse hobnail texture at the maximum." },
-    { "uniform": "u_figure", "label": "Figure", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.8, "effect": "How completely the burnished strapwork suppresses the shimmer; 0 lets faint twinkle leak across the figure until it nearly dissolves into the ground, 1 cuts a perfectly still black silhouette." }
+    {
+      "uniform": "u_twinkleRate",
+      "label": "Twinkle rate",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Frequency of the punch-mark glints; 0 calms the ground to a dim constant stipple (the figure stays legible), 3 boils it into restless glitter."
+    },
+    {
+      "uniform": "u_punch",
+      "label": "Punch spacing",
+      "min": 2.0,
+      "max": 9.0,
+      "step": 0.05,
+      "default": 4.5,
+      "effect": "Spacing of the stipple punches in CSS pixels \u2014 fine coal-dust grain at the minimum, coarse hobnail texture at the maximum."
+    },
+    {
+      "uniform": "u_figure",
+      "label": "Figure",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How completely the burnished strapwork suppresses the shimmer; 0 lets faint twinkle leak across the figure until it nearly dissolves into the ground, 1 cuts a perfectly still black silhouette."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.45,
+    "bloomRadius": 3.5,
+    "backdrop": 0.4,
+    "backdropScale": 1.3,
+    "saturation": 1.1,
+    "contrast": 1.05,
+    "dither": 1.0
+  }
 }
