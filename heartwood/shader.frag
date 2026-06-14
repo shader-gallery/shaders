@@ -72,7 +72,13 @@ vec3 burnFace(vec2 fc, vec2 res, float pr, float faceSeed,
   // (multiplied into a slowly varying field) so lobes wander but the front only
   // ever advances inward (prog increases monotonically).
   float lobeT  = u_time * 0.05;
-  float lag    = angNoise(a, faceSeed) * angNoise(a * 0.5 + lobeT, faceSeed + 4.0);
+  // both factors must stay 2*PI-periodic in `a` or the front radius tears at the
+  // atan seam (a = +/-PI, the LEFT side) -> a flat horizontal notch where the ring
+  // fails to close. The old second factor used `a * 0.5`, whose sin(0.5*a) has a
+  // 4*PI period and jumps +1 -> -1 across the seam. Drift the lobes through the
+  // seed/phase instead (each harmonic's phase advances over time) so they still
+  // wander but every term keeps an integer angular frequency -> seamless ring.
+  float lag    = angNoise(a, faceSeed) * angNoise(a, faceSeed + 4.0 + lobeT);
   lag *= 0.16 * clamp(u_lobeWobble, 0.0, 1.0);
   float front  = (1.0 - prog) + lag; // normalised radius of the burn boundary
 
