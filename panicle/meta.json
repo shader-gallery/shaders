@@ -15,5 +15,5 @@
       "default": 5, "effect": "CSS-pixel wavelength of the fiber texture, from silky-fine to coarse and strawlike." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.4, "backdrop": 0.6 }
+  "post": { "bloom": 0.4, "backdrop": 0.6, "exposure": 1.15, "saturation": 1.35, "contrast": 1.1 }
 }

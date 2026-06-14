@@ -17,5 +17,5 @@
       "default": 1, "effect": "Brightness of the leaning tips, controlling how vividly a front reads against the calm." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.3 }
+  "post": { "bloom": 0.3, "exposure": 1.1, "saturation": 1.25, "backdrop": 0.4 }
 }
