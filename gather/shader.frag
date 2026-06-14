@@ -227,6 +227,24 @@ void main() {
   // the rim catches the flash too
   col += c3 * (fz0 + fz1 + fz2) * rim * 0.5 * u_gulpFlash;
 
+  // --- depth-of-field background: soft defocused blobs of the same liquid format
+  // drift behind the subject for depth + to fill the dark (replaces the backdrop),
+  // gated behind the solid body so the subject stays crisp against the blur. ---
+  vec3 dofBg = vec3(0.0);
+  for (int i = 0; i < 7; i++) {
+    float fi = float(i) + 1.0;
+    vec2  seed = vec2(fract(sin(fi * 91.7) * 4373.0), fract(sin(fi * 47.3) * 9277.0));
+    vec2  obp  = (seed - 0.5) * resC * 0.98;
+    obp += vec2(sin(u_time * 0.15 + fi), cos(u_time * 0.12 + fi * 1.6)) * minR * 0.12;
+    float orad = (0.16 + 0.22 * fract(sin(fi * 23.1) * 1731.0)) * minR;
+    float od   = length(pc - obp);
+    float disc = smoothstep(orad, orad * 0.5, od);
+    float ring = exp(-pow((od - orad * 0.9) / (orad * 0.16), 2.0));
+    vec3  oc   = mix(mix(c0, c2, fract(sin(fi * 5.5) * 331.0)), c1, 0.30);
+    dofBg += oc * (disc * 0.55 + ring * 0.85);
+  }
+  col += dofBg * 0.060 * (1.0 - body);
+
   // soft tone map keeps flashes hot without clipping, then dither
   col = 1.0 - exp(-col);
   float dn = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);

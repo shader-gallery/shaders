@@ -45,5 +45,5 @@
     }
   ],
   "defaultPalette": "mint",
-  "post": { "bloom": 0.6, "backdrop": 0.6 }
+  "post": { "bloom": 0.6 }
 }

@@ -227,6 +227,24 @@ void main() {
   // a soft bloom around the whole liquid so dark bodies still read as luminous wax
   col += rimCol * inside * 0.05;
 
+  // --- depth-of-field background: soft defocused wax blobs rise in the background
+  // column behind the risers, giving depth + filling the dark (replaces backdrop). ---
+  vec3 dofBg = vec3(0.0);
+  for (int i = 0; i < 6; i++) {
+    float fi = float(i) + 1.0;
+    vec2  seed = vec2(fract(sin(fi * 91.7) * 4373.0), fract(sin(fi * 47.3) * 9277.0));
+    float bx = seed.x;
+    float by = pool + fract(seed.y + t * speed * 0.04 + fi * 0.13) * (1.0 - pool);
+    vec2  obp  = vec2((bx - 0.5) * aspect + 0.5, by);
+    float orad = 0.10 + 0.10 * fract(sin(fi * 23.1) * 1731.0);
+    float od   = length(P - obp);
+    float disc = smoothstep(orad, orad * 0.5, od);
+    float ring = exp(-pow((od - orad * 0.9) / (orad * 0.18), 2.0));
+    vec3  oc   = mix(c1, c2, fract(sin(fi * 5.5) * 331.0));
+    dofBg += oc * (disc * 0.55 + ring * 0.80);
+  }
+  col += dofBg * 0.050 * (1.0 - inside);
+
   // gentle vignette to compose the framing and keep edges dark
   vec2 vd = (fc / res - 0.5);
   float vign = 1.0 - smoothstep(0.55, 1.0, length(vd) * 1.25);
