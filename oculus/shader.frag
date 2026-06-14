@@ -26,7 +26,11 @@ uniform vec3  u_palette[4];
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_riseSpeed;   // scale-octaves/sec the rows climb     (default 0.1)
 uniform float u_columns;     // angular coffer columns (rounded)     (default 16)
-uniform float u_bevelGlow;   // lamplit bevel highlight strength     (default 0.7)
+uniform float u_bevelGlow;   // lamplit bevel highlight strength     (default 1.0)
+uniform float u_centerX;     // oculus focal x offset, screen units  (default 0)
+uniform float u_centerY;     // oculus focal y offset, screen units  (default 0)
+uniform float u_warp;        // depth-varying angular twist          (default 0.25)
+uniform float u_mouseShift;  // focal glides toward the pointer       (default 0.35)
 
 const vec3  BG       = vec3(0.030, 0.030, 0.038); // near-black rotunda base
 const float PI       = 3.14159265359;
@@ -52,7 +56,12 @@ void main() {
   float t   = u_time;
 
   // position relative to dome centre (the oculus), aspect-corrected to circular
-  vec2 p = (fc - ctr) / min(res.x, res.y);
+  // movable focal point + smooth mouse parallax (absent pointer -> centred)
+  vec2  mraw = u_mouse;
+  if (dot(mraw, mraw) < 1.0) mraw = ctr;
+  vec2  mN    = (mraw - ctr) / min(res.x, res.y);
+  vec2  focal = vec2(u_centerX, u_centerY) + mN * (0.12 * max(u_mouseShift, 0.0));
+  vec2 p = (fc - ctr) / min(res.x, res.y) - focal;
   float r = length(p);
   float ang = atan(p.y, p.x); // -PI..PI
 
@@ -60,6 +69,7 @@ void main() {
   // radius axis -> logarithm so equal screen-octaves are equal steps; the dome
   // is self-similar in this space. Guard r>0 so the centre never blows up.
   float lr = log(max(r, 1e-4));
+  ang += u_warp * 0.6 * sin(lr * 2.5 + t * 0.15);  // swirl that varies with depth
 
   // angular columns: a fixed (rounded) count wrapping the full circle.
   float cols = max(floor(u_columns + 0.5), 3.0);
@@ -153,14 +163,14 @@ void main() {
 
   vec3 col = BG;
   // recessed coffer face — dim, hue by depth
-  col += rowCol * face * 0.16 * depthDim;
+  col += rowCol * face * 0.24 * depthDim;
   // a soft inner glow pooling in the coffer so faces read as concave wells
   float pool = (1.0 - smoothstep(0.0, 0.42, length(cell))) * face;
-  col += rowCol * pool * 0.10 * depthDim;
+  col += rowCol * pool * 0.14 * depthDim;
   // the lamplit bevel — the signature edge highlight
-  col += bevelCol * bevelLit * (0.55 * u_bevelGlow) * depthDim;
+  col += bevelCol * bevelLit * (0.80 * u_bevelGlow) * depthDim;
   // a whisper of bloom off the lit bevel
-  col += bevelCol * bevel * pow(facing, 2.5) * 0.12 * u_bevelGlow * depthDim;
+  col += bevelCol * bevel * pow(facing, 2.5) * 0.16 * u_bevelGlow * depthDim;
 
   // keep the dead centre pure black (the oculus)
   col *= smoothstep(0.0, 0.10, r);
