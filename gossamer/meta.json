@@ -3,14 +3,62 @@
   "slug": "gossamer",
   "family": "Veil",
   "author": "Erin Carter",
-  "tags": ["dark", "aurora", "ribbons", "fbm", "noise", "glow", "rainbow", "organic", "loop"],
-  "description": "Aurora curtains — soft vertical ribbons of layered FBM noise drifting slowly sideways over a dark sky, with a gentle vertical falloff like northern lights. Translucent, slow, and ethereal, with colours blending smoothly across the palette.",
+  "tags": [
+    "dark",
+    "aurora",
+    "ribbons",
+    "fbm",
+    "noise",
+    "glow",
+    "rainbow",
+    "organic",
+    "loop"
+  ],
+  "description": "Aurora curtains \u2014 soft vertical ribbons of layered FBM noise drifting slowly sideways over a dark sky, with a gentle vertical falloff like northern lights. Translucent, slow, and ethereal, with colours blending smoothly across the palette.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_speed", "label": "Drift speed", "min": 0.0, "max": 3.0, "step": 0.01, "default": 1.0 },
-    { "uniform": "u_gap", "label": "Curtain gap", "min": 0.1, "max": 0.7, "step": 0.01, "default": 0.35 },
-    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 },
-    { "uniform": "u_haze", "label": "Haze", "min": 0.0, "max": 0.3, "step": 0.005, "default": 0.1 }
+    {
+      "uniform": "u_speed",
+      "label": "Drift speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0
+    },
+    {
+      "uniform": "u_gap",
+      "label": "Curtain gap",
+      "min": 0.1,
+      "max": 0.7,
+      "step": 0.01,
+      "default": 0.35
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0.0,
+      "max": 0.3,
+      "step": 0.005,
+      "default": 0.1
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "tide",
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4.0,
+    "saturation": 1.18,
+    "contrast": 1.14,
+    "exposure": 1.1,
+    "backdrop": 0.3,
+    "backdropScale": 1.3,
+    "dither": 1.0
+  }
 }
