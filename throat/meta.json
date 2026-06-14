@@ -14,7 +14,13 @@
     { "uniform": "u_shelfDensity", "label": "Shelf density", "min": 2.0, "max": 9.0, "step": 1.0,
       "default": 4.0, "effect": "Number of ice shelves per scale octave." },
     { "uniform": "u_iceGlow", "label": "Ice glow", "min": 0.2, "max": 1.4, "step": 0.01,
-      "default": 0.8, "effect": "Brightness of the cold rim light along each shelf edge." }
+      "default": 1.0, "effect": "Brightness of the cold rim light along each shelf edge." },
+    { "uniform": "u_centerX", "label": "Focal X", "min": -0.6, "max": 0.6, "step": 0.01,
+      "default": 0.0, "effect": "Horizontal offset of the throat's focal point — slide the gullet off-centre for an asymmetric, off-axis descent." },
+    { "uniform": "u_centerY", "label": "Focal Y", "min": -0.6, "max": 0.6, "step": 0.01,
+      "default": 0.0, "effect": "Vertical offset of the throat's focal point — drop or raise the gullet out of dead-centre." },
+    { "uniform": "u_mouseShift", "label": "Mouse parallax", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.35, "effect": "How far the focal point glides toward the pointer for a smooth look-around (0 locks it; no effect on the static poster)." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6 }

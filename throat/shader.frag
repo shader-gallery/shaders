@@ -27,7 +27,10 @@ uniform vec3  u_palette[4];
 uniform float u_descentSpeed;  // scale-octaves/sec the shelves are swallowed (default 0.1)
 uniform float u_wobble;        // organic contour displacement amplitude 0..1 (default 0.7)
 uniform float u_shelfDensity;  // ice shelves per scale octave              (default 4)
-uniform float u_iceGlow;       // cold rim light brightness                 (default 0.8)
+uniform float u_iceGlow;       // cold rim light brightness                 (default 1.0)
+uniform float u_centerX;       // focal-point x offset, short-axis units    (default 0)
+uniform float u_centerY;       // focal-point y offset, short-axis units    (default 0)
+uniform float u_mouseShift;    // focal glides toward the pointer            (default 0.35)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float TWO_PI   = 6.2831853;
@@ -81,7 +84,12 @@ void main() {
   // aspect-correct centred coordinates, normalized to the short dimension so the
   // throat reads as a circle regardless of tile shape
   float minDim = min(res.x, res.y);
-  vec2  p   = (fc - ctr) / (minDim * 0.5);
+  // movable focal point + smooth mouse parallax (absent pointer -> centred)
+  vec2  mraw = u_mouse;
+  if (dot(mraw, mraw) < 1.0) mraw = ctr;
+  vec2  mN    = (mraw - ctr) / (minDim * 0.5);
+  vec2  focal = vec2(u_centerX, u_centerY) + mN * (0.22 * max(u_mouseShift, 0.0));
+  vec2  p   = (fc - ctr) / (minDim * 0.5) - focal;
   float ang = atan(p.y, p.x);            // -PI..PI
   float r   = length(p);
 
