@@ -17,5 +17,5 @@
       "default": 6.5, "effect": "Radius in CSS px of the white-hot tip core." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.6 }
+  "post": { "bloom": 0.6 }
 }
