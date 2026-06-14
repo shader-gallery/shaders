@@ -3,7 +3,15 @@
   "slug": "shore",
   "family": "Brink",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "fractal", "julia", "coastline", "organic"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "fractal",
+    "julia",
+    "coastline",
+    "organic"
+  ],
   "description": "A single quadratic Julia coastline glows between two near-black domains: smooth escape bands hug the boundary and compress into self-similar filigree at every cape and inlet, while a hidden seed creeping along the Mandelbrot cardioid makes the whole frontier writhe into ever-different coastlines.",
   "entry": "shader.frag",
   "params": [
@@ -23,7 +31,7 @@
       "max": 2.4,
       "step": 0.01,
       "default": 1.15,
-      "effect": "Magnification of the complex plane about frame centre — low values show the whole island chain, high values fill the frame with one stretch of coast."
+      "effect": "Magnification of the complex plane about frame centre \u2014 low values show the whole island chain, high values fill the frame with one stretch of coast."
     },
     {
       "uniform": "u_glowReach",
@@ -44,5 +52,14 @@
       "effect": "How quickly the four palette colours cycle across successive escape bands, from broad single-hue washes to fine multi-hue lamination."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.7,
+    "bloomRadius": 4.5,
+    "backdrop": 0.5,
+    "backdropScale": 1.3,
+    "saturation": 1.12,
+    "contrast": 1.06,
+    "dither": 1.0
+  }
 }

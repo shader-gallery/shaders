@@ -3,18 +3,63 @@
   "slug": "pinion",
   "family": "Brink",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "fractal", "phoenix", "feather", "organic"],
-  "description": "A Phoenix Julia set whose two-term escape-time recurrence grows ranks of luminous feather-fronds fanning from a dark central body. As a hidden memory coefficient rides a slow circle the plumage preens — barbs curl and release, fronds fork and merge, the fan widens and narrows like a wing.",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "fractal",
+    "phoenix",
+    "feather",
+    "organic"
+  ],
+  "description": "A Phoenix Julia set whose two-term escape-time recurrence grows ranks of luminous feather-fronds fanning from a dark central body. As a hidden memory coefficient rides a slow circle the plumage preens \u2014 barbs curl and release, fronds fork and merge, the fan widens and narrows like a wing.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_feather", "label": "Feather", "min": 0.02, "max": 0.3, "step": 0.01,
-      "default": 0.05, "effect": "Radius of the memory coefficient's circuit — how far the plumage strays from the classic phoenix toward wilder fan shapes." },
-    { "uniform": "u_writheSpeed", "label": "Writhe speed", "min": 0.0, "max": 0.2, "step": 0.01,
-      "default": 0.04, "effect": "How quickly the plumage preens and reforms; 0 freezes a single fully drawn fan." },
-    { "uniform": "u_zoom", "label": "Zoom", "min": 0.6, "max": 2.0, "step": 0.05,
-      "default": 0.95, "effect": "Magnification about the body, from the full open fan to a close stand of feather-fronds." },
-    { "uniform": "u_glowReach", "label": "Glow reach", "min": 0.5, "max": 3.0, "step": 0.05,
-      "default": 2.0, "effect": "Depth of the luminous escape margin along each frond before it falls to black." }
+    {
+      "uniform": "u_feather",
+      "label": "Feather",
+      "min": 0.02,
+      "max": 0.3,
+      "step": 0.01,
+      "default": 0.05,
+      "effect": "Radius of the memory coefficient's circuit \u2014 how far the plumage strays from the classic phoenix toward wilder fan shapes."
+    },
+    {
+      "uniform": "u_writheSpeed",
+      "label": "Writhe speed",
+      "min": 0.0,
+      "max": 0.2,
+      "step": 0.01,
+      "default": 0.04,
+      "effect": "How quickly the plumage preens and reforms; 0 freezes a single fully drawn fan."
+    },
+    {
+      "uniform": "u_zoom",
+      "label": "Zoom",
+      "min": 0.6,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.95,
+      "effect": "Magnification about the body, from the full open fan to a close stand of feather-fronds."
+    },
+    {
+      "uniform": "u_glowReach",
+      "label": "Glow reach",
+      "min": 0.5,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 2.0,
+      "effect": "Depth of the luminous escape margin along each frond before it falls to black."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.6,
+    "bloomRadius": 4.0,
+    "backdrop": 0.42,
+    "backdropScale": 1.25,
+    "saturation": 1.1,
+    "contrast": 1.05,
+    "dither": 1.0
+  }
 }

@@ -3,18 +3,63 @@
   "slug": "keel",
   "family": "Brink",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "fractal", "crease", "silhouette", "julia"],
-  "description": "A burning-ship-style abs-folded Julia set: a single glowing coastline creased into keel-lines and rigging-like tendrils, a dark vessel run aground in near-black. A hidden seed sweeps a slow closed arc and the whole wreck continuously rebuilds itself — tendrils extend and dissolve, creases migrate, the boundary becomes a different boundary without ever travelling.",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "fractal",
+    "crease",
+    "silhouette",
+    "julia"
+  ],
+  "description": "A burning-ship-style abs-folded Julia set: a single glowing coastline creased into keel-lines and rigging-like tendrils, a dark vessel run aground in near-black. A hidden seed sweeps a slow closed arc and the whole wreck continuously rebuilds itself \u2014 tendrils extend and dissolve, creases migrate, the boundary becomes a different boundary without ever travelling.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_foldMix", "label": "Fold mix", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 1.0, "effect": "Blends the iteration from a smooth quadratic Julia (0) to the fully abs-folded burning-ship form (1), melting the creased hull into soft lace and back." },
-    { "uniform": "u_writheSpeed", "label": "Writhe speed", "min": 0.0, "max": 0.2, "step": 0.01,
-      "default": 0.045, "effect": "Speed of the seed's arc — how quickly the wreck rebuilds itself." },
-    { "uniform": "u_zoom", "label": "Zoom", "min": 0.6, "max": 2.2, "step": 0.05,
-      "default": 1.0, "effect": "Magnification about the composition centre, from the whole wreck to one stretch of creased hull." },
-    { "uniform": "u_glowReach", "label": "Glow reach", "min": 0.5, "max": 3.0, "step": 0.05,
-      "default": 1.5, "effect": "Depth of the luminous escape-band margin clinging to the silhouette before it falls to black." }
+    {
+      "uniform": "u_foldMix",
+      "label": "Fold mix",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Blends the iteration from a smooth quadratic Julia (0) to the fully abs-folded burning-ship form (1), melting the creased hull into soft lace and back."
+    },
+    {
+      "uniform": "u_writheSpeed",
+      "label": "Writhe speed",
+      "min": 0.0,
+      "max": 0.2,
+      "step": 0.01,
+      "default": 0.045,
+      "effect": "Speed of the seed's arc \u2014 how quickly the wreck rebuilds itself."
+    },
+    {
+      "uniform": "u_zoom",
+      "label": "Zoom",
+      "min": 0.6,
+      "max": 2.2,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Magnification about the composition centre, from the whole wreck to one stretch of creased hull."
+    },
+    {
+      "uniform": "u_glowReach",
+      "label": "Glow reach",
+      "min": 0.5,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.5,
+      "effect": "Depth of the luminous escape-band margin clinging to the silhouette before it falls to black."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.6,
+    "bloomRadius": 4.5,
+    "backdrop": 0.5,
+    "backdropScale": 1.3,
+    "saturation": 1.12,
+    "contrast": 1.07,
+    "dither": 1.0
+  }
 }
