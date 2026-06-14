@@ -82,8 +82,8 @@ void main() {
   float pf     = fbm(pcoord);
   // puddle interior where the field is high; soft anti-aliased shoreline.
   // thresholds tuned so puddles cover ~half the frame in broad organic patches
-  float puddle = smoothstep(0.40, 0.55, pf);
-  float edge   = smoothstep(0.34, 0.40, pf) * (1.0 - smoothstep(0.40, 0.48, pf));
+  float puddle = smoothstep(0.33, 0.50, pf);
+  float edge   = smoothstep(0.27, 0.33, pf) * (1.0 - smoothstep(0.33, 0.43, pf));
 
   // ----- faint asphalt grain on the dry stone ------------------------------
   float grain = vnoise(fc / pr * 0.9 + 3.0) * 0.5 + vnoise(fc / pr * 2.3 + 17.0) * 0.5;
@@ -143,7 +143,7 @@ void main() {
 
   // per-column identity: which columns are "lit" and their hue
   float ci    = floor(colX);
-  float lit   = smoothstep(0.30, 0.72, hash11(ci * 1.37));    // some columns dark
+  float lit   = smoothstep(0.12, 0.58, hash11(ci * 1.37));    // more columns lit
   float hue   = fract(hash11(ci * 0.71) + t * 0.01);          // slow hue drift
   // crisp column profile: a bright narrow core with feathered shoulders
   float cf    = fract(colX) - 0.5;
@@ -171,6 +171,9 @@ void main() {
   float water = puddle;
   vec3 reflCol = neon * refl;
   col += reflCol * (water * 2.0 + edge * 0.22);
+  // dim reflection bleeding across the wet-sheened asphalt so the dry gaps still
+  // carry faint neon (in-shader fill for the old dead center-right void).
+  col += neon * refl * 0.14 * (1.0 - water);
 
   // a touch of broad puddle sheen (specular-ish dark gradient) so water reads wet
   col += neon * 0.05 * water * lit * (0.4 + 0.6 * (1.0 - depth));
@@ -180,7 +183,7 @@ void main() {
 
   // ----- finishing: vignette + gentle tone shaping -------------------------
   float vign = 1.0 - smoothstep(0.55, 1.25, length(uv * vec2(1.0 / max(aspect,1.0) * aspect, 1.0)));
-  col *= mix(0.62, 1.0, vign);
+  col *= mix(0.74, 1.0, vign);
 
   // gentle highlight knee so the brightest neon cores bloom without clipping flat,
   // applied lightly so the columns keep their saturation
