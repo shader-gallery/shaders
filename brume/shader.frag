@@ -25,7 +25,7 @@ uniform float u_flowSpeed; // horizontal streaming speed of the fog (default 0.4
 uniform float u_glow;      // brightness of the mist behind the columns (default 0.8)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const float COL_FRAC    = 0.46;   // column half-width as a fraction of half-spacing
+const float COL_FRAC    = 0.30;   // column half-width as a fraction of half-spacing
 const float EDGE_CSS    = 14.0;   // soft-edge falloff width of the silhouettes (css px)
 
 // hash + value-noise + fbm for the rolling fog field
@@ -132,14 +132,14 @@ void main() {
 
   col += fogCol * vign;
 
-  // columns occlude: multiply the lit fog down toward near-black silhouette.
-  // keep a faint floor so the silhouettes read as unlit shapes, not holes.
-  col = mix(col, BG * 0.85, occ);
+  // columns read as soft luminous DIVIDERS, not space-jail bars: they dim the fog
+  // behind them rather than blacking it out, so colour still drifts through.
+  col = mix(col, col * 0.60 + tint * mist * 0.08, occ);
 
-  // a whisper of rim sheen where fog brushes the soft column edges (Veil sheen)
+  // a luminous rim sheen where fog brushes the soft column edges (Veil sheen)
   float rim = smoothstep(colHalf + edge, colHalf - edge * 0.2, dx)
             * smoothstep(colHalf - edge * 1.6, colHalf, dx);
-  col += tint * rim * mist * 0.25 * u_glow * vign;
+  col += tint * rim * mist * 0.45 * u_glow * vign;
 
   gl_FragColor = vec4(col, 1.0);
 }
