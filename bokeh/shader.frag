@@ -105,7 +105,7 @@ vec3 layer(vec2 fc, vec2 res, float pr, float t,
 
       // heptagonal aperture SDF
       float sd  = sdHeptagon(p, r, ang);
-      float aa  = max(r * 0.10, 1.2 * pr); // defocus softness scales with disc size
+      float aa  = max(r * 0.20, 1.5 * pr); // defocus softness scales with disc size
 
       // soft-filled interior (out-of-focus disc, dim toward centre)
       float fill = 1.0 - smoothstep(-aa, aa * 0.6, sd);
@@ -149,15 +149,15 @@ void main() {
   float farSpd  = mix(1.0, 0.18, px);
 
   // FAR: many small bright discs
-  col += layer(fc, res, pr, t, 0.32, farSpd, 1.05, 64.0, 0.0);
+  col += layer(fc, res, pr, t, 0.34, farSpd, 1.10, 56.0, 0.0);
   // MID: medium discs
   col += layer(fc, res, pr, t, 0.62, midSpd, 0.72, 120.0, 17.0);
   // NEAR: a few large dim discs (big soft foreground circles)
-  col += layer(fc, res, pr, t, 1.25, nearSpd, 0.42, 240.0, 41.0);
+  col += layer(fc, res, pr, t, 1.75, nearSpd, 0.52, 175.0, 41.0);
 
   // gentle lens vignette: corners fall to near-black like a fast lens
   float vign = 1.0 - smoothstep(0.55, 1.25, length((fc - ctr) / res));
-  col *= mix(0.55, 1.0, vign);
+  col *= mix(0.70, 1.0, vign);
 
   // subtle filmic toe so accents stay luminous without washing the base
   col = col / (1.0 + col * 0.35);
