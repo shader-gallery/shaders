@@ -3,16 +3,19 @@
   "slug": "fret",
   "family": "Burnish",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "border", "geometric", "etched"],
-  "description": "A Greek-key meander engraved as a continuous border around the frame, its center left deep and empty. The engraving never moves — a small specular glint travels the closed rectilinear path, cornering crisply and trailing a soft afterglow, like a coin tilted under lamplight.",
+  "tags": ["glow", "loop", "maze", "labyrinth", "circuit", "lines", "flow"],
+  "description": "A living labyrinth: a Truchet weave of quarter-turn paths connects edge to edge into one continuous meander that fills the whole frame, no empty centre and no border band. The paths glow in slowly shifting palette hues while bright currents of light course along them like charge running through a circuit.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_runSpeed", "label": "Run speed", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.5, "effect": "Multiplies the glint's pace around the border circuit; 0 parks a single lit corner, 2 sends it racing a full lap every few seconds." },
-    { "uniform": "u_keySize", "label": "Key size", "min": 18.0, "max": 64.0, "step": 1.0,
-      "default": 32.0, "effect": "Size of each Greek-key cell in CSS pixels — a fine dense meander at the minimum, a bold architectural border at the maximum." },
-    { "uniform": "u_tail", "label": "Tail length", "min": 0.0, "max": 0.5, "step": 0.01,
-      "default": 0.18, "effect": "Length of the fading afterglow behind the glint as a fraction of the circuit; 0 is a bare point of light, 0.5 leaves half the border softly embered behind it." }
+    { "uniform": "u_scale", "label": "Cell size", "min": 30.0, "max": 160.0, "step": 2.0,
+      "default": 70.0, "effect": "Size of each path cell in CSS pixels - a dense fine labyrinth at the minimum, broad sweeping meanders at the maximum." },
+    { "uniform": "u_line", "label": "Line weight", "min": 1.0, "max": 8.0, "step": 0.1,
+      "default": 3.0, "effect": "Core thickness of the glowing path in CSS pixels, from a hairline trace to a fat neon conduit." },
+    { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
+      "default": 0.6, "effect": "Speed of the bright currents travelling the paths; 0 freezes the light as static beads, high sends it coursing through the labyrinth." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Strength of the soft halo around each path; low is a crisp drawn line, high a luminous bloom that floods the maze with light." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "defaultPalette": "peacock"
 }
