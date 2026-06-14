@@ -53,5 +53,6 @@
       "effect": "Amplitude of the settling wobble that runs along the pool crest after each detach and rejoin; at zero the crest stays glassy calm."
     }
   ],
-  "defaultPalette": "ember"
+  "defaultPalette": "ember",
+  "post": { "bloom": 0.6, "backdrop": 0.5 }
 }

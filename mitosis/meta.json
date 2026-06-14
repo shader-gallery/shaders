@@ -44,5 +44,6 @@
       "effect": "Amplitude of the damped ringing after each snap; at zero divisions land without aftershock."
     }
   ],
-  "defaultPalette": "mint"
+  "defaultPalette": "mint",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

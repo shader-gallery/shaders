@@ -53,5 +53,6 @@
       "effect": "Brightness of the colour-3 spark at every neck snap; at zero fusions pass with rim light only."
     }
   ],
-  "defaultPalette": "opal"
+  "defaultPalette": "opal",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

@@ -53,5 +53,6 @@
       "effect": "Brightness of the colour-3 snap at every fusion and pinch; at zero alignments pass without fanfare."
     }
   ],
-  "defaultPalette": "peacock"
+  "defaultPalette": "peacock",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

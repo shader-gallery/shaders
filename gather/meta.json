@@ -44,5 +44,6 @@
       "effect": "Brightness of the colour-3 bloom at each swallow and shed; at zero exchanges happen silently."
     }
   ],
-  "defaultPalette": "viridian"
+  "defaultPalette": "viridian",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

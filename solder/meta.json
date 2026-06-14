@@ -53,5 +53,6 @@
       "effect": "Strength of the cool interior sheen on each bead's upper edge; at zero the beads read as pure dark mirror."
     }
   ],
-  "defaultPalette": "sodium"
+  "defaultPalette": "sodium",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }
