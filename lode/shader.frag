@@ -139,7 +139,16 @@ void main() {
   // faint stone tint that cycles with depth phase (rings shift hue as they fall)
   vec3 rockTint = palMix(c0, c1, c2, c3, depth * 0.18 + 0.5);
   // ambient (un-lit) wall: dim but visibly grainy and ringed
-  col += rockTint * rock * 0.23;
+  col += rockTint * rock * 0.28;
+
+  // faint cosmic-dust haze filling the void between veins (in-shader; replaces the
+  // old gradient backdrop): a low-frequency palette-tinted nebula cloud, textured
+  // by FBM so it reads as drifting dust rather than a flat wash. Shaped by the
+  // core-dark + vignette at the end so the focal centre and frame edge still fall off.
+  float dust = fbmA(vec2(au * 0.6, du * 0.32 + 5.0), CELLS_A);
+  dust = pow(clamp(dust, 0.0, 1.0), 1.4);
+  vec3  dustCol = palMix(c0, c1, c2, c3, depth * 0.12 + 0.3);
+  col += dustCol * dust * 0.13;
 
   // ---- the stationary lamp band: fixed SCREEN radius, no motion ----
   // a TIGHT warm ring of illumination at r = u_lampDepth; brightness events
