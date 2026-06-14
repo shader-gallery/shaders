@@ -26,5 +26,5 @@
       "default": 0.5, "effect": "Brightness of the copper traces and solder pads behind the pulses." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.7, "backdrop": 0.4 }
+  "post": { "bloom": 0.7, "backdrop": 0.10 }
 }
