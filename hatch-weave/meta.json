@@ -1,0 +1,19 @@
+{
+  "name": "Hatch Weave",
+  "slug": "hatch-weave",
+  "family": "Burnish",
+  "author": "Erin Carter",
+  "tags": ["dark", "glow", "loop", "etched", "weave", "tartan", "plaid", "texture", "organic"],
+  "description": "A Hatch variation: the diagonal crosshatch stands upright into axis-aligned warp and weft threads that interlace over-under like real cloth, with a coarse colour sett running along each axis so the field reads as a woven tartan plaid. Warp and weft take two different palette yarns while the same drifting ghost field modulates thread weight, so the tonal gradient reads as light and shade falling across fabric.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.3, "effect": "Speed of the invisible plume's drift across the weave; 0 holds a frozen still-life of shaded cloth, 2 sends the light-and-shade billowing visibly over the fabric." },
+    { "uniform": "u_spacing", "label": "Thread gap", "min": 3.0, "max": 14.0, "step": 1.0,
+      "default": 9.0, "effect": "Distance between threads in CSS pixels — a tight fine-woven cloth at the minimum, open coarse canvas at the maximum." },
+    { "uniform": "u_ink", "label": "Ink", "min": 0.2, "max": 1.5, "step": 0.01,
+      "default": 1.0, "effect": "How strongly the ghost field thickens the threads; low yields an even flat weave, high carves deep chiaroscuro with bare gaps and heavy massed thread in the shadows." }
+  ],
+  "post": { "bloom": 0.5, "bloomRadius": 4.0, "backdrop": 0.55, "backdropScale": 1.1, "saturation": 1.12, "contrast": 1.05, "dither": 1.0 },
+  "defaultPalette": "spectral"
+}

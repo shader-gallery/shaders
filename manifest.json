@@ -248,6 +248,7 @@
     "armature",
     "stellate",
     "prism",
-    "hatch-contour"
+    "hatch-contour",
+    "hatch-weave"
   ]
 }
