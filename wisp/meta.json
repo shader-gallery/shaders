@@ -22,17 +22,17 @@
       "min": 20,
       "max": 120,
       "step": 1,
-      "default": 82,
+      "default": 40,
       "effect": "Height of each teardrop flame in CSS pixels; width and halo scale proportionally."
     },
     {
       "uniform": "u_count",
-      "label": "Wisps",
-      "min": 2,
-      "max": 14,
+      "label": "Density",
+      "min": 4,
+      "max": 20,
       "step": 1,
-      "default": 10,
-      "effect": "How many flames wander the marsh at once, from a lonely pair to a crowded drift filling the frame."
+      "default": 12,
+      "effect": "How many wisps span the frame (field density); higher fills the marsh with a dense swarm."
     },
     {
       "uniform": "u_flicker",
