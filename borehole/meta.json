@@ -13,7 +13,7 @@
     "well",
     "descent"
   ],
-  "description": "A geological borehole seen straight down from above, plunging to a true-black focal point at screen center. Fine sedimentary bands of faintly glowing rock are sliced from log-radius, scuffed by angular drill-grain, and tinted through the palette by depth; an exponential fog drowns the deep walls in black. The whole stack of strata sinks steadily down the scale axis toward a center it never reaches — nothing rotates, nothing translates.",
+  "description": "A geological borehole seen straight down from above, plunging to a true-black focal point, off-centre by default and movable. Fine sedimentary bands of faintly glowing rock are sliced from log-radius, scuffed by angular drill-grain, and tinted through the palette by depth; an exponential fog drowns the deep walls in black. The whole stack of strata sinks steadily down the scale axis toward a center it never reaches; the pointer parallax-shifts the near walls for a look-around into the bore.",
   "entry": "shader.frag",
   "params": [
     {
@@ -49,9 +49,15 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.45,
+      "default": 0.55,
       "effect": "Amount of angular drill-grain scuffing the bands — 0 leaves clean concentric rings."
-    }
+    },
+    { "uniform": "u_centerX", "label": "Focal X", "min": -0.5, "max": 0.5, "step": 0.01,
+      "default": 0.14, "effect": "Horizontal offset of the bore's dark focal point — off-centre by default for an asymmetric, off-axis plunge." },
+    { "uniform": "u_centerY", "label": "Focal Y", "min": -0.5, "max": 0.5, "step": 0.01,
+      "default": -0.10, "effect": "Vertical offset of the bore's focal point out of dead-centre." },
+    { "uniform": "u_mouseShift", "label": "Mouse parallax", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.35, "effect": "How far the near walls slide toward the pointer for a depth look-around (the deep core holds; no effect on the static poster)." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6 }

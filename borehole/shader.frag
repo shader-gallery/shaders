@@ -35,7 +35,10 @@ uniform vec3  u_palette[4];
 uniform float u_descentSpeed; // scale-octaves per second the strata sink   (default 0.12)
 uniform float u_bandDensity;  // sediment bands per scale octave            (default 6)
 uniform float u_fogDepth;     // how far down light reaches before black     (default 0.8)
-uniform float u_grain;        // angular drill-grain scuffing the bands      (default 0.45)
+uniform float u_grain;        // angular drill-grain scuffing the bands      (default 0.55)
+uniform float u_centerX;      // focal x offset, short-axis units (off-centre) (default 0.14)
+uniform float u_centerY;      // focal y offset, short-axis units             (default -0.10)
+uniform float u_mouseShift;   // pointer depth-parallax on the near walls      (default 0.35)
 
 const vec3  BG     = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float PI     = 3.14159265359;
@@ -111,7 +114,14 @@ void main() {
   float fogD = clamp(u_fogDepth, 0.15, 2.0);
   float grn  = clamp(u_grain, 0.0, 1.0);
 
-  vec2  v   = fc - 0.5 * res;
+  // movable focal (off-centre by default) + r-weighted mouse depth parallax:
+  // the near (outer) walls slide toward the pointer while the deep core holds.
+  vec2  mraw = u_mouse;
+  if (dot(mraw, mraw) < 1.0) mraw = 0.5 * res;
+  vec2  mN   = (mraw - 0.5 * res) / (0.5 * mn);
+  vec2  v0   = (fc - 0.5 * res) - vec2(u_centerX, u_centerY) * (0.5 * mn);
+  float r0n  = length(v0) / (0.5 * mn);
+  vec2  v    = v0 - mN * (0.16 * max(u_mouseShift, 0.0)) * (0.5 * mn) * smoothstep(0.0, 0.9, r0n);
   float r   = max(length(v), 1e-3);
   float ang = atan(v.y, v.x);
   // a seamless angular coordinate for the grain noise: sampling noise on
@@ -187,7 +197,7 @@ void main() {
 
   // assemble the wall: vein body + seam glint, scuffed by rock grain
   float body = vein * rough;
-  vec3  acc  = (bandCol * body * 0.62 + seamCol * seam * 0.55) * fade;
+  vec3  acc  = (bandCol * body * 0.72 + seamCol * seam * 0.60) * fade;
 
   // faint ambient haze in the gaps so the lit annulus reads as a continuous
   // throat of rock rather than isolated rings (kept very low, palette-tinted)
@@ -196,7 +206,7 @@ void main() {
   // gentle corner vignette + soft-knee tone map keeps seams from blowing out
   vec2  uv  = v / mn;
   float vig = 1.0 - 0.42 * smoothstep(0.48, 1.05, length(uv));
-  vec3  col = BG + (1.0 - exp(-acc * 1.25)) * vig;
+  vec3  col = BG + (1.0 - exp(-acc * 1.45)) * vig;
 
   // ~1-LSB hash dither breaks 8-bit banding in the smooth fog gradient
   col += (hash21(fc) - 0.5) * (1.6 / 255.0);
