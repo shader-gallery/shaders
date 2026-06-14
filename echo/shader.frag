@@ -132,7 +132,7 @@ void main() {
   // device pixels per ring-unit at this radius (analytic AA + halo basis)
   float pxw = max(r * LN2 / dens, 0.5);
   float strokeU = (lw * 0.5) / pxw;
-  float haloU   = strokeU + (0.10 + halo * 0.55);
+  float haloU   = strokeU + (0.15 + halo * 0.65);
 
   // --- lifetime envelope ----------------------------------------------------
   // Broadened so rings stay lit across most of the frame (the old narrow bell
@@ -196,7 +196,11 @@ void main() {
   float outer = 1.0 - smoothstep(1.15, 1.7, rn);
 
   vec3  col = BG;
-  col += wallCol * wall * 0.06 * envR * pupil * outer;
+  // reverberant fog: fills the ring GAPS and the CORNERS with the wells own
+  // palette-tinted medium (broad envelope reaching past the ring field; a base
+  // level + FBM texture so even the dead gaps carry a soft returning glow).
+  float fogEnv = pupil * (1.0 - smoothstep(1.45, 2.05, rn));
+  col += wallCol * (0.12 + 0.88 * wall) * 0.30 * fogEnv;
   col += acc * 1.15 * pupil * outer;
 
   // soft-knee tone map keeps the brightest crests from blowing out
