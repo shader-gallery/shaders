@@ -157,9 +157,20 @@ void main() {
   float out1 = max(d - R, 0.0);
   vec3  gcol = wheel(a, c0, c1, c2, c3);
   float glow = exp(-out1 / max(reachPx * 0.40, 6.0)) * 0.14
-             + exp(-out1 / max(reachPx * 1.60, 24.0)) * 0.045;
+             + exp(-out1 / max(reachPx * 1.60, 24.0)) * 0.055
+             + exp(-out1 / max(reachPx * 4.50, 60.0)) * 0.028;
   float limb = exp(-out1 / (2.5 * pr)) * 0.22;
   acc += gcol * (glow * current + limb * (0.7 + 0.3 * current));
+
+  // faint starfield filling the surrounding void (in-shader, replacing the backdrop):
+  // dim hash-scattered twinkling stars in the dark sky around the eclipse.
+  vec2  sc    = fc / pr;
+  vec2  scell = floor(sc / 24.0);
+  vec2  sfr   = fract(sc / 24.0) - 0.5;
+  float sh    = hash12(scell + 3.0);
+  float star  = step(0.85, sh) * exp(-dot(sfr, sfr) * 62.0)
+              * (0.45 + 0.55 * sin(u_time * (0.4 + sh) + sh * 40.0));
+  acc += wheel(hash12(scell + 9.0), c0, c1, c2, c3) * star * 0.45;
 
   // ---- compose: true-void disc, vignetted dark field, soft-knee tone map ----
   float mask = smoothstep(R - aa, R + aa, d);    // 0 inside the void
