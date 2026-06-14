@@ -147,9 +147,9 @@ void main() {
   float bevel = (1.0 - groove);                      // 0 in groove, 1 mid-face
   bevel = bevel * bevel;                             // tighten toward centre
   // base stone tint + jittered relief; the face is clearly visible stone now
-  vec3 stone = hue * (0.11 + 0.10 * bevel) * faceJit;
+  vec3 stone = hue * (0.145 + 0.125 * bevel) * faceJit;
   // a touch of cool ambient so faces aren't a pure single hue and never pure black
-  stone += BG * 0.7;
+  stone += BG * 1.05;
   col = stone;
 
   // mortar — the luminous accent recessed BETWEEN stones (not over them)
@@ -157,7 +157,7 @@ void main() {
   // first deepen the groove shadow so grout reads as a recess
   col *= mix(1.0, 0.35, groove);
   // then lay the thin catch-light line in the bottom of the groove
-  col += hue * mortarLine * 0.60 * glow;
+  col += hue * mortarLine * 0.74 * glow;
 
   // quoin seams: brighter continuous corner lines (the only radial feature)
   col += hue * quoin * (0.28 + 0.22 * mortarLine) * glow * 0.8;

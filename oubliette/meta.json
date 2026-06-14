@@ -23,5 +23,5 @@
       "default": 0.35, "effect": "How far the near courses slide toward the pointer for a depth look-around (the deep focus holds; no effect on the static poster)." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.5 }
+  "post": { "bloom": 0.6 }
 }
