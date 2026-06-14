@@ -15,5 +15,5 @@
       "default": 1.25, "effect": "Thickness of the glowing connector lines in CSS pixels, from hairline etching to soft bright strokes." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.4 }
+  "post": { "bloom": 0.6 }
 }

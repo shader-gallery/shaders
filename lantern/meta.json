@@ -19,5 +19,5 @@
       "effect": "Strength of the lantern that follows the pointer; 0 disables pointer interaction entirely." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.5 }
+  "post": { "bloom": 0.6 }
 }

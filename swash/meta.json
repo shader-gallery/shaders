@@ -15,5 +15,5 @@
       "default": 140.0, "effect": "CSS-pixel length of each light streak from bright head to faded tail." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.5, "backdrop": 0.6 }
+  "post": { "bloom": 0.5 }
 }

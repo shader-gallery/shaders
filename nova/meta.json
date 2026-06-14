@@ -15,5 +15,5 @@
       "default": 0.5, "effect": "FBM raggedness of the shell rim: 0 is a clean smooth ring, 1 a torn filamentary supernova remnant." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.7, "backdrop": 0.6 }
+  "post": { "bloom": 0.7 }
 }

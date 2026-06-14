@@ -36,5 +36,5 @@
     }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.4, "backdrop": 0.3 }
+  "post": { "bloom": 0.4 }
 }

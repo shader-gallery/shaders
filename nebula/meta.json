@@ -13,5 +13,5 @@
     { "uniform": "u_erosion", "label": "Erosion", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.5, "effect": "FBM raggedness of the pillar silhouettes, from clean smooth columns to deeply gnawed, wispy-edged towers." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.4 }
+  "post": { "bloom": 0.6 }
 }

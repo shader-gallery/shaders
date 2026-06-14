@@ -15,5 +15,5 @@
       "default": 1.2, "effect": "Displacement strength — how strongly the background magnifies and smears through each lens, with rim brightness scaling to match." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.4, "backdrop": 0.5 }
+  "post": { "bloom": 0.4 }
 }
