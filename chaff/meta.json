@@ -44,5 +44,6 @@
       "effect": "CSS-pixel size of each chaff fleck, from fine drifting dust to coarse confetti."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "backdrop": 0.7, "backdropScale": 1.3 }
 }

@@ -16,5 +16,6 @@
     { "uniform": "u_reflect", "label": "Reflection", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.55, "effect": "Brightness of the mirrored rank in the water, from absent to nearly as vivid as the reeds." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4, "backdrop": 0.7, "backdropScale": 1.3 }
 }

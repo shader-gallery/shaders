@@ -44,5 +44,6 @@
       "effect": "Brightness of the sky band behind the crest, setting the contrast floor of the scene."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.3, "backdrop": 0.6 }
 }
