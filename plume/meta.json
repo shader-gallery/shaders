@@ -15,5 +15,5 @@
       "default": 70.0, "effect": "CSS-pixel width of the column at its base — a pencil line of smoke up to a broad soft pillar." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.6 }
+  "post": { "bloom": 0.6 }
 }

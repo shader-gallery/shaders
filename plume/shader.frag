@@ -63,6 +63,23 @@ float wheelW(float s, float c) {
   return max(0.0, 1.0 - min(d, 4.0 - d));
 }
 
+// a dim background plume (offset lane) for the multi-plume field + depth fill
+float bgPlumeMass(vec2 uv, float laneX, float wMul, float rise, float shear, float phase) {
+  float yy = clamp(uv.y, 0.0, 1.4);
+  float meander = sin(uv.y * 2.3 + phase) * 0.7 + sin(uv.y * 4.1 + phase * 1.7) * 0.3;
+  float center = laneX + 0.12 * meander * (0.15 + yy * 0.85) + shear * 0.20 * yy * yy;
+  float dx = uv.x - center;
+  float width = max(0.060 * wMul * (0.55 + yy * 1.6), 1e-3);
+  vec2  q = vec2(dx * 6.5, uv.y * 5.2 - rise);
+  float dye = fbm(q * 0.9 + vec2(phase, rise * 0.4));
+  float ridge = 0.28 + 1.05 * dye; ridge *= ridge;
+  float r = abs(dx) / width;
+  float core = (1.0 - smoothstep(0.0, 1.0, r)) * ridge;
+  float foot = smoothstep(0.0, 0.06, uv.y);
+  float dissip = 1.0 - smoothstep(0.30, 1.25, uv.y);
+  return core * foot * dissip;
+}
+
 void main() {
   float pr  = u_pixelRatio;
   vec2  fc  = gl_FragCoord.xy;
@@ -168,8 +185,15 @@ void main() {
   float bloom = exp(-r * r * 1.6) * core * foot * dissip;
   col += dyeCol * bloom * 0.22;
 
+  // background plumes: two dimmer offset columns so the frame reads as a field of
+  // rising dye with depth (in-shader fill replacing the backdrop), not one lone column.
+  float bg0 = bgPlumeMass(uv, -0.27, 0.85, rise * 0.85 + 3.0, shear * 0.7, 1.3);
+  float bg1 = bgPlumeMass(uv,  0.31, 0.70, rise * 1.15 + 7.0, shear * 0.6, 4.1);
+  col += mix(dyeCol, c0, 0.30) * bg0 * 0.52;
+  col += mix(dyeCol, c1, 0.30) * bg1 * 0.44;
+
   // gentle horizontal vignette so the frame edges stay deep dark
-  float vign = 1.0 - smoothstep(0.35, 0.62, abs(uv.x));
+  float vign = 1.0 - smoothstep(0.52, 0.78, abs(uv.x));
   col *= mix(0.7, 1.0, vign);
 
   gl_FragColor = vec4(col, 1.0);
