@@ -53,5 +53,6 @@
       "effect": "How far back along its path each flame's beaded filament reaches; 0 removes the trail entirely, 1 draws a long ghostly strand of cold-fire droplets."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.7, "backdrop": 0.7, "backdropScale": 1.3 }
 }

@@ -53,5 +53,6 @@
       "effect": "Phase delay, as a fraction of one pulse, between a bell's contraction and the whip of its tentacle curves — 0 moves them rigidly with the bell, 1 drags them a full pulse behind."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

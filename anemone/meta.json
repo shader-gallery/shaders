@@ -11,5 +11,6 @@
     { "uniform": "u_ringRadius", "label": "Ring radius", "min": 80.0, "max": 320.0, "step": 1.0, "default": 180.0, "effect": "Radius of the lobe ring in CSS pixels — the overall size of the organism on screen." },
     { "uniform": "u_lobeCount", "label": "Lobe count", "min": 6.0, "max": 24.0, "step": 1.0, "default": 14.0, "effect": "Number of tentacle lobes around the ring (floored in-shader); few reads as broad petals, many as a fine fringed fan." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.8, "backdrop": 0.7, "backdropScale": 1.3 }
 }
