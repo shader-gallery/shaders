@@ -76,7 +76,13 @@ void main() {
   float shA = 0.5 + 0.5 * sin(uv.x * 1.7 + t * 0.13);
   float shB = 0.5 + 0.5 * sin(uv.x * 3.9 - t * 0.21 + 1.7);
   col += mix(violet, tipCol, 0.4) * upper * (0.055 + 0.030 * shA);
-  col += mix(c2, c0, 0.5) * exp(-uv.y * 3.0) * 0.045 * (0.7 + 0.3 * shB);
+  col += mix(c2, c0, 0.5) * exp(-uv.y * 3.0) * 0.075 * (0.7 + 0.3 * shB);
+  // distant storm-horizon glow band + a faint continuous ionized sky so the lower
+  // two-thirds reads as luminous atmosphere rather than empty void (in-shader fill
+  // replacing the backdrop).
+  float horizonB = exp(-pow((uv.y - 0.11) / 0.085, 2.0));
+  col += mix(rose, violet, 0.45) * horizonB * 0.060 * (0.7 + 0.3 * shA);
+  col += mix(violet, c2, 0.55) * (0.016 + 0.014 * shB) * (1.0 - 0.55 * uv.y);
 
   // reach of streamers in normalized-y units (css px / buffer height)
   float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0);

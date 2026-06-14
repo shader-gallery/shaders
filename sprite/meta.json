@@ -17,5 +17,5 @@
       "default": 0.6, "effect": "Number and branching of tendrils per cluster, from two or three lone threads to a dense forking fan." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.5 }
+  "post": { "bloom": 0.6 }
 }
