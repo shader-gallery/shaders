@@ -84,12 +84,15 @@ void main() {
   // aspect-correct centred coordinates, normalized to the short dimension so the
   // throat reads as a circle regardless of tile shape
   float minDim = min(res.x, res.y);
-  // movable focal point + smooth mouse parallax (absent pointer -> centred)
+  // static movable focal (deliberate recenter), then a real DEPTH parallax from the mouse:
+  // outer (near) shelves slide toward the pointer while the deep centre holds.
   vec2  mraw = u_mouse;
   if (dot(mraw, mraw) < 1.0) mraw = ctr;
   vec2  mN    = (mraw - ctr) / (minDim * 0.5);
-  vec2  focal = vec2(u_centerX, u_centerY) + mN * (0.22 * max(u_mouseShift, 0.0));
-  vec2  p   = (fc - ctr) / (minDim * 0.5) - focal;
+  vec2  p0  = (fc - ctr) / (minDim * 0.5) - vec2(u_centerX, u_centerY);
+  float r0  = length(p0);
+  vec2  parallax = mN * (0.18 * max(u_mouseShift, 0.0));
+  vec2  p   = p0 - parallax * smoothstep(0.0, 0.85, r0);
   float ang = atan(p.y, p.x);            // -PI..PI
   float r   = length(p);
 
