@@ -115,16 +115,20 @@ void main() {
   float minRes = min(res.x, res.y);
   vec2  p   = (fc - 0.5 * res) / (minRes * 0.5);        // ~[-1,1] short axis, y up in math
   // place the depth focus decisively in the lower-right third: +x right, -y down
-  // smooth mouse parallax: vanishing point eases toward the cursor (absent -> centre)
+  // mouse eye-shift -> resolved to a per-layer PARALLAX below (not a global translate):
+  // subtracting a constant in each layer's local frame shifts it on screen by ~rK, so
+  // NEAR frames (large rK) slide far more than the deep ones — a real look-around.
   vec2  mraw = u_mouse;
   if (dot(mraw, mraw) < 1.0) mraw = 0.5 * res;          // no pointer -> centre, no shift
   vec2  mN  = (mraw - 0.5 * res) / (minRes * 0.5);
-  vec2  vp  = vec2(u_vanishX, u_vanishY) + mN * (0.18 * max(u_mouseShift, 0.0));
+  vec2  vp  = vec2(u_vanishX, u_vanishY);               // fixed off-centre vanishing point
   vec2  q   = p - vp;                                    // vector from the bore depth
   // roll the whole gallery about the vanishing point (static bank + slow drift)
   float roll = radians(u_roll) + t * u_rollSpeed;
   float cR = cos(roll), sR = sin(roll);
-  q = mat2(cR, -sR, sR, cR) * q;
+  mat2  Rot = mat2(cR, -sR, sR, cR);
+  q = Rot * q;
+  vec2  parallax = (Rot * mN) * (0.12 * max(u_mouseShift, 0.0));
   float r   = length(q) + 1e-4;                          // radial distance from depth
   float ang = atan(q.y, q.x);                            // direction around the bore
 
@@ -202,7 +206,7 @@ void main() {
     // frame scale in short-axis units = rK; draw its portal as an SDF in the
     // direction-normalised local frame. We work directly in p-space: the portal
     // is a fixed shape scaled by rK and anchored at the vanishing point vp.
-    vec2 lp = q / rK;                            // local coords, frame ~unit size
+    vec2 lp = q / rK - parallax;                 // local coords + per-layer parallax
 
     // sheared trapezoidal portal: a quad outline. In local space the portal is a
     // rectangle from (-PX..PX) x (FLOOR..TOP); we shear x by height to fake the
