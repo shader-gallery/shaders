@@ -27,6 +27,7 @@ uniform vec3  u_palette[4];
 uniform float u_burnRate;   // how fast the rim collapses toward the pith (default 0.18)
 uniform float u_rimWidth;   // ember rim width, CSS px, scaled by pixelRatio (default 13)
 uniform float u_lobeWobble; // per-angle lag of the rim; 0 = perfect circle (default 0.5)
+uniform float u_ringRandom; // higher-frequency raggedness of the burn ring; 0 = smooth (default 0.4)
 uniform float u_preheat;    // brightness of the hairline preheat ring; 0 disables (default 0.4)
 
 const vec3  BG        = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
@@ -80,6 +81,11 @@ vec3 burnFace(vec2 fc, vec2 res, float pr, float faceSeed,
   // wander but every term keeps an integer angular frequency -> seamless ring.
   float lag    = angNoise(a, faceSeed) * angNoise(a, faceSeed + 4.0 + lobeT);
   lag *= 0.16 * clamp(u_lobeWobble, 0.0, 1.0);
+  // controllable higher-frequency randomness of the ring edge (jagged vs smooth);
+  // angNoise(a*3.0,...) keeps integer angular harmonics so it stays 2*PI-periodic
+  // and never tears at the atan seam. Drifts slowly in time so the jag wanders.
+  float rnd    = angNoise(a * 3.0, faceSeed + 8.0 + lobeT * 0.5);
+  lag += rnd * 0.11 * clamp(u_ringRandom, 0.0, 1.0);
   float front  = (1.0 - prog) + lag; // normalised radius of the burn boundary
 
   float rimW = max(u_rimWidth, 0.5) * pr / maxR; // rim half-width-ish in norm units

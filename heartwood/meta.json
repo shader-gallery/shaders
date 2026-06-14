@@ -4,7 +4,7 @@
   "family": "Smolder",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "ember", "fire", "wood", "rings"],
-  "description": "The sawn end of a log: faint dark-on-dark growth rings around an off-centre pith, with fire eating inward from the bark as a wandering annular ember rim graded warm-to-cool. Rings light as hairline preheat circles a beat before they burn; outside is ash with cooling sparks. The rim tightens to the pith and dies as a fresh dark face is already burning in.",
+  "description": "The sawn end of a log: warm concentric growth rings and radial grain around an off-centre pith, with fire eating inward from the bark as a wandering annular ember rim graded warm-to-cool. Rings light as hairline preheat circles a beat before they burn; outside is ash with cooling sparks. The rim tightens to the pith and dies as a fresh face is already burning in.",
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_burnRate", "label": "Burn rate", "min": 0.05, "max": 0.6, "step": 0.01,
@@ -12,7 +12,9 @@
     { "uniform": "u_rimWidth", "label": "Rim width", "min": 4.0, "max": 36.0, "step": 1.0,
       "default": 13.0, "effect": "Width in CSS px of the annular ember rim." },
     { "uniform": "u_lobeWobble", "label": "Lobe wobble", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.5, "effect": "Per-angle lag of the rim; 0 keeps it a perfect shrinking circle." },
+      "default": 0.5, "effect": "Slow per-angle lag of the rim into wandering lobes; 0 keeps it a perfect shrinking circle." },
+    { "uniform": "u_ringRandom", "label": "Ring randomness", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.4, "effect": "Higher-frequency raggedness of the burn ring's edge; 0 is a smooth rim, 1 is jagged and irregular." },
     { "uniform": "u_preheat", "label": "Preheat", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.4, "effect": "Brightness of the hairline ring that lights each growth ring just before consumption; 0 disables the preview." }
   ],
