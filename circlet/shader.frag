@@ -207,6 +207,24 @@ void main() {
   float ghost    = ringBand * (1.0 - inside) * (1.0 - 0.85 * fuse);
   col += hue * ghost * 0.07;
 
+  // --- depth-of-field background: soft defocused mercury orbs of the same format
+  // drift behind the ring, giving depth + filling the dark (replaces the backdrop).
+  // gated behind the solid body so the subject stays crisp against the blur. ---
+  vec3 dofBg = vec3(0.0);
+  for (int i = 0; i < 7; i++) {
+    float fi = float(i) + 1.0;
+    vec2  seed = vec2(fract(sin(fi * 91.7) * 4373.0), fract(sin(fi * 47.3) * 9277.0));
+    vec2  obp  = (seed - 0.5) * vec2(res.x * 0.98, res.y * 0.98);
+    obp += vec2(sin(t * flow * 0.15 + fi), cos(t * flow * 0.12 + fi * 1.6)) * minHalf * 0.12;
+    float orad = (0.16 + 0.22 * fract(sin(fi * 23.1) * 1731.0)) * minHalf;
+    float od   = length(p - obp);
+    float disc = smoothstep(orad, orad * 0.5, od);              // soft out-of-focus body
+    float ring = exp(-pow((od - orad * 0.9) / (orad * 0.16), 2.0)); // bokeh rim
+    vec3  oc   = mix(mix(c0, c2, fract(sin(fi * 5.5) * 331.0)), c1, 0.30);
+    dofBg += oc * (disc * 0.55 + ring * 0.85);
+  }
+  col += dofBg * 0.060 * (1.0 - inside);
+
   // radial vignette keeps corners dark, ring luminous
   float vign = 1.0 - smoothstep(0.45, 1.15, length(p / res));
   col *= mix(0.82, 1.0, vign);
