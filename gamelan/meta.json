@@ -3,18 +3,19 @@
   "slug": "gamelan",
   "family": "Knell",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "resonance", "bars", "ensemble", "decay"],
-  "description": "A rank of seven graded bronze bars rings in their free-bar standing-wave modes after hash-scheduled strikes, antinodes glowing while the nodal points stay pinned and dark, each bar decaying in place at its own length-keyed rate.",
+  "tags": ["glow", "loop", "resonance", "bars", "ensemble", "spectrum"],
+  "description": "A full-width rank of struck metallophone bars edge to edge across the frame, lengths graded so their tops form a ragged skyline. Each bar rings in its free-bar standing-wave modes - bright antinodes, pinned dark nodes - and a travelling flare climbs the bar on every hash-scheduled strike, while a persistent baseline glow keeps the whole wall resonating rather than flickering. Bars take graded palette hues left to right.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_strikeGap", "label": "Strike gap", "min": 3.0, "max": 24.0, "step": 1.0,
-      "default": 8.0, "effect": "Mean seconds between strikes on any one bar, from a gently busy ensemble to rare lone notes." },
+    { "uniform": "u_strikeGap", "label": "Strike gap", "min": 2.0, "max": 18.0, "step": 0.5,
+      "default": 5.0, "effect": "Mean seconds between strikes on any one bar, from a busy gamelan ensemble shimmering all at once to rare lone notes ringing across a still wall." },
     { "uniform": "u_ringTime", "label": "Ring time", "min": 1.5, "max": 12.0, "step": 0.05,
-      "default": 5.0, "effect": "Scales every bar's sustain while keeping the short-bright to long-slow grading across the rank." },
-    { "uniform": "u_barWidth", "label": "Bar width", "min": 18.0, "max": 60.0, "step": 1.0,
-      "default": 34.0, "effect": "CSS-pixel width of each bar, from slender chimes to broad slabs filling the rank." },
+      "default": 6.0, "effect": "How long a struck bar rings before decaying back to its baseline glow; short is a dry percussive tick, long a deep sustained bronze resonance." },
+    { "uniform": "u_barWidth", "label": "Bar width", "min": 12.0, "max": 60.0, "step": 1.0,
+      "default": 24.0, "effect": "Width of each bar in CSS pixels and so how many fill the wall - many slender keys at the minimum, a few broad slabs at the maximum." },
     { "uniform": "u_overtone", "label": "Overtone", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.4, "effect": "Level of the second free-bar mode, adding a short-lived three-lobed sparkle atop each strike." }
+      "default": 0.55, "effect": "Higher-mode shimmer content; 0 is a pure fundamental with a few calm antinodes, 1 stacks restless overtones for a brighter metallic glitter." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.8, "bloomRadius": 5.0, "backdrop": 0.4, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.05, "dither": 1.0 },
+  "defaultPalette": "spectral"
 }
