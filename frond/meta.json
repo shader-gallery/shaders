@@ -1,21 +1,75 @@
 {
-  "name": "Frond",
+  "name": "Pothos",
   "slug": "frond",
   "family": "Smolder",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "ember", "fire", "leaf", "organic"],
-  "description": "A leaf skeleton lies diagonally across the frame and burns from its margin inward: a glowing incandescent rim traces an ever-shrinking copy of the leaf's outline, graded warm-to-cool across its width, while the veins it crosses keep a dim cooling glow behind it. When one leaf is consumed a second on the opposite diagonal ignites at its own margin, crossfaded so the burn never restarts.",
+  "tags": [
+    "glow",
+    "loop",
+    "plant",
+    "vine",
+    "pothos",
+    "leaves",
+    "organic"
+  ],
+  "description": "A pothos (Epipremnum aureum) trailing down the frame: many small heart-shaped leaves strung along several wandering vines, each leaf carrying a cool glowing midrib with herringbone veins, a warm glowing margin, and pale cream variegation. The vines hang and sway on a slow wind and the luminous leaves overlap into a lush curtain. Everything themes from the palette — foliage, veins, margin and variegation alike.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_burnRate", "label": "Burn rate", "min": 0.05, "max": 0.8, "step": 0.01,
-      "default": 0.25, "effect": "How fast the margin contracts toward the midrib." },
-    { "uniform": "u_rimWidth", "label": "Rim width", "min": 3.0, "max": 30.0, "step": 1.0,
-      "default": 10.0, "effect": "Width in CSS px of the glowing margin rim." },
-    { "uniform": "u_veinAfterglow", "label": "Vein afterglow", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.5, "effect": "How long crossed veins keep their cooling glow; 0 snuffs them the moment the front passes." },
-    { "uniform": "u_marginRagged", "label": "Margin raggedness", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.7, "effect": "FBM roughness of the burning margin; 0 keeps it a clean offset of the leaf edge." }
+    {
+      "uniform": "u_leafSize",
+      "label": "Leaf size",
+      "min": 14,
+      "max": 80,
+      "step": 1,
+      "default": 34,
+      "effect": "Radius of the heart-shaped leaves in CSS pixels — small dense foliage to a few broad leaves."
+    },
+    {
+      "uniform": "u_leafDensity",
+      "label": "Leaf density",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How full the curtain is, from a few sparse trailing vines to a packed wall of leaves."
+    },
+    {
+      "uniform": "u_veinGlow",
+      "label": "Vein glow",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Brightness of the cool midrib and herringbone veins."
+    },
+    {
+      "uniform": "u_marginGlow",
+      "label": "Margin glow",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Brightness of the warm glowing leaf margin (kept from the burning-leaf original)."
+    },
+    {
+      "uniform": "u_sway",
+      "label": "Sway",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How much the vines and leaves sway on the wind; zero hangs them still."
+    },
+    {
+      "uniform": "u_variegation",
+      "label": "Variegation",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Amount of pale cream variegation marbling on the leaves."
+    }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.4 }
+  "post": { "bloom": 0.6, "backdrop": 0.35 }
 }
