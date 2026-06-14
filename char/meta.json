@@ -60,8 +60,17 @@
       "step": 0.01,
       "default": 0.5,
       "effect": "Rotation speed of the globe; zero holds it still."
+    },
+    {
+      "uniform": "u_zoom",
+      "label": "Zoom out",
+      "min": 0.8,
+      "max": 3,
+      "step": 0.01,
+      "default": 1.6,
+      "effect": "Widens the field of view so the whole globe fits; raise it to pull back and frame the sphere with margin, lower it to fill the frame."
     }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.5 }
+  "post": { "bloom": 0.6, "backdrop": 0.15 }
 }

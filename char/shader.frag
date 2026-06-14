@@ -21,6 +21,7 @@ uniform float u_rimWidth;       // width of the graded incandescent rim (default
 uniform float u_sparkDensity;   // amount of cooling speckle sparks on the char (default 0.45)
 uniform float u_edgeRaggedness; // FBM perturbation of the front contour (default 1)
 uniform float u_spin;           // rotation speed of the object (default 0.5)
+uniform float u_zoom;           // camera zoom-out; larger fits the whole globe (default 1.6)
 
 const vec3  BG  = vec3(0.020, 0.020, 0.028); // house near-black
 const float TAU = 6.28318530718;
@@ -149,10 +150,12 @@ void main() {
   float rate    = max(u_frontSpeed, 0.001) * 0.06;
   float spin    = u_spin;
 
-  // ---- camera ray (perspective)
+  // ---- camera ray (perspective); u_zoom widens the field of view so the whole
+  // globe fits on any aspect (it was clipped top/bottom on wide/full screens).
+  float zoom = max(u_zoom, 0.2);
   vec2 uv = (frag - 0.5 * res) / res.y;
   vec3 ro = vec3(0.0, 0.0, 3.2);
-  vec3 rd = normalize(vec3(uv * 1.05, -1.6));
+  vec3 rd = normalize(vec3(uv * 1.05 * zoom, -1.6));
 
   // ---- analytic ray-sphere
   float R = 1.30;
