@@ -27,7 +27,8 @@ uniform vec3  u_palette[4];
 uniform float u_burnRate;   // how fast the rim collapses toward the pith (default 0.18)
 uniform float u_rimWidth;   // ember rim width, CSS px, scaled by pixelRatio (default 13)
 uniform float u_lobeWobble; // per-angle lag of the rim; 0 = perfect circle (default 0.5)
-uniform float u_ringRandom; // higher-frequency raggedness of the burn ring; 0 = smooth (default 0.4)
+uniform float u_ringRandom; // higher-frequency raggedness of the BURN ring; 0 = smooth (default 0.4)
+uniform float u_ringWaver;  // waviness of the GROWTH rings off perfect circles; 0 = perfect (default 0.4)
 uniform float u_preheat;    // brightness of the hairline preheat ring; 0 disables (default 0.4)
 
 const vec3  BG        = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
@@ -95,10 +96,15 @@ vec3 burnFace(vec2 fc, vec2 res, float pr, float faceSeed,
 
   vec3 col = vec3(0.0);
 
-  // ---------- the intact wood face (very faint, dark-on-dark) ----------
-  // growth rings as faint concentric ridges; ONLY in the unburned interior and
-  // kept barely above background so the rim is the only real brightness.
-  float ring = 0.5 + 0.5 * sin(rn / max(ringSp, 1e-4) * 6.2831 + ringPh);
+  // ---------- the intact wood face ----------
+  // growth rings as concentric ridges. Their radius is wavered per-angle by
+  // u_ringWaver so they aren't perfect machine circles (real wood is irregular);
+  // angNoise keeps integer harmonics -> 2*PI-periodic, no atan-seam tear. The
+  // waver scales with ring spacing so it reads as rings nudging, not chaos.
+  float ringWv = (angNoise(a, faceSeed + 2.0) * 0.6 + angNoise(a * 2.0, faceSeed + 15.0) * 0.4)
+               * ringSp * 3.2 * clamp(u_ringWaver, 0.0, 1.0);
+  float rnRing = rn + ringWv;                      // wavy radius for the growth rings
+  float ring = 0.5 + 0.5 * sin(rnRing / max(ringSp, 1e-4) * 6.2831 + ringPh);
   float ringLine = smoothstep(0.30, 0.95, ring); // bold concentric growth rings
   // radial check-cracks: a few hairline spokes (also used by the sparks below)
   float crackAng = a + hash11(faceSeed + 11.0) * 6.2831;
@@ -119,7 +125,7 @@ vec3 burnFace(vec2 fc, vec2 res, float pr, float faceSeed,
   // the growth ring sitting just inside the leading edge glows warm a beat ahead
   // of consumption — a thin incandescent preview circle. We isolate the single
   // ring nearest the front and ramp it up as the front approaches it.
-  float ringIdx   = rn / max(ringSp, 1e-4) + ringPh / 6.2831; // continuous ring number
+  float ringIdx   = rnRing / max(ringSp, 1e-4) + ringPh / 6.2831; // wavy-ring number
   float ringFrac  = abs(fract(ringIdx) - 0.5) * 2.0;          // 1 on a ridge, 0 between
   float ridge     = smoothstep(0.45, 0.95, ringFrac);         // crisp ring ridge
   float preLead   = ringSp * 2.2;                             // how far ahead preheat reaches
