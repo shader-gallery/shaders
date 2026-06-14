@@ -101,8 +101,12 @@ vec3 burnFace(vec2 fc, vec2 res, float pr, float faceSeed,
   // u_ringWaver so they aren't perfect machine circles (real wood is irregular);
   // angNoise keeps integer harmonics -> 2*PI-periodic, no atan-seam tear. The
   // waver scales with ring spacing so it reads as rings nudging, not chaos.
-  float ringWv = (angNoise(a, faceSeed + 2.0) * 0.6 + angNoise(a * 2.0, faceSeed + 15.0) * 0.4)
-               * ringSp * 3.2 * clamp(u_ringWaver, 0.0, 1.0);
+  float angW = angNoise(a, faceSeed + 2.0) * 0.55
+             + angNoise(a * 2.0, faceSeed + 15.0) * 0.30
+             + angNoise(a * 3.0, faceSeed + 22.0) * 0.20;
+  // displacement grows with radius (rn term) so the OUTER rings change shape too,
+  // not just the centre; the ringSp base keeps the inner rings wavy as well.
+  float ringWv = angW * (ringSp * 1.6 + rn * 0.18) * clamp(u_ringWaver, 0.0, 1.0);
   float rnRing = rn + ringWv;                      // wavy radius for the growth rings
   float ring = 0.5 + 0.5 * sin(rnRing / max(ringSp, 1e-4) * 6.2831 + ringPh);
   float ringLine = smoothstep(0.30, 0.95, ring); // bold concentric growth rings
