@@ -4,7 +4,7 @@
   "family": "Burnish",
   "author": "Erin Carter",
   "tags": ["gold", "glow", "loop", "ceramic", "fracture", "branching", "texture"],
-  "description": "Gold-repaired pottery broken the way struck glaze really breaks: radial cracks spread and split outward from a few strike points, ringed by concentric hackle and laced with a fine craquelure - each crack type dialable on its own. Molten gold floods the breaks over one continuous palette-tinted ceramic glaze, and a set of movable light sources travels the surface so the gold catches the light and flares as a light passes. A branching fracture web, never a uniform cell mosaic.",
+  "description": "Gold-repaired pottery broken the way struck glaze really breaks: radial cracks spread and split outward from a few strike points, ringed by concentric hackle and laced with a fine craquelure - each crack type dialable on its own. Molten gold floods the breaks over one continuous palette-tinted ceramic glaze, and optional movable light sources travel the surface so the gold catches the light and flares as a light passes. A branching fracture web, never a uniform cell mosaic.",
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_impacts", "label": "Strikes", "min": 1.0, "max": 8.0, "step": 1.0,
@@ -14,16 +14,18 @@
     { "uniform": "u_radial", "label": "Radial cracks", "min": 0.0, "max": 1.5, "step": 0.01,
       "default": 1.0, "effect": "Strength of the radial spoke cracks that shoot out from each strike and split as they go - the main branching break lines." },
     { "uniform": "u_rings", "label": "Ring cracks", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.6, "effect": "Strength of the concentric hackle rings circling each strike point; raise for a classic spiderweb impact, drop for pure radial breaks." },
+      "default": 0.8, "effect": "Strength of the concentric hackle rings circling each strike point; raise for a classic spiderweb impact, drop for pure radial breaks." },
     { "uniform": "u_craze", "label": "Craquelure", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.35, "effect": "Strength of the fine all-over hairline craquelure that laces the glaze between the main breaks; adds delicate gold filigree texture." },
+      "default": 0.5, "effect": "Strength of the fine all-over hairline craquelure that laces the glaze between the main breaks; adds delicate gold filigree texture." },
     { "uniform": "u_seam", "label": "Seam width", "min": 1.0, "max": 6.0, "step": 0.05,
-      "default": 2.8, "effect": "Width of the gold repair seams in CSS pixels - a hairline lacquer line at the minimum, a generous molten channel of liquid gold at the maximum." },
+      "default": 2.6, "effect": "Width of the gold repair seams in CSS pixels - a hairline lacquer line at the minimum, a generous molten channel of liquid gold at the maximum." },
+    { "uniform": "u_shimmer", "label": "Shimmer", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.9, "effect": "Intensity and speed of the molten shimmer travelling the seams; 0 lets the gold rest as a steady gleam, 2 keeps every mend quietly boiling." },
     { "uniform": "u_lights", "label": "Light sources", "min": 0.0, "max": 6.0, "step": 1.0,
-      "default": 3.0, "effect": "Number of moving light sources gliding over the vessel; the gold flares hot where a light passes and rests to a deep gleam in shadow. 0 lights it flat and even." },
+      "default": 0.0, "effect": "Number of moving light sources gliding over the vessel; the gold flares hot where a light passes. 0 leaves only the molten shimmer (the default look), higher adds travelling highlights." },
     { "uniform": "u_lightSpeed", "label": "Light speed", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.5, "effect": "How fast the light sources drift across the surface; 0 pins them as fixed highlights, high sweeps the gleam restlessly over the gold." }
+      "default": 0.5, "effect": "How fast the light sources drift across the surface; 0 pins them as fixed highlights, high sweeps the gleam restlessly over the gold. No effect when Light sources is 0." }
   ],
-  "post": { "bloom": 0.6, "bloomRadius": 4.5, "saturation": 1.08, "contrast": 1.06, "dither": 1.0 },
-  "defaultPalette": "tide"
+  "post": { "bloom": 0.7, "bloomRadius": 4.5, "saturation": 1.08, "contrast": 1.06, "dither": 1.0 },
+  "defaultPalette": "ember"
 }
