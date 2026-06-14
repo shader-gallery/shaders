@@ -7,12 +7,13 @@
   "description": "A loose constellation of glow-dot nodes hung across the dark, each slowly circling its own anchor. Hairline threads fade in between nodes that drift within reach and faint triangle ghosts settle behind clustered triples, so the mesh is alive — connections form and dissolve by proximity while a barely-there wave breathes diagonally across the net.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_orbitSpeed", "label": "Orbit speed", "min": 0.1, "max": 2.0, "step": 0.05,
-      "default": 0.5, "effect": "Scales how fast nodes circle their anchors, from a near-frozen hush to a visibly restless mesh of forming and breaking threads." },
-    { "uniform": "u_cell", "label": "Cell size", "min": 60.0, "max": 220.0, "step": 1.0,
-      "default": 120.0, "effect": "Spacing of the underlying node grid in CSS px; smaller packs more nodes, threads, and triangle ghosts into view, larger leaves a sparse open net." },
-    { "uniform": "u_reach", "label": "Reach", "min": 0.6, "max": 1.6, "step": 0.01,
-      "default": 1.0, "effect": "Multiplier on the proximity threshold where threads fade in; low gives rare lone connections, high keeps the mesh densely strung with frequent triangle fills." }
+    { "uniform": "u_orbitSpeed", "label": "Orbit speed", "min": 0.1, "max": 3.0, "step": 0.05,
+      "default": 2.0, "effect": "Scales how fast nodes circle their anchors, from a near-frozen hush to a visibly restless mesh of forming and breaking threads." },
+    { "uniform": "u_cell", "label": "Cell size", "min": 36.0, "max": 220.0, "step": 1.0,
+      "default": 60.0, "effect": "Spacing of the underlying node grid in CSS px; smaller packs more nodes, threads, and triangle ghosts into view, larger leaves a sparse open net." },
+    { "uniform": "u_reach", "label": "Reach", "min": 0.6, "max": 2.2, "step": 0.01,
+      "default": 1.6, "effect": "Multiplier on the proximity threshold where threads fade in; low gives rare lone connections, high keeps the mesh densely strung with frequent triangle fills." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.7, "bloomRadius": 4.0, "backdrop": 0.5, "backdropScale": 1.2, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "spectral"
 }
