@@ -17,5 +17,5 @@
       "default": 0.4, "effect": "Brightness of the hairline ring that lights each growth ring just before consumption; 0 disables the preview." }
   ],
   "defaultPalette": "ember",
-  "post": { "bloom": 0.6, "backdrop": 0.5 }
+  "post": { "bloom": 0.6 }
 }

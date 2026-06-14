@@ -93,15 +93,21 @@ vec3 burnFace(vec2 fc, vec2 res, float pr, float faceSeed,
   // growth rings as faint concentric ridges; ONLY in the unburned interior and
   // kept barely above background so the rim is the only real brightness.
   float ring = 0.5 + 0.5 * sin(rn / max(ringSp, 1e-4) * 6.2831 + ringPh);
-  float ringLine = smoothstep(0.62, 0.98, ring); // thin faint ridges
-  // radial check-cracks: a few hairline spokes
+  float ringLine = smoothstep(0.30, 0.95, ring); // bold concentric growth rings
+  // radial check-cracks: a few hairline spokes (also used by the sparks below)
   float crackAng = a + hash11(faceSeed + 11.0) * 6.2831;
   float crack = pow(abs(sin(crackAng * 2.5 + sin(crackAng) * 1.7)), 40.0);
+  // radial grain / medullary rays fanning out from the pith
+  float grain = smoothstep(0.55, 1.0, 0.5 + 0.5 * sin(a * 44.0 + angNoise(a, faceSeed) * 4.0));
   float interior = smoothstep(0.012, 0.0, sd); // 1 inside the front (unburned)
-  // wood tone: only a whisper warmer than BG, ridges barely catch light.
-  // a touch more ring contrast so the intact fuel is legible just before preheat.
-  vec3 woodCol = c3 * 0.024 + c0 * 0.024 * ringLine;
-  col += woodCol * interior;
+  // VISIBLE warm wood: amber heartwood near the pith -> paler sapwood outward,
+  // with the growth rings, radial grain and check-cracks catching light so the
+  // sawn-log end actually reads as wood (was dark-on-dark). Woody browns are
+  // hardcoded (this is the warm wood/ember exemplar) but lightly palette-tinted.
+  vec3 woodWarm = mix(vec3(0.40, 0.24, 0.12), vec3(0.60, 0.41, 0.24), clamp(rn, 0.0, 1.0));
+  woodWarm = mix(woodWarm, c3 * 0.5 + c0 * 0.3, 0.22);
+  vec3 woodCol = woodWarm * (0.22 + 0.55 * ringLine + 0.16 * grain - 0.10 * crack);
+  col += max(woodCol, vec3(0.0)) * interior;
 
   // ---------- preheat: ring closest to the front lights just before burning ----------
   // the growth ring sitting just inside the leading edge glows warm a beat ahead
