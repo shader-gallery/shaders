@@ -12,7 +12,7 @@
     "refraction",
     "aurora"
   ],
-  "description": "A static two-scale fracture web over a deep, slow-creeping aurora — no crack is ever drawn. Each shard refracts the colour field through its own slowly wandering offset and tilt, so hue and brightness jump cleanly at every seam while fine crazing shears the gradient in miniature inside each shard.",
+  "description": "A static two-scale fracture web over a deep, slow-creeping aurora \u2014 no crack is ever drawn. Each shard refracts the colour field through its own slowly wandering offset and tilt, so hue and brightness jump cleanly at every seam while fine crazing shears the gradient in miniature inside each shard.",
   "entry": "shader.frag",
   "params": [
     {
@@ -39,7 +39,7 @@
       "min": 0,
       "max": 1,
       "default": 0.55,
-      "effect": "Magnitude of each shard's sample offset as a fraction of its size — 0 heals the glaze into one unbroken field, 1 scrambles neighbours far apart.",
+      "effect": "Magnitude of each shard's sample offset as a fraction of its size \u2014 0 heals the glaze into one unbroken field, 1 scrambles neighbours far apart.",
       "step": 0.01
     },
     {
@@ -48,9 +48,17 @@
       "min": 0,
       "max": 1,
       "default": 0.5,
-      "effect": "Strength of the nested hairline layer's micro-offsets inside each shard — 0 leaves only the coarse shatter, 1 fills shards with fine crazing shear.",
+      "effect": "Strength of the nested hairline layer's micro-offsets inside each shard \u2014 0 leaves only the coarse shatter, 1 fills shards with fine crazing shear.",
       "step": 0.01
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.55,
+    "bloomRadius": 4.0,
+    "backdrop": 0.45,
+    "backdropScale": 1.2,
+    "saturation": 1.1,
+    "dither": 1.0
+  }
 }

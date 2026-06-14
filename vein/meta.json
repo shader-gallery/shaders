@@ -12,7 +12,7 @@
     "web",
     "growth"
   ],
-  "description": "Only the seams of a voronoi partition — thin capillary lines on a near-black field that continuously rewire: edges fade in along their length, dock into junctions with a soft glint, stand a while, then thin and retract, each seam tinted by its two neighbouring cells.",
+  "description": "Only the seams of a voronoi partition \u2014 thin capillary lines on a near-black field that continuously rewire: edges fade in along their length, dock into junctions with a soft glint, stand a while, then thin and retract, each seam tinted by its two neighbouring cells.",
   "entry": "shader.frag",
   "params": [
     {
@@ -30,7 +30,7 @@
       "min": 0.05,
       "max": 1,
       "default": 0.3,
-      "effect": "How quickly edges grow in and retract — from slow lichen-paced turnover to a web visibly knitting itself.",
+      "effect": "How quickly edges grow in and retract \u2014 from slow lichen-paced turnover to a web visibly knitting itself.",
       "step": 0.01
     },
     {
@@ -52,5 +52,13 @@
       "step": 0.05
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.65,
+    "bloomRadius": 4.5,
+    "backdrop": 0.28,
+    "backdropScale": 1.4,
+    "saturation": 1.06,
+    "dither": 1.0
+  }
 }
