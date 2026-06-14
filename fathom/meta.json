@@ -44,5 +44,6 @@
       "effect": "Rate the deepest surviving dots flicker at the void's rim; 0 leaves the depths perfectly still."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4 }
 }

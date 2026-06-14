@@ -14,5 +14,6 @@
     { "uniform": "u_relief", "label": "Relief", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.7, "effect": "Asymmetry strength between lit and slip faces; low flattens crests to faint lines, high cuts deep moonlit relief." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4 }
 }

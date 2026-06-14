@@ -44,5 +44,6 @@
       "effect": "Diameter of each storm's dark calm eye in CSS pixels."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "backdrop": 0.5 }
 }

@@ -16,5 +16,6 @@
     { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 2.0, "step": 0.01,
       "default": 0.5, "effect": "Creep speed of the warp folds and the flake twinkle, from a still slab to a slowly breathing seam." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4 }
 }

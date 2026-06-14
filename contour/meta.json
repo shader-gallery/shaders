@@ -35,5 +35,6 @@
       "effect": "Stroke width of ordinary isolines in CSS pixels; index contours track at about double this width."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4, "backdrop": 0.3 }
 }

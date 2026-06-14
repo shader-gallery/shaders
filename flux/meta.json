@@ -44,5 +44,6 @@
       "effect": "Stroke width of the arcs in CSS pixels; the bundles near the poles brighten as strokes overlap."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }

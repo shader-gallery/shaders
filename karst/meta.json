@@ -16,5 +16,6 @@
     { "uniform": "u_spacing", "label": "Tower width", "min": 80.0, "max": 360.0, "step": 1.0,
       "default": 180.0, "effect": "Width and spacing of the karst towers in CSS pixels, from a dense pinnacle forest to a few grand monoliths." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }
