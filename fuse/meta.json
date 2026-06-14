@@ -3,19 +3,28 @@
   "slug": "fuse",
   "family": "Smolder",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "ember", "fire", "spark"],
-  "description": "Two thin fuse cords cross the dark frame on shallow diagonals; a white-hot bead chews along each at its own jittering speed, ringed by a warm-to-cool halo and throwing sparks, leaving ash behind and dark cord ahead.",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "ember",
+    "spark",
+    "circuit"
+  ],
+  "description": "The traveling fuse-spark mapped onto a circuit board: a lattice of faint copper traces and solder pads fills the frame, and white-hot charge pulses race along the rows and columns at their own speeds and directions, each ringed by a warm-to-cool halo, throwing spark flecks and dragging a glowing cooling trail that lights the traces behind it. The pulses light pads as they pass; staggered phases keep current flowing somewhere always.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_burnSpeed", "label": "Burn speed", "min": 0.02, "max": 0.25, "step": 0.01,
-      "default": 0.08, "effect": "Base fraction of a cord each bead consumes per second; the speed jitter rides on top of this." },
+    { "uniform": "u_burnSpeed", "label": "Pulse speed", "min": 0.02, "max": 0.25, "step": 0.01,
+      "default": 0.08, "effect": "How fast the charge pulses race along the traces." },
     { "uniform": "u_haloWidth", "label": "Halo width", "min": 6.0, "max": 36.0, "step": 1.0,
-      "default": 16.0, "effect": "Radius in CSS px of the colour-graded halo around the burn bead." },
+      "default": 16.0, "effect": "Radius in CSS px of the colour-graded halo around each pulse head." },
     { "uniform": "u_sparkSpray", "label": "Spark spray", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.8, "effect": "Density of spark flecks thrown off each bead; 0 leaves clean ember points." },
-    { "uniform": "u_cordWaviness", "label": "Cord waviness", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.5, "effect": "How far the cords bow away from straight lines; 0 lays them perfectly straight." }
+      "default": 0.8, "effect": "Density of spark flecks thrown off each pulse head; 0 leaves clean ember points." },
+    { "uniform": "u_traceDensity", "label": "Trace density", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "How fine the lattice is and how many edges are routed, from sparse traces to a packed board." },
+    { "uniform": "u_padGlow", "label": "Pad glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "Brightness of the copper traces and solder pads behind the pulses." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.7, "backdrop": 0.7, "backdropScale": 1.3 }
+  "post": { "bloom": 0.7, "backdrop": 0.4 }
 }

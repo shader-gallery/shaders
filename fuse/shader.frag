@@ -1,12 +1,12 @@
-// fuse (Smolder) — two long fuse cords crossing the frame on shallow diagonals,
-// each a thin noise-bent filament barely a step above the near-black ground.
-// Both cords burn at once: each carries one white-hot bead chewing along its
-// length at a different, hard-jittering speed (lurching through knots, racing the
-// easy stretches). Each bead wears a tight palette-graded halo (hottest->coolest
-// outward) and throws a hashed spray of short-lived spark flecks. Behind the bead
-// the cord is spent ash-grey; ahead it waits dark and whole. The two burn windows
-// overlap and crossfade so the relay never shows a reset — one-way consumption of
-// a one-dimensional track.
+// fuse (Smolder) — REFRAMED as a CIRCUIT NETWORK: instead of two lonely cords on
+// black, the traveling fuse-spark now runs as charge pulses along a frame-filling
+// lattice of faint copper traces with solder pads. Each row and column carries a
+// white-hot pulse head — the original bead with its palette-graded halo, spark
+// spray and a glowing cooling trail behind it — racing along the traces at its own
+// hashed speed and direction, lighting pads as it passes. The spark-burst, halo
+// and burnt-trail mechanic is kept; it just has a host structure now, so the frame
+// reads as a live circuit rather than near-empty black. Everything themes from
+// u_palette.
 //
 // Uniforms provided by the runtime:
 //   u_time        seconds, monotonically increasing
@@ -23,78 +23,52 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_burnSpeed;     // base fraction of a cord each bead eats per second (default 0.08)
-uniform float u_haloWidth;     // halo radius in CSS px around the bead            (default 16)
-uniform float u_sparkSpray;    // density of spark flecks thrown off each bead 0..1 (default 0.8)
-uniform float u_cordWaviness;  // how far cords bow from straight 0..1             (default 0.5)
+uniform float u_burnSpeed;    // how fast the pulse heads race along the traces (default 0.08)
+uniform float u_haloWidth;    // halo radius in CSS px around each pulse head     (default 16)
+uniform float u_sparkSpray;   // density of spark flecks thrown off each head 0..1 (default 0.8)
+uniform float u_traceDensity; // how dense the circuit lattice + routing is 0..1   (default 0.5)
+uniform float u_padGlow;      // brightness of the solder pads / traces 0..1       (default 0.5)
 
-const vec3  BG        = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const float CORD_CSS  = 1.6;   // cord half-thickness in CSS px
-const float TWO_PI    = 6.2831853;
+const vec3  BG     = vec3(0.020, 0.022, 0.028); // dark board
+const float TWO_PI = 6.2831853;
 
-// --- hashes ---
 float hash11(float n) { return fract(sin(n * 12.9898) * 43758.5453); }
 float hash21(vec2 p)  { return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
 
-// smooth 1D value noise
-float vnoise(float x) {
-  float i = floor(x), f = fract(x);
-  float a = hash11(i), b = hash11(i + 1.0);
-  f = f * f * (3.0 - 2.0 * f);
-  return mix(a, b, f);
+// palette-graded halo around a pulse head: warm core -> cool rim across radius r/halo.
+vec3 haloGrade(float r, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
+  float g = clamp(r, 0.0, 1.0);
+  vec3 grad = mix(mix(vec3(1.0, 0.85, 0.55), c0, 0.5), c1, smoothstep(0.0, 0.45, g));
+  grad = mix(grad, c3, smoothstep(0.35, 0.70, g));
+  grad = mix(grad, c2, smoothstep(0.60, 1.00, g));
+  return grad;
 }
 
-// a cord is a polyline parameterized by s in 0..1 across the frame. It runs on a
-// shallow diagonal from one edge to the other, bent by layered value noise.
-// Returns the cord's pixel position at parameter s (aspect-correct space px).
-vec2 cordPoint(float s, vec2 res, float dir, float seed, float waviness) {
-  // baseline: shallow diagonal across full width, slight vertical offset by dir
-  vec2 a = vec2(-0.06 * res.x, res.y * (0.5 - dir * 0.30));
-  vec2 b = vec2( 1.06 * res.x, res.y * (0.5 + dir * 0.30));
-  vec2 base = mix(a, b, s);
-  // bow perpendicular to the run, layered noise so it knots and eases
-  vec2 tang = normalize(b - a);
-  vec2 nrm  = vec2(-tang.y, tang.x);
-  float amp = res.y * 0.16 * waviness;
-  float n = vnoise(s * 3.0 + seed) - 0.5
-          + 0.5 * (vnoise(s * 7.3 + seed * 2.0) - 0.5)
-          + 0.25 * (vnoise(s * 15.0 + seed * 3.0) - 0.5);
-  return base + nrm * n * amp;
-}
-
-// distance from point p to the cord, plus the nearest parameter s, by sampling.
-// constant loop bounds (GLSL ES 1.00). Returns vec3(dist, sNearest, _).
-vec3 cordDistance(vec2 p, vec2 res, float dir, float seed, float waviness) {
-  const int N = 48;
-  float best = 1e9;
-  float bestS = 0.0;
-  vec2 prev = cordPoint(0.0, res, dir, seed, waviness);
-  for (int i = 1; i <= N; i++) {
-    float s = float(i) / float(N);
-    vec2 cur = cordPoint(s, res, dir, seed, waviness);
-    vec2 e = cur - prev;
-    vec2 w = p - prev;
-    float h = clamp(dot(w, e) / max(dot(e, e), 1e-4), 0.0, 1.0);
-    vec2 proj = prev + e * h;
-    float d = length(p - proj);
-    if (d < best) {
-      best = d;
-      bestS = (float(i - 1) + h) / float(N);
+// spark spray around a head point hp (reuses fuse's hashed fleck burst).
+vec3 sparks(vec2 fc, vec2 hp, float haloW, float spray, float t, float seed,
+            vec3 c0, vec3 c1, vec3 c2, vec3 c3, float pr) {
+  vec3 acc = vec3(0.0);
+  const int SP = 6;
+  for (int sx = 0; sx < SP; sx++) {
+    for (int sy = 0; sy < SP; sy++) {
+      vec2 cell = vec2(float(sx), float(sy));
+      float life = floor(t * 9.0) + cell.x * 3.0 + cell.y * 7.0 + seed * 31.0;
+      float h0 = hash21(cell + seed * 17.0 + floor(life));
+      if (h0 < spray) {
+        float ang = hash21(cell + 3.1 + life) * TWO_PI;
+        float rad = (0.30 + 1.00 * hash21(cell + 7.7 + life)) * haloW * 1.05;
+        vec2 sp = hp + vec2(cos(ang), sin(ang)) * rad;
+        float sd = length(fc - sp);
+        float fl = hash21(cell + 5.5 + life);
+        float twinkle = 0.6 + 0.4 * sin(t * 40.0 + fl * TWO_PI);
+        float sg = max(pr * 1.7, 1.0);
+        float pt = exp(-sd * sd / (sg * sg));
+        float amt = pt * twinkle * (0.7 + 0.5 * h0);
+        acc += mix(vec3(1.0, 0.85, 0.5), c3, clamp(rad / haloW, 0.0, 1.0)) * amt;
+      }
     }
-    prev = cur;
   }
-  return vec3(best, bestS, 0.0);
-}
-
-// jittering one-way burn position in 0..1 for a bead, given a phase. The bead
-// advances monotonically across its window (lurch through knots, race elsewhere)
-// driven by an integral-like accumulation of a noisy speed. Phase ph in 0..1.
-float beadPos(float ph, float seed) {
-  // base linear sweep plus a noise warp that locally speeds/slows but stays
-  // monotone overall (warp amplitude < 1 so derivative stays positive-ish)
-  float warp = 0.16 * (vnoise(ph * 6.0 + seed) - 0.5)
-             + 0.10 * (vnoise(ph * 13.0 + seed * 2.0) - 0.5);
-  return clamp(ph + warp, 0.0, 1.0);
+  return acc * 1.7;
 }
 
 void main() {
@@ -104,13 +78,11 @@ void main() {
   vec2  ctr = res * 0.5;
   float t   = u_time;
 
-  // guard the params so the full slider range is safe
-  float burnSpeed = max(u_burnSpeed, 0.001);
-  float haloW     = max(u_haloWidth, 1.0) * pr;
-  float spray     = clamp(u_sparkSpray, 0.0, 1.0);
-  float waviness  = clamp(u_cordWaviness, 0.0, 1.0);
-
-  vec3 col = BG;
+  float speed   = max(u_burnSpeed, 0.001);
+  float haloW   = max(u_haloWidth, 1.0) * pr;
+  float spray   = clamp(u_sparkSpray, 0.0, 1.0);
+  float density = clamp(u_traceDensity, 0.0, 1.0);
+  float padG    = clamp(u_padGlow, 0.0, 1.0);
 
   // palette fallback (headless contexts can leave the array zeroed)
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
@@ -119,117 +91,84 @@ void main() {
     c2 = vec3(0.133, 0.827, 0.933); c3 = vec3(0.957, 0.247, 0.369);
   }
 
-  float cordHalf = CORD_CSS * pr;
-  float aa = pr * 1.2;
+  vec3 traceCol = c2 * 0.5 + c0 * 0.18;        // copper trace tint
+  vec3 col = BG;
 
-  // each cord burns one full length per (1/burnSpeed) seconds; the two beads run
-  // at visibly different base speeds so the relay reads as a gaining/falling race.
-  float spdA = burnSpeed;
-  float spdB = burnSpeed * 1.47;
-  // staggered phases (offset by half) so a finished cord reignites while the other
-  // bead is still mid-cord -> burn windows overlap, no global reset visible.
-  float phA = fract(t * spdA);
-  float phB = fract(t * spdB + 0.5);
-  float burnA = beadPos(phA, 1.7);
-  float burnB = beadPos(phB, 9.3);
+  // ---- lattice geometry: square cells; density picks how fine the routing is.
+  float cells   = mix(5.0, 11.0, density);
+  float colW    = res.x / cells;
+  vec2  g       = fc / colW;                   // grid coords
+  float traceHalf = 1.6 * pr;
+  float aa      = 1.2 * pr;
 
-  // unify the two cords' contribution
-  // i=0 -> cord A, i=1 -> cord B
-  for (int i = 0; i < 2; i++) {
-    float dir   = (i == 0) ? 1.0 : -1.0;
-    float seed  = (i == 0) ? 1.7 : 9.3;
-    float burn  = (i == 0) ? burnA : burnB;
-    float ph    = (i == 0) ? phA : phB;
+  float rx = floor(g.x + 0.5);                 // nearest vertical lattice line
+  float ry = floor(g.y + 0.5);                 // nearest horizontal lattice line
+  float dxPx = (g.x - rx) * colW;              // px distance to that vertical line
+  float dyPx = (g.y - ry) * colW;              // px distance to that horizontal line
+  float ix = floor(g.x);                       // cell column index
+  float jy = floor(g.y);                       // cell row index
 
-    vec3 cd = cordDistance(fc, res, dir, seed, waviness);
-    float dist = cd.x;
-    float s    = cd.y;
+  // segment presence: not every lattice edge is routed (hashed) -> reads as PCB
+  // routing rather than a full grid. Higher density routes more edges.
+  float presThr = mix(0.45, 0.92, density);
+  float presH = step(hash21(vec2(ix, ry) + 0.13), presThr); // horizontal edge at row ry
+  float presV = step(hash21(vec2(rx, jy) + 7.70), presThr); // vertical edge at col rx
 
-    // base cord: thin filament, barely above background, fading at the very ends
-    float ends = smoothstep(0.0, 0.05, s) * smoothstep(1.0, 0.95, s);
-    float cordMask = (1.0 - smoothstep(cordHalf, cordHalf + aa, dist)) * ends;
+  float hMask = (1.0 - smoothstep(traceHalf, traceHalf + aa, abs(dyPx))) * presH;
+  float vMask = (1.0 - smoothstep(traceHalf, traceHalf + aa, abs(dxPx))) * presV;
+  col += traceCol * max(hMask, vMask) * (0.18 + 0.5 * padG);
 
-    // territory: ahead of the bead the cord is dark + whole; behind it is ash.
-    // a soft boundary right at the bead so the front reads as a moving edge.
-    float spent = smoothstep(burn + 0.004, burn - 0.004, s); // 1 behind bead, 0 ahead
+  // ---- solder pads at the nearest node
+  vec2  nodeG = vec2(rx, ry);
+  float dn    = length(g - nodeG) * colW;
+  float pad   = 1.0 - smoothstep(3.2 * pr, 4.4 * pr, dn);
+  float ring  = (1.0 - smoothstep(4.4 * pr, 5.6 * pr, dn)) * smoothstep(3.4 * pr, 4.4 * pr, dn);
+  float padLit = step(hash21(nodeG + 3.3), 0.28);
+  vec3  padBase = mix(traceCol * 1.3, mix(c0, c3, 0.4) * 1.4, padLit);
+  col += padBase * (pad * 0.6 + ring * 0.35) * (0.4 + 0.9 * padG);
 
-    // intact (ahead) cord: a faint cool ember-less filament, a real step above BG
-    vec3 cordCol = mix(vec3(0.060, 0.058, 0.066), c2 * 0.12, 0.35);
-    // ash (behind) cord: a sagging char, DIMMER than the intact cord
-    vec3 ashCol  = vec3(0.026, 0.024, 0.028);
-    // the spent char also sags thinner -> slightly reduce its mask
-    float filCordMask = cordMask * mix(1.0, 0.82, spent);
-    vec3 filCol  = mix(cordCol, ashCol, spent);
-    col += filCol * filCordMask;
-
-    // --- the burn bead: white-hot core at parameter `burn` along the cord ---
-    vec2 beadPt = cordPoint(burn, res, dir, seed, waviness);
-    float bd = length(fc - beadPt); // distance to bead centre in px
-
-    // white-hot core
-    float core = exp(-bd * bd / (max(cordHalf * 2.2, 1.0) * max(cordHalf * 2.2, 1.0)));
-    col += vec3(1.0, 0.96, 0.88) * core * 1.6;
-
-    // palette-graded halo: rings hottest->coolest outward across its width.
-    // map radial distance 0..haloW to a 0..1 grade, then blend palette warm->cool.
-    float r = bd / haloW;
-    float haloFall = exp(-r * r * 2.2); // tight halo
-    // grade: near core = warmest (c0/ember orange), outer = coolest (c2 cyan-ish)
-    float g = clamp(r, 0.0, 1.0);
-    vec3 grad = mix(mix(vec3(1.0,0.85,0.55), c0, 0.5), c1, smoothstep(0.0, 0.45, g));
-    grad = mix(grad, c3, smoothstep(0.35, 0.7, g));
-    grad = mix(grad, c2, smoothstep(0.6, 1.0, g));
-    col += grad * haloFall * 1.25;
-
-    // a slim trailing afterglow just behind the bead (cooling rim) along the cord
-    float behind = smoothstep(burn, burn - 0.06, s) * (1.0 - smoothstep(burn - 0.06, burn - 0.14, s));
-    float trail = behind * (1.0 - smoothstep(cordHalf, cordHalf + haloW * 0.25, dist));
-    col += mix(c3, c0, 0.5) * trail * 0.35;
-
-    // --- spark flecks: short-lived hashed points thrown a few px off the bead ---
-    // sample a small fixed grid of candidate sparks in a box around the bead.
-    const int SP = 7;
-    float sparkAccum = 0.0;
-    vec3  sparkCol = vec3(0.0);
-    for (int sx = 0; sx < SP; sx++) {
-      for (int sy = 0; sy < SP; sy++) {
-        // each spark cell gets a lifetime cycle; time quantized so flecks pop+die
-        vec2 cell = vec2(float(sx), float(sy));
-        float life = floor(t * 9.0) + cell.x * 3.0 + cell.y * 7.0 + float(i) * 31.0;
-        float h0 = hash21(cell + float(i) * 17.0 + floor(life));
-        // only some cells are active -> spray density
-        if (h0 < spray) {
-          float ang = hash21(cell + 3.1 + life) * TWO_PI;
-          float rad = (0.35 + 1.05 * hash21(cell + 7.7 + life)) * haloW * 1.05;
-          vec2 sp = beadPt + vec2(cos(ang), sin(ang)) * rad;
-          float sd = length(fc - sp);
-          // flicker each spark over its short life (never fully off, so a fleck
-          // always paints a few pixels while alive -> spray reads in stills too)
-          float fl = hash21(cell + 5.5 + life);
-          float twinkle = 0.6 + 0.4 * sin(t * 40.0 + fl * TWO_PI);
-          float sg = max(pr * 1.7, 1.0);
-          float pt = exp(-sd * sd / (sg * sg));
-          float amt = pt * twinkle * (0.7 + 0.5 * h0);
-          sparkAccum += amt;
-          // sparks tint warm, cooling with throw distance
-          vec3 sc = mix(vec3(1.0, 0.85, 0.5), c3, clamp(rad / haloW, 0.0, 1.0));
-          sparkCol += sc * amt;
-        }
-      }
-    }
-    col += sparkCol * 1.7;
-
-    // faint ember-dust cloud: a soft warm haze the spark spray kicks up around
-    // the bead. Scales with spray density (0 spray -> clean ember point, no dust)
-    // and gives the spray param real pixel coverage. Stays dim so the bead reads.
-    float dustR = bd / (haloW * 2.4);
-    float dust = exp(-dustR * dustR * 1.3);
-    col += mix(vec3(0.9, 0.55, 0.28), c0, 0.4) * dust * spray * 0.30;
+  // ---- horizontal pulse on the nearest row (some rows carry a running pulse)
+  float rowHas = step(hash21(vec2(ry, 0.0) + 1.1), 0.78);
+  if (rowHas > 0.5 && abs(dyPx) < haloW * 1.6) {
+    float dir = (mod(ry, 2.0) < 1.0) ? 1.0 : -1.0;
+    float spd = speed * (0.6 + 0.9 * hash11(ry + 2.0));
+    float ph  = hash11(ry + 4.0);
+    float bx  = fract(t * spd * dir + ph) * res.x;   // head x in px
+    vec2  hp  = vec2(bx, ry * colW);
+    float bd  = length(fc - hp);
+    // white-hot core + graded halo
+    col += vec3(1.0, 0.96, 0.88) * exp(-bd * bd / (max(traceHalf * 2.4, 1.0) * max(traceHalf * 2.4, 1.0))) * 1.5;
+    col += haloGrade(bd / haloW, c0, c1, c2, c3) * exp(-(bd / haloW) * (bd / haloW) * 2.2) * 1.2;
+    // glowing cooling trail behind the head along the routed row
+    float along = (fc.x - bx) * dir;                 // <0 behind the head
+    float trail = exp(-max(-along, 0.0) / (res.x * 0.16)) * step(along, 0.0);
+    trail *= (1.0 - smoothstep(traceHalf, traceHalf + haloW * 0.30, abs(dyPx))) * presH;
+    col += mix(c3, c0, 0.5) * trail * 0.85;
+    // spark spray
+    col += sparks(fc, hp, haloW, spray, t, ry + 0.5, c0, c1, c2, c3, pr);
   }
 
-  // gentle vignette to keep the corners dark and the burn beads luminous
-  float vign = 1.0 - smoothstep(0.55, 1.15, length((fc - ctr) / res));
-  col *= mix(0.7, 1.0, vign);
+  // ---- vertical pulse on the nearest column
+  float colHas = step(hash21(vec2(rx, 0.0) + 8.4), 0.78);
+  if (colHas > 0.5 && abs(dxPx) < haloW * 1.6) {
+    float dir = (mod(rx, 2.0) < 1.0) ? 1.0 : -1.0;
+    float spd = speed * (0.6 + 0.9 * hash11(rx + 5.0));
+    float ph  = hash11(rx + 9.0);
+    float by  = fract(t * spd * dir + ph) * res.y;
+    vec2  hp  = vec2(rx * colW, by);
+    float bd  = length(fc - hp);
+    col += vec3(1.0, 0.96, 0.88) * exp(-bd * bd / (max(traceHalf * 2.4, 1.0) * max(traceHalf * 2.4, 1.0))) * 1.5;
+    col += haloGrade(bd / haloW, c0, c1, c2, c3) * exp(-(bd / haloW) * (bd / haloW) * 2.2) * 1.2;
+    float along = (fc.y - by) * dir;
+    float trail = exp(-max(-along, 0.0) / (res.y * 0.16)) * step(along, 0.0);
+    trail *= (1.0 - smoothstep(traceHalf, traceHalf + haloW * 0.30, abs(dxPx))) * presV;
+    col += mix(c3, c0, 0.5) * trail * 0.85;
+    col += sparks(fc, hp, haloW, spray, t, rx + 40.0, c0, c1, c2, c3, pr);
+  }
+
+  // gentle vignette to keep the corners dark and the pulse heads luminous
+  float vign = 1.0 - smoothstep(0.55, 1.18, length((fc - ctr) / res));
+  col *= mix(0.74, 1.0, vign);
 
   // soft tonemap so overlapping glow doesn't clip harshly to flat white
   col = col / (col + vec3(0.55)) * 1.55;
