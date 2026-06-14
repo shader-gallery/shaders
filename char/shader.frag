@@ -184,21 +184,32 @@ void main() {
       float charAmt = (s0.a * w0 + s1.a * w1) / wsum;
       vec3 emis = s0.rgb * w0 + s1.rgb * w1;
 
-      // ---- base surface material lit so the globe reads as a 3D form
-      vec3 paper = vec3(0.060, 0.058, 0.070);
-      vec3 charB = vec3(0.020, 0.018, 0.024);
-      vec3 baseMat = mix(paper, charB, charAmt);
-      // faint surface grain so the virgin side isn't a flat ball
-      baseMat *= 0.80 + 0.40 * fbm3(lp * 7.0 + 1.3);
+      // ---- base surface material: a SOLID, clearly-visible marbled sphere so
+      // the object reads as a real 3D body BEFORE the burn reaches it (was near
+      // black / invisible). Palette-tinted continents of marbling over a lit body.
+      float grain  = fbm3(lp * 2.6 + 2.0);
+      float grain2 = fbm3(lp * 7.5 + 7.0);
+      float veinM  = 1.0 - smoothstep(0.0, 0.10, abs(fbm3(lp * 4.0 + 11.0) - 0.5));
+      vec3 matLo = mix(c0, c1, 0.5) * 0.34 + vec3(0.05);     // body base
+      vec3 matHi = mix(c2, c0, 0.5) * 0.55 + vec3(0.08);     // lighter marbling
+      vec3 surf  = mix(matLo, matHi, smoothstep(0.36, 0.66, grain));
+      surf *= 0.74 + 0.5 * grain2;                            // mottle the surface
+      surf += mix(c2, c0, 0.4) * veinM * 0.12;                // faint surface veining
+      // char darkens (but never to invisible — a charred crust, not a hole)
+      vec3 baseMat = mix(surf, surf * 0.16 + vec3(0.012), charAmt);
 
       vec3 L = normalize(vec3(0.55, 0.65, 0.55));
       float diff = clamp(dot(n, L), 0.0, 1.0);
       float fres = 1.0 - clamp(dot(n, -rd), 0.0, 1.0);
       fres = fres * fres * fres;
-      vec3 lit = baseMat * (0.22 + 0.95 * diff);
-      lit += mix(c0, c2, 0.5) * fres * 0.30;            // cool rim light for form
+      vec3 lit = baseMat * (0.34 + 0.95 * diff);             // brighter ambient floor
+      // soft specular sheen so the unburnt body reads as a solid ball
+      vec3 H = normalize(L - rd);
+      float spec = pow(max(dot(n, H), 0.0), 22.0) * (1.0 - 0.8 * charAmt);
+      lit += vec3(1.0, 0.97, 0.92) * spec * 0.22;
+      lit += mix(c2, c0, 0.5) * fres * 0.45;                 // cool atmosphere rim
 
-      col = lit + emis;                                  // emissive embers on top
+      col = lit + emis;                                       // emissive embers on top
     }
   }
 
