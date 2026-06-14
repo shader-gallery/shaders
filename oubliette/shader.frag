@@ -27,6 +27,9 @@ uniform float u_descentSpeed;   // scale-octaves/sec the courses fall  (default 
 uniform float u_courseDensity;  // stone courses per scale octave      (default 6)
 uniform float u_mortarGlow;     // brightness of the mortar lines       (default 0.6)
 uniform float u_grate;          // visibility of the overhead grate     (default 0.55)
+uniform float u_centerX;        // focal x offset, short-axis (off-centre) (default 0.12)
+uniform float u_centerY;        // focal y offset, short-axis            (default -0.08)
+uniform float u_mouseShift;     // pointer depth-parallax on near courses  (default 0.35)
 
 const vec3  BG       = vec3(0.030, 0.030, 0.038); // near-black shaft base
 const float PI       = 3.14159265;
@@ -51,7 +54,14 @@ void main() {
   // square-cross-section coordinate, normalised by the short screen axis so the
   // shaft looks square at any aspect; centred on the focal point
   float minRes = min(res.x, res.y);
-  vec2  p = (fc - ctr) / (minRes * 0.5);   // ~[-1,1] on the short axis
+  // movable focal (off-centre by default) + r-weighted mouse depth parallax:
+  // near (outer) courses slide toward the pointer while the deep focus holds.
+  vec2  mraw = u_mouse;
+  if (dot(mraw, mraw) < 1.0) mraw = ctr;
+  vec2  mN   = (mraw - ctr) / (minRes * 0.5);
+  vec2  p0   = (fc - ctr) / (minRes * 0.5) - vec2(u_centerX, u_centerY);
+  float r0   = length(p0);
+  vec2  p    = p0 - mN * (0.16 * max(u_mouseShift, 0.0)) * smoothstep(0.0, 0.9, r0);
 
   vec3 col = BG;
 
@@ -137,7 +147,7 @@ void main() {
   float bevel = (1.0 - groove);                      // 0 in groove, 1 mid-face
   bevel = bevel * bevel;                             // tighten toward centre
   // base stone tint + jittered relief; the face is clearly visible stone now
-  vec3 stone = hue * (0.060 + 0.060 * bevel) * faceJit;
+  vec3 stone = hue * (0.11 + 0.10 * bevel) * faceJit;
   // a touch of cool ambient so faces aren't a pure single hue and never pure black
   stone += BG * 0.7;
   col = stone;
@@ -147,17 +157,17 @@ void main() {
   // first deepen the groove shadow so grout reads as a recess
   col *= mix(1.0, 0.35, groove);
   // then lay the thin catch-light line in the bottom of the groove
-  col += hue * mortarLine * 0.42 * glow;
+  col += hue * mortarLine * 0.60 * glow;
 
   // quoin seams: brighter continuous corner lines (the only radial feature)
   col += hue * quoin * (0.28 + 0.22 * mortarLine) * glow * 0.8;
 
   // ---- focal fog: courses drown in black below a chosen depth (near centre) ----
   // fade to pure black as cheb -> 0 (the perfect black square focus)
-  float focusFog = smoothstep(0.0, 0.10, cheb);   // 0 at exact centre
+  float focusFog = smoothstep(0.0, 0.07, cheb);   // 0 at exact centre (smaller dark focus)
   // an extra depth-based dimming so deeper courses lose energy gradually
   float depthDim = smoothstep(0.012, 0.18, cheb);
-  col *= focusFog * mix(0.55, 1.0, depthDim);
+  col *= focusFog * mix(0.78, 1.0, depthDim);
 
   // gentle outer vignette so the frame edge reads as the lip of the shaft
   float vign = 1.0 - smoothstep(0.75, 1.45, length(p));
