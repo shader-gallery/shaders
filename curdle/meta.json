@@ -15,5 +15,5 @@
       "effect": "CSS-pixel radius of a fresh drop, setting the scale of everything its tendrils become." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.5, "backdrop": 0.6 }
+  "post": { "bloom": 0.5 }
 }

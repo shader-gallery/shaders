@@ -189,6 +189,18 @@ void main() {
 
   vec3 col = BG;
 
+  // faint ambient fluid medium (the dark tea the drops fall into) so the void reads
+  // as slowly-swirling tinted liquid, not flat black — in-shader fill replacing the
+  // old gradient backdrop, built from the same curl/fbm current the drops obey.
+  vec2  mq   = uv * 1.4 + 0.30 * curl(uv * 1.1 + vec2(t * 0.03, 0.0));
+  float md   = fbm(mq + vec2(t * 0.02, -t * 0.015)) * 0.6
+             + fbm(mq * 2.1 + 7.0 - vec2(0.0, t * 0.025)) * 0.4;
+  float ms   = md * 4.0;
+  vec3  medCol = (c0 * wheelW(ms,0.0) + c1 * wheelW(ms,1.0)
+                + c2 * wheelW(ms,2.0) + c3 * wheelW(ms,3.0))
+               / max(wheelW(ms,0.0)+wheelW(ms,1.0)+wheelW(ms,2.0)+wheelW(ms,3.0), 0.001);
+  col += medCol * (0.045 + 0.075 * md);
+
   // composite each drop: bright pale core blended toward palette tint along the
   // tendrils, dimming with the drop's life so it ends as ghost threads.
   for (int i = 0; i < 2; i++) {
