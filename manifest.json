@@ -247,6 +247,7 @@
     "phalanx",
     "armature",
     "stellate",
-    "prism"
+    "prism",
+    "hatch-contour"
   ]
 }
