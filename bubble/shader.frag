@@ -26,7 +26,7 @@ uniform float u_waver;      // horizontal waver amplitude in CSS px (default 18)
 uniform float u_popFlash;   // brightness & spread of the pop burst (default 1)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const int   NUM_BUBBLES = 22;    // sparse field; literal const (no dynamic counts)
+const int   NUM_BUBBLES = 40;    // dense field; literal const (no dynamic counts)
 const float LINE_CSS    = 1.4;   // ring outline half-thickness in CSS px
 const float GROW        = 0.30;  // fractional growth over a lifetime (~30%)
 const float POP_FRAC    = 0.5;   // fraction of life spent as the pop (half second-ish)
@@ -114,44 +114,51 @@ void main() {
     // radius grows ~GROW over the rise
     float r = baseR * (1.0 + GROW * rising);
 
-    // distance from this fragment to the ring centre
     vec2  d  = uv - cen;
     float dist = length(d);
-
-    // --- ring outline (annulus): thin glassy stroke at radius r ---
-    float ringSD = abs(dist - r);
-    float stroke = 1.0 - smoothstep(0.0, line + px.x * 1.6, ringSD);
-
-    // one brighter highlight arc (upper-left), suggesting curved glass
+    float rN  = dist / max(r, 1e-4);          // 0 centre .. 1 rim
     float ang = atan(d.y, d.x);
-    float hi  = smoothstep(0.35, 0.95, cos(ang - 2.3));  // peak around upper-left
-    float highlight = stroke * hi;
 
-    // soft outer bloom of the glass rim so it reads as luminous, not a hairline
-    float rim = exp(-ringSD / max(line * 4.0, 1e-4));
-
-    // bubble fades in just after birth and is steady until pop
     float born = smoothstep(0.0, 0.06, rising);
-
     vec3 tint = tintFor(htint, c0, c1, c2, c3);
 
+    // depth: nearer bubbles read bigger/brighter/crisper, farther fainter/softer
+    float hd     = hash11(fi * 6.3 + 2.0);
+    float edge   = mix(0.12, 0.035, hd);      // crisper membrane when near
+    float bright = mix(0.40, 1.10, hd);
+
+    // glassy sphere: translucent body, a fresnel rim that brightens to the edge, a
+    // crisp surface membrane, iridescent thin-film sheen and a specular glint.
+    float inside   = 1.0 - smoothstep(1.0 - edge, 1.0 + edge, rN);
+    float fres     = smoothstep(0.55, 1.0, rN) * inside;
+    float membrane = exp(-((rN - 1.0) * (rN - 1.0)) / max(edge * edge * 0.9, 1e-5));
+    // thin-film iridescence: hue cycles with radius + angle (soap-film colours)
+    float ir    = fract(rN * 1.7 + ang / 6.2831 + htint * 2.0 + t * 0.03);
+    vec3  sheen = tintFor(ir, c0, c1, c2, c3);
+    // specular glints (upper-left bright, lower-right dim) sell the curved glass
+    vec2  sp1 = cen + vec2(-0.40, 0.42) * r;
+    vec2  sp2 = cen + vec2( 0.34, -0.36) * r;
+    float spec1 = exp(-dot(uv - sp1, uv - sp1) / max(r * r * 0.020, 1e-6)) * inside;
+    float spec2 = exp(-dot(uv - sp2, uv - sp2) / max(r * r * 0.060, 1e-6)) * inside;
+
     // --- pop: a quick expanding flash dissolving into a fading glow ---
-    float popT = clamp((lt - lifeLen) / popLen, 0.0, 1.0); // 0..1 across pop
-    float inPop = step(lifeLen, lt);                        // 1 while popping
-    // expanding shell radius grows outward from the pop radius
+    float popT = clamp((lt - lifeLen) / popLen, 0.0, 1.0);
+    float inPop = step(lifeLen, lt);
     float popR  = r * (1.0 + 2.6 * popT);
     float popShellSD = abs(dist - popR);
     float popSpread  = (line * 3.0 + baseR * 1.2 * popT);
     float shell = exp(-popShellSD / max(popSpread, 1e-4));
-    // central soft bloom that fades over the pop
-    float core  = exp(-dist * dist / max(baseR * baseR * (0.4 + 2.0 * popT), 1e-4));
-    float popFade = (1.0 - popT);                 // overall fade across the pop
-    float popLight = (shell * 1.1 + core * 0.5) * popFade * popFade * inPop;
+    float corePop = exp(-dist * dist / max(baseR * baseR * (0.4 + 2.0 * popT), 1e-4));
+    float popFade = (1.0 - popT);
+    float popLight = (shell * 1.1 + corePop * 0.5) * popFade * popFade * inPop;
 
-    // assemble this bubble's contribution
-    float ringLight = (stroke * 0.9 + rim * 0.35 + highlight * 0.9) * born * (1.0 - inPop);
-
-    col += tint * ringLight * 1.05;
+    // assemble the glassy bubble (translucent, additive over the dark water)
+    float vis = born * (1.0 - inPop) * bright;
+    col += sheen * inside * 0.085 * vis;                       // faint glass body
+    col += sheen * fres * 0.80 * vis;                          // fresnel rim
+    col += mix(sheen, vec3(1.0), 0.45) * membrane * 0.95 * vis; // crisp membrane
+    col += vec3(1.0) * spec1 * 0.95 * vis;                     // bright specular
+    col += sheen * spec2 * 0.45 * vis;                         // secondary glint
     col += tint * popLight * (0.6 + 0.9 * max(u_popFlash, 0.0));
   }
 
