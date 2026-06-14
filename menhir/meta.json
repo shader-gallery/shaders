@@ -16,5 +16,6 @@
     { "uniform": "u_rimGlow", "label": "Rim glow", "min": 0.0, "max": 2.0, "step": 0.01,
       "default": 0.9, "effect": "Strength of the thin bright edge where a stone's silhouette meets the fog behind it." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6 }
 }

@@ -16,5 +16,6 @@
     { "uniform": "u_seamGlow", "label": "Seam glow", "min": 0.0, "max": 2.0, "step": 0.01,
       "default": 0.7, "effect": "Brightness of the rare glowing seams inscribed on chosen slabs." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6 }
 }
