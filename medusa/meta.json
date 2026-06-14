@@ -29,9 +29,9 @@
       "uniform": "u_count",
       "label": "Bells",
       "min": 2,
-      "max": 5,
+      "max": 9,
       "step": 1,
-      "default": 4,
+      "default": 8,
       "effect": "How many jellyfish bells swim the frame at once."
     },
     {
@@ -40,7 +40,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 1.2,
+      "default": 1.5,
       "effect": "Overall emission of the bells and their tentacles; raises the jellies clear of the dark water."
     },
     {

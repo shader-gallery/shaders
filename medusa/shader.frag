@@ -29,7 +29,7 @@ uniform float u_brightness;    // bell emission multiplier, 0..2 (default 1.2)
 uniform float u_tentacleLag;   // tentacle phase lag, 0..1 pulse (default 0.45)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const int   NBELLS   = 5;       // structured organisms, count-gated
+const int   NBELLS   = 9;       // structured organisms, count-gated
 const int   NTENT    = 5;       // tentacle curves hanging per bell
 const float TWO_PI   = 6.2831853;
 
@@ -85,7 +85,7 @@ void main() {
   float lag        = clamp(u_tentacleLag, 0.0, 1.0);
 
   // accumulate glow from each bell (additive over the dark water)
-  for (int bi = 0; bi < NBELLS; bi++) {
+  for (int bi = 0; bi < 9; bi++) {
     float fbi = float(bi);
     if (fbi > u_count - 0.5) continue;   // u_count gates how many bells swim
 
@@ -95,7 +95,10 @@ void main() {
     float phOff   = fract(fbi * 0.7321 + 0.11);
     float laneAng = mix(-0.35, 0.35, fract(fbi * 0.5550 + 0.2)); // diagonal lane slope
     // keep lanes clear of the top/bottom edges so bells aren't clipped
-    float laneY0  = mix(0.30, 0.68, fract(fbi * 0.3170 + 0.05)); // lane vertical anchor
+    // evenly-spaced lane heights (by index) so the bells fill the frame
+    // vertically instead of clustering; a small hash jitter avoids a rigid row
+    float laneY0  = mix(0.15, 0.85, (fbi + 0.5) / 9.0)
+                  + (fract(fbi * 0.3170 + 0.05) - 0.5) * 0.06;
 
     // depth scales the body: far bells smaller and dimmer
     float dscale  = mix(0.55, 1.15, depth);
