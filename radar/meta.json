@@ -7,7 +7,7 @@
   "description": "A bearing/time radar waterfall: the newest return is written along the top edge and the whole record feeds slowly downward like chart paper. Persistent contacts stack into luminous streaks that snake left and right as they descend and cool through the palette, while faint clutter dissolves into grain between hair-thin vertical bearing rulings.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_feedSpeed", "label": "Feed speed", "min": 0.2, "max": 2.0, "step": 0.05,
+    { "uniform": "u_feedSpeed", "label": "Feed speed", "min": 0.02, "max": 2.0, "step": 0.02,
       "default": 0.7, "effect": "Rate the record scrolls downward — slow settings hold contacts on screen like patient surveillance, fast settings stream the history past like rushing chart paper." },
     { "uniform": "u_persist", "label": "Persistence", "min": 0.1, "max": 1.0, "step": 0.01,
       "default": 0.5, "effect": "How far down the record contact streaks survive before fading into the dark — bright only near the write line at min, luminous trails reaching nearly the bottom edge at max." },

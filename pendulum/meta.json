@@ -14,5 +14,6 @@
     { "uniform": "u_swing", "label": "Swing width", "min": 80, "max": 360, "step": 1,
       "default": 200, "effect": "Full lateral travel of each bob in CSS pixels; small values give a tight nervous shimmer, large values sweep broad overlapping arcs across neighbouring columns." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6 }
 }

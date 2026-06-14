@@ -43,5 +43,6 @@
       "effect": "Intensity of the resonance line drawn between aligning bodies — invisible at 0, a clearly visible luminous chord briefly bridging the rings at max."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6 }
 }
