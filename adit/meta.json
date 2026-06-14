@@ -14,7 +14,15 @@
     { "uniform": "u_timberWidth", "label": "Timber width", "min": 2.0, "max": 10.0, "step": 0.05,
       "default": 5.0, "effect": "Stroke width of the posts and cap beams, in CSS pixels." },
     { "uniform": "u_lampGlow", "label": "Lamp glow", "min": 0.1, "max": 1.5, "step": 0.01,
-      "default": 0.9, "effect": "Brightness of the hanging lamp under each cap beam." }
+      "default": 0.9, "effect": "Brightness of the hanging lamp under each cap beam." },
+    { "uniform": "u_vanishX", "label": "Vanishing point X", "min": -0.7, "max": 0.7, "step": 0.01,
+      "default": 0.50, "effect": "Horizontal placement of the bore's vanishing depth — left, centred, or (default) pinned to the off-axis right third for the raking glance." },
+    { "uniform": "u_vanishY", "label": "Vanishing point Y", "min": -0.7, "max": 0.7, "step": 0.01,
+      "default": -0.44, "effect": "Vertical placement of the vanishing depth — high, centred, or (default) dropped into the lower third for the down-the-drift view." },
+    { "uniform": "u_shear", "label": "Rake", "min": 0.0, "max": 1.2, "step": 0.01,
+      "default": 0.72, "effect": "How hard the timber verticals shear with height — 0 a square head-on portal, high a steep oblique rake down the gallery." },
+    { "uniform": "u_railGlow", "label": "Rail glow", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.6, "effect": "Brightness of the glowing floor rails and their bloom converging on the depth — from dim ghost rails to a bright lit track." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.7 }

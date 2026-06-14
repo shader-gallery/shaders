@@ -35,6 +35,10 @@ uniform float u_descentSpeed;  // scale-octaves/sec the timber frames recede   (
 uniform float u_frameDensity;  // timber frames per scale octave                (default 2)
 uniform float u_timberWidth;   // stroke width of posts & cap beam, css px      (default 5)
 uniform float u_lampGlow;      // brightness of the hanging lamp per frame       (default 0.9)
+uniform float u_vanishX;       // vanishing-point x, short-axis units            (default 0.50)
+uniform float u_vanishY;       // vanishing-point y, short-axis units            (default -0.44)
+uniform float u_shear;         // raking obliqueness of the portal verticals     (default 0.72)
+uniform float u_railGlow;      // brightness of the floor rails + bloom          (default 0.6)
 
 const vec3  BG     = vec3(0.030, 0.030, 0.038); // near-black gallery base
 const float TWO_PI = 6.28318531;
@@ -100,13 +104,14 @@ void main() {
   float density = clamp(u_frameDensity, 1.0, 4.0);      // frames per octave
   float timberW = max(u_timberWidth, 0.5) * pr;         // stroke half-ish width, device px
   float lampK   = max(u_lampGlow, 0.0);
+  float railK   = max(u_railGlow, 0.0);
 
   // ---- composition: vanishing point pinned in the lower-right third ----
   // normalise to short axis so the framing is aspect-stable; y up.
   float minRes = min(res.x, res.y);
   vec2  p   = (fc - 0.5 * res) / (minRes * 0.5);        // ~[-1,1] short axis, y up in math
   // place the depth focus decisively in the lower-right third: +x right, -y down
-  vec2  vp  = vec2(0.50, -0.44);
+  vec2  vp  = vec2(u_vanishX, u_vanishY);
   vec2  q   = p - vp;                                    // vector from the bore depth
   float r   = length(q) + 1e-4;                          // radial distance from depth
   float ang = atan(q.y, q.x);                            // direction around the bore
@@ -159,11 +164,11 @@ void main() {
     float floorFog = smoothstep(0.02, 0.30, r) * smoothstep(1.45, 0.55, r);
     rail    *= floorFog;
     sleeper *= floorFog;
-    col += warm * rail * 0.6;
+    col += warm * rail * railK;
     col += mix(warm, c2, 0.5) * sleeper * 0.22 * floorFog;
     // soft rail bloom along the two rays
     float railBloom = exp(-min(dCL, dCR) / max(railAA, 1e-3) * 1.0);
-    col += warm * railBloom * 0.12 * floorMask * floorFog;
+    col += warm * railBloom * 0.2 * railK * floorMask * floorFog;
   }
 
   // ---- the timber frame ladder: a constant window of scale layers ----
@@ -200,7 +205,7 @@ void main() {
     float TOP   = 0.92;                          // near-left cap height (local +y)
     float FLOORY= -0.46;                         // floor line (local -y)
     // shear: shift x strongly as a function of y so verticals rake hard
-    float shear = 0.72;
+    float shear = u_shear;
     vec2  sp = lp;
     sp.x -= shear * sp.y;
     // post x positions; near-left taller + wider, far-right much shorter
