@@ -14,5 +14,6 @@
     { "uniform": "u_pathCss", "label": "Path width", "min": 140.0, "max": 720.0, "step": 1.0,
       "default": 460.0, "effect": "Width of the glitter column at the bottom of the frame — narrow gives a thin moonbeam lane, wide floods the lower frame with sparkle." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.7, "backdropScale": 1.3 }
 }

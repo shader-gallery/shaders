@@ -11,5 +11,6 @@
     { "uniform": "u_fray", "label": "Fray depth", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "Depth of the rim's ridged-noise fraying — 0 leaves a clean breathing circle, 2 tears long filamental tongues from the edge." },
     { "uniform": "u_waverSpeed", "label": "Waver speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.18, "effect": "How fast the rim fray crawls around the disc and the interior shimmer rolls." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.7, "backdrop": 0.6, "backdropScale": 1.3 }
 }

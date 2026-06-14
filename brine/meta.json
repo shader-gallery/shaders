@@ -14,5 +14,6 @@
     { "uniform": "u_feather", "label": "Frost feathers", "min": 0.0, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "Extent of the frost feathers fanning from the column's flanks — 0 leaves a bare glassy finger, 2 grows wide lacy crystalline fans." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "backdrop": 0.7, "backdropScale": 1.3 }
 }

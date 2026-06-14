@@ -14,5 +14,6 @@
     { "uniform": "u_cover", "label": "Cover", "min": 0.0, "max": 0.9, "step": 0.01,
       "default": 0.55, "effect": "Fraction of the floor shaded by the overhead mat — 0 scatters flecks broadly across the frame, 0.9 leaves only a handful of survivors in deep shade." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4 }
 }

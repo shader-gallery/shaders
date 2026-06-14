@@ -14,5 +14,6 @@
     { "uniform": "u_filament", "label": "Filament sharpness", "min": 0.5, "max": 4.0, "step": 0.05,
       "default": 2.0, "effect": "Sharpness exponent on the ridge falloff — high gives crisp hairline filaments, low gives fat soft strands of light." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }

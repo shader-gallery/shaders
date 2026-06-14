@@ -43,5 +43,6 @@
       "effect": "CSS-pixel width of a typical shaft — narrow gives many slivers of light, wide gives two or three broad columns."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "backdrop": 0.5 }
 }
