@@ -3,37 +3,17 @@
   "slug": "kintsugi",
   "family": "Burnish",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "gold", "cracks", "episodic"],
-  "description": "Near-black porcelain repaired in real time: a handful of sparse, hand-drawn fissures each break as a hair of deeper black, flood in place from deep ember to liquid gold, settle into a quiet warm gleam, then mellow and yield their place to a new break elsewhere. No light ever travels along a seam — every brightening rises where it lies.",
+  "tags": ["gold", "glow", "loop", "ceramic", "cracks", "voronoi", "texture"],
+  "description": "Gold-repaired pottery: a palette-tinted ceramic glaze body fills the frame, fractured into shards by an interconnected Voronoi crack network whose edges run as molten gold seams - deep ember in the hollows rising to bright liquid gold on the ridges, with a slow shimmer creeping along each repair. A faint craze of hairline cracks textures the glaze. The kintsugi mend reads as a dense web of gold across the whole surface, never a few floating strands on black.",
   "entry": "shader.frag",
   "params": [
-    {
-      "uniform": "u_cyclePeriod",
-      "label": "Cycle period",
-      "min": 12,
-      "max": 60,
-      "step": 1,
-      "default": 30,
-      "effect": "Length in seconds of one seam's full break-flood-settle-fade lifecycle; short runs a busy kiln of frequent breaks, long stretches each mend into a rare contemplative event."
-    },
-    {
-      "uniform": "u_seam",
-      "label": "Seam width",
-      "min": 1,
-      "max": 6,
-      "step": 0.05,
-      "default": 2.5,
-      "effect": "Width of the repair seams in CSS pixels — hairline lacquer at the minimum, generous molten channels at the maximum."
-    },
-    {
-      "uniform": "u_shimmer",
-      "label": "Shimmer",
-      "min": 0,
-      "max": 2,
-      "step": 0.01,
-      "default": 0.8,
-      "effect": "Intensity of the faint simmer on settled gold; 0 lets resting seams hold a perfectly steady gleam, 2 keeps every mended line quietly molten."
-    }
+    { "uniform": "u_density", "label": "Shards", "min": 3.0, "max": 14.0, "step": 0.5,
+      "default": 6.5, "effect": "How many shards the pottery breaks into; low gives a few large pieces with bold gold rivers, high a fine mosaic of small fragments laced with a tight gold web." },
+    { "uniform": "u_seam", "label": "Seam width", "min": 1.0, "max": 6.0, "step": 0.05,
+      "default": 2.6, "effect": "Width of the gold repair seams in CSS pixels - a hairline lacquer line at the minimum, a generous molten channel of liquid gold at the maximum." },
+    { "uniform": "u_shimmer", "label": "Shimmer", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.9, "effect": "Intensity and speed of the molten shimmer travelling the seams; 0 lets the gold rest as a steady gleam, 2 keeps every mend quietly boiling." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.7, "bloomRadius": 4.5, "saturation": 1.08, "contrast": 1.06, "dither": 1.0 },
+  "defaultPalette": "ember"
 }
