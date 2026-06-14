@@ -14,5 +14,6 @@
     { "uniform": "u_width", "label": "Base width", "min": 20.0, "max": 200.0, "step": 1.0,
       "default": 70.0, "effect": "CSS-pixel width of the column at its base — a pencil line of smoke up to a broad soft pillar." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

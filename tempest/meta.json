@@ -16,5 +16,6 @@
     { "uniform": "u_detail", "label": "Detail scale", "min": 150, "max": 900, "step": 1,
       "default": 420, "effect": "CSS-pixel scale of the dominant cloud billows revealed by each flash, from fine scud to a few monumental masses." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

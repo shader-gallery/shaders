@@ -14,5 +14,6 @@
     { "uniform": "u_dropSize", "label": "Drop size", "min": 60.0, "max": 400.0, "step": 1.0, "default": 220.0,
       "effect": "CSS-pixel radius of a fresh drop, setting the scale of everything its tendrils become." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "backdrop": 0.6 }
 }

@@ -43,5 +43,6 @@
       "effect": "CSS-pixel size of the dominant swirl features, from fine dense marbling to a few huge slow folds."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }
