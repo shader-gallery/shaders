@@ -44,5 +44,6 @@
       "effect": "How often a filament erupts into a long detaching streamer; 0 disables eruptions entirely, 1 keeps one arcing free somewhere most of the time."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

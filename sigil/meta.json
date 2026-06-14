@@ -14,5 +14,6 @@
     { "uniform": "u_runeCss", "label": "Rune size", "min": 120.0, "max": 480.0, "step": 1.0,
       "default": 260.0, "effect": "Characteristic height of each branded figure in CSS pixels, from a scatter of small marks to one or two frame-dominating staves." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.6 }
 }

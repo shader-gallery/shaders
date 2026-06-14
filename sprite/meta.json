@@ -16,5 +16,6 @@
     { "uniform": "u_tendrils", "label": "Tendrils", "min": 0.2, "max": 1.0, "step": 0.01,
       "default": 0.6, "effect": "Number and branching of tendrils per cluster, from two or three lone threads to a dense forking fan." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.5 }
 }
