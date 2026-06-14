@@ -7,10 +7,13 @@
   "description": "A loom's warp — thin bright vertical threads on a near-black field that ripple side to side as a slow sinusoidal wave travels down them, with soft glow nodes blooming where a sweeping horizontal weft crosses, tinted across the palette by thread position.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_drift", "label": "Ripple drift", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.3 },
-    { "uniform": "u_amp", "label": "Ripple amplitude", "min": 0.0, "max": 20.0, "step": 0.1, "default": 7.0 },
-    { "uniform": "u_spacing", "label": "Thread spacing", "min": 18.0, "max": 60.0, "step": 1.0, "default": 34.0 },
-    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0 }
+    { "uniform": "u_drift", "label": "Ripple drift", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.3, "effect": "Speed the sinusoidal ripple travels down the warp threads; 0 freezes the weave, high sends the wave coursing down at speed." },
+    { "uniform": "u_amp", "label": "Ripple amplitude", "min": 0.0, "max": 20.0, "step": 0.1, "default": 9.0, "effect": "How far the threads sway side to side; low is a taut straight warp, high billows the weave into deep waves." },
+    { "uniform": "u_spacing", "label": "Thread spacing", "min": 12.0, "max": 60.0, "step": 1.0, "default": 28.0, "effect": "Distance between warp threads in CSS px - dense packed weave at the minimum, open sparse threads at the maximum." },
+    { "uniform": "u_thick", "label": "Thread width", "min": 0.5, "max": 5.0, "step": 0.1, "default": 1.4, "effect": "Half-width of each thread in CSS px, with its halo scaling alongside - fine hairline filaments to thick glowing cords." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.1, "effect": "Overall brightness of the threads and the weft glow nodes; low is a delicate quiet weave, high a luminous neon warp." },
+    { "uniform": "u_weft", "label": "Weft speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.22, "effect": "Speed the horizontal weft glow bands sweep up and down the warp, lighting nodes where they cross; 0 holds them still." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.6, "bloomRadius": 4.0, "backdrop": 0.55, "backdropScale": 1.2, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "spectral"
 }

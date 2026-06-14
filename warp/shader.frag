@@ -19,15 +19,15 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_spacing;  // px between warp threads      (default 34)
-uniform float u_amp;      // horizontal ripple amplitude  (default 7)
+uniform float u_spacing;  // px between warp threads      (default 28)
+uniform float u_amp;      // horizontal ripple amplitude  (default 9)
 uniform float u_drift;    // ripple travel speed          (default 0.3)
 uniform float u_glow;     // thread/node glow multiplier  (default 1)
+uniform float u_thick;    // thread half-width in CSS px   (default 1.4)
+uniform float u_weft;     // weft glow-band sweep speed    (default 0.22)
 
 const float BG          = 0.039;   // #0A -> ~0.04 near-black base
-const float THREAD_CSS  = 1.1;   // thread half-width
 const float WAVELEN_CSS = 240.0; // vertical wavelength of the travelling ripple
-const float WEFT_SPEED  = 0.22;  // how fast the weft glow band sweeps (loops)
 
 const float TAU = 6.2831853;
 
@@ -53,15 +53,15 @@ void main() {
   float spacing = u_spacing * refScale * pr;
   float amp     = u_amp * pr;
   float wavelen = WAVELEN_CSS * refScale * pr;
-  float thick   = THREAD_CSS * pr;
+  float thick   = max(u_thick, 0.3) * refScale * pr;
 
   // travelling ripple phase along y (periodic in t -> seamless loop)
   float yPhase = (fc.y / wavelen) * TAU - t * u_drift * TAU;
 
   // weft: two soft horizontal bands sweeping up and down out of phase, looping.
   // (square via multiply, not pow() -- pow of a negative base is undefined.)
-  float wA = res.y * (0.5 + 0.40 * sin(t * WEFT_SPEED * TAU));
-  float wB = res.y * (0.5 + 0.34 * sin(t * WEFT_SPEED * TAU * 0.6 + 2.1));
+  float wA = res.y * (0.5 + 0.40 * sin(t * u_weft * TAU));
+  float wB = res.y * (0.5 + 0.34 * sin(t * u_weft * TAU * 0.6 + 2.1));
   float nA = (fc.y - wA) / (res.y * 0.14);
   float nB = (fc.y - wB) / (res.y * 0.20);
   float weft = exp(-nA * nA) + 0.6 * exp(-nB * nB);
