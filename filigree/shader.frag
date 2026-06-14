@@ -72,7 +72,7 @@ void main() {
   float wave  = 0.5 + 0.5 * sin(diag / (WAVELEN_CSS * pr) * 6.2831853 - t * u_waveSpeed);
   // a second, slower cross-wave so the pulse never reads as a single sweep
   float wave2 = 0.5 + 0.5 * sin(length(node - ctr) / (WAVELEN_CSS * 1.7 * pr) * 6.2831853 + t * u_waveSpeed * 0.6);
-  float pulse = mix(0.22, 1.0, wave * 0.7 + wave2 * 0.3);
+  float pulse = mix(0.44, 1.0, wave * 0.7 + wave2 * 0.3);
 
   // Theme colours come from u_palette. Some headless poster contexts can't bind
   // a vec3[] uniform (the active name is "u_palette[0]"), leaving it all-zero;
@@ -95,8 +95,8 @@ void main() {
   // node jewels: a faint glow dot where the diamonds meet, brightest at the wave
   float jewel = exp(-dot(local, local) / (spacing * spacing * 0.012)) * pulse;
 
-  // radial vignette keeps the edges dark and the centre luminous
-  float vign = 1.0 - smoothstep(0.25, 1.05, length((fc - ctr) / res));
+  // gentle radial falloff (floored so the lace still reads to the edges)
+  float vign = 0.72 + 0.28 * (1.0 - smoothstep(0.45, 1.30, length((fc - ctr) / res)));
 
   col += lace * stroke * pulse * 0.95 * u_glow * vign;
   col += lace * jewel * 0.55 * u_glow * vign;
