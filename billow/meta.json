@@ -3,16 +3,54 @@
   "slug": "billow",
   "family": "Veil",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "cloth", "waves", "organic"],
-  "description": "A continuous sheet of cloth seen from above, billowing over moving air: two slow travelling wave-trains cross the frame at a shallow diagonal, summed with soft FBM and shaded by analytic normals so every wavefront carries a moving ridge of sheen with dark troughs between. Palette hues grade across the frame so successive crests catch subtly different colours — one unbroken shaded surface that rolls open-endedly with no loop seam.",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "cloth",
+    "waves",
+    "organic"
+  ],
+  "description": "A continuous sheet of cloth seen from above, billowing over moving air: two slow travelling wave-trains cross the frame at a shallow diagonal, summed with soft FBM and shaded by analytic normals so every wavefront carries a moving ridge of sheen with dark troughs between. Palette hues grade across the frame so successive crests catch subtly different colours \u2014 one unbroken shaded surface that rolls open-endedly with no loop seam.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_waveSpeed", "label": "Wave speed", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.35, "effect": "Travel speed of the wavefronts and their riding sheen, from glassy near-calm to a steady rolling billow." },
-    { "uniform": "u_swell", "label": "Swell wavelength", "min": 120.0, "max": 600.0, "step": 1.0,
-      "default": 300.0, "effect": "CSS-pixel wavelength of the main swell; short gives rippling taffeta, long gives huge slow rollers." },
-    { "uniform": "u_cross", "label": "Cross wave", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.4, "effect": "Strength of the counter-angled second wave-train, from clean parallel swells to softly interfering, dappled billows." }
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Travel speed of the wavefronts and their riding sheen, from glassy near-calm to a steady rolling billow."
+    },
+    {
+      "uniform": "u_swell",
+      "label": "Swell wavelength",
+      "min": 120.0,
+      "max": 600.0,
+      "step": 1.0,
+      "default": 300.0,
+      "effect": "CSS-pixel wavelength of the main swell; short gives rippling taffeta, long gives huge slow rollers."
+    },
+    {
+      "uniform": "u_cross",
+      "label": "Cross wave",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Strength of the counter-angled second wave-train, from clean parallel swells to softly interfering, dappled billows."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "opal",
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3.5,
+    "saturation": 1.28,
+    "contrast": 1.12,
+    "exposure": 1.06,
+    "dither": 1.0,
+    "backdrop": 0.6,
+    "backdropScale": 1.3
+  }
 }
