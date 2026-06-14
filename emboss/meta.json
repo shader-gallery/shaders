@@ -3,16 +3,21 @@
   "slug": "emboss",
   "family": "Burnish",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "metal", "relief", "shading"],
-  "description": "A full field of low-relief medallion bosses — concentric petal ridges shaded against one fixed oblique lamp. Each boss runs its own hash-staggered strike cycle, swelling up from flat metal with a brief glint as the die lands, holding in relief, then subsiding, so shadows deepen and drain across the field while the lamp never moves.",
+  "tags": ["glow", "loop", "relief", "quilted", "iridescent", "satin", "texture"],
+  "description": "A deep quilted surface of padded diamond cushions, pulled in at the button points and creased along the seams, lit as a soft satin so every pucker carries a specular bloom. The fabric is iridescent shot silk - hue shifts across the curve of each cushion and the highlights flash a complementary colour - sweeping slowly across the whole frame. All relief and colour, no flat grid.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_strikePeriod", "label": "Strike period", "min": 6.0, "max": 40.0, "step": 1.0,
-      "default": 18.0, "effect": "Length in seconds of one medallion's full swell-hold-subside cycle; short keeps the field restless with overlapping strikes, long lets each boss rise and settle like a slow breath." },
-    { "uniform": "u_relief", "label": "Relief", "min": 0.2, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "Apparent depth at full strike — scales the heightfield gradient so shading runs from a whisper of low relief to deep crisp chiaroscuro." },
-    { "uniform": "u_motif", "label": "Motif size", "min": 70.0, "max": 260.0, "step": 1.0,
-      "default": 140.0, "effect": "Size of each embossed medallion in CSS pixels — a field of small studded bosses at the minimum, a few monumental reliefs at the maximum." }
+    { "uniform": "u_size", "label": "Cushion size", "min": 40.0, "max": 240.0, "step": 2.0,
+      "default": 120.0, "effect": "Size of each padded diamond cushion in CSS pixels - a dense fine quilting at the minimum, a few large plush pillows at the maximum." },
+    { "uniform": "u_relief", "label": "Relief", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Depth of the padding; low is a shallow pressed quilt, high swells the cushions into deep rounded pillows with sharp seam creases." },
+    { "uniform": "u_iris", "label": "Iridescence", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.8, "effect": "How far the shot-silk hue travels across each cushion and how fast it drifts; 0 is a near-solid satin, 1 a full rainbow sheen rolling over the relief." },
+    { "uniform": "u_sheen", "label": "Sheen", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.7, "effect": "Strength of the satin specular highlight on each pucker - matte at 0, a wet glossy bloom at the maximum." },
+    { "uniform": "u_scatter", "label": "Scatter", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.45, "effect": "Randomizes each button so it is not pinned dead-centre in its cushion; 0 is a perfectly regular quilt, 1 throws the pucker points around for a hand-stitched, irregular tuft." }
   ],
-  "defaultPalette": "midnight"
+  "post": { "bloom": 0.5, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.05, "dither": 1.0 },
+  "defaultPalette": "opal"
 }
