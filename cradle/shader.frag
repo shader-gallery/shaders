@@ -16,11 +16,15 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
-uniform float u_anchors;    
-uniform float u_linesPer;   
-uniform float u_morphSpeed; 
-uniform float u_line;       
-uniform float u_glintSpeed; 
+uniform float u_anchors;
+uniform float u_linesPer;
+uniform float u_morphSpeed;
+uniform float u_line;
+uniform float u_glintSpeed;
+uniform float u_scatter;
+uniform float u_tint;
+
+float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }
 
 float wheelW(float s, float c) { float d = abs(s - c); return max(0.0, 1.0 - min(d, 4.0 - d)); }
 vec3 wheelCol(float k, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
@@ -30,12 +34,16 @@ vec3 wheelCol(float k, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
 }
 
 
-vec2 anchorPos(float idx, float nA, vec2 ctr, vec2 halfExt, float t, float morph) {
-  float ang = 6.2831853 * idx / nA + t * morph * 0.13;
+vec2 anchorPos(float idx, float nA, vec2 ctr, vec2 halfExt, float t, float morph, float scatter) {
+  // even angle around the ring, plus a per-anchor random angular offset so the
+  // anchors stay on the screen edge but at uneven, asymmetric positions.
+  float jit = (hash11(idx + 1.0) - 0.5) * scatter * (6.2831853 / nA) * 1.7;
+  float ang = 6.2831853 * idx / nA + t * morph * 0.13 + jit;
   vec2 dir = vec2(cos(ang), sin(ang));
   vec2 tt = halfExt / max(abs(dir), vec2(0.0001));
   float tedge = min(tt.x, tt.y);
   float br = 0.975 + 0.022 * sin(t * morph * 0.27 + idx * 1.7);
+  br *= 1.0 - scatter * 0.14 * hash11(idx + 9.3);   // tiny radial scatter
   return ctr + dir * tedge * br;
 }
 
@@ -70,32 +78,34 @@ void main() {
   
   for (int i = 0; i < 24; i++) {
     if (float(i) >= nA) break;
-    vec2 A = anchorPos(float(i), nA, ctr, rad, t, u_morphSpeed);
+    vec2 A = anchorPos(float(i), nA, ctr, rad, t, u_morphSpeed, u_scatter);
     for (int k = 1; k <= 12; k++) {
       if (float(k) > mPer) break;
-      vec2 B = anchorPos(mod(float(i) + float(k), nA), nA, ctr, rad, t, u_morphSpeed);
+      vec2 B = anchorPos(mod(float(i) + float(k), nA), nA, ctr, rad, t, u_morphSpeed, u_scatter);
       float h;
       float d = segDistH(fc, A, B, h);
-      
+
       float core = smoothstep(lw, 0.0, d);
       float halo = lw / (d + lw * 1.3);
       halo = halo * halo * 0.6;
-      
+
       vec3 cc = wheelCol(float(k) / mPer * 0.7 + float(i) * 0.013 + t * 0.02, c0, c1, c2, c3);
-      
+      // line colour: u_tint mixes the chord between white (0) and full palette (1)
+      vec3 lc = mix(vec3(1.0), cc, clamp(u_tint, 0.0, 1.0));
       float bead = exp(-pow((fract(h - t * u_glintSpeed * 0.25 + float(i) * 0.31) - 0.5) * 7.0, 2.0));
-      acc += cc * (core * 1.3 + halo) * (0.75 + 0.7 * bead);
+      acc += lc * (core * 1.0 + halo) * (0.68 + 0.45 * bead);
     }
   }
 
   
   for (int i = 0; i < 24; i++) {
     if (float(i) >= nA) break;
-    vec2 A = anchorPos(float(i), nA, ctr, rad, t, u_morphSpeed);
+    vec2 A = anchorPos(float(i), nA, ctr, rad, t, u_morphSpeed, u_scatter);
     float dn = length(fc - A);
     float node = exp(-pow(dn / (lw * 3.5), 2.0));
     vec3 cc = wheelCol(float(i) / nA + t * 0.02, c0, c1, c2, c3);
-    acc += cc * node * 1.4;
+    vec3 nc = mix(vec3(1.0), cc, clamp(u_tint, 0.0, 1.0) * 0.7 + 0.15);
+    acc += nc * node * 1.3;
   }
 
   

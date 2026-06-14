@@ -16,7 +16,11 @@
     { "uniform": "u_line", "label": "Line weight", "min": 0.8, "max": 3.0, "step": 0.05,
       "default": 1.4, "effect": "Core thickness of each chord in CSS px, with halo scaling alongside - thin reads as hairline wire, thick as soft neon string." },
     { "uniform": "u_glintSpeed", "label": "Glint speed", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.7, "effect": "Travel speed of the bright beads sliding along the chords; at 0 they rest as fixed highlights, at max light visibly courses down every string." }
+      "default": 0.7, "effect": "Travel speed of the bright beads sliding along the chords; at 0 they rest as fixed highlights, at max light visibly courses down every string." },
+    { "uniform": "u_scatter", "label": "Scatter", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.35, "effect": "Randomizes the anchor spacing so the figure is no longer a perfectly symmetric star pinned to the centre; 0 is even and centred, 1 throws the anchors into a lopsided, off-centre web." },
+    { "uniform": "u_tint", "label": "Line tint", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.9, "effect": "Colour of the chords: 0 strings them in plain white, 1 takes full palette hues per chord family so the envelopes read in rich colour instead of washing out white." }
   ],
   "post": { "bloom": 0.85, "bloomRadius": 5.0, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
   "defaultPalette": "witchlight"
