@@ -15,5 +15,5 @@
       "default": 260.0, "effect": "Characteristic height of each branded figure in CSS pixels, from a scatter of small marks to one or two frame-dominating staves." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.6 }
+  "post": { "bloom": 0.6 }
 }

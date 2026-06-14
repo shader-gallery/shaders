@@ -26,7 +26,7 @@ uniform float u_coolPeriod;  // seconds to cool white→charred       (default 4
 uniform float u_runeCss;     // characteristic figure height, css px (default 260)
 
 const vec3  BG       = vec3(0.030, 0.029, 0.036); // near-black iron base
-const int   SLOTS    = 6;    // rune slots scattered over the field (const bound)
+const int   SLOTS    = 9;    // rune slots scattered over the field (const bound)
 const float STROKE_CSS = 3.4;// half-thickness of a brand stroke, css px
 
 // ---- hashes (cheap, deterministic) ----
@@ -209,7 +209,7 @@ void main() {
 
     // brightness: hot brands are luminous, charred traces are faint embers.
     // keep a floor so a cold rune still leaves a charred trace on the iron.
-    float bright = 0.06 + 1.25 * pow(localTemp, 0.9);
+    float bright = 0.14 + 1.20 * pow(localTemp, 0.9);
 
     col += heat * cov * bright;
     // soft glow halo around the strokes, brighter while the rune is hot
@@ -222,8 +222,12 @@ void main() {
   float vign = 1.0 - smoothstep(0.45, 1.15, length((fc - ctr) / res));
   col *= mix(0.75, 1.0, vign);
 
-  // a whisper of cool tone in the deep background so black iron isn't dead flat
-  col += BG * 0.5;
+  // faint hammered-iron grain so the black field reads as a textured forged surface
+  // (in-shader fill replacing the backdrop) rather than a flat void.
+  vec2  ic  = floor(fc / pr / 5.0);
+  float ig  = hash11(dot(ic, vec2(1.0, 57.0)));
+  float ig2 = hash11(dot(floor(fc / pr / 17.0), vec2(7.0, 23.0)));
+  col += (cEmber * 0.45 + BG) * (0.050 + 0.060 * ig + 0.045 * ig2);
 
   gl_FragColor = vec4(col, 1.0);
 }
