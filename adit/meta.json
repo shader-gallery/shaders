@@ -22,7 +22,15 @@
     { "uniform": "u_shear", "label": "Rake", "min": 0.0, "max": 1.2, "step": 0.01,
       "default": 0.72, "effect": "How hard the timber verticals shear with height — 0 a square head-on portal, high a steep oblique rake down the gallery." },
     { "uniform": "u_railGlow", "label": "Rail glow", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.6, "effect": "Brightness of the glowing floor rails and their bloom converging on the depth — from dim ghost rails to a bright lit track." }
+      "default": 0.6, "effect": "Brightness of the glowing floor rails and their bloom converging on the depth — from dim ghost rails to a bright lit track." },
+    { "uniform": "u_brace", "label": "Cribbing", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Strength of the diagonal cribbing braces inside each frame — 0 clean portals, up a dense braced timber warren (alternating diagonal per frame)." },
+    { "uniform": "u_roll", "label": "Roll", "min": -45.0, "max": 45.0, "step": 0.5,
+      "default": 0.0, "effect": "Static bank rotation of the whole gallery about the vanishing point, in degrees — tilt the drift off the horizontal." },
+    { "uniform": "u_rollSpeed", "label": "Roll drift", "min": -0.3, "max": 0.3, "step": 0.005,
+      "default": 0.0, "effect": "Continuous slow roll about the vanishing point, radians per second — a gentle banking spin layered over the descent (0 holds still)." },
+    { "uniform": "u_mouseShift", "label": "Mouse parallax", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.35, "effect": "How far the vanishing point glides toward the pointer for a smooth look-around parallax (0 locks it; no effect on the static poster)." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.7 }

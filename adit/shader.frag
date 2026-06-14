@@ -39,6 +39,10 @@ uniform float u_vanishX;       // vanishing-point x, short-axis units           
 uniform float u_vanishY;       // vanishing-point y, short-axis units            (default -0.44)
 uniform float u_shear;         // raking obliqueness of the portal verticals     (default 0.72)
 uniform float u_railGlow;      // brightness of the floor rails + bloom          (default 0.6)
+uniform float u_brace;         // cribbing brace strength, 0 = clean portals      (default 0)
+uniform float u_roll;          // static bank rotation about the vanishing point  (default 0, deg)
+uniform float u_rollSpeed;     // continuous roll drift                           (default 0, rad/sec)
+uniform float u_mouseShift;    // how far the vanishing point follows the cursor  (default 0.35)
 
 const vec3  BG     = vec3(0.030, 0.030, 0.038); // near-black gallery base
 const float TWO_PI = 6.28318531;
@@ -111,8 +115,16 @@ void main() {
   float minRes = min(res.x, res.y);
   vec2  p   = (fc - 0.5 * res) / (minRes * 0.5);        // ~[-1,1] short axis, y up in math
   // place the depth focus decisively in the lower-right third: +x right, -y down
-  vec2  vp  = vec2(u_vanishX, u_vanishY);
+  // smooth mouse parallax: vanishing point eases toward the cursor (absent -> centre)
+  vec2  mraw = u_mouse;
+  if (dot(mraw, mraw) < 1.0) mraw = 0.5 * res;          // no pointer -> centre, no shift
+  vec2  mN  = (mraw - 0.5 * res) / (minRes * 0.5);
+  vec2  vp  = vec2(u_vanishX, u_vanishY) + mN * (0.18 * max(u_mouseShift, 0.0));
   vec2  q   = p - vp;                                    // vector from the bore depth
+  // roll the whole gallery about the vanishing point (static bank + slow drift)
+  float roll = radians(u_roll) + t * u_rollSpeed;
+  float cR = cos(roll), sR = sin(roll);
+  q = mat2(cR, -sR, sR, cR) * q;
   float r   = length(q) + 1e-4;                          // radial distance from depth
   float ang = atan(q.y, q.x);                            // direction around the bore
 
@@ -219,6 +231,10 @@ void main() {
     float dPostL = sdSeg(sp, Lb, Lt);
     float dPostR = sdSeg(sp, Rb, Rt);
     float dBeam  = sdSeg(sp, vec2(postLx, topL), vec2(postRx, topR));
+    // optional cribbing brace: one diagonal per frame, alternating by rung parity
+    float dBraceA = sdSeg(sp, Lb, Rt);
+    float dBraceB = sdSeg(sp, Rb, Lt);
+    float dBrace  = mix(dBraceA, dBraceB, step(0.5, mod(rung, 2.0)));
     float dTimber = min(min(dPostL, dPostR), dBeam);
     // soft-edged timber stroke (anti-aliased), width in local units
     float aa = lw * 0.9 + 0.004;
@@ -240,6 +256,9 @@ void main() {
     // timber faces stay dim; a soft inner bloom gives the thick-soft-edged read
     float bloom = exp(-dTimber / max(lw * 2.2, 1e-3));
     vec3  timberCol = tint * (timber * 0.55 + bloom * 0.14);
+    // cribbing braces ride dimmer than the structural posts/beam, gated by u_brace
+    float braceStroke = (1.0 - smoothstep(lw, lw + aa, dBrace)) * clamp(u_brace, 0.0, 1.0);
+    timberCol += tint * braceStroke * 0.42;
 
     // ---- hanging lamp: a warm glow dot just under the cap-beam centre ----
     // anchor at the beam midpoint, dropped a little along local -y
