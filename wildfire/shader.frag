@@ -1,15 +1,13 @@
-// wildfire (Smolder) — a fire season from a night satellite. Dark terrain with
-// a whisper of FBM relief carries two or three closed irregular rings of ember
-// light at staggered ages: a broad old perimeter swelling past mid-frame, a
-// younger loop tight around its ignition point, sometimes a brand-new spark of
-// a ring. Each ring is the contour where its own radial-plus-FBM distance field
-// crosses a rising threshold, so it bulges along unseen valleys and stalls on
-// ridges, its narrow stroke graded through the four palette colours across its
-// width with isolated brighter knots where the line is locally fiercest. Every
-// interior is uniformly burned, a tone darker than the unburned exterior,
-// pricked by sparse cooling sparks that thin behind the front. Perimeters only
-// grow; births overlap lifetimes; an exhausted ring's near-black interior
-// crossfades away only once it has swollen past the frame corners.
+// wildfire (Smolder) — REFRAMED COSMIC: an emission nebula rather than a fire.
+// The magenta/cyan ragged spreading perimeters that always read as nebular gas
+// are now exactly that — slow expanding ionization shells lit warm-to-cool across
+// their stroke, with brighter star-forming knots strung along them. They float
+// over a luminous palette-tinted gas field threaded by dark dust lanes (two
+// large-scale colour regions, pink and blue), and a multi-layer twinkling
+// starfield sits on top; the brightest stars halo into spikes through post bloom.
+// The interiors the shells have swept read as denser glowing gas pockets, so each
+// "blob" is a filled cloud with a bright rim. The cool magenta/cyan palette is the
+// feature here (this piece goes cosmic, not warm-ember like its Smolder siblings).
 //
 // Uniforms provided by the runtime:
 //   u_time        seconds, monotonically increasing
@@ -26,12 +24,14 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_spreadRate;   // how fast each perimeter dilates outward (default 0.15)
-uniform float u_lineWidth;    // stroke width of the glowing perimeter, css px, scaled by u_pixelRatio (default 8)
-uniform float u_knotIntensity;// brightness boost of the hot knots along the lines; 0 evens them out (default 0.8)
-uniform float u_terrainDrag;  // how strongly unseen terrain distorts the rings; 0 = clean circles (default 0.55)
+uniform float u_spreadRate;   // how fast each gas shell dilates outward (default 0.15)
+uniform float u_lineWidth;    // stroke width of the glowing shell, css px, scaled by u_pixelRatio (default 8)
+uniform float u_knotIntensity;// brightness boost of the star-forming knots along the shells; 0 evens them (default 0.8)
+uniform float u_terrainDrag;  // how strongly turbulence distorts the shells; 0 = clean rings (default 0.55)
+uniform float u_starDensity;  // how many stars populate the field, 0..1 (default 0.5)
+uniform float u_gasAmount;    // brightness/coverage of the nebula gas field, 0..1.5 (default 0.9)
 
-const vec3  BG  = vec3(0.035, 0.035, 0.043); // house near-black
+const vec3  BG  = vec3(0.018, 0.016, 0.030); // deep-space near-black
 const float TAU = 6.28318530718;
 
 float hash21(vec2 p) {
@@ -63,62 +63,51 @@ float fbm(vec2 p) {
   return s;
 }
 
-// Each ring lives on its own cycle of length T (seconds-units of phase). Born
-// as a spark at phase 0, it dilates monotonically; once swollen well past the
-// frame corners it is invisible and its slot re-ignites at a fresh hash-chosen
-// point. `vis` fades a ring in from the spark and out once huge, hiding both
-// the birth pop and the retire crossfade.
+// Each shell lives on its own cycle. Born tight at phase 0, it dilates
+// monotonically; once swollen past the frame corners it is invisible and its slot
+// re-ignites at a fresh hash-chosen point. `vis` fades it in from birth and out
+// once huge, hiding the birth pop and the retire crossfade.
 float vis(float ph) {
-  // ph in [0,1]. Fade in fast at birth, hold, fade out late once off-frame.
   float born = smoothstep(0.0, 0.06, ph);
   float gone = 1.0 - smoothstep(0.80, 1.0, ph);
   return born * gone;
 }
 
-// Per-slot state for one expanding conversion loop. Returns the additive ember
-// contribution and accumulates the burned-interior darkening via `burnOut`.
-// `slot` selects an independent ignition point + cycle phase.
-vec3 ringLayer(vec2 fragPx, float slot, float phase, float vw,
-               vec3 c0, vec3 c1, vec3 c2, vec3 c3,
-               float linePx, float dragAmp, float knot,
-               float t, float pr, vec2 res, inout float burnOut) {
-  // ignition point: hash-chosen from `slot`, which the caller bumps by the
-  // cycle index each re-ignition so a slot lights somewhere new every cycle
-  // (stable within a cycle, so the contour is fixed and the front only grows).
+// One expanding ionization shell. Returns the additive gas-shell contribution and
+// accumulates the swept-interior coverage via `swept` (used to fill the cloud body
+// with denser glowing gas). `slot` selects an independent origin + cycle phase.
+vec3 shellLayer(vec2 fragPx, float slot, float phase, float vw,
+                vec3 c0, vec3 c1, vec3 c2, vec3 c3,
+                float linePx, float dragAmp, float knot,
+                float t, float pr, vec2 res, inout float swept) {
+  // origin: hash-chosen from `slot`, which the caller bumps by the cycle index
+  // each re-ignition so a slot lights somewhere new every cycle.
   vec2 hp = vec2(slot * 13.7 + 2.3, slot * 5.1 - 1.9);
   vec2 ign = vec2(hash21(hp), hash21(hp + 9.31));
-  // keep ignition comfortably inside the frame so the loop reads as closed
   ign = mix(vec2(0.22), vec2(0.78), ign) * res;
 
-  // radial distance field from the ignition point, in css-ish units
   vec2 d = (fragPx - ign) / max(pr, 0.25);
   float r = length(d) / 90.0;            // ~screens of radius
   float ang = atan(d.y, d.x);
 
-  // terrain distortion: low-freq FBM keyed to angle + radius so lobes bulge
-  // along valleys and stall on ridges. Static per slot (contour fixed; only
-  // the threshold rises), so the front can only advance.
+  // turbulence: low-freq FBM keyed to angle + radius so the shell bulges and
+  // stalls. Static per slot (contour fixed; only the threshold rises).
   vec2 q = vec2(cos(ang), sin(ang)) * (r * 1.4) + vec2(slot * 3.1, -slot * 2.2);
   float terr = (fbm(q * 1.7 + 4.0) - 0.5) * dragAmp;
-  float fieldVal = r + terr;             // distance field for this ring
+  float fieldVal = r + terr;
 
-  // rising threshold = current perimeter radius. phase 0..1 maps to radius
-  // growing from ~0 (spark) out past the frame corners.
-  float thr = phase * 2.4;               // max radius in same units as r
+  float thr = phase * 2.4;               // current shell radius
+  float sd = fieldVal - thr;             // signed dist to shell (>0 outside)
 
-  // signed distance to the perimeter (in field units), >0 outside (unburned)
-  float sd = fieldVal - thr;
-  // approximate field gradient magnitude ~1 (radial); convert sd to px width
-  float linU = linePx / (pr * 90.0);     // line half-width in field units
+  float linU = linePx / (pr * 90.0);
   float lh = max(linU, 0.004);
 
-  // ---- burned interior: everything inside the perimeter is converted.
-  float inside = smoothstep(lh * 0.4, -lh * 0.6, sd); // 1 well inside
-  burnOut = max(burnOut, inside * vw);
+  // ---- swept interior: the gas the shell has passed through (cloud body).
+  float inside = smoothstep(lh * 0.4, -lh * 0.6, sd);
+  swept = max(swept, inside * vw);
 
-  // ---- the incandescent perimeter stroke, graded across its width.
-  // u runs 0 at the leading (outer) edge against unburned dark, to 1 at the
-  // trailing (inner) side dropping into char. Hottest c3 first -> c1 -> c0 -> c2.
+  // ---- the incandescent shell stroke, graded across its width.
+  // u: 0 at the leading (outer) edge, 1 at the trailing inner side. c3 -> c1 -> c0 -> c2.
   float u = clamp(-sd / lh * 0.5 + 0.5, 0.0, 1.0);
   float on = exp(-(sd * sd) / (lh * lh)); // gaussian stroke, AA by construction
   vec3 ramp = c3;
@@ -126,34 +115,53 @@ vec3 ringLayer(vec2 fragPx, float slot, float phase, float vw,
   ramp = mix(ramp, c0, smoothstep(0.40, 0.68, u));
   ramp = mix(ramp, c2, smoothstep(0.68, 0.98, u));
 
-  // hot knots: isolated brighter beads strung along the line where it is
-  // locally fiercest, drifting slowly along the perimeter. Two angular noise
-  // octaves gated tight so knots stay sparse and punchy; as `knot` rises the
-  // line between knots is gently recessed so the beading reads, not a uniform
-  // brighten. At knot==0 the perimeter is perfectly even.
+  // star-forming knots: brighter beads strung along the shell, drifting slowly.
   float knr = vnoise(vec2(ang * 2.4 + slot * 4.0, t * 0.25 + slot))
             * 0.65
             + vnoise(vec2(ang * 6.1 - slot * 2.0, t * 0.15 + slot * 3.0)) * 0.35;
   float kn = smoothstep(0.58, 0.90, knr);
   float knotBoost = 1.0 + knot * (3.2 * kn - 0.5 * (1.0 - kn));
 
-  // white-hot thread at the very crest
-  float crest = exp(-(sd * sd) / (lh * lh * 0.10));
+  float crest = exp(-(sd * sd) / (lh * lh * 0.10)); // bright thread at the crest
 
-  // perimeter brightness scales down a touch as the ring grows huge so the old
-  // broad loop reads cooler/fainter than a fresh tight one.
+  // shells dim a touch as they grow huge so an old broad loop reads fainter.
   float ageDim = mix(1.05, 0.62, smoothstep(0.15, 0.95, phase));
 
   vec3 col = vec3(0.0);
   col += ramp * on * 0.95 * knotBoost * ageDim;
-  col += (c3 * 0.7 + vec3(0.28, 0.24, 0.20)) * crest * (0.45 + 0.6 * kn) * ageDim;
+  col += (c3 * 0.7 + c2 * 0.3) * crest * (0.45 + 0.6 * kn) * ageDim;
 
-  // faint preheat bleeding just outside the line into the unburned dark
+  // ionization glow bleeding just outside the shell into the surrounding gas
   float ahead = max(sd, 0.0);
-  float preheat = 0.22 * exp(-ahead / (lh * 1.6));
-  col += (c3 * 0.8 + c1 * 0.2) * preheat * ageDim;
+  float halo = 0.22 * exp(-ahead / (lh * 1.6));
+  col += (c1 * 0.6 + c2 * 0.4) * halo * ageDim;
 
   return col * vw;
+}
+
+// Multi-layer twinkling starfield. Tight cores so cells never read boxy; the
+// brightest stars halo into spikes through the post bloom pass.
+vec3 starField(vec2 p, float t, float density, vec3 cwarm, vec3 ccool) {
+  vec3 acc = vec3(0.0);
+  for (int L = 0; L < 3; L++) {
+    float fl = float(L);
+    float scale = 16.0 + fl * 30.0;            // cell size in css px
+    vec2 cp = p / scale;
+    vec2 cell = floor(cp);
+    vec2 f = fract(cp);
+    float h = hash21(cell + fl * 41.3);
+    float thr = 1.0 - clamp(density, 0.0, 1.0) * (0.16 - fl * 0.03);
+    float present = step(thr, h);
+    vec2 sp = vec2(hash21(cell + fl + 1.7), hash21(cell + fl * 2.0 + 4.3));
+    float dd = length(f - sp);
+    float bright = hash21(cell + fl * 7.0 + 9.1);
+    float sz = 110.0 + bright * 240.0 - fl * 22.0; // core tightness
+    float core = exp(-dd * dd * sz);
+    float tw = 0.55 + 0.45 * sin(t * (1.2 + bright * 3.5) + h * 40.0);
+    vec3 sc = mix(ccool, cwarm, bright * bright);  // most cool-white, a few warm
+    acc += sc * core * present * tw * (0.4 + 1.2 * bright);
+  }
+  return acc;
 }
 
 void main() {
@@ -167,6 +175,7 @@ void main() {
   float drag   = clamp(u_terrainDrag, 0.0, 1.0) * 0.9;
   float knot   = clamp(u_knotIntensity, 0.0, 1.5);
   float rate   = max(u_spreadRate, 0.001) * 0.06; // cycles/sec scaler
+  float gasAmt = clamp(u_gasAmount, 0.0, 1.5);
 
   // ---- palette with house fallback (headless contexts can zero the array)
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
@@ -175,66 +184,51 @@ void main() {
     c2 = vec3(0.133, 0.827, 0.933); c3 = vec3(0.957, 0.247, 0.369);
   }
 
-  // ---- dark terrain ground: a whisper of FBM relief, nearly featureless
-  float relief = fbm(cssP / 220.0 + 2.1) * 0.6 + fbm(cssP / 70.0 + 8.0) * 0.4;
-  vec3 ground = BG * (0.82 + 0.42 * relief);
+  // ---- nebula gas field: luminous palette-tinted FBM filling the frame.
+  // Slow drift so the gas breathes without the rings moving.
+  vec2 gp = cssP + vec2(8.0, -5.0) * t * 0.6;
+  float g1 = fbm(gp / 260.0 + 1.7);
+  float g2 = fbm(gp / 110.0 + 8.0);
+  float g3 = fbm(gp /  44.0 + 3.0);
+  float gas = g1 * 0.5 + g2 * 0.35 + g3 * 0.15;       // ~0..0.9
+  gas = smoothstep(0.18, 0.95, gas);                  // lift contrast, kill flat murk
+  // two large-scale colour regions: a pink/magenta zone and a blue zone, with
+  // teal highlights riding the densest knots.
+  float zone = fbm(cssP / 360.0 + 20.0);
+  vec3 gasCol = mix(c1, c0, smoothstep(0.34, 0.66, zone));
+  gasCol = mix(gasCol, c3, smoothstep(0.45, 0.85, g2) * 0.35); // magenta cores
+  gasCol = mix(gasCol, c2, smoothstep(0.70, 0.98, g3) * 0.40); // teal highlights
+  // dark dust lanes: a separate FBM carves filamentary obscuration through the gas.
+  float dust = smoothstep(0.52, 0.82, fbm(cssP / 150.0 + 40.0));
+  vec3 col = BG + gasCol * gas * gasAmt * (1.0 - 0.62 * dust);
 
-  // Three independent ring slots, each on its own staggered cycle so births
-  // overlap lifetimes — two or three loops alive at once, a fresh one always
-  // kindling while an old perimeter is still mid-frame. Each slot folds its
-  // running cycle index into its ignition seed so it lights somewhere new each
-  // re-ignition; phase 0..1 dilates the perimeter, vis() hides birth+retire.
-  float T = 1.0; // normalised cycle; rate carries seconds
-
-  // slot phases, evenly offset by 1/3 so the three ages stay staggered
+  // ---- three expanding ionization shells on staggered cycles (the ragged blobs).
   float base = t * rate;
-  float p0 = fract(base + 0.00);
-  float p1 = fract(base + 0.34);
-  float p2 = fract(base + 0.67);
-  // cycle index per slot -> fresh ignition point each re-ignition
-  float k0 = floor(base + 0.00);
-  float k1 = floor(base + 0.34);
-  float k2 = floor(base + 0.67);
-
+  float p0 = fract(base + 0.00), p1 = fract(base + 0.34), p2 = fract(base + 0.67);
+  float k0 = floor(base + 0.00), k1 = floor(base + 0.34), k2 = floor(base + 0.67);
   float v0 = vis(p0), v1 = vis(p1), v2 = vis(p2);
 
-  // burned-interior accumulation: rings convert territory irreversibly. We take
-  // the max coverage across live rings (overlapping burns stay burned).
-  float burn = 0.0;
+  float swept = 0.0;
+  vec3 shells = vec3(0.0);
+  shells += shellLayer(fc, 1.7 + k0 * 3.1, p0, v0, c0, c1, c2, c3, linePx, drag, knot, t, pr, res, swept);
+  shells += shellLayer(fc, 8.3 + k1 * 3.1, p1, v1, c0, c1, c2, c3, linePx, drag, knot, t, pr, res, swept);
+  shells += shellLayer(fc, 4.9 + k2 * 3.1, p2, v2, c0, c1, c2, c3, linePx, drag, knot, t, pr, res, swept);
 
-  vec3 ember = vec3(0.0);
-  ember += ringLayer(fc, 1.7 + k0 * 3.1, p0, v0, c0, c1, c2, c3, linePx, drag, knot, t, pr, res, burn);
-  ember += ringLayer(fc, 8.3 + k1 * 3.1, p1, v1, c0, c1, c2, c3, linePx, drag, knot, t, pr, res, burn);
-  ember += ringLayer(fc, 4.9 + k2 * 3.1, p2, v2, c0, c1, c2, c3, linePx, drag, knot, t, pr, res, burn);
+  // swept interiors read as denser glowing gas pockets (filled clouds, bright rim)
+  col += (c1 * 0.5 + c0 * 0.3 + c2 * 0.2) * swept * 0.22 * gasAmt;
+  col += shells;
 
-  // burned interior is a tone darker than the unburned exterior
-  vec3 charBase = BG * 0.46 * (0.80 + 0.5 * relief);
-  vec3 col = mix(ground, charBase, burn);
+  // ---- starfield on top; brightest stars bloom into spikes via post.
+  col += starField(cssP, t, u_starDensity, vec3(1.0, 0.92, 0.82), c2 * 0.7 + vec3(0.5));
 
-  // ---- sparse cooling sparks pricking the burned interiors, thinning with
-  // distance behind each front. Hash-placed cells, one-shot pop + decay.
-  // (Cheap global field gated by `burn` so sparks only sit on converted land.)
-  vec2 cell = floor(cssP / 26.0);
-  float sh = hash21(cell + 0.5);
-  if (sh > 0.62) {
-    vec2 cseed = cell + 11.0;
-    float life = 2.2;
-    float ph = fract(t / life + hash21(cseed));
-    float pop = exp(-ph * 5.0) * smoothstep(0.0, 0.04, ph);
-    vec2 jit = (vec2(hash21(cseed + 1.0), hash21(cseed + 2.0)) - 0.5) * 18.0;
-    vec2 sc = (cell + 0.5) * 26.0 + jit;
-    float dd = length(cssP - sc);
-    float dot = exp(-dd * dd / 6.0);
-    col += (c3 * 0.7 + c1 * 0.3) * dot * pop * 0.9 * burn;
-  }
-
-  col += ember;
-
-  // gentle vignette seats the scene
+  // gentle vignette to seat the field in the dark frame
   vec2 uv = fc / res;
-  col *= 1.0 - 0.40 * smoothstep(0.35, 1.10, length(uv - 0.5) * 1.42);
+  col *= 1.0 - 0.34 * smoothstep(0.40, 1.12, length(uv - 0.5) * 1.42);
 
-  // tiny dither to keep long glow gradients band-free
+  // soft filmic rolloff keeps the hottest knots/stars from clipping flat
+  col = col / (1.0 + col * 0.42);
+
+  // tiny dither to keep long gas gradients band-free
   col += (hash21(fc + fract(t) * vec2(13.1, 7.7)) - 0.5) * 0.004;
 
   gl_FragColor = vec4(col, 1.0);

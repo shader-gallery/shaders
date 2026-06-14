@@ -7,31 +7,32 @@
     "dark",
     "glow",
     "loop",
-    "ember",
-    "fire",
-    "terrain",
-    "ring"
+    "space",
+    "nebula",
+    "stars",
+    "gas",
+    "cosmic"
   ],
-  "description": "A fire season seen from a night satellite: dark FBM terrain carrying two or three closed irregular ember rings at staggered ages, each an expanding conversion front graded warm-to-cool across its narrow stroke with hot knots strung along it. Interiors stay burned and pricked by cooling sparks; perimeters only grow, a fresh ring always kindling while an old one is still mid-frame.",
+  "description": "An emission nebula seen deep-field: luminous palette-tinted gas in pink and blue regions, threaded by dark dust lanes, with two or three ragged expanding ionization shells lit warm-to-cool across their stroke and beaded with brighter star-forming knots. The interiors the shells have swept read as denser glowing cloud, and a twinkling multi-layer starfield sits over it all, the brightest stars haloing into soft spikes.",
   "entry": "shader.frag",
   "params": [
     {
       "uniform": "u_spreadRate",
-      "label": "Spread rate",
+      "label": "Expansion rate",
       "min": 0.03,
       "max": 0.5,
       "step": 0.01,
       "default": 0.15,
-      "effect": "How fast each perimeter dilates outward."
+      "effect": "How fast each gas shell dilates outward."
     },
     {
       "uniform": "u_lineWidth",
-      "label": "Line width",
+      "label": "Filament width",
       "min": 2,
       "max": 24,
       "step": 1,
       "default": 8,
-      "effect": "Stroke width in CSS pixels of the glowing perimeter lines."
+      "effect": "Stroke width in CSS pixels of the glowing ionization shells."
     },
     {
       "uniform": "u_knotIntensity",
@@ -40,16 +41,34 @@
       "max": 1.5,
       "step": 0.01,
       "default": 0.8,
-      "effect": "Brightness boost of the hot knots strung along the lines; zero evens the perimeters out."
+      "effect": "Brightness boost of the star-forming knots strung along the shells; zero evens them out."
     },
     {
       "uniform": "u_terrainDrag",
-      "label": "Terrain drag",
+      "label": "Turbulence",
       "min": 0,
       "max": 1,
       "step": 0.01,
       "default": 0.55,
-      "effect": "How strongly the unseen terrain distorts the rings; zero spreads them as clean circles."
+      "effect": "How strongly turbulence distorts the shells; zero spreads them as clean rings."
+    },
+    {
+      "uniform": "u_starDensity",
+      "label": "Star density",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How many stars populate the field, from a sparse scatter to a dense sky."
+    },
+    {
+      "uniform": "u_gasAmount",
+      "label": "Gas amount",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "Brightness and coverage of the nebula gas field; zero leaves only shells and stars on black."
     }
   ],
   "defaultPalette": "midnight",
