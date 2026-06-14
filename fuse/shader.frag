@@ -127,43 +127,55 @@ void main() {
   vec3  padBase = mix(traceCol * 1.3, mix(c0, c3, 0.4) * 1.4, padLit);
   col += padBase * (pad * 0.6 + ring * 0.35) * (0.4 + 0.9 * padG);
 
-  // ---- horizontal pulse on the nearest row (some rows carry a running pulse)
-  float rowHas = step(hash21(vec2(ry, 0.0) + 1.1), 0.78);
-  if (rowHas > 0.5 && abs(dyPx) < haloW * 1.6) {
+  // ---- horizontal charge pulse: rides ALONG the nearest row, hugging the trace,
+  // and only exists where the segment under the head is actually routed (so it
+  // tracks the copper instead of floating across gaps).
+  float rowHas = step(hash21(vec2(ry, 0.0) + 1.1), 0.80);
+  {
     float dir = (mod(ry, 2.0) < 1.0) ? 1.0 : -1.0;
     float spd = speed * (0.6 + 0.9 * hash11(ry + 2.0));
     float ph  = hash11(ry + 4.0);
-    float bx  = fract(t * spd * dir + ph) * res.x;   // head x in px
-    vec2  hp  = vec2(bx, ry * colW);
-    float bd  = length(fc - hp);
-    // white-hot core + graded halo
-    col += vec3(1.0, 0.96, 0.88) * exp(-bd * bd / (max(traceHalf * 2.4, 1.0) * max(traceHalf * 2.4, 1.0))) * 1.5;
-    col += haloGrade(bd / haloW, c0, c1, c2, c3) * exp(-(bd / haloW) * (bd / haloW) * 2.2) * 1.2;
-    // glowing cooling trail behind the head along the routed row
-    float along = (fc.x - bx) * dir;                 // <0 behind the head
-    float trail = exp(-max(-along, 0.0) / (res.x * 0.16)) * step(along, 0.0);
-    trail *= (1.0 - smoothstep(traceHalf, traceHalf + haloW * 0.30, abs(dyPx))) * presH;
-    col += mix(c3, c0, 0.5) * trail * 0.85;
-    // spark spray
-    col += sparks(fc, hp, haloW, spray, t, ry + 0.5, c0, c1, c2, c3, pr);
+    float bx  = fract(t * spd * dir + ph) * res.x;          // head x in px
+    float headPres = step(hash21(vec2(floor(bx / colW), ry) + 0.13), presThr);
+    float perp = abs(dyPx);
+    if (rowHas * headPres > 0.5 && perp < haloW * 1.1) {
+      float along  = (fc.x - bx) * dir;                      // <0 behind the head
+      float onLine = 1.0 - smoothstep(traceHalf, traceHalf + haloW * 0.45, perp);
+      // white-hot head core, compressed onto the trace in y
+      float bd2 = (fc.x - bx) * (fc.x - bx) + dyPx * dyPx * 3.0;
+      float cr = max(traceHalf * 2.6, 1.0);
+      col += vec3(1.0, 0.96, 0.88) * exp(-bd2 / (cr * cr)) * 1.7;
+      // comet glow: bright bloom at the head + a cooling tail behind, all on-line
+      float comet = exp(-(along * along) / (colW * colW * 0.20))
+                  + exp(-max(-along, 0.0) / (colW * 2.4)) * step(along, 0.0);
+      col += haloGrade(clamp(perp / (haloW * 0.55), 0.0, 1.0), c0, c1, c2, c3)
+           * comet * onLine * 1.3;
+      // a small contained spark burst right at the head (no wide scatter)
+      col += sparks(fc, vec2(bx, ry * colW), haloW * 0.5, spray, t, ry + 0.5, c0, c1, c2, c3, pr);
+    }
   }
 
-  // ---- vertical pulse on the nearest column
-  float colHas = step(hash21(vec2(rx, 0.0) + 8.4), 0.78);
-  if (colHas > 0.5 && abs(dxPx) < haloW * 1.6) {
+  // ---- vertical charge pulse on the nearest column (same, axes swapped)
+  float colHas = step(hash21(vec2(rx, 0.0) + 8.4), 0.80);
+  {
     float dir = (mod(rx, 2.0) < 1.0) ? 1.0 : -1.0;
     float spd = speed * (0.6 + 0.9 * hash11(rx + 5.0));
     float ph  = hash11(rx + 9.0);
     float by  = fract(t * spd * dir + ph) * res.y;
-    vec2  hp  = vec2(rx * colW, by);
-    float bd  = length(fc - hp);
-    col += vec3(1.0, 0.96, 0.88) * exp(-bd * bd / (max(traceHalf * 2.4, 1.0) * max(traceHalf * 2.4, 1.0))) * 1.5;
-    col += haloGrade(bd / haloW, c0, c1, c2, c3) * exp(-(bd / haloW) * (bd / haloW) * 2.2) * 1.2;
-    float along = (fc.y - by) * dir;
-    float trail = exp(-max(-along, 0.0) / (res.y * 0.16)) * step(along, 0.0);
-    trail *= (1.0 - smoothstep(traceHalf, traceHalf + haloW * 0.30, abs(dxPx))) * presV;
-    col += mix(c3, c0, 0.5) * trail * 0.85;
-    col += sparks(fc, hp, haloW, spray, t, rx + 40.0, c0, c1, c2, c3, pr);
+    float headPres = step(hash21(vec2(rx, floor(by / colW)) + 7.70), presThr);
+    float perp = abs(dxPx);
+    if (colHas * headPres > 0.5 && perp < haloW * 1.1) {
+      float along  = (fc.y - by) * dir;
+      float onLine = 1.0 - smoothstep(traceHalf, traceHalf + haloW * 0.45, perp);
+      float bd2 = (fc.y - by) * (fc.y - by) + dxPx * dxPx * 3.0;
+      float cr = max(traceHalf * 2.6, 1.0);
+      col += vec3(1.0, 0.96, 0.88) * exp(-bd2 / (cr * cr)) * 1.7;
+      float comet = exp(-(along * along) / (colW * colW * 0.20))
+                  + exp(-max(-along, 0.0) / (colW * 2.4)) * step(along, 0.0);
+      col += haloGrade(clamp(perp / (haloW * 0.55), 0.0, 1.0), c0, c1, c2, c3)
+           * comet * onLine * 1.3;
+      col += sparks(fc, vec2(rx * colW, by), haloW * 0.5, spray, t, rx + 40.0, c0, c1, c2, c3, pr);
+    }
   }
 
   // gentle vignette to keep the corners dark and the pulse heads luminous
