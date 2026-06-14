@@ -15,5 +15,5 @@
       "default": 0.3, "effect": "How often a candle snuffs out and sends up its smoke thread; 0 disables snuff events entirely, 1 keeps one dying somewhere most of the time." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.6 }
+  "post": { "bloom": 0.6 }
 }

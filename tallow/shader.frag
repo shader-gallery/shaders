@@ -107,8 +107,8 @@ void main() {
   vec3 col = BG;
 
   // gentle warm ambient from the gathered glow pooling upward, fades toward top
-  float upWarm = smoothstep(res.y * 0.85, shelfY, fc.y);
-  col += mix(c0, c1, 0.4) * upWarm * 0.020;
+  float upWarm = smoothstep(res.y * 1.02, shelfY, fc.y);
+  col += mix(c0, c1, 0.4) * upWarm * 0.032;
 
   // implied shelf line: a faint dark ledge with a thin lit edge where light pools
   float shelfDist = fc.y - shelfY;
@@ -239,6 +239,23 @@ void main() {
         col += smokeCol * thread * vfade * smokeAmt * 0.16;
       }
     }
+  }
+
+  // back row of distant candles (depth): small dim warm glows on a higher shelf so
+  // the frame reads as a deep field of candles rather than one front row (in-shader
+  // fill replacing the backdrop).
+  float bgShelf = res.y * 0.58;
+  for (float bi = 0.0; bi < 9.0; bi += 1.0) {
+    float bfi = bi + 1.0;
+    float bcx = margin * 0.4 + ((bi + 0.5) / 9.0) * (res.x - margin * 0.8)
+              + (hash11(bfi * 8.3) - 0.5) * (span / 9.0) * 0.7;
+    float bby = bgShelf + (hash11b(bfi * 2.0) - 0.5) * flameH * 0.5;
+    float bbr = 0.55 + 0.45 * sin(t * 0.5 + bfi * 1.7);   // slow distant flicker
+    vec2  bp  = fc - vec2(bcx, bby);
+    float bsz = flameH * 0.5;
+    float bglow = exp(-dot(bp, bp) / (bsz * bsz));
+    float bcore = exp(-dot(bp, bp) / (bsz * bsz * 0.13));
+    col += (mix(c0, c1, 0.4) * bglow * 0.085 + coreCol * bcore * 0.16) * bbr;
   }
 
   // gentle vignette to keep the frame composed and edges dark
