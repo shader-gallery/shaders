@@ -18,7 +18,8 @@ uniform vec3  u_palette[4];
 uniform float u_impacts;    // number of strike points         (default 4)
 uniform float u_spread;     // fracture scale / reach           (default 1.0)
 uniform float u_radial;     // radial spoke crack strength      (default 1.0)
-uniform float u_rings;      // concentric ring crack strength   (default 0.8)
+uniform float u_wander;     // how much spokes curve/wander      (default 0.4)
+uniform float u_rings;      // concentric ring crack strength   (default 0.25)
 uniform float u_craze;      // fine craquelure strength         (default 0.5)
 uniform float u_seam;       // gold seam width in CSS px         (default 2.6)
 uniform float u_shimmer;    // molten shimmer along the seams    (default 0.9)
@@ -46,11 +47,11 @@ vec3 wheelCol(float k, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
 }
 
 // branching radial spokes (x) and concentric hackle rings (y) around one strike
-vec2 impactCracks(vec2 rel, float seed, float width) {
+vec2 impactCracks(vec2 rel, float seed, float width, float wander) {
   float rad = length(rel) + 1e-3;
   float ang = atan(rel.y, rel.x);
   float wob = fbm(rel * 2.1 + seed * 17.0) - 0.5;
-  float aw = ang + wob * 1.1;
+  float aw = ang + wob * wander * 2.4;        // 0 = straight spokes, high = curvy
   float spokes = (3.0 + floor(seed * 2.0)) * (1.0 + floor(rad * 0.85));   // split = branch
   float radial = abs(fract(aw / 6.2831853 * spokes) - 0.5) * 2.0;
   float rw = width * (2.6 + 10.0 / max(spokes, 1.0));
@@ -79,7 +80,7 @@ void main() {
     if (float(i) >= max(floor(u_impacts + 0.5), 1.0)) break;
     float fi = float(i) + 1.0;
     vec2 imp = (vec2(hash21(vec2(fi, 1.7)), hash21(vec2(fi, 4.3))) - 0.5) * 1.3;
-    cr = max(cr, impactCracks(uv - imp, fi, width));
+    cr = max(cr, impactCracks(uv - imp, fi, width, u_wander));
   }
   float fine = smoothstep(0.5, 0.46, abs(fbm(uv * 9.0 + 2.0) - 0.5) * 2.0);
   fine *= smoothstep(1.3, 0.2, length(uv));
