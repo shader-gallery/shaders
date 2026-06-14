@@ -121,8 +121,8 @@ void main() {
 
   // ENGRAVED STRANDS: dim, colour-tinted cuts in dark steel — light is structural,
   // so the bare strands stay restrained and the crossings carry the brightness.
-  col += litCol * litLine * 0.34;
-  col += litCol * second  * 0.16;   // the under-stroke, dimmer, reads the braid
+  col += litCol * litLine * 0.58;
+  col += litCol * second  * 0.30;   // the under-stroke, dimmer, reads the braid
 
   // CROSSINGS: prox exceeds ~1 only where two centrelines coincide. That excess
   // is the lozenge corner where one strand crosses over another — set a jewel.
@@ -137,8 +137,8 @@ void main() {
   col += litCol * litLine * 0.10;
 
   // gentle vignette to frame the band and keep the rim dark
-  float vign = 1.0 - smoothstep(0.5, 1.18, length((fc - ctr) / res));
-  col *= mix(0.7, 1.0, vign);
+  float vign = 1.0 - smoothstep(0.6, 1.28, length((fc - ctr) / res));
+  col *= mix(0.84, 1.0, vign);
 
   gl_FragColor = vec4(col, 1.0);
 }
