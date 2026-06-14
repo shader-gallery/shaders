@@ -17,5 +17,5 @@
       "default": 420, "effect": "CSS-pixel scale of the dominant cloud billows revealed by each flash, from fine scud to a few monumental masses." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "backdrop": 0.6 }
+  "post": { "bloom": 0.6 }
 }

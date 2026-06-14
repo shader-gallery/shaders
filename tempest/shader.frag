@@ -27,7 +27,7 @@ uniform float u_afterglow;    // post-flash glow decay length, seconds  (default
 uniform float u_detail;       // css-px scale of dominant billows       (default 420)
 
 const vec3  BG     = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const vec3  CHARC  = vec3(0.090, 0.094, 0.116); // charcoal cloud, readable at rest
+const vec3  CHARC  = vec3(0.130, 0.135, 0.165); // charcoal cloud, readable at rest
 
 // --- hash + value-noise + fbm ----------------------------------------------
 float hash21(vec2 p) {
@@ -114,13 +114,19 @@ void main() {
   // faint cool storm-light tint on the cloud body + self-shadowed troughs, so
   // the billows have form at rest rather than reading as a flat black field
   float relief = smoothstep(0.34, 0.78, dens) * bank;
-  col += mix(c2, c1, 0.45) * relief * 0.075;
-  col += mix(c1, c3, 0.30) * (1.0 - relief) * mass * 0.018;
+  col += mix(c2, c1, 0.45) * relief * 0.105;
+  col += mix(c1, c3, 0.30) * (1.0 - relief) * mass * 0.026;
   // distant storm glow pooling along the horizon (ever-present light pollution)
   float horizon = smoothstep(0.46, 0.0, uvn.y) * bankBot;
-  col += mix(c1, c3, 0.35) * horizon * 0.05;
-  // faint vertical sky gradient so the top isn't dead flat
-  col += BG * (1.0 - uvn.y) * 0.15;
+  col += mix(c1, c3, 0.35) * horizon * 0.08;
+  // storm sky filling the upper frame in-shader (replaces the old gradient backdrop):
+  // a palette-tinted charged gradient + faint high-altitude scud so the space above
+  // the bank reads as atmosphere, not void.
+  float skyT    = smoothstep(0.28, 1.0, uvn.y);
+  float hiScud  = fbm(cuv * 0.5 + vec2(3.0, t * roil * 2.0));
+  vec3  skyCol  = mix(c1, c2, 0.5);
+  col += skyCol * (0.040 + 0.055 * hiScud) * skyT;
+  col += BG * (1.0 - uvn.y) * 0.20;
 
   // --- lightning events -----------------------------------------------------
   // Each event occupies one "slot" of length ~u_flashPeriod. Slot index + a
