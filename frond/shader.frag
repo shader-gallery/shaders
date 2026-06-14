@@ -1,30 +1,28 @@
-// frond (Smolder) — REFRAMED as a POTHOS VINE (Epipremnum aureum): instead of one
-// burning leaf, a lush curtain of many SMALL heart-shaped leaves trailing down
-// several wandering vines, filling the frame. frond's identity is kept but minted
-// small x many: each leaf carries a glowing midrib + herringbone veins (cool) and
-// a glowing margin rim (warm) — the blue-vein / red-margin contrast of the original
-// — plus cream variegation patches. The vines hang and sway; stems thread through
-// the leaf bases so the leaves sit ON the vine. Leaves are luminous and composited
-// additively so overlapping foliage reads as depth. Fully themeable: foliage,
-// veins, margin and variegation all derive from u_palette.
+// frond (Smolder) — REFRAMED as a POTHOS VINE (Epipremnum aureum): a curtain of
+// small heart-shaped leaves trailing down several vines, filling the frame. Each
+// leaf keeps frond's identity at small scale — a glowing midrib + herringbone
+// veins and a glowing margin (the blue-vein / red-margin contrast) — plus cream
+// variegation. The vine SHAPES are fixed; only a gentle oscillating breeze sways
+// the leaves and the trailing tips (no sideways drift). Leaves are z-composited so
+// the nearest one wins, reading as layered foliage rather than additive mush.
+// Fully palette-themeable.
 precision highp float;
 
-uniform float u_time;        // seconds, monotonically increasing
-uniform vec2  u_resolution;  // drawing-buffer size in device pixels
-uniform vec2  u_mouse;       // pointer in device px, (0,0) when absent — unused
-uniform float u_pixelRatio;  // devicePixelRatio of the buffer
-uniform vec3  u_palette[4];  // four theme colours, 0..1 rgb
+uniform float u_time;
+uniform vec2  u_resolution;
+uniform vec2  u_mouse;
+uniform float u_pixelRatio;
+uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_leafSize;     // leaf radius in CSS px (default 34)
+uniform float u_leafSize;     // heart leaf radius in CSS px (default 38)
 uniform float u_leafDensity;  // how full the curtain is, 0..1 (default 0.7)
 uniform float u_veinGlow;     // brightness of the cool midrib/herringbone veins (default 0.7)
 uniform float u_marginGlow;   // brightness of the warm glowing leaf margin (default 0.6)
-uniform float u_sway;         // wind sway amount of the vines, 0..1 (default 0.5)
+uniform float u_sway;         // breeze sway amount, 0..1 (default 0.5)
 uniform float u_variegation;  // cream variegation patch amount, 0..1 (default 0.5)
 
-const vec3  BG  = vec3(0.018, 0.026, 0.024); // deep foliage near-black (green-ish)
-const float TAU = 6.28318530718;
+const vec3  BG = vec3(0.015, 0.022, 0.018); // deep foliage near-black
 const int   VINES  = 6;
 const int   LEAVES = 9;
 
@@ -43,47 +41,40 @@ float vnoise(vec2 p) {
   float d = hash21(i + vec2(1.0, 1.0));
   return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
 }
-
-// distance to a line segment a->b
 float sdSeg(vec2 p, vec2 a, vec2 b) {
   vec2 pa = p - a, ba = b - a;
   float h = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-5), 0.0, 1.0);
   return length(pa - ba * h);
 }
 
-// position of vine `fv` at param s in [0,1] (top -> bottom), with its tangent.
-// Vines hang downward across the full height and wander horizontally; the wander
-// breathes in time so the whole curtain sways.
-vec2 vinePoint(float fv, float s, float t, float sway, vec2 res, out vec2 tang) {
+// STATIC vine shape: fixed curve hanging from the top of the frame down past the
+// bottom, wandering horizontally. No time term — the shape never drifts.
+vec2 vinePoint(float fv, float s, vec2 res, out vec2 tang) {
   float h0 = hash11(fv * 1.7 + 1.0);
   float h1 = hash11(fv * 2.3 + 4.0);
-  float startX = (fv + 0.5) / float(VINES) * res.x + (h0 - 0.5) * res.x * 0.10;
-  float amp    = res.x * (0.06 + 0.10 * h1);
-  float freq   = 1.3 + 1.4 * h0;
-  float phase  = fv * 2.1 + t * (0.15 + 0.25 * sway);
-  float y = s * res.y * 1.18 - 0.12 * res.y;
+  float startX = (fv + 0.5) / float(VINES) * res.x + (h0 - 0.5) * res.x * 0.12;
+  float amp    = res.x * (0.05 + 0.09 * h1);
+  float freq   = 1.2 + 1.3 * h0;
+  float phase  = fv * 2.1;
+  float y = res.y * 1.12 - s * res.y * 1.24;             // top -> bottom
   float wob = sin(s * freq * 3.14159 + phase) + 0.4 * sin(s * freq * 6.3 + phase * 1.7);
-  float x = startX + amp * wob * (0.5 + 0.8 * sway);
-  // tangent via small finite difference in s
-  float dy = res.y * 1.18 / 64.0;
+  float x = startX + amp * wob;
   float s2 = s + 1.0 / 64.0;
   float wob2 = sin(s2 * freq * 3.14159 + phase) + 0.4 * sin(s2 * freq * 6.3 + phase * 1.7);
-  float x2 = startX + amp * wob2 * (0.5 + 0.8 * sway);
-  tang = normalize(vec2(x2 - x, dy));
+  float x2 = startX + amp * wob2;
+  float y2 = res.y * 1.12 - s2 * res.y * 1.24;
+  tang = normalize(vec2(x2 - x, y2 - y));
   return vec2(x, y);
 }
 
-// heart / cordate implicit in leaf-local coords (cleft up toward the petiole,
-// tip pointing down/away). f < 0 inside; |f| small near the outline.
+// heart / cordate implicit, lobes at +y (cleft toward petiole), cusp/tip at -y.
 float heartField(vec2 p) {
-  // classic heart: lobes at +y, cusp at -y. p already scaled to ~unit heart.
   float x = p.x, y = p.y;
   float a = x * x + y * y - 1.0;
   return a * a * a - x * x * y * y * y;
 }
 
 void main() {
-  // palette with house fallback (headless contexts can leave it zeroed)
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
   if (dot(c0,c0)+dot(c1,c1)+dot(c2,c2)+dot(c3,c3) < 1e-5) {
     c0 = vec3(0.231,0.510,0.965); c1 = vec3(0.659,0.333,0.969);
@@ -95,28 +86,32 @@ void main() {
   vec2  res  = max(u_resolution / pr, vec2(1.0));
   float t    = u_time;
 
-  float leafR  = max(u_leafSize, 6.0);
+  float leafR  = max(u_leafSize, 8.0);
   float dens   = clamp(u_leafDensity, 0.0, 1.0);
   float vGlow  = clamp(u_veinGlow, 0.0, 1.5);
   float mGlow  = clamp(u_marginGlow, 0.0, 1.5);
   float sway   = clamp(u_sway, 0.0, 1.0);
   float varieg = clamp(u_variegation, 0.0, 1.0);
 
-  // foliage / vein / margin / variegation colours, all palette-derived
-  vec3 foliage  = c2 * 0.42 + c0 * 0.10;          // luminous deep leaf
-  vec3 veinCol  = c0 * 0.85 + c2 * 0.20;          // cool veins (frond's blue vein)
-  vec3 marginC  = c3 * 0.95 + c1 * 0.15;          // warm margin (frond's red margin)
-  vec3 varCol   = c2 * 0.7  + vec3(0.35);         // pale cream variegation
-  vec3 stemCol  = c2 * 0.5  + c0 * 0.18;
+  // palette-derived leaf colours
+  vec3 foliageHi = c2 * 0.55 + c0 * 0.12 + vec3(0.02);   // lit leaf face
+  vec3 foliageLo = c2 * 0.20 + c1 * 0.10;                // shadowed leaf
+  vec3 veinCol   = c0 * 0.95 + c2 * 0.25 + vec3(0.05);   // cool veins
+  vec3 marginC   = c3 * 1.00 + c1 * 0.15;                // warm margin
+  vec3 varCol    = c2 * 0.6  + vec3(0.45);               // pale cream variegation
+  vec3 stemCol   = c2 * 0.45 + c0 * 0.16;
 
-  vec3 col = vec3(0.0);
-
-  // how many leaves per vine are active (density scales the curtain)
+  // base + stem layer (behind the leaves)
+  vec3 base = BG + (c2 * 0.05 + c1 * 0.03) * vnoise(cssP / 90.0);
   float activeLeaves = mix(3.0, float(LEAVES), dens);
+
+  // z-buffer: keep the nearest leaf covering this pixel (clean occlusion)
+  float bestZ = -1.0;
+  vec3  bestCol = vec3(0.0);
+  float bestCov = 0.0;
 
   for (int vi = 0; vi < VINES; vi++) {
     float fv = float(vi);
-    // skip a couple of vines at low density
     if (fv > mix(2.5, float(VINES), dens)) continue;
 
     vec2 prevAttach = vec2(0.0);
@@ -128,90 +123,80 @@ void main() {
 
       float s = (fl + 0.6) / float(LEAVES);
       vec2 tang;
-      vec2 P = vinePoint(fv, s, t, sway, res, tang);
-      vec2 nrm = vec2(-tang.y, tang.x);          // perpendicular to the vine
+      vec2 P = vinePoint(fv, s, res, tang);
+      vec2 nrm = vec2(-tang.y, tang.x);
 
-      // ---- stem segment connecting consecutive attach points
+      // gentle OSCILLATING breeze: sways more toward the trailing tip, never drifts
+      float swayA = sin(t * 1.1 + fv * 2.0 + s * 3.2) * sway * leafR * 0.9 * (0.3 + s);
+      vec2 Pp = P + nrm * swayA;
+
+      // stem segment (drawn into the base, behind leaves)
       if (havePrev) {
-        float ds = sdSeg(cssP, prevAttach, P);
-        float stem = exp(-ds * ds / (leafR * leafR * 0.018)); // ~0.13*leafR wide
-        col += stemCol * stem * 0.85;
+        float ds = sdSeg(cssP, prevAttach, Pp);
+        base += stemCol * exp(-ds * ds / (leafR * leafR * 0.020)) * 0.7;
       }
-      prevAttach = P;
+      prevAttach = Pp;
       havePrev = true;
 
-      // per-leaf randomness
-      float hSide = hash11(fv * 7.0 + fl * 3.1);
-      float side  = (mod(fl, 2.0) < 1.0) ? 1.0 : -1.0; // alternate sides
-      float hSize = 0.7 + 0.6 * hash11(fv * 5.0 + fl * 1.7);
-      float hDep  = hash11(fv * 11.0 + fl * 2.3);       // pseudo-depth 0..1
-      float lr    = leafR * hSize * (0.7 + 0.5 * hDep); // nearer (big) .. farther (small)
+      // leaves hang downward with a slight alternating outward splay
+      float side = (mod(fl, 2.0) < 1.0) ? 1.0 : -1.0;
+      float hSize = 0.78 + 0.5 * hash11(fv * 5.0 + fl * 1.7);
+      float hDep  = hash11(fv * 11.0 + fl * 2.3);          // depth 0..1 (front=1)
+      float lr    = leafR * hSize * (0.72 + 0.5 * hDep);
+      vec2 tipDir = normalize(vec2(side * 0.55, -1.0));     // hang down + splay
+      // sway the hang direction a touch (swing), in step with the breeze
+      float swR = sin(t * 1.1 + fv * 2.0 + s * 3.2 + 0.6) * sway * 0.18;
+      tipDir = normalize(tipDir + nrm * swR);
+      vec2 ctr = Pp + tipDir * lr * 1.05;
 
-      // leaf centre: offset off the vine on its alternating side, on a short petiole
-      vec2 petioleDir = normalize(nrm * side + tang * 0.35);
-      vec2 ctr = P + petioleDir * lr * 1.05;
-
-      // quick bounding reject
       vec2 rel = cssP - ctr;
-      if (dot(rel, rel) > lr * lr * 2.9) continue;
+      if (dot(rel, rel) > lr * lr * 3.0) continue;
 
-      // leaf-local frame: tip points outward (away from vine), cleft toward vine.
-      // local +y = from tip toward cleft = -petioleDir.
-      vec2 up = -petioleDir;
+      // leaf-local frame: +y points up toward the cleft/petiole (= -tipDir)
+      vec2 up = -tipDir;
       vec2 rt = vec2(up.y, -up.x);
-      // gentle per-leaf sway rotation
-      float wob = sin(t * (0.8 + hSide) + fv * 2.0 + fl) * 0.12 * sway;
-      float cw = cos(wob), sw = sin(wob);
-      vec2 upr = vec2(up.x * cw - up.y * sw, up.x * sw + up.y * cw);
-      vec2 rtr = vec2(upr.y, -upr.x);
-      vec2 q = vec2(dot(rel, rtr), dot(rel, upr)) / lr; // leaf-local, ~unit heart
+      vec2 q  = vec2(dot(rel, rt), dot(rel, up)) / lr;
 
-      // shape the heart: shift down so cleft sits near the petiole, scale to taste
-      vec2 hp = vec2(q.x * 1.02, (q.y) * 1.12 + 0.42);
+      vec2 hp = vec2(q.x * 1.04, q.y * 1.12 + 0.42);
       float f = heartField(hp);
+      float cov = smoothstep(0.10, -0.22, f);
+      if (cov < 0.02) continue;
 
-      float cov  = smoothstep(0.10, -0.26, f);       // leaf body coverage
-      if (cov < 0.003) continue;
-      float depthDim = 0.55 + 0.6 * hDep;            // far leaves dimmer
+      // veins: midrib + herringbone (in leaf-local space)
+      float midrib = exp(-hp.x * hp.x / 0.009);
+      float herb = abs(hp.x) * 2.3 - hp.y;
+      float lp2  = fract(herb * 2.2) - 0.5;
+      float lat  = exp(-(lp2 * lp2) / 0.013) * smoothstep(0.95, 0.2, abs(hp.x));
+      float veins = max(midrib, lat * 0.7);
+      // margin band hugging the outline
+      float rim = exp(-f * f / 0.022) * smoothstep(0.16, -0.05, f);
+      // variegation blotches
+      float vg = vnoise(q * 3.2 + vec2(fv * 4.0, fl * 2.0));
+      float varMask = smoothstep(0.58, 0.84, vg) * varieg;
+      // simple form shading: brighter near the midrib/upper leaf, darker at edges
+      float shade = clamp(0.45 + 0.55 * (1.0 - abs(hp.x)) - 0.2 * smoothstep(0.0,-0.2,f), 0.0, 1.0);
 
-      // margin rim: a band hugging the outline (|f| ~ 0), inside the leaf
-      float rim = exp(-f * f / 0.020) * smoothstep(0.16, -0.05, f);
+      vec3 leafCol = mix(foliageLo, foliageHi, shade);
+      leafCol = mix(leafCol, varCol, varMask * 0.7);
+      leafCol += veinCol * veins * vGlow * 0.7;
+      leafCol += marginC * rim * mGlow * 0.9;
+      leafCol *= 0.55 + 0.6 * hDep;                          // far leaves a bit dimmer
 
-      // veins in leaf-local space: midrib (x~0) + herringbone laterals
-      float midrib = exp(-hp.x * hp.x / 0.010);
-      float herb   = abs(hp.x) * 2.3 - hp.y;         // diagonal coordinate
-      float lp     = fract(herb * 2.2) - 0.5;        // (avoid pow(neg,..) -> NaN)
-      float lat    = exp(-(lp * lp) / 0.012);
-      lat *= smoothstep(0.9, 0.2, abs(hp.x));        // fade laterals at the edge
-      float veins  = max(midrib, lat * 0.7) * cov;
-
-      // variegation: warm cream blotches keyed to a per-leaf noise field
-      float vg = vnoise(q * 3.0 + vec2(fv * 4.0, fl * 2.0));
-      float varMask = smoothstep(0.6, 0.85, vg) * varieg * cov;
-
-      // assemble the leaf (additive, luminous) — body more solid so leaves read
-      // as foliage rather than wireframe; veins/margin ride on top.
-      vec3 leaf = foliage * cov * 0.95;
-      leaf += varCol  * varMask * 0.55;
-      leaf += veinCol * veins * vGlow * 0.8;
-      leaf += marginC * rim * mGlow * 0.95;
-
-      col += leaf * depthDim;
+      if (hDep > bestZ) {                                    // nearest leaf wins
+        bestZ = hDep;
+        bestCol = leafCol;
+        bestCov = cov;
+      }
     }
   }
 
-  // base: deep-foliage tint behind everything so gaps read as shadowed leaves,
-  // not flat black (the post backdrop adds a further palette wash).
-  col += BG + foliage * 0.10;
+  vec3 col = mix(base, bestCol, bestCov);
 
-  // gentle vignette to seat the curtain
+  // gentle vignette
   vec2 uv = gl_FragCoord.xy / max(u_resolution, vec2(1.0));
-  col *= 1.0 - 0.30 * smoothstep(0.45, 1.12, length(uv - 0.5) * 1.40);
+  col *= 1.0 - 0.28 * smoothstep(0.5, 1.15, length(uv - 0.5) * 1.40);
 
-  // soft filmic rolloff so dense overlaps don't clip flat
-  col = col / (1.0 + col * 0.40);
-
-  // tiny dither to keep gradients band-free
+  // tiny dither
   col += (hash21(gl_FragCoord.xy + fract(t) * vec2(13.1, 7.7)) - 0.5) * 0.004;
 
   gl_FragColor = vec4(max(col, 0.0), 1.0);
