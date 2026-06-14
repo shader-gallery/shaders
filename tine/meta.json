@@ -3,18 +3,63 @@
   "slug": "tine",
   "family": "Knell",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "resonance", "fork", "interference", "decay"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "resonance",
+    "fork",
+    "interference",
+    "decay"
+  ],
   "description": "A single tuning fork standing on a near-black field, drawn as the long-exposure envelope of its own vibration: each tine blooms wider where its swing is largest and stays needle-sharp at the yoke. A faint ladder of fixed interference fringes hangs between the tines. Hash-spaced strikes flood the envelope, then it narrows exponentially toward a hairline as the note rings down.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_gap", "label": "Tine gap", "min": 28, "max": 120, "step": 1,
-      "default": 56, "effect": "CSS-pixel spacing between the two tines, also re-spacing the interference ladder hung between them." },
-    { "uniform": "u_swing", "label": "Strike swing", "min": 3, "max": 24, "step": 1,
-      "default": 12, "effect": "Peak blur width at the tine tips just after a strike, from a tight hum to a wide soft bloom." },
-    { "uniform": "u_strikeGap", "label": "Strike spacing", "min": 4, "max": 28, "step": 1,
-      "default": 10, "effect": "Mean seconds between strikes and softer mid-decay touches on the fork." },
-    { "uniform": "u_ringTime", "label": "Ring time", "min": 2, "max": 14, "step": 1,
-      "default": 7, "effect": "How slowly the envelope narrows back toward a hairline after each strike." }
+    {
+      "uniform": "u_gap",
+      "label": "Tine gap",
+      "min": 10.0,
+      "max": 120,
+      "step": 1,
+      "default": 56.0,
+      "effect": "CSS-pixel spacing between the two tines, also re-spacing the interference ladder hung between them."
+    },
+    {
+      "uniform": "u_swing",
+      "label": "Strike swing",
+      "min": 3,
+      "max": 24,
+      "step": 1,
+      "default": 12,
+      "effect": "Peak blur width at the tine tips just after a strike, from a tight hum to a wide soft bloom."
+    },
+    {
+      "uniform": "u_strikeGap",
+      "label": "Strike spacing",
+      "min": 4,
+      "max": 28,
+      "step": 1,
+      "default": 10,
+      "effect": "Mean seconds between strikes and softer mid-decay touches on the fork."
+    },
+    {
+      "uniform": "u_ringTime",
+      "label": "Ring time",
+      "min": 2,
+      "max": 14,
+      "step": 1,
+      "default": 7,
+      "effect": "How slowly the envelope narrows back toward a hairline after each strike."
+    }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.7,
+    "bloomRadius": 4.5,
+    "backdrop": 0.5,
+    "backdropScale": 1.2,
+    "saturation": 1.1,
+    "contrast": 1.06,
+    "dither": 1.0
+  }
 }
