@@ -32,6 +32,7 @@ uniform float u_iceGlow;       // cold rim light brightness                 (def
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float TWO_PI   = 6.2831853;
 const float LOG2     = 0.6931472;
+const float ANG_CELLS = 7.0;                      // lobes around the throat == angular noise period
 
 // cyclic triangular weight for a palette entry centred at c on a 0..4 wheel
 float wheelW(float s, float c) {
@@ -49,11 +50,13 @@ vec3 wheel(vec3 c0, vec3 c1, vec3 c2, vec3 c3, float s) {
 // smooth 1-D value noise on a cyclic angular axis (period built by the caller via
 // integer cells); hash is the classic sin-fract, stable under headless-gl.
 float hash1(float n) { return fract(sin(n) * 43758.5453123); }
-float vnoise(float x) {
+float pvnoise(float x, float period) {
   float i = floor(x);
   float f = fract(x);
   float u = f * f * (3.0 - 2.0 * f);
-  return mix(hash1(i), hash1(i + 1.0), u);
+  float i0 = mod(i,        period);              // wrap the cell index...
+  float i1 = mod(i + 1.0,  period);              // ...and its neighbour, so it tiles
+  return mix(hash1(i0), hash1(i1), u);
 }
 
 // Angular FBM frozen in (angle, log-depth) space. `a` is the seamless angular
@@ -61,10 +64,10 @@ float vnoise(float x) {
 // shelf so adjacent shelves don't share an identical contour. Returns ~ -1..1.
 float angFBM(float a, float z) {
   float v = 0.0;
-  v += 0.55 * vnoise(a + z);
-  v += 0.27 * vnoise(a * 2.0 + z * 1.7 + 11.3);
-  v += 0.13 * vnoise(a * 4.0 + z * 2.3 + 23.1);
-  v += 0.05 * vnoise(a * 8.0 + z * 3.1 + 47.7);
+  v += 0.55 * pvnoise(a + z,                    ANG_CELLS);
+  v += 0.27 * pvnoise(a * 2.0 + z * 1.7 + 11.3, ANG_CELLS * 2.0);
+  v += 0.13 * pvnoise(a * 4.0 + z * 2.3 + 23.1, ANG_CELLS * 4.0);
+  v += 0.05 * pvnoise(a * 8.0 + z * 3.1 + 47.7, ANG_CELLS * 8.0);
   return (v / 0.55) * 2.0 - 2.0; // normalize ~0..1 range then map toward -1..1
 }
 
@@ -97,7 +100,6 @@ void main() {
   // seamless angular coordinate. We want the FBM to wrap exactly once per turn:
   // map angle to 0..1, scale by an integer cell count so floor()-cell hashing is
   // periodic, and add the matching wrap so vnoise reads identically at +/-PI.
-  const float ANG_CELLS = 7.0;            // lobes around the throat
   float ua = (ang / TWO_PI) + 0.5;        // 0..1
   float aSeam = ua * ANG_CELLS;           // 0..ANG_CELLS, integer-periodic
 
