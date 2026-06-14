@@ -16,5 +16,6 @@
     { "uniform": "u_grate", "label": "Grate", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.55, "effect": "Visibility of the fixed overhead grate silhouette; 0 removes it for an open shaft." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6, "backdrop": 0.5 }
 }

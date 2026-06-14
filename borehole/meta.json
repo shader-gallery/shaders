@@ -53,5 +53,6 @@
       "effect": "Amount of angular drill-grain scuffing the bands — 0 leaves clean concentric rings."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6 }
 }

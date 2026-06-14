@@ -16,5 +16,6 @@
     { "uniform": "u_iceGlow", "label": "Ice glow", "min": 0.2, "max": 1.4, "step": 0.01,
       "default": 0.8, "effect": "Brightness of the cold rim light along each shelf edge." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.6 }
 }

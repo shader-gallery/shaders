@@ -52,5 +52,6 @@
       "effect": "Softness and reach of the glow halo around each ring; 0 leaves crisp bare circles."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.7, "backdrop": 0.6 }
 }
