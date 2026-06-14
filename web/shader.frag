@@ -176,19 +176,19 @@ void main() {
   // (family motion language). Keyed to radius + angle, paced by the same speed.
   float silkWave = 0.5 + 0.5 * sin(rw / ringGap * 1.6 + angN * 3.0
                                    - t * u_glintSpeed * TAU * 0.22);
-  silkWave = mix(0.08, 1.45, silkWave * silkWave);
+  silkWave = mix(0.32, 1.7, silkWave * silkWave);
 
-  // --- compose: silk is faint, dew carries most of the light ---
+  // --- compose: bold luminous silk + bright dew glints ---
   float silkAmt = (spokeStroke + ringStroke);
-  col += silkCol * silkAmt * 0.24 * silkWave;            // hairline strands, shimmering
-  col += dewCol * bead * beadLight * webMask * 1.35;     // dew core
+  col += silkCol * silkAmt * 0.62 * silkWave;            // hairline strands, shimmering
+  col += dewCol * bead * beadLight * webMask * 1.7;      // dew core
   // soft bloom halo around lit beads
-  col += dewCol * bead * beadLight * webMask * 0.5;
+  col += dewCol * bead * beadLight * webMask * 0.6;
   // tiny white-hot centre on the brightest glints
-  col += vec3(1.0) * bead * pow(glint, 3.0) * webMask * 0.35;
+  col += vec3(1.0) * bead * pow(glint, 3.0) * webMask * 0.55;
 
-  // radial vignette to settle the framing
-  float vign = 1.0 - smoothstep(0.35, 1.15, length((fc - res * 0.5) / res));
+  // gentle radial falloff, floored so the web reads to the edges
+  float vign = 0.78 + 0.22 * (1.0 - smoothstep(0.5, 1.25, length((fc - res * 0.5) / res)));
   col *= vign;
 
   gl_FragColor = vec4(col, 1.0);

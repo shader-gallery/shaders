@@ -3,7 +3,15 @@
   "slug": "web",
   "family": "Loom",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "spider", "radial", "beads", "tremble"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "spider",
+    "radial",
+    "beads",
+    "tremble"
+  ],
   "description": "A single orb-weaver's web hung across the dark from an off-centre hub: a dozen-odd irregular radial spokes crossed by a slightly wonky Archimedean spiral. Hairline silk barely glows while dew beads at the crossings glint awake in slow travelling sequence around the web, their colour wandering through a restrained rainbow, the whole structure trembling a few pixels in the night air.",
   "entry": "shader.frag",
   "params": [
@@ -44,5 +52,13 @@
       "effect": "Rate at which dew beads light up in sequence around the web, from one slow circuit per half-minute to a lively sparkle chase."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "peacock",
+  "post": {
+    "bloom": 0.7,
+    "bloomRadius": 4.5,
+    "backdrop": 0.45,
+    "backdropScale": 1.2,
+    "saturation": 1.08,
+    "dither": 1.0
+  }
 }
