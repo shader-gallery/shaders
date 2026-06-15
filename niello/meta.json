@@ -77,6 +77,33 @@
       "step": 0.05,
       "default": 1.0,
       "effect": "How fast each punch-mark glint flickers, independent of how many twinkle; 0 freezes the sparkle mid-shimmer, high sets it racing."
+    },
+    {
+      "uniform": "u_strapWidth",
+      "label": "Strap width",
+      "min": 0.04,
+      "max": 0.45,
+      "step": 0.01,
+      "default": 0.27,
+      "effect": "Thickness of the interlace ribbons; low draws fine lacy knotwork lines, high swells them into bold burnished bands."
+    },
+    {
+      "uniform": "u_weaveMix",
+      "label": "Weave style",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Morphs the figure pattern: 0 is a pure diagonal basket weave, 0.5 the full crossed interlace, 1 a square orthogonal lattice."
+    },
+    {
+      "uniform": "u_medallion",
+      "label": "Medallion",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the concentric rings at the centre; 0 leaves a pure weave with no focal rosette, high sets a bold medallion at the heart of the panel."
     }
   ],
   "defaultPalette": "midnight",
