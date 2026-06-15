@@ -1,4 +1,4 @@
-// hatch-contour (Burnish) — "Hatch Contour", a variation on Hatch. Where Hatch
+// hatch-contour (Burnish) - Hatch Contour, a variation on Hatch. Where Hatch
 // rules dead-straight diagonals, the whole crosshatch lattice is domain-warped
 // here along the drifting ghost field, so every burin stroke bends and flows
 // around the hidden form like the curved lines of a wood engraving or the
@@ -11,7 +11,7 @@
 // Uniforms provided by the runtime:
 //   u_time        seconds, monotonically increasing
 //   u_resolution  drawing-buffer size in device pixels
-//   u_mouse       pointer in device pixels (0,0 when absent) — unused here
+//   u_mouse       pointer in device pixels (0,0 when absent) - unused here
 //   u_pixelRatio  devicePixelRatio used for the buffer
 //   u_palette[4]  four glow colours, themeable (0..1 rgb)
 precision highp float;
@@ -23,7 +23,7 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_drift;    // speed of the invisible plume's drift   (default 0.35)
+uniform float u_drift;    // speed of the invisible plumes drift   (default 0.35)
 uniform float u_spacing;  // hatch line gap in CSS px                (default 7)
 uniform float u_ink;      // how strongly the ghost field carves     (default 0.8)
 uniform float u_warp;     // how far the strokes bend along the flow (default 0.6)
@@ -66,7 +66,7 @@ float wheelW(float s, float c) {
 }
 
 // One hatch set: parallel lines along direction `dir`, gap `spacing` (px),
-// each line's ink coverage gated by `weight` (0 = no line, 1 = full). Returns a
+// each lines ink coverage gated by `weight` (0 = no line, 1 = full). Returns a
 // soft anti-aliased coverage 0..1. The lattice itself is static in screen space.
 float hatchSet(vec2 fc, vec2 dir, float spacing, float weight, float aa) {
   // signed coordinate perpendicular to the line direction
@@ -122,7 +122,7 @@ void main() {
 
   // Per-set line weight from the shade. First set fades in over the lighter half,
   // the second crosshatch over the mid-darks, the third sparse set only in the
-  // very deepest tones — classic engraving tonal build-up.
+  // very deepest tones - classic engraving tonal build-up.
   float w1 = smoothstep(0.18, 0.70, shade);                 // primary diagonal
   float w2 = smoothstep(0.46, 0.96, shade);                 // crossing diagonal
   float w3 = smoothstep(0.80, 1.00, shade) * 0.85;          // sparse third set
@@ -168,7 +168,7 @@ void main() {
     c2 = vec3(0.133,0.827,0.933); c3 = vec3(0.957,0.247,0.369);
   }
 
-  // line tint shifts through the palette with the ghost field's local density —
+  // line tint shifts through the palette with the ghost fields local density -
   // rainbow stays buried inside the linework, never a wash. Keep the spatial
   // sweep gentle and the tone coupling small so each region holds one or two
   // neighbouring hues rather than the whole spectrum at once.
@@ -179,13 +179,13 @@ void main() {
 
   // --- raking light: a low light from one edge whose bearing precesses a full
   // slow circle over the loop, adding a gentle luminance gradient across the
-  // static engraving (the only thing that "moves"). ---
+  // static engraving (the only thing that moves). ---
   float bearing = t * 0.18; // precesses; full circle ~ loop
   vec2  lightDir = vec2(cos(bearing), sin(bearing));
   float ramp = dot((fc - ctr) / (RAKE_CSS * pr), lightDir);
   float rake = 0.5 + 0.5 * ramp;        // 0..1 luminance gradient
   rake = clamp(rake, 0.0, 1.0);
-  // sheen: a narrow bright band where the raking light grazes — the rare glint
+  // sheen: a narrow bright band where the raking light grazes - the rare glint
   float sheen = exp(-pow((ramp) * 1.6, 2.0));
 
   // The ink itself is luminous (etched metal catching light). Brightness of the
