@@ -7,7 +7,7 @@
   "description": "Concentric glowing rings crossed by radial spokes, like a circular LED grid or a luminous manhole cover. Charge pulses outward through the rings while the hue turns with radius and angle, all over a softly lit ground.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_scale", "label": "Ring spacing", "min": 24.0, "max": 140.0, "step": 2.0,
+    { "uniform": "u_scale", "label": "Ring spacing", "min": 12.0, "max": 140.0, "step": 2.0,
       "default": 60.0, "effect": "Spacing between concentric rings in CSS pixels - many fine rings at the minimum, a few wide ones at the maximum." },
     { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 8.0, "step": 0.1,
       "default": 2.8, "effect": "Core thickness of each glowing ring and spoke in CSS pixels, from a hairline trace to a fat neon tube." },
@@ -16,8 +16,18 @@
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.7, "effect": "Strength of the soft halo around rings and spokes; low is crisp, high a luminous bloom." },
     { "uniform": "u_spokes", "label": "Spokes", "min": 4.0, "max": 48.0, "step": 1.0,
-      "default": 16.0, "effect": "Number of radial spokes dividing the wheel, from a sparse cross to a dense sunburst cage." }
+      "default": 16.0, "effect": "Number of radial spokes dividing the wheel, from a sparse cross to a dense sunburst cage." },
+    { "uniform": "u_colorBlend", "label": "Colour blend", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Heals the colour seam on the left where the hue wraps; low keeps the original half-wheel pinwheel, high turns the hue through one seamless full rainbow per revolution." },
+    { "uniform": "u_fill", "label": "Cell fill", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Fraction of grid cells that light up as a solid glowing dot inside the rings and spokes; 0 leaves the wheel open, high fills it like a circular LED matrix." },
+    { "uniform": "u_fillSize", "label": "Fill size", "min": 0.3, "max": 1.0, "step": 0.01,
+      "default": 0.8, "effect": "Size of each filled dot within its cell, from a small bead to a block that nearly meets the surrounding rings and spokes." },
+    { "uniform": "u_fade", "label": "Twinkle", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Makes the filled cells breathe in and out, each on its own random phase, so the wheel shimmers." },
+    { "uniform": "u_seed", "label": "Pattern", "min": 0.0, "max": 64.0, "step": 1.0,
+      "default": 0.0, "effect": "Re-rolls which cells fill and their twinkle phases for a fresh arrangement of the same wheel." }
   ],
-  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0, "vignette": 0.26 },
   "defaultPalette": "prism"
 }
