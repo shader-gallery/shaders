@@ -63,7 +63,7 @@ float ribbon(float v, float halfWidth) {
 // a tiled field of concentric-ring medallions. count sets how many across the
 // panel; ringRnd jitters each medallion's position, ring count and phase so a
 // randomised value scatters a varied set of rosettes instead of one repeat.
-float medallionField(vec2 uv, float count, float rnd, float ringRnd) {
+float medallionField(vec2 uv, float count, float rnd, float ringRnd, float hw) {
   float cell = 2.4 / max(count, 0.4);
   vec2  g  = uv / cell;
   vec2  id = floor(g + 0.5);
@@ -74,7 +74,9 @@ float medallionField(vec2 uv, float count, float rnd, float ringRnd) {
   float h2 = hash21(id + 57.3);
   float ringsN = 5.0 + h * 7.0 * ringRnd;       // randomised ring count
   float ph = rnd + h2 * 6.2831853 * ringRnd;    // randomised phase
-  float rings = ribbon(sin(rn * 3.14159265 * ringsN + ph), 0.28);
+  // ring thickness tracks the Strap width control so the whole figure thickens
+  // together (default ~0.28 keeps the original ring weight).
+  float rings = ribbon(sin(rn * 3.14159265 * ringsN + ph), clamp(hw, 0.04, 0.45));
   rings *= 1.0 - smoothstep(0.82, 1.0, rn);     // gate each medallion to its cell
   return rings;
 }
@@ -98,8 +100,9 @@ float strapField(vec2 uv, float freq, float rnd, float hw, float weaveMix, float
   float gW = mix(0.08, 1.0, smoothstep(0.0, 0.5, weaveMix));
   float weave = max(diagW * dW, gridW * gW);
 
-  // a field of medallions ties the panel into a composed figure
-  float rings = medallionField(uv, medCount, rnd, ringRnd) * med;
+  // a field of medallions ties the panel into a composed figure (rings thickness
+  // follows the same Strap width as the weave)
+  float rings = medallionField(uv, medCount, rnd, ringRnd, hw) * med;
 
   return max(weave, rings);
 }
