@@ -45,6 +45,28 @@ vec3 wheelCol(float k, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
   return (c0 * a + c1 * b + c2 * cc + c3 * dd) / max(a + b + cc + dd, 0.001);
 }
 
+// one medallion, centred at the origin of gg (cell units), seeded by cid.
+// Returns vec3(mass, line, boss). The figure can grow past its own cell (fill>1)
+// so neighbouring medallions OVERLAP rather than crop at the cell edge.
+vec3 medallion(vec2 gg, vec2 cid, float fill, float det, float Nf, float mt) {
+  vec2 gs = gg / fill;
+  float r = length(gs);
+  if (r > 0.5) return vec3(0.0);             // outside this figure entirely
+  float ang = atan(gs.y, gs.x);
+  float sector = 6.2831853 / Nf;
+  float fa = mod(ang, sector);
+  fa = abs(fa - 0.5 * sector);
+  vec2 fg = vec2(cos(fa), sin(fa)) * r;
+  float d1 = fbm(fg * det + cid * 0.3 + 2.1 + mt);
+  float d2 = fbm(fg * det * 1.9 + 8.4 - mt);
+  float orn = mix(d1, d2, 0.35);
+  float radMask = smoothstep(0.5, 0.12, r);
+  float mass = smoothstep(0.5, 0.62, orn) * radMask;
+  float line = smoothstep(0.035, 0.0, abs(orn - 0.56)) * radMask;
+  float boss = smoothstep(0.09, 0.0, r);
+  return vec3(mass, line, boss);
+}
+
 void main() {
   float pr  = u_pixelRatio;
   vec2  fc  = gl_FragCoord.xy;
@@ -62,41 +84,34 @@ void main() {
   vec2  uv = rel / cell;
   uv += u_sway * vec2(sin(t * 0.16), cos(t * 0.13)) * 0.35;
 
-  // half-drop damask repeat: shift alternate columns by half a row
-  float colOdd = mod(floor(uv.x), 2.0);
-  vec2  p = vec2(uv.x, uv.y + colOdd * 0.5);
-  vec2  cellId = floor(p);
-  vec2  g = fract(p) - 0.5;
-  // element spacing: shrink each medallion within its cell to open the gaps
-  // between motifs. The repeat grid stays fixed; only the figure footprint
-  // changes, so higher spacing spreads the elements further apart.
-  float fill = clamp(1.0 - u_spacing * 0.6, 0.35, 1.3);
-  vec2  gs = g / fill;
+  // element spacing on a half-drop repeat: tightening grows each medallion past
+  // its cell so neighbours OVERLAP instead of cropping at the edge. Gather the
+  // figure from a 3x3 block of cells (alternate columns half-dropped) and union
+  // them, so a fragment can be covered by more than one overlapping medallion.
+  float fill = clamp(1.0 - u_spacing * 0.6, 0.35, 1.8);
+  float det  = 6.0 + u_detail * 10.0;
+  float Nf   = max(floor(u_fold + 0.5), 2.0);
+  float mt   = t * u_morph * 0.14;
 
-  // fold into an N-fold dihedral kaleidoscope -> a perfectly symmetric motif
-  float r = length(gs);
-  float ang = atan(gs.y, gs.x);
-  float N = max(floor(u_fold + 0.5), 2.0);
-  float sector = 6.2831853 / N;
-  float fa = mod(ang, sector);
-  fa = abs(fa - 0.5 * sector);
-  vec2  fg = vec2(cos(fa), sin(fa)) * r;
-
-  // ornamental density field, symmetric by construction. A slow time offset on
-  // the noise seed lets the filigree breathe and evolve while staying perfectly
-  // symmetric (fg is already folded, so the motif morphs without losing balance).
-  float det = 6.0 + u_detail * 10.0;
-  float mt  = t * u_morph * 0.14;
-  float d1 = fbm(fg * det + cellId * 0.3 + 2.1 + mt);
-  float d2 = fbm(fg * det * 1.9 + 8.4 - mt);
-  float orn = mix(d1, d2, 0.35);
-
-  // confine the ornament to a medallion that fades before the cell edge
-  float radMask = smoothstep(0.5, 0.12, r);
-  float mass = smoothstep(0.5, 0.62, orn) * radMask;          // filled ornament body
-  float line = smoothstep(0.035, 0.0, abs(orn - 0.56)) * radMask; // gold outline filigree
-  float boss = smoothstep(0.09, 0.0, r);                      // central boss
-  float ink  = clamp(max(line, boss * 0.9) + mass * 0.25, 0.0, 1.0);
+  vec2 baseCell = floor(uv);
+  float mass = 0.0, line = 0.0, boss = 0.0, rNear = 100.0;
+  vec2 cellId = baseCell;
+  for (int dx = -1; dx <= 1; dx++) {
+    for (int dy = -1; dy <= 1; dy++) {
+      vec2 cid = baseCell + vec2(float(dx), float(dy));
+      float odd = mod(cid.x, 2.0);
+      vec2 center = vec2(cid.x + 0.5, cid.y + 0.5 - odd * 0.5);  // half-drop
+      vec2 gg = uv - center;
+      vec3 m = medallion(gg, cid, fill, det, Nf, mt);
+      mass = max(mass, m.x);
+      line = max(line, m.y);
+      boss = max(boss, m.z);
+      float rr = length(gg);
+      if (rr < rNear) { rNear = rr; cellId = cid; }
+    }
+  }
+  float r = rNear / fill;                                     // radial coord (shim)
+  float ink = clamp(max(line, boss * 0.9) + mass * 0.25, 0.0, 1.0);
 
   // --- palette ---
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
