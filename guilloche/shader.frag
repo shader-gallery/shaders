@@ -26,6 +26,7 @@ uniform float u_stroke;      // strand stroke width in CSS px                  (
 uniform float u_braidDepth;  // sine amplitude about each band axis            (default 0.55)
 uniform float u_glint;       // brightness of specular sparks at crossings     (default 1)
 uniform float u_random;      // scatter each strand start phase                (default 0)
+uniform float u_tube;        // round strands into rotating tubes              (default 0)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black steel base ~#09090B
 const float BANDS    = 9.0;    // number of horizontal band axes (rows of strands)
@@ -80,6 +81,7 @@ void main() {
   float bestDepth = -1e9;   // larger depth = drawn on top (over-stroke)
   float prox      = 0.0;    // sum of soft proximities to every strand centreline
   float second    = 0.0;    // coverage of the 2nd-nearest strand (under-stroke)
+  float litNrm    = 0.0;    // signed cross-tube coord of the over-strand (-1..1)
 
   // a longitudinal coordinate phase so the whole braid is seamless
   for (int si = 0; si < 4; si++) {
@@ -95,7 +97,8 @@ void main() {
     float travel = t * u_waveSpeed * (0.55 + fsi * 0.17);
     float ang   = fc.x * kx * harm + phase + travel;
     float sy    = axisY + amp * sin(ang);
-    float d     = abs(fc.y - sy);
+    float dsign = fc.y - sy;
+    float d     = abs(dsign);
 
     // over/under depth: cosine staggered per strand gives a smoothly migrating
     // over-under braid (the larger value is the strand drawn on top)
@@ -114,6 +117,7 @@ void main() {
         bestDepth = depth;
         litLine   = cov;
         litCol    = sc;
+        litNrm    = dsign / max(stroke, 0.5);   // for the rotating-tube shading
       } else {
         second = max(second, cov);
       }
@@ -127,10 +131,21 @@ void main() {
     prox += exp(-d * d / pw);
   }
 
+  // ROTATING TUBE: shade the over-strand as a rounded cylinder (dark at the rim,
+  // bright along the crown) and run a helical highlight that travels around the
+  // circumference over time, so the flat strand reads as a spinning tube. The
+  // whole effect fades to the flat engraved line at u_tube = 0.
+  float theta  = asin(clamp(litNrm, -1.0, 1.0));    // angle across the tube
+  float roundv = cos(theta);                        // 1 at crown, 0 at the rim
+  float bar    = 0.5 + 0.5 * sin(theta * 3.0 + fc.x * kx * 2.0 - t * (0.8 + u_waveSpeed * 1.5));
+  float roll   = pow(bar, 3.0) * roundv;            // helical specular band
+  vec3  overCol = mix(litCol, litCol * mix(0.45, 1.2, roundv), u_tube);
+
   // ENGRAVED STRANDS: dim, colour-tinted cuts in dark steel — light is structural,
   // so the bare strands stay restrained and the crossings carry the brightness.
-  col += litCol * litLine * 0.58;
+  col += overCol * litLine * 0.58;
   col += litCol * second  * 0.30;   // the under-stroke, dimmer, reads the braid
+  col += mix(litCol, vec3(1.0), 0.6) * roll * litLine * u_tube * 0.7;  // rolling highlight
 
   // CROSSINGS: prox exceeds ~1 only where two centrelines coincide. That excess
   // is the lozenge corner where one strand crosses over another — set a jewel.

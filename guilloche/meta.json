@@ -59,6 +59,15 @@
       "step": 0.01,
       "default": 0.0,
       "effect": "Scatters where each strand's wave starts and ends; 0 is the orderly aligned braid, higher offsets every strand by a random phase so the weave looks hand-drawn and irregular."
+    },
+    {
+      "uniform": "u_tube",
+      "label": "Tube roll",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Rounds the flat strands into 3D tubes and runs a helical highlight around them so they appear to rotate; 0 is the flat engraved line, higher gives glossy spinning rods (best read with thicker strokes)."
     }
   ],
   "defaultPalette": "peacock",
