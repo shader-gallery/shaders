@@ -17,6 +17,8 @@ uniform float u_scale;   // path cell size in CSS px      (default 70)
 uniform float u_line;    // path core weight in CSS px     (default 3.0)
 uniform float u_flow;    // speed of the travelling light  (default 0.6)
 uniform float u_glow;    // halo / glow strength 0..1      (default 0.7)
+uniform float u_weld;    // 0 = segmented beads, 1 = seamless flow (default 1)
+uniform float u_seed;    // re-rolls which tiles turn -> a new maze (default 0)
 
 float hash21(vec2 p) { p = fract(p * vec2(123.34, 345.45)); p += dot(p, p + 34.345); return fract(p.x * p.y); }
 float wheelW(float s, float c) { float d = abs(s - c); return max(0.0, 1.0 - min(d, 4.0 - d)); }
@@ -35,12 +37,12 @@ void main() {
   float HALFPI = 1.5707963;
 
   float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0);
-  float cell = max(u_scale, 18.0) * refScale * pr;
+  float cell = max(u_scale, 8.0) * refScale * pr;
   vec2  uv = (fc - ctr) / cell;
 
   vec2 id = floor(uv);
   vec2 f  = fract(uv);
-  float hsh = hash21(id);
+  float hsh = hash21(id + vec2(u_seed * 1.7, u_seed * 2.3));  // u_seed re-rolls the maze
   if (hsh > 0.5) f.x = 1.0 - f.x;          // pick one of the two Truchet turns
 
   // two quarter-arcs centred at opposite corners, radius 0.5 -> connected paths
@@ -66,15 +68,21 @@ void main() {
     c2 = vec3(0.133,0.827,0.933); c3 = vec3(0.957,0.247,0.369);
   }
 
-  // hue varies slowly across the maze so the lines are multi-hue, not one wash
-  float hue = dot(uv, vec2(0.06, 0.085)) + hsh * 0.12 + t * 0.02;
+  // hue varies slowly across the maze so the lines are multi-hue, not one wash.
+  // the per-tile hsh jump is faded out by u_weld so colour does not step at seams.
+  float hue = dot(uv, vec2(0.06, 0.085)) + hsh * 0.12 * (1.0 - u_weld) + t * 0.02;
   vec3 pathCol = wheelCol(hue, c0, c1, c2, c3);
 
-  // travelling current: a bright pulse running along each arc, direction set by
-  // the tile so the light reads as coursing continuously through the labyrinth.
-  float dirn = (hsh > 0.5) ? -1.0 : 1.0;
-  float s = ang / HALFPI + (id.x + id.y) * 0.5;          // arc-length-ish phase
-  float pulse = 0.5 + 0.5 * sin(6.2831853 * (s * 1.0 - t * u_flow * 0.5) * dirn);
+  // travelling current: a bright pulse running along the paths. the LOCAL phase
+  // chains arc-length per tile (the original look) but jumps at every cell edge;
+  // the GLOBAL phase is one continuous field across the frame (no seams). u_weld
+  // crossfades local -> global so the beads weld into a smooth coursing flow.
+  float dirn   = (hsh > 0.5) ? -1.0 : 1.0;
+  float sLocal = ang / HALFPI + (id.x + id.y) * 0.5;     // arc-length-ish phase
+  float phLoc  = (sLocal - t * u_flow * 0.5) * dirn;
+  float phGlob = dot(uv, vec2(0.5, 0.5)) - t * u_flow * 0.5;
+  float ph     = mix(phLoc, phGlob, u_weld);
+  float pulse  = 0.5 + 0.5 * sin(6.2831853 * ph);
   pulse = pow(pulse, 3.0);
 
   float lit = core * (0.85 + 1.0 * pulse) + halo * (0.7 + 0.6 * pulse);
