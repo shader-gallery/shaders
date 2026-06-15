@@ -3,15 +3,162 @@
   "slug": "lacework",
   "family": "Loom",
   "author": "Erin Carter",
-  "tags": ["dark", "grid", "lattice", "glow", "rainbow", "organic", "loop"],
+  "tags": [
+    "dark",
+    "grid",
+    "lattice",
+    "glow",
+    "rainbow",
+    "organic",
+    "loop"
+  ],
   "description": "A dark field of stitches — dots that morph into crosses as a radial wave passes through them, lit by four drifting glow blobs and tinted by angle into a faint rainbow.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_waveSpeed", "label": "Wave speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.6, "effect": "Speed the radial wave travels out from the centre, morphing dots into crosses as it passes; 0 freezes the pattern mid-morph." },
-    { "uniform": "u_spacing", "label": "Dot spacing", "min": 12.0, "max": 60.0, "step": 1.0, "default": 22.0, "effect": "Distance between dots in CSS px - a dense fine halftone lace at the minimum, an open sparse grid at the maximum." },
-    { "uniform": "u_wavelength", "label": "Wavelength", "min": 80.0, "max": 500.0, "step": 5.0, "default": 220.0, "effect": "Spacing of the concentric morph rings; short packs many dot-to-cross bands across the frame, long sweeps one broad wave." },
-    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.85, "effect": "Brightness of the four drifting glow blobs that light the lace from behind; low keeps the crisp dots dominant, high floods soft colour through the grid." }
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Speed the radial wave travels out from the centre, morphing dots into crosses as it passes; 0 freezes the pattern mid-morph."
+    },
+    {
+      "uniform": "u_spacing",
+      "label": "Dot spacing",
+      "min": 12.0,
+      "max": 60.0,
+      "step": 1.0,
+      "default": 22.0,
+      "effect": "Distance between dots in CSS px - a dense fine halftone lace at the minimum, an open sparse grid at the maximum."
+    },
+    {
+      "uniform": "u_wavelength",
+      "label": "Wavelength",
+      "min": 80.0,
+      "max": 500.0,
+      "step": 5.0,
+      "default": 220.0,
+      "effect": "Spacing of the concentric morph rings; short packs many dot-to-cross bands across the frame, long sweeps one broad wave."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Lace brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the crisp dots/crosses themselves (the lace). Low keeps them subtle, high makes the halftone pop in vivid colour."
+    },
+    {
+      "uniform": "u_backlight",
+      "label": "Backlight",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Strength of the four drifting glow blobs that flood soft colour behind the lace - the background fill. 0 leaves crisp dots on near-black (the original cleaner read); high washes the whole field in moving colour."
+    },
+    {
+      "uniform": "u_dotSize",
+      "label": "Dot size",
+      "min": 0.3,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Radius of the resting dots. Small reads as a fine pin-prick halftone; large fattens them into bold beads before they morph to crosses."
+    },
+    {
+      "uniform": "u_crossSize",
+      "label": "Cross size",
+      "min": 0.3,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Arm length and thickness of the crosses at full morph. Small keeps tidy plus-signs; large throws bold stitched X-bars across the cells."
+    },
+    {
+      "uniform": "u_rippleAmp",
+      "label": "Ripple depth",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How fully the passing wave morphs dots into crosses. Low barely flickers the shapes; high drives a strong visible ripple sweeping dot-to-cross across the frame."
+    },
+    {
+      "uniform": "u_ripples",
+      "label": "Ripple count",
+      "min": 0.25,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How many concentric morph rings span the field. Low is one broad slow wave; high packs many tight dot-to-cross bands rippling outward together."
+    },
+    {
+      "uniform": "u_originX",
+      "label": "Origin X",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Horizontal position of the point the ripples radiate from. 0 is centre; +/- drives the wave source off toward an edge for an asymmetric sweep."
+    },
+    {
+      "uniform": "u_originY",
+      "label": "Origin Y",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Vertical position of the ripple source. 0 is centre; +/- pushes it up or down so the rings arrive across the frame at an angle."
+    },
+    {
+      "uniform": "u_morphBias",
+      "label": "Morph bias",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Resting shape with no wave: negative holds everything as dots, 0 lets the wave do the work, positive biases the whole field toward crosses (a stitched-X lattice)."
+    },
+    {
+      "uniform": "u_crisp",
+      "label": "Crispness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Edge hardness of the shapes. Low is soft glowing halftone dots; high snaps them to crisp high-contrast marks (the sharp halftone read)."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Rotation",
+      "min": -90.0,
+      "max": 90.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Spins the whole dot grid off the upright axis so the rows and ripple bands run diagonally."
+    },
+    {
+      "uniform": "u_distort",
+      "label": "Distortion",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Sine-warps the grid so the rows ripple and bow instead of running straight - a woven, hand-laid distortion. 0 is a perfect grid."
+    }
   ],
-  "post": { "bloom": 0.4, "bloomRadius": 3.5, "backdrop": 0.45, "backdropScale": 1.15, "saturation": 1.1, "contrast": 1.06, "dither": 1.0 },
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3.5,
+    "backdrop": 0.0,
+    "backdropScale": 1.15,
+    "saturation": 1.1,
+    "contrast": 1.06,
+    "dither": 1.0
+  },
   "defaultPalette": "neon"
 }
