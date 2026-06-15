@@ -96,8 +96,10 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag, vec3 bg,
   float focus = clamp(u_focus, 0.0, 1.0);
   float nearest = floor(q.x / spacing);
 
-  // the silhouette dark colour (a near-black tint of the local background)
-  vec3 reedDark = bg * 0.08 + vec3(0.004, 0.005, 0.010);
+  // the silhouette dark colour — a CONSISTENT soft dusk-dark, independent of the
+  // sky behind it, so a reed reads as one even tone instead of shifting contrast
+  // as it crosses the sky gradient.
+  vec3 reedDark = vec3(0.022, 0.021, 0.038);
 
   // wide window so clump-displaced / jittered / leaning stems are still captured
   for (int i = -7; i <= 7; i++) {
@@ -145,7 +147,7 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag, vec3 bg,
     float atmos = (1.0 - dep) * 0.5 + defocus * 0.3;
     float hv = 0.5 + 0.5 * sin(id * 0.9 + dep * 2.0);
     vec3 reedHue = mix(mix(c0, c1, hv), c2, atmos * 0.6);
-    vec3 reedCol = reedDark + reedHue * (0.04 + 0.16 * atmos);
+    vec3 reedCol = reedDark + reedHue * (0.025 + 0.09 * atmos);
     // premultiplied "over": nearer-looking later stems sit in front
     float a = s * (1.0 - sil);
     silCol += reedCol * a;
