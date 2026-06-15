@@ -126,7 +126,8 @@ void main() {
       float jitter = (hash11(ci * 3.17 + 11.0 + fl * 53.0) - 0.5) * gap * 0.4;
       float caneX  = (ci + 0.5) * gap + jitter;
       if (abs(fc.x - caneX) > reach) continue;          // can't reach: skip pre-wind
-      float halfW  = gap * (0.20 + 0.08 * hash11(ci * 1.7 + 4.0 + fl * 7.0))
+      // base cane radius — taper is applied once we know height along the cane
+      float radius = gap * (0.20 + 0.08 * hash11(ci * 1.7 + 4.0 + fl * 7.0))
                    * widthScale * u_thickness;
 
       // --- calm continuous wind ---
@@ -141,14 +142,26 @@ void main() {
       float spring = 1.0 + 0.18 * sin(t * (2.4 + caneSeed) + ci);
       float bowAmt = wave * env * u_windStrength * stiff * spring;
 
-      // bow grows with along^2 (stiff base, flexible top); clamped so a cane
-      // never leans past the searched neighbourhood.
-      float bowCells = clamp(bowAmt * along * along * 0.9, -1.6, 1.6);
+      // --- natural base: canes emerge from the soil at staggered heights ---
+      float rootYNc = rootYN + (hash11(ci * 5.9 + 21.0 + fl * 8.0) - 0.5) * 0.06;
+      float spanYNc = max(topYN - rootYNc, 0.05);
+      float alongC  = (yN - rootYNc) / spanYNc;           // 0 root .. 1 tip (per cane)
+      if (alongC < -0.05 || alongC > 1.10) continue;      // outside this cane
+
+      // bamboo taper: a touch fatter at the base, slimmer toward the tip
+      float halfW = radius * mix(1.12, 0.88, clamp(alongC, 0.0, 1.0));
+
+      // bow grows with along^2 (stiff base, flexible top); clamped to neighbourhood
+      float bowCells = clamp(bowAmt * alongC * alongC * 0.9, -1.6, 1.6);
       float shimmer  = u_distortion * sin(fc.y * 0.045 - t * 1.6 + caneX * 0.03)
                      * 0.10 * env;
       float cx  = caneX + (bowCells + shimmer) * gap;
       float dxc = fc.x - cx;
-      if (abs(dxc) > gap * 0.80) continue;               // negligible: skip cell
+      if (abs(dxc) > gap * 0.85) continue;               // negligible: skip cell
+
+      // depth of field: the NEAR row is the focal plane; far rows blur out.
+      float focus = fl;                                   // 1 near (sharp) .. 0 far
+      float blur  = (1.0 - focus) * u_depth;              // far-row defocus amount
 
       // --- cylindrical shading across the cane ---
       float u  = clamp(dxc / max(halfW, 1.0), -1.0, 1.0);
@@ -158,10 +171,12 @@ void main() {
       float spec = d4 * d4 * diff * u_specular;           // diff^9 * spec
       float shade = 0.16 + 0.70 * diff + 0.95 * spec;
 
-      // body mask: soft edges + tip rounding
-      float edge     = smoothstep(halfW + pr * 1.4, halfW - pr * 0.6, abs(dxc));
-      float tipRound = smoothstep(1.02, 0.86, along);
-      float body     = edge * tipRound;
+      // body mask: DoF-softened edges, tip rounding, soil-shadowed base
+      float eSoft = pr * 1.0 + blur * halfW * 0.55;       // far edges defocus
+      float edge  = smoothstep(halfW + eSoft, halfW - eSoft, abs(dxc));
+      float tipRound = smoothstep(1.02, 0.86, alongC);
+      float baseFade = smoothstep(-0.02, 0.13, alongC);   // emerge from the soil
+      float body  = edge * tipRound;
 
       // cane colour: adjacent palette blend; glints from the opposite pair.
       float caneHue = mod((0.5 + (hash11(ci * 4.1 + 7.0 + fl * 9.0) - 0.5) * u_hueSpread) * 4.0, 4.0);
@@ -173,36 +188,48 @@ void main() {
       float gw2 = wheelW(glintHue,2.0), gw3 = wheelW(glintHue,3.0);
       vec3  glintCol = (c0*gw0 + c1*gw1 + c2*gw2 + c3*gw3) / max(gw0+gw1+gw2+gw3, 0.001);
 
-      // lit 3D body, painted OVER farther canes (mix = occlusion, real depth)
-      vec3 bodyCol = mix(caneCol, skyCol, haze) * shade * (0.85 + 0.5 * exc) * dim;
+      // lit 3D body, painted OVER farther canes; the base sits in soil shadow.
+      float baseShade = mix(0.28, 1.0, baseFade);
+      vec3 bodyCol = mix(caneCol, skyCol, haze) * shade * (0.85 + 0.5 * exc) * dim * baseShade;
       col = mix(col, bodyCol, body * 0.92);
 
-      // --- node ring + climbing glint, evaluated ANALYTICALLY (nearest ring) ---
-      float alongN = clamp(along, 0.0, 1.0) * NODES;
+      // --- node ring + climbing glint (analytic, DoF-softened, none in soil) ---
+      float alongN = clamp(alongC, 0.0, 1.0) * NODES;
       float centerK = clamp(floor(alongN), 0.0, NODES - 1.0);
       float nodeAlong = (centerK + 0.5) / NODES;          // nearest ring centre
-      float dyPx  = (along - nodeAlong) * spanYN * res.y;  // screen-y dist to ring
+      float dyPx  = (alongC - nodeAlong) * spanYNc * res.y; // screen-y dist to ring
       float ringD2 = ((0.62*dxc)*(0.62*dxc) + (2.2*dyPx)*(2.2*dyPx)) / max(halfW*halfW, 1.0);
-      float ringMask = exp(-ringD2 * 3.4);
+      float ringMask = exp(-ringD2 * mix(1.4, 3.4, focus)); // far rings defocus
       // climbing glint lights the ring it passes (wrap-aware as climb rolls over)
       float climb  = fract(t * climbSpeed - ci * 0.13 - fl * 0.21);
       float dphase = abs(climb - nodeAlong); dphase = min(dphase, 1.0 - dphase);
       float la = dphase * 4.5;
       float lit  = exp(-la * la);
       float rest = 0.30 + 0.10 * sin(t * 0.6 + centerK * 1.3 + ci);
-      float glow = ringMask * (lit * exc * u_glintClimb + rest);
+      float glow = ringMask * (lit * exc * u_glintClimb + rest) * baseFade;
       col += glintCol * glow * u_nodeGlow * (0.55 + 0.55 * u_windStrength) * dim * 1.05;
 
-      // --- sparse leaf stroke near the top ---
-      float leafSeed = hash11(ci * 6.7 + 2.0 + fl * 6.0);
-      float leafYN   = rootYN + spanYN * (0.80 + 0.12 * leafSeed);
-      float leafSide = (hash11(ci*8.1 + 3.0 + fl*5.0) > 0.5) ? 1.0 : -1.0;
-      float lbow     = (bowCells * 0.78) * gap;
-      vec2  lp       = vec2(fc.x - (caneX + lbow + leafSide * halfW * 1.6),
-                            fc.y - leafYN * res.y);
-      float blade    = exp(-pow((lp.x - leafSide * lp.y * 0.5) / (halfW*0.9), 2.0))
-                     * exp(-pow(lp.y / (gap*0.9), 2.0));
-      col += glintCol * blade * (0.06 + 0.55 * exc) * u_nodeGlow * u_leaf * dim * 0.7;
+      // --- crisp lanceolate leaf blades, clustered near the top ---
+      if (alongC > 0.6) {
+        float leafBright = (0.08 + 0.5 * exc) * u_nodeGlow * u_leaf * dim * 0.6;
+        for (int lf = 0; lf < 3; lf++) {
+          float ls   = hash11(ci * 6.7 + float(lf) * 13.0 + 2.0 + fl * 6.0);
+          float side = (fract(ls * 7.0) > 0.5) ? 1.0 : -1.0;
+          float attY = rootYNc + spanYNc * (0.74 + 0.20 * ls);
+          float attX = caneX + bowCells * 0.85 * gap + side * halfW * 0.5;
+          vec2  rel  = vec2(fc.x - attX, fc.y - attY * res.y);
+          vec2  ax   = normalize(vec2(side * (0.45 + 0.4 * ls), 0.92)); // up & outward
+          vec2  pp   = vec2(-ax.y, ax.x);
+          float bl   = gap * (0.42 + 0.28 * ls);          // blade length (px)
+          float tc   = dot(rel, ax) / bl;                  // 0 base .. 1 pointed tip
+          float sc   = dot(rel, pp);                        // across-blade (px)
+          float w    = halfW * 0.5 * sin(clamp(tc, 0.0, 1.0) * 3.14159); // lanceolate
+          float inEdge = mix(0.70, 0.34, focus);           // crisp near, soft far
+          float bladeM = smoothstep(w + blur * w, w * inEdge, abs(sc))
+                       * step(0.0, tc) * step(tc, 1.0);
+          col += glintCol * bladeM * leafBright;
+        }
+      }
     }
   }
 
