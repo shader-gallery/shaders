@@ -41,6 +41,42 @@
       "step": 0.01,
       "default": 0.8,
       "effect": "How completely the burnished strapwork suppresses the shimmer; 0 lets faint twinkle leak across the figure until it nearly dissolves into the ground, 1 cuts a perfectly still black silhouette."
+    },
+    {
+      "uniform": "u_patScale",
+      "label": "Pattern scale",
+      "min": 0.6,
+      "max": 3.5,
+      "step": 0.01,
+      "default": 1.6,
+      "effect": "Tightness of the interlace weave; low spreads a few grand straps across the panel, high packs a dense fine knotwork."
+    },
+    {
+      "uniform": "u_patRot",
+      "label": "Pattern angle",
+      "min": -180.0,
+      "max": 180.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Rotates the whole strapwork figure to any angle while the stippled ground stays put."
+    },
+    {
+      "uniform": "u_random",
+      "label": "Randomize",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Re-lays the interlace into a fresh configuration; scrub it to shuffle the knotwork pattern through endless variations."
+    },
+    {
+      "uniform": "u_twinkleSpeed",
+      "label": "Twinkle speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast each punch-mark glint flickers, independent of how many twinkle; 0 freezes the sparkle mid-shimmer, high sets it racing."
     }
   ],
   "defaultPalette": "midnight",

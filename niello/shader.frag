@@ -24,6 +24,10 @@ uniform vec3  u_palette[4];
 uniform float u_twinkleRate; // frequency of the punch-mark glints   (default 1)
 uniform float u_punch;       // stipple spacing in CSS px            (default 4.5)
 uniform float u_figure;      // how fully the strapwork kills shimmer (default 0.8)
+uniform float u_patScale;    // interlace weave frequency            (default 1.6)
+uniform float u_patRot;      // interlace rotation in degrees        (default 0)
+uniform float u_random;      // randomise the interlace layout       (default 0)
+uniform float u_twinkleSpeed;// animation tempo of the glints        (default 1)
 
 const vec3  BG          = vec3(0.030, 0.030, 0.038); // near-black niello alloy
 const float STILL_DIM   = 0.16;  // residual stipple brightness when rate -> 0
@@ -52,23 +56,24 @@ float ribbon(float v, float halfWidth) {
   // v is a signed field; a strap sits where v is near zero. Narrow soft band.
   return 1.0 - smoothstep(halfWidth, halfWidth + 0.10, abs(v));
 }
-float strapField(vec2 uv) {
+float strapField(vec2 uv, float freq, float rnd) {
   float pi = 3.14159265;
   float hw = 0.27; // ribbon half-width in field units (thickened so the figure reads)
 
-  // Two families of parallel diagonal ribbons cross to make a basket weave.
-  // Each family: cosine-spaced lanes; the ribbon hugs each lane crest.
-  float a = ribbon(sin((uv.x + uv.y) * pi * 1.6), hw);
-  float b = ribbon(sin((uv.x - uv.y) * pi * 1.6), hw);
+  // Two families of parallel diagonal ribbons cross to make a basket weave. freq
+  // sets how tight the interlace is; rnd offsets each lane family's phase so a
+  // randomised value re-lays the whole knotwork into a fresh configuration.
+  float a = ribbon(sin((uv.x + uv.y) * pi * freq + rnd * 2.1), hw);
+  float b = ribbon(sin((uv.x - uv.y) * pi * freq + rnd * 5.3), hw);
   // a third orthogonal couple tightens the knot
-  float c = ribbon(sin(uv.x * pi * 1.6), hw * 0.8);
-  float d = ribbon(sin(uv.y * pi * 1.6), hw * 0.8);
+  float c = ribbon(sin(uv.x * pi * freq + rnd * 1.7), hw * 0.8);
+  float d = ribbon(sin(uv.y * pi * freq + rnd * 3.9), hw * 0.8);
   float weave = max(max(a, b), max(c, d) * 0.85);
 
   // concentric medallion rings tie the panel into a composed figure
   vec2  m = uv - 0.5;
   float r = length(m);
-  float rings = ribbon(sin(r * pi * 3.0 - 0.4), 0.28);
+  float rings = ribbon(sin(r * pi * 3.0 - 0.4 + rnd), 0.28);
   // gate rings to a central medallion so they don't fill the whole panel
   rings *= 1.0 - smoothstep(1.05, 1.55, r);
 
@@ -100,8 +105,12 @@ void main() {
   // Centre + slight aspect correction so the medallion stays round-ish.
   vec2 p = (fc - ctr) / res.y;          // y-normalised, centred
   vec2 uv = p * (res.y / (STRAP_CSS * pr)); // strap-cell coordinates
-  // strap coverage 0..1 (already an antialiased band from strapField)
-  float strap = strapField(uv);
+  // rotate the interlace for layout variety (still centred on the medallion)
+  float prot = radians(u_patRot);
+  uv = mat2(cos(prot), -sin(prot), sin(prot), cos(prot)) * uv;
+  // strap coverage 0..1 (antialiased band); u_patScale sets the weave frequency
+  // and u_random re-lays the knotwork into a fresh configuration.
+  float strap = strapField(uv, max(u_patScale, 0.4), u_random * 6.2831853);
   // FIGURE param controls how completely the strap suppresses shimmer. The
   // suppression curve is shaped non-linearly so the param's dramatic range
   // matches the spec: near 0 the mask barely bites (twinkle leaks almost fully
@@ -173,7 +182,7 @@ void main() {
   float tide  = 0.5 + 0.5 * (0.62 * tideA + 0.38 * tideB); // 0..1 broad swell
   // per-punch sparkle phase
   float speed  = 0.6 + 2.4 * seed;           // varied so no two match
-  float phase  = seed * 6.2831 + t * speed * rate;
+  float phase  = seed * 6.2831 + t * speed * rate * u_twinkleSpeed;
   // sharp spark: a narrow peak of the sine, raised to a power for an instant
   // (widened a touch so more punches catch light at once → a denser coal-dust
   // glitter rather than a few lonely dots)
