@@ -10,7 +10,9 @@
     { "uniform": "u_haloRadius", "label": "Moon radius", "min": 120.0, "max": 460.0, "step": 1.0, "default": 200.0, "effect": "CSS-pixel radius of the occulting moon, from a small distant eclipse to a frame-filling one with a sprawling corona." },
     { "uniform": "u_fray", "label": "Corona reach", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "Depth and reach of the corona streamers — 0 leaves a tight ring at the limb, 2 streams long feathery prominences far out into space." },
     { "uniform": "u_waverSpeed", "label": "Waver speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.18, "effect": "How fast the corona streamers crawl around the disc and shimmer." },
-    { "uniform": "u_starDensity", "label": "Star density", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "How thickly stars fill the surrounding deep space — 0 is an empty void, 2 a dense crowded field." }
+    { "uniform": "u_starDensity", "label": "Star density", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "How thickly stars fill the surrounding deep space — 0 is an empty void, 2 a dense crowded field." },
+    { "uniform": "u_posX", "label": "Moon X", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.40, "effect": "Horizontal position of the eclipse across the frame, as a fraction of width." },
+    { "uniform": "u_posY", "label": "Moon Y", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.62, "effect": "Vertical position of the eclipse, as a fraction of height (0 bottom, 1 top)." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.8 }

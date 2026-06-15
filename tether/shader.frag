@@ -21,10 +21,12 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_swellSpeed;   // rate of the bob + reflection shimmer   (default 0.5)
+uniform float u_swellSpeed;   // rate of the reflection shimmer          (default 0.5)
 uniform float u_reflection;   // length/strength of the water reflections (default 1)
 uniform float u_buoyGlow;     // css-px buoy glow size                   (default 7)
 uniform float u_density;      // how many lights line the shore 0..1     (default 0.8)
+uniform float u_riseSpeed;    // vertical drift: + rises, - falls         (default 0.5)
+uniform float u_refDistort;   // horizontal distortion of the reflections (default 0.5)
 
 const vec3  BG    = vec3(0.024, 0.027, 0.038); // near-black harbour water
 const int   N     = 34;       // candidate lights along the shore
@@ -81,17 +83,19 @@ void main() {
     // waterfront, not a regular comb
     float jx = (h11(fi * 2.3 + 1.1) - 0.5) * (2.0 * halfW / float(N)) * 1.6;
     float lx = mix(-halfW, halfW, (fi + 0.5) / float(N)) + jx;
-    // height above the waterline: most lamps hug the shore, a few ride higher
-    // (further-back tiers / masts). power-bias toward the waterline.
-    float hb = h11(fi * 3.1 + 2.7);
-    float ly = WY + 0.015 + pow(hb, 1.7) * 0.40;
-    // a few foreground buoys sit just above the water, larger + brighter
+    // continuous vertical drift: the lamps RISE (like lanterns) or FALL (like
+    // sinking embers) through a band above the water, wrapping seamlessly with a
+    // fade at the ends so the wrap never pops. Speed 0 leaves them hovering.
+    float bandLo = WY + 0.02;
+    float bandHi = 0.46;
+    float range  = bandHi - bandLo;
+    float ph     = h11(fi * 3.1 + 2.7);
+    float travel = fract(ph + t * u_riseSpeed * (0.045 + 0.03 * h11(fi*7.9)));
+    float ly     = bandLo + travel * range;
+    float vfade  = smoothstep(0.0, 0.12, travel) * (1.0 - smoothstep(0.85, 1.0, travel));
+    // a few brighter, larger lamps ride forward
     float fg = step(0.82, h11(fi * 4.3 + 0.3));
     float sz = glow * mix(0.8, 1.0, h11(fi * 5.1 + 4.0)) * (fg > 0.5 ? 1.7 : 1.0);
-
-    // gentle bob on the swell
-    float bob = 0.010 * sin(TAU * t * spd * (0.18 + 0.10 * h11(fi*7.9)) + fi * 2.1);
-    ly += bob;
 
     // per-lamp colour, dealt round-robin so the waterfront is multi-hued
     float pick = h11(fi * 4.9 + 1.3);
@@ -106,27 +110,27 @@ void main() {
     float d2 = dot(rq, rq);
     float core = exp(-d2 / (sz * sz * 0.45));
     float halo = exp(-d2 / (sz * sz * 4.0));
-    col += hue * (core * 1.5 + halo * 0.45);
-    col += vec3(core * core) * 0.6;          // white-hot centre
+    col += hue * (core * 1.5 + halo * 0.45) * vfade;
+    col += vec3(core * core) * 0.6 * vfade;          // white-hot centre
 
     // ---- vertical reflection streamed straight down the water -------------
     if (depth > 0.0) {
-      float dx = uv.x - lx;
-      // horizontal spread of the reflection (a defined streak, widens slightly
-      // with depth as the surface scatters it)
+      // horizontal distortion: the reflection column wavers with depth as the
+      // disturbed surface refracts it (controllable wobble), on top of a slow
+      // bulk shimmer offset.
+      float warp = u_refDistort * (0.022 * sin(depth * 22.0 - t * spd * 2.2 + fi * 1.7)
+                                 + 0.012 * sin(depth * 41.0 + t * spd * 1.3 + fi));
+      float dx = (uv.x - lx) + warp;
       float wq = sz * (0.6 + 1.4 * (depth / 0.5));
       float streakX = exp(-(dx * dx) / (wq * wq * 0.5));
-      // reflection length tied to the lamp's height above water * the param
       float lh = max(ly - WY, 0.02);
       float reflLen = (0.10 + lh * 1.4) * (0.4 + refl);
       float vert = exp(-depth / reflLen);
-      // bright near-surface lobe just under the waterline
       float lobe = exp(-depth / (reflLen * 0.32));
-      // horizontal ripple bands marching down = the stirred surface
       float shim = 0.55 + 0.45 * sin(depth * (60.0 + 30.0 * h11(fi*6.1))
                                      - t * spd * 2.4 + fi * 2.1);
       float reflAmt = (vert * 0.7 + lobe * 0.6) * streakX * shim;
-      col += hue * reflAmt * 0.7;
+      col += hue * reflAmt * 0.7 * vfade;
     }
   }
 

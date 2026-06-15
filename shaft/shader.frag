@@ -30,6 +30,7 @@ uniform float u_beam;      // typical shaft width, css px (x u_pixelRatio) (defa
 uniform float u_sources;   // number of light sources, 1..3               (default 2)
 uniform float u_sourceX;   // primary source x, fraction of width         (default -0.05)
 uniform float u_sourceY;   // primary source y, fraction of height (up)   (default 1.05)
+uniform float u_intensity; // overall beam brightness                     (default 1.0)
 
 const vec3  BG        = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float TAU       = 6.28318530718;
@@ -168,7 +169,7 @@ void main() {
   // gentle vignette; soft-knee tone map keeps shaft cores from blowing out
   vec2  uv  = (fc - 0.5 * res) / mn;
   float vig = 1.0 - 0.28 * smoothstep(0.50, 1.05, length(uv));
-  vec3  col = BG + (1.0 - exp(-acc * 3.1)) * vig;
+  vec3  col = BG + (1.0 - exp(-acc * 3.1 * max(u_intensity, 0.0))) * vig;
 
   // ~1-LSB hash dither breaks 8-bit banding in the broad soft gradients
   col += (hash12(fc) - 0.5) * (1.6 / 255.0);

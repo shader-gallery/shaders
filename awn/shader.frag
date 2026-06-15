@@ -25,8 +25,10 @@ uniform vec3  u_palette[4];
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_gustRate;  // how often gust fronts arrive to sweep the field (default 0.45)
 uniform float u_bend;      // bow depth + spring-back overshoot under a front  (default 1)
-uniform float u_spacing;   // css-px spacing of stalks in the nearest rank     (default 22)
+uniform float u_spacing;   // css-px spacing of stalks in the nearest rank     (default 14)
 uniform float u_headGlow;  // brightness the seed-heads/awns catch at full flex(default 1)
+uniform float u_scatter;   // randomness of stalk placement + height variation (default 0.5)
+uniform float u_distance;  // viewable distance: how far the field recedes     (default 1)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float PI       = 3.14159265;
@@ -126,11 +128,16 @@ void main() {
   // iterate ranks back-to-front — a deep sea of grass: many overlapping rows
   // recede from the horizon down to the foreground so the whole lower frame
   // fills with wheat, a wind rippling across the field.
+  // viewable distance: a higher horizon recedes the field further back so more
+  // rows stack into the distance; scatter randomises placement + height.
+  float distance = clamp(u_distance, 0.5, 1.6);
+  float scatter  = clamp(u_scatter, 0.0, 1.0);
+  float horizonY = 0.50 + (distance - 1.0) * 0.20;   // ~0.40 (near) .. 0.62 (far)
   for (int r = 0; r < 7; r++) {
     float fr   = float(r);
     float rk   = fr / 6.0;                        // 0 far .. 1 near
-    float baseY = mix(0.60, -0.02, rk);           // root line (rows recede to horizon)
-    float height = mix(0.12, 0.46, rk);           // stalk height (overlap -> continuous sea)
+    float baseY = mix(horizonY, -0.02, rk);       // root line (rows recede to horizon)
+    float height = mix(0.12, 0.46, rk) * mix(1.15, 0.85, (distance - 0.5) / 1.1); // far field shorter when distant
     float spCss  = u_spacing * mix(0.40, 1.0, rk); // far rows much denser in css px
     float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
     float spacing = max(spCss * refScale * pr, 3.0);
@@ -147,13 +154,15 @@ void main() {
     // (a stalk bent sideways can cross neighbouring columns)
     for (int o = -1; o <= 1; o++) {
       float idx = floor(colF) + float(o);
-      float rootX = (idx + 0.5) * spacing;       // root x in device px
-      float xN    = rootX / res.x;               // normalized 0..1 for gust field
-
       // per-stalk randomness: slight height/lean variation + micro-sway phase
       float hsh  = hash11(idx * 1.37 + fr * 11.1);
       float hsh2 = hash11(idx * 2.91 + fr * 5.3);
-      float hMul = mix(0.82, 1.12, hsh);
+      // scatter jitters the root x off its even slot (placement randomisation)
+      float rootX = (idx + 0.5) * spacing
+                  + (hash11(idx * 7.7 + fr * 3.3) - 0.5) * spacing * scatter * 0.85;
+      float xN    = rootX / res.x;               // normalized 0..1 for gust field
+      // height variation widens with scatter
+      float hMul = mix(0.86, 1.10, hsh) * (1.0 + (hsh2 - 0.5) * 0.5 * scatter);
       float topReach = height * hMul * res.y;    // stalk length in device px
 
       // gust-driven bend for this column (signed) + flex magnitude

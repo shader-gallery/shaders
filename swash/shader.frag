@@ -22,13 +22,13 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_surgeSpeed;    // rate of every lane's surge + drain-back  (default 0.6)
+uniform float u_flowSpeed;     // rate the streaks flow along their lanes    (default 0.6)
 uniform float u_spacing;       // perpendicular css-px between lanes        (default 18)
 uniform float u_streakLength;  // css-px length of each streak head->tail   (default 200)
 uniform float u_thickness;     // streak half-thickness across its lane, css px (default 2.4)
+uniform float u_angle;         // lane angle in degrees                      (default 20)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const float ANGLE    = 0.34;   // shallow lane angle (radians) — etched beach
 
 // hash a lane index to a pseudo-random 0..1 (stable per integer lane)
 float hash11(float n) {
@@ -58,7 +58,8 @@ void main() {
   }
 
   // Rotated frame: 'along' runs up the slope (lane axis), 'across' steps between
-  // lanes. Shallow ANGLE etches the field at a beach-like rake.
+  // lanes. The lane angle is a control (degrees), etching the field at a rake.
+  float ANGLE = radians(u_angle);
   float ca = cos(ANGLE), sa = sin(ANGLE);
   vec2  p  = fc - ctr;
   float along  = p.x * ca + p.y * sa;   // distance up the lane direction
@@ -76,46 +77,35 @@ void main() {
   float hw   = max(u_thickness, 0.5) * pr;
   float lane = 1.0 - smoothstep(hw, hw + 1.6 * pr, abs(laneOff));
 
-  // ---- reciprocation: each streak surges up-slope, holds an accent, drains back ----
-  // The lane is tiled into segments so streaks populate its WHOLE length, filling
-  // the frame; each segment reciprocates on its own hash-staggered phase.
+  // ---- continuous flow: dashes scroll along each lane, off one edge while new
+  // ones enter the other — a travelling current, not a back-and-forth surge. ----
   float len    = max(u_streakLength, 8.0) * pr;
-  float travel = len * 1.15;                     // up-slope excursion of the head
-  float seg    = len + travel + spacing * 2.0;   // segment pitch up the lane
-  float segF   = along / seg;
+  float seg    = len + spacing * 1.4 + len * 0.7;  // dash + gap pitch up the lane
+  float speed  = max(u_flowSpeed, 0.0);
+  // per-lane flow speed variation so lanes don't move in lockstep
+  float laneSpd = speed * (0.55 + 0.9 * hash11(laneId * 1.7 + 3.0));
+  // continuous scroll up the lane (features travel +along and exit the top edge)
+  float scroll = t * laneSpd * 70.0 * pr;
+  float alongS = along - scroll;
+  float segF   = alongS / seg;
   float segId  = floor(segF);
-  // unique cell key blends lane + segment so neighbours never sync
   float cellK  = laneId * 2.3 + segId * 5.7;
 
-  float ph0   = hash11(cellK);                   // staggered phase per streak
-  float speed = max(u_surgeSpeed, 0.05);         // never freeze entirely
-  float cyc   = fract(t * speed * (1.0 / 7.0) + ph0); // ~7 s base period at speed 1
-  // ease.in/out triangle gives advance + retreat; the cosine eases into a HELD
-  // bright accent at the top of the stroke (slow near the turn) before draining.
-  float tri   = 0.5 - 0.5 * cos(cyc * 6.2831853); // 0->1->0, slow at both turns
-  // smootherstep the rise so the head lingers at the top: reciprocation accent.
-  float ride  = tri * tri * (3.0 - 2.0 * tri);
-
-  // Head rides up its segment then drains back; base offset varies per segment.
-  float base   = (segId + 0.18 + hash11(cellK + 7.3) * 0.18) * seg;
-  float head   = base + ride * travel;
-
-  // distance from this fragment up the lane to the streak HEAD (signed: +tail).
-  float d     = head - along;            // >0 : we are below the head (the tail side)
-  float along01 = clamp(d / len, 0.0, 1.0); // 0 at head, 1 at faded tail end
-  // capsule body: 1 inside [head .. head-len], soft-capped at both ends
-  float headCap = 1.0 - smoothstep(0.0, 4.0 * pr, -d);            // soft head end
-  float tailCap = 1.0 - smoothstep(len - 6.0 * pr, len, d);       // faded tail end
+  // each dash sits fixed within its scrolling segment, with a per-dash length
+  float dashLen = len * (0.7 + 0.6 * hash11(cellK + 11.0));
+  float base    = (segId + 0.15 + hash11(cellK + 7.3) * 0.5) * seg;
+  float d       = base - alongS;          // >0 : tail side of this dash
+  float along01 = clamp(d / dashLen, 0.0, 1.0);
+  float headCap = 1.0 - smoothstep(0.0, 4.0 * pr, -d);
+  float tailCap = 1.0 - smoothstep(dashLen - 6.0 * pr, dashLen, d);
   float body    = headCap * tailCap;
 
-  // brightness graded along the streak: bright head -> dim tail. A floor keeps
-  // the tail visible so the whole stroke reads, not just the head.
+  // brightness graded along the streak: bright head -> dim tail, floored so the
+  // whole dash reads; per-dash variation + a gentle twinkle keep the flow lively.
   float grade = (1.0 - along01);
-  grade = grade * grade;                  // bias light toward the head
-  grade = 0.32 + 0.68 * grade;            // floor so tails still read
-  // accent flare: brightest when the lane holds at the top of its surge, but a
-  // higher floor keeps every lane luminous (denser, brighter field).
-  float accent = 0.5 + 0.5 * ride;
+  grade = grade * grade;
+  grade = 0.32 + 0.68 * grade;
+  float accent = (0.62 + 0.38 * hash11(cellK + 2.1)) * (0.85 + 0.15 * sin(t * 2.0 + cellK));
 
   float streak = lane * body * grade * accent;
 

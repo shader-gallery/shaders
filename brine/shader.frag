@@ -49,11 +49,11 @@ vec3 finger(vec2 uv, float yT, vec2 res, float pr, float t, float speed,
             float feath, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
   float dxPx = (uv.x - cx) * res.x / pr;     // px from this finger's axis
 
-  // hanging finger geometry: full width at top, tapering to a rounded tip
+  // hanging finger geometry: wide at the frozen ceiling, tapering steadily to a
+  // sharp point — the unmistakable silhouette of an icicle (the clearest read).
   float along = clamp(yT / max(tipY, 0.001), 0.0, 1.0);  // 0 top .. 1 tip
-  float taper = mix(1.0, 0.52, along);
-  float tipRound = 1.0 - smoothstep(0.82, 1.0, along);
-  float wHere = halfW * taper * mix(0.35, 1.0, tipRound);
+  float taper = mix(1.0, 0.10, pow(along, 1.3));
+  float wHere = halfW * taper;
 
   float dn = dxPx / max(wHere, 0.5);         // -1..1 across the finger
   float belowTip = step(yT, tipY + 0.001);
@@ -65,10 +65,13 @@ vec3 finger(vec2 uv, float yT, vec2 res, float pr, float t, float speed,
   float facet = abs(fract(facetPhase) - 0.5) * 2.0;
   float facetRidge = smoothstep(0.55, 1.0, facet);
 
-  // cold tint grading along the finger length (the kept purple/blue/teal/red wheel)
+  // tint grading along the finger; then pulled strongly toward icy white-blue so
+  // the fingers unambiguously read as translucent ICE rather than abstract neon
+  // tubes (a faint palette hue survives so the theme still tints the frost).
   float s = fract(along * 0.85 + 0.05 + seed * 0.13) * 4.0;
   float w0 = wheelW(s,0.0), w1 = wheelW(s,1.0), w2 = wheelW(s,2.0), w3 = wheelW(s,3.0);
   vec3 iceTint = (c0*w0 + c1*w1 + c2*w2 + c3*w3) / max(w0+w1+w2+w3, 0.001);
+  iceTint = mix(iceTint, vec3(0.70, 0.85, 1.0), 0.60);
 
   float bodyThick = 1.0 - smoothstep(0.0, 1.04, abs(dn));
   float facetShade = mix(0.78, 1.0, 1.0 - facet);
@@ -93,9 +96,13 @@ vec3 finger(vec2 uv, float yT, vec2 res, float pr, float t, float speed,
   col += iceTint * facetRidge * colMask * 0.07 * (0.5 + 0.5*shimmer);
   col += mix(iceTint, vec3(0.9,0.95,1.0), 0.6) * glint * 0.9;
 
-  // cold rim highlight on the edges
+  // cold rim highlight on the edges (glassy ice catches a bright outline)
   float rim = smoothstep(0.60, 0.82, abs(dn)) * (1.0 - smoothstep(0.82, 1.05, abs(dn))) * belowTip;
-  col += mix(iceTint, vec3(0.8,0.9,1.0), 0.5) * rim * 0.40 * (0.6 + 0.4*shimmer);
+  col += mix(iceTint, vec3(0.85,0.92,1.0), 0.6) * rim * 0.55 * (0.6 + 0.4*shimmer);
+  // a wet glassy specular stripe just off the centre line so each icicle reads as
+  // a rounded translucent rod of ice catching the light
+  float spec = exp(-pow((dn + 0.32) / 0.22, 2.0)) * colMask;
+  col += vec3(0.9, 0.95, 1.0) * spec * 0.35 * (0.5 + 0.5*shimmer);
 
   // frost feathers fanning from the flanks
   if (feath > 0.001) {

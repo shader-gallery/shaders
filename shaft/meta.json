@@ -68,6 +68,15 @@
       "step": 0.01,
       "default": 1.05,
       "effect": "Vertical position of the primary light source (1 is the top edge) — above 1 it sits off the top so the beams rake down into the frame."
+    },
+    {
+      "uniform": "u_intensity",
+      "label": "Light intensity",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Overall brightness of the beams and haze — low gives faint moody shafts, high floods the frame with bright volumetric light."
     }
   ],
   "defaultPalette": "midnight",

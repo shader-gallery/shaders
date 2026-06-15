@@ -4,17 +4,19 @@
   "family": "Wake",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "water", "streaks", "graphic"],
-  "description": "Dozens of thin diagonal streaks of light lie in parallel lanes across the frame, like a beach etched at a shallow angle. Each soft-edged capsule of glow surges up-slope and drains back along its own lane on a hash-staggered reciprocation, palette-graded from a bright head to a dim tail, holding a bright accent at the top of each stroke before retreating.",
+  "description": "Dozens of thin diagonal streaks of light flow in parallel lanes across the frame like a travelling current, each dash scrolling steadily off one edge while new ones enter the other, lanes drifting at staggered speeds. Palette-graded from a bright head to a dim tail, bold and crisp against the near-black.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_surgeSpeed", "label": "Surge speed", "min": 0.1, "max": 2.0, "step": 0.05,
-      "default": 0.6, "effect": "Rate of every lane's up-slope surge and drain-back; the stagger pattern stays fixed while the strokes quicken." },
+    { "uniform": "u_flowSpeed", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.05,
+      "default": 0.6, "effect": "How fast the streaks flow along their lanes and off the frame; 0 stills the current, high sends them racing through." },
     { "uniform": "u_spacing", "label": "Lane spacing", "min": 10.0, "max": 80.0, "step": 1.0,
       "default": 18.0, "effect": "Perpendicular CSS-pixel distance between streak lanes; small = dense etched field, large = sparse isolated strokes." },
     { "uniform": "u_streakLength", "label": "Streak length", "min": 40.0, "max": 340.0, "step": 1.0,
       "default": 200.0, "effect": "CSS-pixel length of each light streak from bright head to faded tail; longer strokes fill more of each lane." },
     { "uniform": "u_thickness", "label": "Stroke thickness", "min": 0.8, "max": 8.0, "step": 0.1,
-      "default": 2.4, "effect": "Half-thickness of each streak in CSS pixels — thin gives hairline etching, thick gives bold crisp diagonal bars." }
+      "default": 2.4, "effect": "Half-thickness of each streak in CSS pixels — thin gives hairline etching, thick gives bold crisp diagonal bars." },
+    { "uniform": "u_angle", "label": "Lane angle", "min": 0.0, "max": 90.0, "step": 1.0,
+      "default": 20.0, "effect": "Angle of the lanes in degrees — 0 is a horizontal drift, 90 a vertical fall, anything between a diagonal rake." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6 }

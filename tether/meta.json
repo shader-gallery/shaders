@@ -4,17 +4,21 @@
   "family": "Wake",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "water", "harbour", "reflection", "night"],
-  "description": "A harbour at night: a waterfront of moored lights strung along the far shore just above the waterline, each glowing buoy- and dock-lamp throwing a long shimmering reflection straight down the black water. The lamps bob gently on the swell and their mirrored streaks break into horizontal ripple bands as the surface stirs — a slow living current of leashed embers on dark glass.",
+  "description": "Glowing lights over dark water at night: lamps drift slowly upward like rising lanterns (or downward like sinking embers) through the air above a waterline, each throwing a long shimmering reflection down the black water that wavers and refracts as the surface stirs. Multi-hued embers on dark glass, their mirrored streaks breaking into rippling distorted bands.",
   "entry": "shader.frag",
   "params": [
+    { "uniform": "u_riseSpeed", "label": "Rise / fall", "min": -1.5, "max": 1.5, "step": 0.05,
+      "default": 0.5, "effect": "Vertical drift of the lamps — positive rises them like lanterns, negative sinks them like embers, 0 leaves them hovering in place." },
     { "uniform": "u_swellSpeed", "label": "Swell speed", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.5, "effect": "Rate of the lamps' gentle bob and the ripple shimmer travelling down their reflections — 0 stills the harbour to glass, high keeps the surface stirring." },
+      "default": 0.5, "effect": "Rate of the ripple shimmer travelling down the reflections — 0 stills the water to glass, high keeps the surface stirring." },
     { "uniform": "u_reflection", "label": "Reflection length", "min": 0.0, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "Length and strength of the water reflections — 0 leaves just the lamps and a glint at the waterline, 2 streams long luminous columns down the whole water." },
+    { "uniform": "u_refDistort", "label": "Reflection distortion", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.5, "effect": "How much the reflection columns waver and refract with depth — 0 gives clean mirror streaks, high gives a heavily disturbed, broken-up surface." },
     { "uniform": "u_buoyGlow", "label": "Lamp glow", "min": 3.0, "max": 16.0, "step": 0.05,
-      "default": 7.0, "effect": "CSS-pixel radius of each lamp's glow core, from pinprick harbour lights to broad lanterns." },
+      "default": 7.0, "effect": "CSS-pixel radius of each lamp's glow core, from pinprick lights to broad lanterns." },
     { "uniform": "u_density", "label": "Lamp density", "min": 0.1, "max": 1.0, "step": 0.01,
-      "default": 0.8, "effect": "How many lamps line the shore — low scatters a sparse few, high strings a dense lit waterfront across the whole frame." }
+      "default": 0.8, "effect": "How many lamps fill the scene — low scatters a sparse few, high crowds the air with a dense drift of lights." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.5 }

@@ -14,7 +14,11 @@
     { "uniform": "u_spacing", "label": "Stalk spacing", "min": 7.0, "max": 36.0, "step": 1.0,
       "default": 14.0, "effect": "CSS-pixel spacing between stalks in the nearest rank, from a dense field of wheat to a sparse stand." },
     { "uniform": "u_headGlow", "label": "Head glow", "min": 0.2, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "How brightly the bristle-fan seed-heads glow, from a muted field to a vivid iridescent sea." }
+      "default": 1.0, "effect": "How brightly the bristle-fan seed-heads glow, from a muted field to a vivid iridescent sea." },
+    { "uniform": "u_scatter", "label": "Scatter", "min": 0.0, "max": 1.0, "step": 0.05,
+      "default": 0.5, "effect": "Randomness of stalk placement and height — 0 is a neat regimented row, 1 a wild naturally-jittered field." },
+    { "uniform": "u_distance", "label": "Viewable distance", "min": 0.5, "max": 1.6, "step": 0.05,
+      "default": 1.0, "effect": "How far the field recedes — low brings the grass close and tall, high lifts the horizon so more rows stack into the distance." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.5 }

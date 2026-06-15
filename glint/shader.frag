@@ -28,6 +28,7 @@ uniform float u_heaveSpeed;  // swell + flicker speed             (default 0.35)
 uniform float u_glintCss;    // highlight height in css px        (default 2.5)
 uniform float u_pathCss;     // central moonbeam width, css px     (default 640)
 uniform float u_density;     // glitter density across the sea    (default 1.2)
+uniform float u_distort;     // refractive ripple distortion       (default 0.5)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float HORIZON_Y   = 0.685;  // horizon as fraction up the frame (upper third)
@@ -91,6 +92,14 @@ void main() {
 
   // Everything below is water. Mask out the sky region for the glitter pass.
   float waterMask = smoothstep(0.004, 0.02, (horizonPx - fc.y) / res.y);
+
+  // refractive ripple: warp the glitter sampling sideways as if the sea surface
+  // were rippling — stronger toward the foreground, fading to nothing at the
+  // horizon so the far field stays crisp. Bends the glitter into wavy streaks.
+  float belowH = smoothstep(0.0, 0.55, (horizonPx - fc.y) / max(horizonPx, 1.0));
+  float rip = (sin(uv.y * 26.0 - t * 1.7) + 0.6 * sin(uv.y * 11.0 + t * 0.9))
+            * 0.012 * max(u_distort, 0.0) * belowH;
+  uv.x += rip;
 
   // ---- perspective water field --------------------------------------------
   // Map screen y (below horizon) to a ground-plane depth. yb = 0 at the bottom

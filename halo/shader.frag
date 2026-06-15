@@ -27,6 +27,8 @@ uniform float u_haloRadius;  // CSS-px radius of the occulting moon (default 200
 uniform float u_fray;        // depth/reach of the corona streamers      (default 1)
 uniform float u_waverSpeed;  // crawl speed of streamers + shimmer        (default 0.18)
 uniform float u_starDensity; // density of the background starfield       (default 1.0)
+uniform float u_posX;        // moon centre x, fraction of width          (default 0.40)
+uniform float u_posY;        // moon centre y, fraction of height         (default 0.62)
 
 const vec3  BG          = vec3(0.018, 0.020, 0.032); // deep space base
 // disc centre lift above frame centre, as a FRACTION of disc radius so the
@@ -106,10 +108,9 @@ void main() {
   float maxVisible = min(res.x, res.y) * 0.34;
   float baseR = maxVisible * (1.0 - exp(-reqR / maxVisible));
 
-  // moon centre: lifted high, biased off-centre (rule-of-thirds), slow drift.
-  float lift = baseR * DISC_LIFT_FRAC;
-  float offX = res.x * (0.40 + 0.025 * sin(t * 0.05));
-  vec2 ctr = vec2(offX, res.y * 0.52 + lift);
+  // moon centre: user-positioned, with a barely-there slow horizontal drift.
+  float offX = res.x * clamp(u_posX, 0.0, 1.0) + 0.018 * res.x * sin(t * 0.05);
+  vec2 ctr = vec2(offX, res.y * clamp(u_posY, 0.0, 1.0));
   vec2 d   = fc - ctr;
   float r  = length(d);
   float ang = atan(d.y, d.x); // -pi..pi

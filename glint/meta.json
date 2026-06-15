@@ -14,7 +14,9 @@
     { "uniform": "u_pathCss", "label": "Beam width", "min": 140.0, "max": 1400.0, "step": 1.0,
       "default": 640.0, "effect": "Width of the bright central moonbeam — narrow gives a tight glitter lane, wide floods the whole sea evenly. Glitter always spans the full frame; this sets where it concentrates." },
     { "uniform": "u_density", "label": "Glitter density", "min": 0.3, "max": 3.0, "step": 0.05,
-      "default": 1.2, "effect": "How many glints populate the sea — low scatters a few sparse sparkles, high packs the surface with dense shimmering specular highlights." }
+      "default": 1.2, "effect": "How many glints populate the sea — low scatters a few sparse sparkles, high packs the surface with dense shimmering specular highlights." },
+    { "uniform": "u_distort", "label": "Ripple distortion", "min": 0.0, "max": 2.5, "step": 0.05,
+      "default": 0.5, "effect": "How strongly the sea surface refracts the glitter — 0 holds clean perspective rows, high bends them into wavy rippling streaks as if the water were stirred." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6 }
