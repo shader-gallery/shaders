@@ -34,6 +34,7 @@ uniform float u_height;     // reed height scale                      (default 1
 uniform float u_sunX;       // sun horizontal position 0..1           (default 0.6)
 uniform float u_ripple;     // water ripple / shimmer strength        (default 1)
 uniform float u_dusk;       // dusk sky brightness                    (default 1)
+uniform float u_hills;      // far-shore hill height (depth)          (default 1)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float WATER_FRAC  = 0.66;   // waterline height as fraction up from bottom
@@ -46,15 +47,15 @@ const float FRONT_CSS   = 220.0;  // spatial width of one gust front in css px
 // hash for per-stem jitter (height, phase)
 float hash11(float n) { return fract(sin(n * 12.9898) * 43758.5453); }
 
-// bend envelope at a stem given how long ago the front reached it.
-// returns a signed sway amplitude: a damped spring — quick bow, overshoot,
-// shrinking swings back to zero (the long becalmed quiet between fronts).
-float sway(float dt) {
-  if (dt < 0.0) return 0.0;           // front hasn't arrived yet -> dead calm
-  float env = exp(-dt * 2.4);          // decay quickly back to stillness
-  // bow then overshoot: a quick initial bow, then shrinking spring-back swings
-  float osc = sin(dt * 6.2831853 * 0.85);
-  return env * osc;
+// gentle continuous sway: each reed leans on its own slow, multi-frequency
+// drift so the bed is always softly alive — no gust events, no dead calm, just a
+// lazy dusk breeze. `spd` paces it; the result is a small signed lean amplitude.
+float drift(float id, float t, float spd) {
+  float ph1 = hash11(id * 3.1) * 6.2831853;
+  float ph2 = hash11(id * 1.7) * 6.2831853;
+  float s1 = sin(t * spd * 0.45 + ph1);
+  float s2 = sin(t * spd * 0.78 + ph2) * 0.4;
+  return (s1 + s2) * 0.12;            // small amplitude -> a barely-there lean
 }
 
 // distance from point p to a vertical-ish capsule segment a->b, half-width r
@@ -84,19 +85,7 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag,
   float headLen = HEADLEN_CSS * pr;
   float t       = u_time - lag;
 
-  // Episodic gust fronts. A front sweeps left->right across the rank in a fixed
-  // crossing time (so its travel speed reads the same at every rate), then the
-  // whole field is becalmed until the next cycle begins. The cycle PERIOD shrinks
-  // as the gust rate rises, so calm is the resting state and fronts are intermittent.
-  float rate    = max(u_gustRate, 0.001);
-  float period  = 3.6 / rate;            // seconds between successive fronts
-  // crossing time, kept below the period so a long calm always follows a front
-  float crossDur = min(4.2, period * 0.55);
-  // phase offset so the curated/poster moments (t≈2, t≈9) each catch a front
-  float te      = t + 1.0;
-  float cyc     = floor(te / period);    // index of the current cycle
-  float tInCyc  = te - cyc * period;     // seconds elapsed within this cycle
-
+  float spd     = max(u_gustRate, 0.001);   // now paces the gentle continuous sway
   float nearest = floor(q.x / spacing);
 
   // walk a small fixed window of stems around this fragment (const bound)
@@ -107,13 +96,8 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag,
     // u_height scales the whole reed bed taller or shorter.
     float rnd  = clamp(u_randomize, 0.0, 1.0);
     float hgt  = STEMH_CSS * pr * (0.82 + 0.36 * mix(0.5, hash11(id * 1.7), rnd)) * clamp(u_height, 0.4, 1.6);
-    float ph   = hash11(id * 3.1) * 0.18 * rnd;    // tiny per-stem timing jitter
-
-    // the front reaches this stem when tInCyc passes its arrival time, set by
-    // the stem's position across the screen (left stems bow first, right last).
-    float arrive = (root / max(u_resolution.x, 1.0)) * crossDur + ph;
-    float dt = tInCyc - arrive;                    // seconds since this stem was hit
-    float amp = sway(dt) * u_bend;
+    // each reed drifts on its own slow phase so the rank never moves in lockstep
+    float amp = drift(id, t, spd) * u_bend;
 
     vec2 base = vec2(root, waterY);                 // root pinned to waterline
     // tip displaced by amp*hgt; mid-stem bows so it reads as a bend, not a tilt
@@ -173,6 +157,27 @@ vec3 skyAt(float yA, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
   return s * 0.55 * clamp(u_dusk, 0.3, 1.8);     // overall dusk brightness (u_dusk)
 }
 
+// far-shore rolling hills for depth: two layered ridge silhouettes hugging the
+// horizon behind the reeds. Composites the hills into `base`. `yA` is px above
+// the horizon (waterline) — feed the mirrored height for the reflection pass.
+// `hs` (u_hills) raises/lowers the ridges; `crest` tints the dusk-lit hilltops.
+vec3 hills(vec3 base, float xPx, float yA, float pr, float skyH, float hs, vec3 crest) {
+  float x = xPx / pr;
+  // far ridge — low and gentle; near ridge — taller, in front
+  float hF = skyH * hs * (0.050 + 0.030 * (0.6*sin(x*0.0042 + 1.3) + 0.4*sin(x*0.0091 + 4.1)));
+  float hN = skyH * hs * (0.090 + 0.055 * (0.55*sin(x*0.0026 - 0.7) + 0.45*sin(x*0.0061 + 2.2)));
+  float aa = 2.0 * pr;
+  vec3 c = base;
+  // far hills: hazed by atmospheric perspective (don't go full black)
+  float mF = smoothstep(0.0, aa, hF - yA);
+  c = mix(c, mix(base, vec3(0.05, 0.05, 0.085), 0.55), mF * 0.9);
+  // near hills: darker silhouette occluding the far ridge, with a dusk-lit crest
+  float mN = smoothstep(0.0, aa, hN - yA);
+  c = mix(c, mix(base, vec3(0.015, 0.015, 0.03), 0.88), mN);
+  c += crest * exp(-abs(hN - yA) / (2.5 * pr)) * step(-6.0*pr, hN - yA) * 0.16;
+  return c;
+}
+
 void main() {
   float pr  = u_pixelRatio;
   vec2  fc  = gl_FragCoord.xy;
@@ -204,6 +209,8 @@ void main() {
     col = skyAt(yA, c0, c1, c2, c3);
     // the sun glow
     col += sunCol * exp(-length(fc - sun) / (res.y * 0.18)) * 0.6;
+    // far-shore rolling hills behind the reeds (depth / scene-setting)
+    col = hills(col, fc.x, fc.y - waterY, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35));
 
     float sil; vec3 glow;
     rank(fc, pr, spacing, waterY, 0.0, sil, glow, c0, c1, c2);
@@ -216,22 +223,27 @@ void main() {
     float yR = depth / skyH;                       // mirrored sky height
     // rolling ripple bands travelling down the water
     float ripple = clamp(u_ripple, 0.0, 2.0);
-    float band = sin(depth * 0.045 / pr - t * 1.1)
-               + 0.5 * sin(depth * 0.11 / pr + t * 0.7 + 1.3);
+    // slow rolling ripple bands travelling down the water (barely breathing)
+    float band = sin(depth * 0.045 / pr - t * 0.35)
+               + 0.5 * sin(depth * 0.11 / pr + t * 0.22 + 1.3);
     float rippleBright = 0.85 + 0.15 * band * ripple;
     // reflected dusk sky (a touch darker + desaturated, broken by ripples)
     vec3 reflSky = skyAt(yR, c0, c1, c2, c3) * 0.82 * rippleBright;
     col = reflSky;
-    // reflected sun = a shimmering glitter column straight below the sun
+    // reflected sun = a slow shimmering glitter column straight below the sun
     float sunDx = (fc.x - sunX);
     float glint = exp(-(sunDx*sunDx) / (res.x*res.x*0.010))
-                * (0.5 + 0.5 * sin(depth * 0.18 / pr - t * 3.0))
+                * (0.5 + 0.5 * sin(depth * 0.18 / pr - t * 0.9))
                 * exp(-depth / (skyH * 1.1));
     col += sunCol * glint * 0.5;
 
-    // horizontal shimmer offset so the reed mirror wavers like real water
-    float shimmer = sin(fc.y * 0.05 / pr + t * 1.3) * 3.0 * pr
+    // slow horizontal shimmer so the mirror wavers like calm water
+    float shimmer = sin(fc.y * 0.05 / pr + t * 0.45) * 3.0 * pr
                   * smoothstep(0.0, 60.0 * pr, depth) * ripple;
+    // reflected far-shore hills, just under the horizon (mirrored, dimmed, rippled)
+    float hfade = exp(-depth / (res.y * 0.55));
+    col = mix(col, hills(col, fc.x + shimmer, depth, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35)),
+              0.8 * (0.5 + 0.5 * hfade) * rippleBright);
     vec2 q = vec2(fc.x + shimmer, waterY + depth * 1.18); // stretched mirror
     float sil; vec3 glow;
     rank(q, pr, spacing, waterY, 0.22, sil, glow, c0, c1, c2);

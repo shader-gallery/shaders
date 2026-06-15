@@ -7,10 +7,10 @@
   "description": "A rank of cattail rushes silhouetted against a glowing dusk sky along a waterline, with a low sun on the horizon — and below, a prominent rippling reflection of the whole scene: the reflected dusk sky, a shimmering sun-glitter column, and the dark mirrored reeds wavering on the water. A gust front crosses the bed stem by stem, each rush bowing and overshooting with glow gathering on its downwind edge, the reflection echoing every gesture a beat late.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_gustRate", "label": "Gust rate", "min": 0.1, "max": 1.5, "step": 0.05,
-      "default": 0.4, "effect": "How often gust fronts cross the reed bed." },
-    { "uniform": "u_bend", "label": "Bend", "min": 0.2, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "How far the rushes bow and overshoot when a front passes." },
+    { "uniform": "u_gustRate", "label": "Sway speed", "min": 0.1, "max": 1.5, "step": 0.05,
+      "default": 0.4, "effect": "Pace of the reeds' gentle continuous sway — low is a barely-there drift, high a livelier breeze." },
+    { "uniform": "u_bend", "label": "Sway amount", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "How far the rushes lean as they drift — 0 holds them dead still, high leans them well over." },
     { "uniform": "u_spacing", "label": "Reed spacing", "min": 10.0, "max": 48.0, "step": 1.0,
       "default": 18.0, "effect": "CSS-pixel spacing between rushes along the waterline, from a dense reed bed to a sparse stand." },
     { "uniform": "u_reflect", "label": "Reflection", "min": 0.0, "max": 1.5, "step": 0.01,
@@ -24,7 +24,9 @@
     { "uniform": "u_ripple", "label": "Ripple", "min": 0.0, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "Strength of the water's ripple and shimmer — 0 stills it to a clean mirror, high churns the reflection into broken wavering bands." },
     { "uniform": "u_dusk", "label": "Sky glow", "min": 0.3, "max": 1.8, "step": 0.05,
-      "default": 1.0, "effect": "Brightness of the dusk sky and its reflection — low sinks the scene toward night, high flares a vivid sunset glow." }
+      "default": 1.0, "effect": "Brightness of the dusk sky and its reflection — low sinks the scene toward night, high flares a vivid sunset glow." },
+    { "uniform": "u_hills", "label": "Hills", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "Height of the rolling far-shore hills behind the reeds (and their reflection) — 0 is a flat open horizon, high raises distant hills to sell the lake's depth." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.5 }
