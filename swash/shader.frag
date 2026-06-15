@@ -23,12 +23,12 @@ uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_surgeSpeed;    // rate of every lane's surge + drain-back  (default 0.6)
-uniform float u_spacing;       // perpendicular css-px between lanes        (default 28)
-uniform float u_streakLength;  // css-px length of each streak head->tail   (default 140)
+uniform float u_spacing;       // perpendicular css-px between lanes        (default 18)
+uniform float u_streakLength;  // css-px length of each streak head->tail   (default 200)
+uniform float u_thickness;     // streak half-thickness across its lane, css px (default 2.4)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float ANGLE    = 0.34;   // shallow lane angle (radians) — etched beach
-const float HALF_CSS = 1.4;    // streak half-thickness across its lane (css px)
 
 // hash a lane index to a pseudo-random 0..1 (stable per integer lane)
 float hash11(float n) {
@@ -71,8 +71,9 @@ void main() {
   float laneId  = floor(laneF + 0.5);   // nearest lane index
   float laneOff = (laneF - laneId) * spacing; // perpendicular dist to lane centre
 
-  // Thin soft-edged capsule across the lane (anti-aliased on both flanks).
-  float hw   = HALF_CSS * pr;
+  // Soft-edged capsule across the lane (anti-aliased on both flanks); thickness
+  // is now a param so the streaks can read as bold crisp strokes.
+  float hw   = max(u_thickness, 0.5) * pr;
   float lane = 1.0 - smoothstep(hw, hw + 1.6 * pr, abs(laneOff));
 
   // ---- reciprocation: each streak surges up-slope, holds an accent, drains back ----
@@ -107,11 +108,14 @@ void main() {
   float tailCap = 1.0 - smoothstep(len - 6.0 * pr, len, d);       // faded tail end
   float body    = headCap * tailCap;
 
-  // brightness graded along the streak: bright head -> dim tail
+  // brightness graded along the streak: bright head -> dim tail. A floor keeps
+  // the tail visible so the whole stroke reads, not just the head.
   float grade = (1.0 - along01);
   grade = grade * grade;                  // bias light toward the head
-  // accent flare: brightest exactly when the lane holds at the top of its surge
-  float accent = 0.35 + 0.65 * ride;
+  grade = 0.32 + 0.68 * grade;            // floor so tails still read
+  // accent flare: brightest when the lane holds at the top of its surge, but a
+  // higher floor keeps every lane luminous (denser, brighter field).
+  float accent = 0.5 + 0.5 * ride;
 
   float streak = lane * body * grade * accent;
 
@@ -134,8 +138,8 @@ void main() {
   float vign = 1.0 - smoothstep(0.55, 1.25, length(p / res));
 
   col += floorTint * vign;
-  col += hue * streak * 1.5 * vign;
-  col += hue * bloom * 0.30 * vign;
+  col += hue * streak * 2.4 * vign;
+  col += hue * bloom * 0.5 * vign;
 
   gl_FragColor = vec4(col, 1.0);
 }

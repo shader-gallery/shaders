@@ -10,10 +10,12 @@
     { "uniform": "u_surgeSpeed", "label": "Surge speed", "min": 0.1, "max": 2.0, "step": 0.05,
       "default": 0.6, "effect": "Rate of every lane's up-slope surge and drain-back; the stagger pattern stays fixed while the strokes quicken." },
     { "uniform": "u_spacing", "label": "Lane spacing", "min": 10.0, "max": 80.0, "step": 1.0,
-      "default": 28.0, "effect": "Perpendicular CSS-pixel distance between streak lanes; small = dense etched field, large = sparse isolated strokes." },
-    { "uniform": "u_streakLength", "label": "Streak length", "min": 40.0, "max": 300.0, "step": 1.0,
-      "default": 140.0, "effect": "CSS-pixel length of each light streak from bright head to faded tail." }
+      "default": 18.0, "effect": "Perpendicular CSS-pixel distance between streak lanes; small = dense etched field, large = sparse isolated strokes." },
+    { "uniform": "u_streakLength", "label": "Streak length", "min": 40.0, "max": 340.0, "step": 1.0,
+      "default": 200.0, "effect": "CSS-pixel length of each light streak from bright head to faded tail; longer strokes fill more of each lane." },
+    { "uniform": "u_thickness", "label": "Stroke thickness", "min": 0.8, "max": 8.0, "step": 0.1,
+      "default": 2.4, "effect": "Half-thickness of each streak in CSS pixels — thin gives hairline etching, thick gives bold crisp diagonal bars." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.5 }
+  "post": { "bloom": 0.6 }
 }
