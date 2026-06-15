@@ -20,7 +20,13 @@
     { "uniform": "u_colorBlend", "label": "Colour blend", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.0, "effect": "Smooths the hue from a stepped cell-by-cell mosaic into a continuous gradient that drifts across cell edges without a seam." },
     { "uniform": "u_seed", "label": "Pattern", "min": 0.0, "max": 64.0, "step": 1.0,
-      "default": 0.0, "effect": "Re-rolls the per-cell hue offsets and chase directions for a fresh arrangement of the same comb." }
+      "default": 0.0, "effect": "Re-rolls the per-cell hue offsets and chase directions for a fresh arrangement of the same comb." },
+    { "uniform": "u_fill", "label": "Cell fill", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Fraction of cells that light up as a solid glowing hexagon inside the rim; 0 leaves the comb hollow, high fills most cells with colour." },
+    { "uniform": "u_fillSize", "label": "Fill size", "min": 0.3, "max": 1.0, "step": 0.01,
+      "default": 0.8, "effect": "Size of each filled hexagon within its cell, from a small inner core to a block that nearly meets the rim." },
+    { "uniform": "u_fade", "label": "Twinkle", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Makes the filled cells breathe in and out, each on its own random phase, so the comb shimmers." }
   ],
   "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0, "vignette": 0.26 },
   "defaultPalette": "peacock"

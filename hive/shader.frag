@@ -20,6 +20,9 @@ uniform float u_glow;    // halo / glow strength 0..1       (default 0.7)
 uniform float u_weld;    // 0 per-cell chase .. 1 continuous (default 0)
 uniform float u_colorBlend; // 0 per-cell hue .. 1 continuous (default 0)
 uniform float u_seed;    // pattern re-roll                 (default 0)
+uniform float u_fill;    // density of filled cells 0..1    (default 0)
+uniform float u_fillSize; // filled-hex size within cell    (default 0.8)
+uniform float u_fade;    // filled cells twinkle 0..1       (default 0)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -80,10 +83,21 @@ void main(){
 
   float lit=core*(0.85+1.0*pulse)+halo*(0.7+0.6*pulse);
 
+  // random filled hexes: each cell may fill as a solid glowing hex inside its
+  // rim, twinkling on its own phase. hexMetric already gives 0 at centre to
+  // ~0.5 at the rim, so the block stays contained - no neighbour scan needed.
+  float fr=0.5*clamp(u_fillSize,0.0,1.0);
+  float fl=step(1.0-u_fill, hash21(cidi+sd+vec2(3.7,1.9)));   // which cells fill
+  float fs=smoothstep(fr,fr-0.06,hm)*fl;                      // hex mask, soft edge
+  float fph=hash21(cidi+sd+vec2(5.1,2.9));                    // per-cell twinkle phase
+  float fd=mix(1.0,0.5+0.5*sin(6.2831853*(t*0.12+fph)),u_fade);
+  float fhue=hue+hash21(cidi+sd+vec2(1.3,2.7))*0.08;          // harmonise with the rim
+  vec3 fillAdd=wheelCol(fhue,c0,c1,c2,c3)*(fs*fd)*(0.30+0.45*u_glow);
+
   float rr=length((fc-ctr)/res);
   vec3 ground=wheelCol(0.55+rr*0.3+t*0.01,c0,c1,c2,c3)*0.16;
 
-  vec3 col=ground+pathCol*lit;
+  vec3 col=ground+fillAdd+pathCol*lit;
   col+=pathCol*core*pulse*0.7;
 
   float vign=1.0-smoothstep(0.7,1.35,rr);
