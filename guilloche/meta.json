@@ -28,10 +28,10 @@
       "uniform": "u_stroke",
       "label": "Stroke width",
       "min": 0.5,
-      "max": 3.0,
+      "max": 8.0,
       "step": 0.05,
       "default": 1.6,
-      "effect": "Width of each strand stroke in CSS pixels \u2014 hairline banknote engraving at the minimum, bold burin cuts at the maximum."
+      "effect": "Width of each strand stroke in CSS pixels \u2014 hairline banknote engraving at the minimum, thick ribbon strands that swell into solid woven bands at the maximum."
     },
     {
       "uniform": "u_braidDepth",
@@ -50,6 +50,15 @@
       "step": 0.05,
       "default": 1.0,
       "effect": "Brightness of the specular sparks where strands cross; 0 leaves the bare unjeweled weave, 2 sets a bright jewel at every lozenge corner."
+    },
+    {
+      "uniform": "u_random",
+      "label": "Randomize",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Scatters where each strand's wave starts and ends; 0 is the orderly aligned braid, higher offsets every strand by a random phase so the weave looks hand-drawn and irregular."
     }
   ],
   "defaultPalette": "peacock",

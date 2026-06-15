@@ -25,11 +25,14 @@ uniform float u_waveSpeed;   // longitudinal phase-travel rate of the strands  (
 uniform float u_stroke;      // strand stroke width in CSS px                  (default 1.2)
 uniform float u_braidDepth;  // sine amplitude about each band axis            (default 0.55)
 uniform float u_glint;       // brightness of specular sparks at crossings     (default 1)
+uniform float u_random;      // scatter each strand start phase                (default 0)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black steel base ~#09090B
 const float BANDS    = 9.0;    // number of horizontal band axes (rows of strands)
 const float STRANDS  = 4.0;    // strands per band (one per palette colour)
 const float WAVES_CSS = 165.0; // longitudinal wavelength of each strand in CSS px
+
+float hash21(vec2 p) { p = fract(p * vec2(123.34, 345.45)); p += dot(p, p + 34.345); return fract(p.x * p.y); }
 
 // cyclic triangular weight for a palette entry centred at c on a 0..4 wheel
 float wheelW(float s, float c) {
@@ -84,7 +87,10 @@ void main() {
     // harmonic: each strand has a slightly different wavenumber + base phase so
     // the family is incommensurate and perpetually re-weaves
     float harm  = 1.0 + fsi * 0.12;                 // wavenumber multiplier
-    float phase = fsi * 1.5708 + bandId * 0.6;      // quarter-turn offsets per strand
+    // base quarter-turn offsets, plus an optional per-strand/per-band random
+    // scatter so the waves no longer all start at the same point along the band.
+    float rphase = hash21(vec2(fsi + 1.7, bandId + 0.3)) * 6.2831853;
+    float phase = fsi * 1.5708 + bandId * 0.6 + u_random * rphase;
     // longitudinal travel: each strand drifts at its own incommensurate rate
     float travel = t * u_waveSpeed * (0.55 + fsi * 0.17);
     float ang   = fc.x * kx * harm + phase + travel;
@@ -113,9 +119,11 @@ void main() {
       }
     }
     // narrow proximity to this strand's centreline. Where two of these bumps
-    // overlap, two strand centres are crossing → a jewel sits there. Width is
-    // tied to the stroke so sparks stay tight points, not smears.
-    float pw = stroke * stroke * 5.0;
+    // overlap, two strand centres are crossing → a jewel sits there. The width
+    // tracks the stroke but SATURATES, so very thick strands keep tight point
+    // sparks instead of flooding the gaps with false jewels.
+    float sw = min(stroke, 2.5 * pr);
+    float pw = sw * sw * 5.0;
     prox += exp(-d * d / pw);
   }
 
