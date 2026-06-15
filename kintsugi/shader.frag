@@ -56,9 +56,12 @@ float crackAt(vec2 p, float w, float fine) {
   float na = fbm(wp * 0.9 + 3.0);
   float nb = fbm(wp * 1.9 + 17.0);
   float nd = fbm(wp * 3.7 + 31.0);
+  // primary crack at full width; the secondary and fine "background" cracks are
+  // drawn THINNER than the primary so the main seams read in front and the lesser
+  // network recedes behind them.
   float c = 1.0 - smoothstep(0.0, w, abs(na - 0.5));
-  c = max(c, (1.0 - smoothstep(0.0, w * 1.2, abs(nb - 0.5))) * 0.7);
-  c = max(c, (1.0 - smoothstep(0.0, w * 1.6, abs(nd - 0.5))) * 0.5 * fine);
+  c = max(c, (1.0 - smoothstep(0.0, w * 0.65, abs(nb - 0.5))) * 0.7);
+  c = max(c, (1.0 - smoothstep(0.0, w * 0.42, abs(nd - 0.5))) * 0.5 * fine);
   return clamp(c, 0.0, 1.0);
 }
 
