@@ -28,6 +28,7 @@ uniform float u_depthFade;
 uniform float u_twist;
 uniform float u_skew;
 uniform float u_layerSeed;
+uniform float u_reach;
 
 float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }
 
@@ -84,6 +85,9 @@ void main() {
   float mPer = max(floor(u_linesPer + 0.5), 1.0);
   float lw  = max(u_line, 0.4) * refScale * pr;
   float nL  = max(floor(u_layers + 0.5), 1.0);
+  // reach > 1 pushes the anchor ring past the screen edge so chords enter from
+  // off-frame (the bright nodes sit outside view); < 1 pulls them inside.
+  vec2  radB = rad * max(u_reach, 0.2);
 
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
   if (dot(c0,c0)+dot(c1,c1)+dot(c2,c2)+dot(c3,c3) < 1e-5) {
@@ -103,7 +107,7 @@ void main() {
     float dimL = mix(1.0, max(0.0, 1.0 - u_depthFade), lf);
     float lwL = lw * mix(1.0, 0.78, lf);                 // deeper lines thinner
     float hueL = float(L) * 0.11;
-    vec2 radL = rad * scaleL;
+    vec2 radL = radB * scaleL;
 
 
     for (int i = 0; i < 24; i++) {

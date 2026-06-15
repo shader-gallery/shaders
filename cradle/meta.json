@@ -20,7 +20,7 @@
       "min": 3.0,
       "max": 24.0,
       "step": 1.0,
-      "default": 11.0,
+      "default": 24.0,
       "effect": "Number of cradle-point anchors around the ring - few gives a stark angular star, many a finely sampled envelope that reads as smooth curves."
     },
     {
@@ -29,7 +29,7 @@
       "min": 1.0,
       "max": 12.0,
       "step": 1.0,
-      "default": 5.0,
+      "default": 10.0,
       "effect": "How many chords fan out from each anchor (to neighbours 1..k steps away); each step adds another nested envelope family, so more lines build a denser layered web."
     },
     {
@@ -38,7 +38,7 @@
       "min": 0.0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.3,
+      "default": 0.24,
       "effect": "Rate the anchor ring breathes and rotates; 0 freezes a single crisp figure, higher slowly swings the whole envelope as the anchors glide."
     },
     {
@@ -56,7 +56,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 0.7,
+      "default": 0.15,
       "effect": "Travel speed of the bright beads sliding along the chords; at 0 they rest as fixed highlights, at max light visibly courses down every string."
     },
     {
@@ -65,7 +65,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.35,
+      "default": 0.0,
       "effect": "Randomizes the anchor spacing so the figure is no longer a perfectly symmetric star pinned to the centre; 0 is even and centred, 1 throws the anchors into a lopsided, off-centre web."
     },
     {
@@ -74,7 +74,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.9,
+      "default": 1.0,
       "effect": "Colour of the chords: 0 strings them in plain white, 1 takes full palette hues per chord family so the envelopes read in rich colour instead of washing out white."
     },
     {
@@ -130,6 +130,15 @@
       "step": 0.01,
       "default": 0.4,
       "effect": "Re-lays the anchor jitter independently per level so the stacked webs are distinct figures rather than scaled copies. 0 makes every layer the same shape; high throws each level its own asymmetric arrangement."
+    },
+    {
+      "uniform": "u_reach",
+      "label": "Anchor reach",
+      "min": 0.5,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How far the anchor ring sits from centre. 1 pins the nodes on the screen edges (the classic read); above 1 pushes them off-screen so chords stream in from beyond the frame with the bright nodes out of view; below 1 pulls the whole figure inward."
     }
   ],
   "post": {
@@ -137,7 +146,8 @@
     "bloomRadius": 5.0,
     "saturation": 1.1,
     "contrast": 1.04,
-    "dither": 1.0
+    "dither": 1.0,
+    "vignette": 0.26
   },
   "defaultPalette": "witchlight"
 }
