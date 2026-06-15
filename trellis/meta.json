@@ -8,7 +8,7 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_scale", "label": "Cell size", "min": 12.0, "max": 170.0, "step": 1.0,
-      "default": 46.0, "effect": "Size of each grid cell in CSS pixels - a fine dense circuit at the minimum, broad open routing at the maximum." },
+      "default": 31.0, "effect": "Size of each grid cell in CSS pixels - a fine dense circuit at the minimum, broad open routing at the maximum." },
     { "uniform": "u_line", "label": "Trace weight", "min": 1.0, "max": 8.0, "step": 0.1,
       "default": 2.2, "effect": "Core thickness of each glowing trace in CSS pixels, from a hairline route to a fat neon bus." },
     { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
@@ -16,11 +16,17 @@
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.4, "effect": "Strength of the soft halo around traces and pads; low is a crisp drawn board, high a luminous bloom." },
     { "uniform": "u_rotate", "label": "Rotation", "min": -45.0, "max": 45.0, "step": 1.0,
-      "default": 0.0, "effect": "Turns the whole board; 0 is an upright square grid, 45 a diamond lattice, anything between a tilted circuit." },
+      "default": -9.0, "effect": "Turns the whole board; 0 is an upright square grid, 45 a diamond lattice, anything between a tilted circuit." },
     { "uniform": "u_pad", "label": "Pad size", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.4, "effect": "Radius of the lit junction pads where traces cross, from tiny vias to fat solder nodes that bloom at every crossing." },
     { "uniform": "u_seed", "label": "Pattern", "min": 0.0, "max": 50.0, "step": 1.0,
-      "default": 0.0, "effect": "Reshuffles which hue each cell takes, rerouting the colour mix across the board without moving the traces." }
+      "default": 14.0, "effect": "Re-rolls the colour mix, the per-trace depth, and the trace scatter into a fresh arrangement of the board." },
+    { "uniform": "u_blend", "label": "Colour blend", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 1.0, "effect": "How the trace colours join across cells; 0 hard-switches the hue at every cell edge a trace crosses, 1 blends them into one smooth continuous colour field." },
+    { "uniform": "u_jitter", "label": "Scatter", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Nudges each trace off the regular grid; 0 is a perfect lattice, higher scatters the rows and columns into an irregular hand-routed board with junctions still lit at every crossing." },
+    { "uniform": "u_depth", "label": "Depth", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Spreads the traces across depth; 0 holds them all on one plane, higher makes some traces read as near (bright and fat) and others far (dim and thin) for a layered board." }
   ],
   "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "vignette": 0.26, "dither": 1.0 },
   "defaultPalette": "neon"
