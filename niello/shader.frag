@@ -30,7 +30,8 @@ uniform float u_random;      // randomise the interlace layout       (default 0)
 uniform float u_twinkleSpeed;// animation tempo of the glints        (default 1)
 uniform float u_strapWidth;  // ribbon thickness of the figure       (default 0.27)
 uniform float u_weaveMix;    // diagonal basket <-> orthogonal grid  (default 0.5)
-uniform float u_medallion;   // strength of the central rings        (default 1)
+uniform float u_medallion;   // strength of the medallion rings      (default 1)
+uniform float u_medCount;    // how many medallions across the panel (default 3)
 
 const vec3  BG          = vec3(0.030, 0.030, 0.038); // near-black niello alloy
 const float STILL_DIM   = 0.16;  // residual stipple brightness when rate -> 0
@@ -59,7 +60,26 @@ float ribbon(float v, float halfWidth) {
   // v is a signed field; a strap sits where v is near zero. Narrow soft band.
   return 1.0 - smoothstep(halfWidth, halfWidth + 0.10, abs(v));
 }
-float strapField(vec2 uv, float freq, float rnd, float hw, float weaveMix, float med) {
+// a tiled field of concentric-ring medallions. count sets how many across the
+// panel; ringRnd jitters each medallion's position, ring count and phase so a
+// randomised value scatters a varied set of rosettes instead of one repeat.
+float medallionField(vec2 uv, float count, float rnd, float ringRnd) {
+  float cell = 2.4 / max(count, 0.4);
+  vec2  g  = uv / cell;
+  vec2  id = floor(g + 0.5);
+  vec2  jit = (vec2(hash21(id + 3.1), hash21(id + 8.7)) - 0.5) * ringRnd * 0.7;
+  vec2  lp = (g - id) - jit;
+  float rn = length(lp) * 2.0;                  // 0 at centre .. ~1 at cell edge
+  float h  = hash21(id + 31.7);
+  float h2 = hash21(id + 57.3);
+  float ringsN = 5.0 + h * 7.0 * ringRnd;       // randomised ring count
+  float ph = rnd + h2 * 6.2831853 * ringRnd;    // randomised phase
+  float rings = ribbon(sin(rn * 3.14159265 * ringsN + ph), 0.28);
+  rings *= 1.0 - smoothstep(0.82, 1.0, rn);     // gate each medallion to its cell
+  return rings;
+}
+
+float strapField(vec2 uv, float freq, float rnd, float hw, float weaveMix, float med, float medCount, float ringRnd) {
   float pi = 3.14159265;
 
   // Two families of parallel diagonal ribbons cross to make a basket weave. freq
@@ -78,12 +98,8 @@ float strapField(vec2 uv, float freq, float rnd, float hw, float weaveMix, float
   float gW = mix(0.08, 1.0, smoothstep(0.0, 0.5, weaveMix));
   float weave = max(diagW * dW, gridW * gW);
 
-  // concentric medallion rings tie the panel into a composed figure
-  vec2  m = uv - 0.5;
-  float r = length(m);
-  float rings = ribbon(sin(r * pi * 3.0 - 0.4 + rnd), 0.28) * med;
-  // gate rings to a central medallion so they don't fill the whole panel
-  rings *= 1.0 - smoothstep(1.05, 1.55, r);
+  // a field of medallions ties the panel into a composed figure
+  float rings = medallionField(uv, medCount, rnd, ringRnd) * med;
 
   return max(weave, rings);
 }
@@ -119,7 +135,8 @@ void main() {
   // strap coverage 0..1 (antialiased band); u_patScale sets the weave frequency
   // and u_random re-lays the knotwork into a fresh configuration.
   float strap = strapField(uv, max(u_patScale, 0.4), u_random * 6.2831853,
-                           max(u_strapWidth, 0.04), clamp(u_weaveMix, 0.0, 1.0), u_medallion);
+                           max(u_strapWidth, 0.04), clamp(u_weaveMix, 0.0, 1.0), u_medallion,
+                           max(u_medCount, 0.4), clamp(u_random, 0.0, 1.0));
   // FIGURE param controls how completely the strap suppresses shimmer. The
   // suppression curve is shaped non-linearly so the param's dramatic range
   // matches the spec: near 0 the mask barely bites (twinkle leaks almost fully
