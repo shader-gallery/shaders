@@ -22,6 +22,7 @@ uniform float u_scatter; // button scatter 0..1          (default 0.45)
 uniform float u_rotate;  // extra lattice rotation deg   (default 0)
 uniform float u_skew;    // lattice shear                (default 0)
 uniform float u_tilt;    // perspective tilt into depth  (default 0)
+uniform float u_depth;   // depth-cued light gradient    (default 0.6)
 uniform float u_shade;   // light/dark depth 0..1        (default 0.5)
 uniform float u_lightaz; // key light azimuth degrees    (default 55)
 uniform float u_lightel; // key light elevation degrees  (default 40)
@@ -71,7 +72,8 @@ void main() {
   // compress while the near edge swells, giving the flat quilt real depth.
   // Denominator stays positive (ny and u_tilt both clamped), so it never folds.
   float ny = clamp(rc.y / max(res.y, 1.0), -0.6, 0.6);
-  rc *= 1.0 / (1.0 + clamp(u_tilt, -1.0, 1.0) * ny);
+  float persp = 1.0 / (1.0 + clamp(u_tilt, -1.0, 1.0) * ny);
+  rc *= persp;
   vec2 p = rc / cell;
 
   // height + analytic normal via finite differences
@@ -116,6 +118,15 @@ void main() {
   col += mix(vec3(1.0), silk2, 0.55) * spec * (0.5 + u_sheen) * 1.1;
   col *= mix(1.0, 0.72, rim);                        // deepen the seam folds
   col += silk * 0.10;                                // ambient floor (no dead-black)
+
+  // depth-cued lighting gradient tied to tilt + skew: the receding (compressed)
+  // side falls into shadow while the near side catches the light, and a sideways
+  // lean follows the shear. Built from the perspective factor + skew so it is
+  // exactly neutral when the quilt is flat (persp 1, skew 0 -> ramp 0).
+  float depthCue = clamp(persp - 1.0, -0.6, 0.9);    // <0 far, >0 near, 0 flat
+  float skewCue  = (fc.x - ctr.x) / max(res.y, 1.0) * u_skew;
+  float ramp = depthCue * 0.6 - skewCue * 0.5;
+  col *= clamp(1.0 + ramp * u_depth, 0.05, 1.8);
 
   gl_FragColor = vec4(col, 1.0);
 }
