@@ -19,6 +19,10 @@ uniform vec3  u_palette[4];
 uniform float u_drift;    // speed of the invisible plume drift   (default 0.35)
 uniform float u_spacing;  // hatch line gap in CSS px                (default 7)
 uniform float u_ink;      // how strongly the ghost field carves     (default 0.8)
+uniform float u_rotate;   // weave rotation in degrees               (default 0)
+uniform float u_skew;     // weave shear along x per unit y          (default 0)
+uniform float u_shade;    // light/dark depth of the ghost shading   (default 1)
+uniform float u_tint;     // hue gradient swept across the weave     (default 0)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float RAKE_CSS    = 520.0;  // wavelength of the raking-light luminance ramp
@@ -130,31 +134,45 @@ void main() {
   // luminance texture so the cloth shows its thread without collapsing into a
   // dot grid. The drifting ghost field lights and shades the whole bolt. ---
 
+  // weave-space coordinate: rotate and shear the whole lattice about the centre
+  // so the plaid can hang on a bias or lean, while the ghost-field light below
+  // stays fixed in screen space (the cloth turns, the light does not).
+  vec2 rel = fc - ctr;
+  float ang = radians(u_rotate);
+  float ca = cos(ang), sa = sin(ang);
+  rel = mat2(ca, -sa, sa, ca) * rel;
+  rel.x += rel.y * u_skew;
+  vec2 wfc = rel + ctr;
+
   // band coordinates: quantise into coarse stripes; a short period repeats the
   // sett like a real tartan, and each band takes a flat hue from the wheel.
   float bw = spacing * 7.0;                       // band width in px
-  float bandx = floor(fc.x / bw);
-  float bandy = floor(fc.y / bw);
+  float bandx = floor(wfc.x / bw);
+  float bandy = floor(wfc.y / bw);
   float kx = fract(bandx * 0.2 + 0.05);           // ~5-band repeating hue run
   float ky = fract(bandy * 0.2 + 0.55);
-  vec3 colX = wheelCol(kx + tone * 0.12 + t * 0.01, c0, c1, c2, c3);   // vertical yarn
-  vec3 colY = wheelCol(ky + tone * 0.12 + t * 0.01, c0, c1, c2, c3);   // horizontal yarn
+  // a smooth hue gradient swept across the whole bolt; u_tint scales how far the
+  // colour wheel travels corner-to-corner, so the flat sett picks up a directional
+  // wash (0 = the original banded-only hue, higher = a rolling rainbow across cloth).
+  float hgrad = dot((wfc - ctr) / min(res.x, res.y), vec2(1.0, 0.7)) * u_tint;
+  vec3 colX = wheelCol(kx + tone * 0.12 + t * 0.01 + hgrad, c0, c1, c2, c3);   // vertical yarn
+  vec3 colY = wheelCol(ky + tone * 0.12 + t * 0.01 + hgrad, c0, c1, c2, c3);   // horizontal yarn
 
   // over-under parity per thread cell tips each check toward warp or weft yarn,
   // so crossing bands read as woven checks rather than a flat colour average.
-  vec2 wcell = floor(fc / spacing);
+  vec2 wcell = floor(wfc / spacing);
   float topw = mod(wcell.x + wcell.y, 2.0);
   vec3 cloth = mix(colX, colY, mix(0.5, topw, 0.55));
 
   // fine weave: a soft thread ripple along each axis, the topmost yarn showing,
   // this is the woven TEXTURE, carried in luminance only so colour stays banded.
-  float thx = 0.5 + 0.5 * cos(6.2831853 * fc.x / spacing);
-  float thy = 0.5 + 0.5 * cos(6.2831853 * fc.y / spacing);
+  float thx = 0.5 + 0.5 * cos(6.2831853 * wfc.x / spacing);
+  float thy = 0.5 + 0.5 * cos(6.2831853 * wfc.y / spacing);
   float weaveTex = mix(thx, thy, topw);           // 0..1 over-under ripple
 
   // thin darker sett lines at the band edges give the plaid crisp definition.
-  float ex = smoothstep(0.0, 0.06, min(fract(fc.x / bw), 1.0 - fract(fc.x / bw)));
-  float ey = smoothstep(0.0, 0.06, min(fract(fc.y / bw), 1.0 - fract(fc.y / bw)));
+  float ex = smoothstep(0.0, 0.06, min(fract(wfc.x / bw), 1.0 - fract(wfc.x / bw)));
+  float ey = smoothstep(0.0, 0.06, min(fract(wfc.y / bw), 1.0 - fract(wfc.y / bw)));
   float settLines = 0.62 + 0.38 * min(ex, ey);
 
   // --- raking light: a low light whose bearing precesses a slow circle over the
@@ -168,7 +186,10 @@ void main() {
   // light the cloth: raking gradient * tone (ghost-field shading) * woven thread
   // ripple * sett gridlines, with a grazing sheen on top. ink modulates contrast.
   float dens = smoothstep(0.08, 0.9, shade);
-  float toneLight = mix(1.12, 0.46, dens * (0.6 + 0.4 * ink));  // shade darkens
+  // u_shade scales the chiaroscuro spread: 0 flattens the cloth to even light,
+  // 1 is the original ghost shading, higher drives deep darks and bright lights.
+  float chiar = clamp(dens * (0.6 + 0.4 * ink) * u_shade, 0.0, 1.0);
+  float toneLight = mix(1.12, 0.46, chiar);  // shade darkens
   float lumin = mix(0.66, 1.2, rake) * toneLight * (0.66 + 0.46 * weaveTex) * settLines;
   vec3 ink_col = cloth;                            // (named for the bloom tail)
   col = cloth * lumin + cloth * sheen * 0.45;

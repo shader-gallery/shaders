@@ -8,12 +8,20 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.3, "effect": "Speed of the invisible plume's drift across the weave; 0 holds a frozen still-life of shaded cloth, 2 sends the light-and-shade billowing visibly over the fabric." },
+      "default": 0.33, "effect": "Speed of the invisible plume's drift across the weave; 0 holds a frozen still-life of shaded cloth, 2 sends the light-and-shade billowing visibly over the fabric." },
     { "uniform": "u_spacing", "label": "Thread gap", "min": 3.0, "max": 14.0, "step": 1.0,
-      "default": 9.0, "effect": "Distance between threads in CSS pixels — a tight fine-woven cloth at the minimum, open coarse canvas at the maximum." },
+      "default": 3.0, "effect": "Distance between threads in CSS pixels — a tight fine-woven cloth at the minimum, open coarse canvas at the maximum." },
     { "uniform": "u_ink", "label": "Ink", "min": 0.2, "max": 1.5, "step": 0.01,
-      "default": 1.0, "effect": "How strongly the ghost field thickens the threads; low yields an even flat weave, high carves deep chiaroscuro with bare gaps and heavy massed thread in the shadows." }
+      "default": 0.2, "effect": "How strongly the ghost field thickens the threads; low yields an even flat weave, high carves deep chiaroscuro with bare gaps and heavy massed thread in the shadows." },
+    { "uniform": "u_rotate", "label": "Rotation", "min": -180.0, "max": 180.0, "step": 1.0,
+      "default": 0.0, "effect": "Rotates the whole plaid about the centre while the lighting stays fixed, so the cloth can hang square, on a diagonal tartan bias, or anywhere between." },
+    { "uniform": "u_skew", "label": "Skew", "min": -1.5, "max": 1.5, "step": 0.01,
+      "default": 0.0, "effect": "Shears the weave sideways so the warp and weft lean into a rhombic twill instead of a square grid; 0 is upright cloth." },
+    { "uniform": "u_shade", "label": "Light/Dark", "min": 0.0, "max": 2.5, "step": 0.01,
+      "default": 1.0, "effect": "Depth of the light-and-shade falling across the cloth; 0 flattens it to an even-lit flat weave, 1 is the natural ghost shading, higher pushes deep shadows and bright highlights." },
+    { "uniform": "u_tint", "label": "Hue gradient", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.0, "effect": "Sweeps a smooth colour gradient across the bolt on top of the banded sett; 0 keeps the flat tartan hues, higher rolls the palette corner-to-corner through the threads." }
   ],
-  "post": { "bloom": 0.5, "bloomRadius": 4.0, "backdrop": 0.55, "backdropScale": 1.1, "saturation": 1.12, "contrast": 1.05, "dither": 1.0 },
-  "defaultPalette": "spectral"
+  "post": { "bloom": 0.5, "bloomRadius": 4.0, "backdrop": 0.0, "backdropScale": 0.3, "saturation": 1.12, "contrast": 1.06, "vignette": 0.26, "dither": 1.0 },
+  "defaultPalette": "rust"
 }
