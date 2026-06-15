@@ -32,6 +32,8 @@ uniform float u_strapWidth;  // ribbon thickness of the figure       (default 0.
 uniform float u_weaveMix;    // diagonal basket <-> orthogonal grid  (default 0.5)
 uniform float u_medallion;   // strength of the medallion rings      (default 1)
 uniform float u_medCount;    // how many medallions across the panel (default 3)
+uniform float u_lightAngle;  // bearing of the burnish sheen (degrees)(default 34)
+uniform float u_lightMove;   // speed the sheen sweeps the figure     (default 0.3)
 
 const vec3  BG          = vec3(0.030, 0.030, 0.038); // near-black niello alloy
 const float STILL_DIM   = 0.16;  // residual stipple brightness when rate -> 0
@@ -157,7 +159,13 @@ void main() {
   // black hole — a static, palette-tinted specular gradient (never twinkles).
   // A specular sheen sweeps across the static engraving like a coin tilted under
   // lamplight: a smooth positional gradient, fixed in time so the figure is still.
-  float sheen = 0.5 + 0.5 * sin((p.x * 2.4 + p.y * 1.6) * 3.14159);
+  // burnish sheen: a positional specular gradient across the figure. Its bearing
+  // is steerable (u_lightAngle) and it can sweep over time (u_lightMove) so the
+  // lamplight rakes across the still strapwork like a tilted coin under a moving
+  // source. At move 0 it is a fixed gradient (the original still figure).
+  float la = radians(u_lightAngle);
+  vec2  ldir = vec2(cos(la), sin(la));
+  float sheen = 0.5 + 0.5 * sin(dot(p, ldir) * 2.884 * 3.14159 + t * u_lightMove);
   vec3  strapTint = mix(c2, c0, 0.5 + 0.5 * p.y);
   // The strap first reads as a polished recess clearly darker than the alloy,
   // then a low burnished gradient catches lamplight so it is worked metal, not
