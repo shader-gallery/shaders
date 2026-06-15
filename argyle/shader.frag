@@ -113,10 +113,10 @@ void main(){
   float ch=hash21(cellId+u_seed*vec2(3.7,1.9));
   float filled=step(1.0-u_fill, ch);
   float cellDepth=1.0-hash21(cellId+u_seed*vec2(1.3,2.7))*u_depth*0.7;
-  // per-cell offset slides the block off-centre so it can reach past the cell and
-  // underlap the cords (which draw on top)
-  vec2 cellOff=(vec2(hash21(cellId+vec2(8.0,3.0)+K1),hash21(cellId+vec2(2.0,9.0)+K1))-0.5)*u_offset*0.6;
-  float edge=max(abs(du-cellId.x-cellOff.x),abs(dv-cellId.y-cellOff.y));
+  // u_offset slides the block from its cell centre toward the cord crossing at
+  // its corner, so at 1 the squares line up directly under where the lines cross
+  vec2 anchor=cellId+vec2(0.5,0.5)*u_offset;
+  float edge=max(abs(du-anchor.x),abs(dv-anchor.y));
   float r=0.46*clamp(u_fillSize,0.0,1.0);
   float sq=smoothstep(r,r-0.07,edge)*filled;
   // each block breathes in and out on its own phase so they twinkle

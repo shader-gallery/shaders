@@ -32,7 +32,7 @@
     { "uniform": "u_fade", "label": "Fade", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.5, "effect": "Makes the filled blocks breathe in and out, each on its own rhythm; 0 holds them steady, higher lets them twinkle from bright to dark and back." },
     { "uniform": "u_offset", "label": "Square offset", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.4, "effect": "Slides each block off the centre of its diamond so it can tuck under the crossing cords on one side; 0 centres every block, higher scatters them so the lines overlap their edges." }
+      "default": 1.0, "effect": "Slides each block from its diamond centre toward the cord crossing at its corner; 0 centres the block in the open diamond, 1 lines it up directly under where the lines cross so the cords overlay it as an X." }
   ],
   "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "vignette": 0.26, "dither": 1.0 },
   "defaultPalette": "spectral"
