@@ -37,10 +37,10 @@
     {
       "uniform": "u_spacing",
       "label": "Reed spacing",
-      "min": 10.0,
+      "min": 6.0,
       "max": 48.0,
       "step": 1.0,
-      "default": 10.0,
+      "default": 8.0,
       "effect": "CSS-pixel spacing between rushes along the waterline, from a dense reed bed to a sparse stand."
     },
     {
@@ -58,7 +58,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.05,
-      "default": 1.0,
+      "default": 0.35,
       "effect": "Spread of per-stem height and sway timing — 0 lines the rushes up as an even rank of identical reeds, 1 gives the full natural scatter of a wild reed bed."
     },
     {
@@ -76,7 +76,7 @@
       "min": 0.05,
       "max": 0.95,
       "step": 0.01,
-      "default": 0.6,
+      "default": 0.58,
       "effect": "Where the low dusk sun sits along the horizon — its glow and the shimmering glitter column below it slide with it."
     },
     {
@@ -112,7 +112,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.05,
-      "default": 0.5,
+      "default": 0.7,
       "effect": "How tightly the rushes gather into dense clumps with open gaps between them — 0 is an even rank, 1 bunches them into tight stands."
     },
     {
@@ -130,7 +130,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.05,
-      "default": 0.7,
+      "default": 0.55,
       "effect": "Which reed depth stays sharp — 0 focuses the far small reeds, 1 the near large ones; the rest soften with distance from it."
     },
     {
@@ -139,7 +139,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.05,
-      "default": 0.6,
+      "default": 1.65,
       "effect": "Concentric ripples spreading out from each reed base where the stem meets the water — 0 is a still surface, high sets every base rippling and breaking up the reflection around it."
     }
   ],

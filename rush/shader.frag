@@ -99,8 +99,8 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag, vec3 bg,
   // the silhouette dark colour (a near-black tint of the local background)
   vec3 reedDark = bg * 0.08 + vec3(0.004, 0.005, 0.010);
 
-  // wider window so clump-displaced / jittered stems are still captured
-  for (int i = -5; i <= 5; i++) {
+  // wide window so clump-displaced / jittered / leaning stems are still captured
+  for (int i = -7; i <= 7; i++) {
     float id   = nearest + float(i);
     // dense groupings: a low-frequency signal pulls stems together into clusters
     // with open gaps between them (u_clump), on top of the per-stem jitter.
@@ -139,8 +139,13 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag, vec3 bg,
     float defocus = abs(dep - focus) * dof;
     float aa = (1.5 + 11.0 * defocus) * pr;
     float s  = max(1.0 - smoothstep(0.0, aa, ds), 1.0 - smoothstep(0.0, aa, dh));
-    // far / out-of-focus reeds haze toward the background (atmospheric depth)
-    vec3 reedCol = mix(reedDark, bg, (1.0 - dep) * 0.45 + defocus * 0.30);
+    // SOLID reeds (no fade-to-sky): convey depth with minor COLOUR variation
+    // instead of opacity — far / out-of-focus reeds drift a touch lighter + cooler,
+    // and each reed carries a small per-stem hue shift along the rank.
+    float atmos = (1.0 - dep) * 0.5 + defocus * 0.3;
+    float hv = 0.5 + 0.5 * sin(id * 0.9 + dep * 2.0);
+    vec3 reedHue = mix(mix(c0, c1, hv), c2, atmos * 0.6);
+    vec3 reedCol = reedDark + reedHue * (0.04 + 0.16 * atmos);
     // premultiplied "over": nearer-looking later stems sit in front
     float a = s * (1.0 - sil);
     silCol += reedCol * a;
