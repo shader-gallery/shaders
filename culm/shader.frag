@@ -175,8 +175,10 @@ void main() {
       float eSoft = pr * 1.0 + blur * halfW * 0.55;       // far edges defocus
       float edge  = smoothstep(halfW + eSoft, halfW - eSoft, abs(dxc));
       float tipRound = smoothstep(1.02, 0.86, alongC);
-      float baseFade = smoothstep(-0.02, 0.13, alongC);   // emerge from the soil
-      float body  = edge * tipRound;
+      // dissolve the base: the cane's OPACITY fades to nothing toward its root
+      // (into the soil/mist) instead of ending on a hard horizontal cut.
+      float baseFade = smoothstep(-0.02, 0.14, alongC);
+      float body  = edge * tipRound * baseFade;
 
       // cane colour: adjacent palette blend; glints from the opposite pair.
       float caneHue = mod((0.5 + (hash11(ci * 4.1 + 7.0 + fl * 9.0) - 0.5) * u_hueSpread) * 4.0, 4.0);
@@ -189,7 +191,7 @@ void main() {
       vec3  glintCol = (c0*gw0 + c1*gw1 + c2*gw2 + c3*gw3) / max(gw0+gw1+gw2+gw3, 0.001);
 
       // lit 3D body, painted OVER farther canes; the base sits in soil shadow.
-      float baseShade = mix(0.28, 1.0, baseFade);
+      float baseShade = mix(0.55, 1.0, baseFade);
       vec3 bodyCol = mix(caneCol, skyCol, haze) * shade * (0.85 + 0.5 * exc) * dim * baseShade;
       col = mix(col, bodyCol, body * 0.92);
 
