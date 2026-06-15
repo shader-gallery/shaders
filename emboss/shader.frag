@@ -21,6 +21,7 @@ uniform float u_sheen;   // satin specular strength      (default 0.7)
 uniform float u_scatter; // button scatter 0..1          (default 0.45)
 uniform float u_rotate;  // extra lattice rotation deg   (default 0)
 uniform float u_skew;    // lattice shear                (default 0)
+uniform float u_tilt;    // perspective tilt into depth  (default 0)
 uniform float u_shade;   // light/dark depth 0..1        (default 0.5)
 uniform float u_lightaz; // key light azimuth degrees    (default 55)
 uniform float u_lightel; // key light elevation degrees  (default 40)
@@ -66,6 +67,11 @@ void main() {
   vec2 rel = fc - ctr;
   vec2 rc = vec2(rel.x * ca - rel.y * sa, rel.x * sa + rel.y * ca);
   rc.x += rc.y * u_skew;
+  // tilt: lay the quilt back in perspective; one edge recedes and its cushions
+  // compress while the near edge swells, giving the flat quilt real depth.
+  // Denominator stays positive (ny and u_tilt both clamped), so it never folds.
+  float ny = clamp(rc.y / max(res.y, 1.0), -0.6, 0.6);
+  rc *= 1.0 / (1.0 + clamp(u_tilt, -1.0, 1.0) * ny);
   vec2 p = rc / cell;
 
   // height + analytic normal via finite differences

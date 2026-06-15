@@ -26,7 +26,9 @@
     { "uniform": "u_rotate", "label": "Rotation", "min": -180.0, "max": 180.0, "step": 1.0,
       "default": 0.0, "effect": "Turns the whole quilt off the 45-degree diamond onto any bias while the lighting stays put." },
     { "uniform": "u_skew", "label": "Skew", "min": -1.5, "max": 1.5, "step": 0.01,
-      "default": 0.0, "effect": "Shears the lattice so the diamond cushions lean into rhombic tufts instead of upright squares." }
+      "default": 0.0, "effect": "Shears the lattice so the diamond cushions lean into rhombic tufts instead of upright squares." },
+    { "uniform": "u_tilt", "label": "Tilt", "min": -1.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Lays the quilt back in perspective; one edge recedes and its cushions shrink while the near edge swells, turning the flat tufting into a surface seen at an angle." }
   ],
   "post": { "bloom": 0.5, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.06, "vignette": 0.26, "dither": 1.0 },
   "defaultPalette": "daybreak"
