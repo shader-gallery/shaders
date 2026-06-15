@@ -25,10 +25,12 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_gustRate;     // how often a front crosses the rank   (default 0.4)
-uniform float u_chaffDensity; // hash-gated fraction that releases     (default 0.8)
+uniform float u_gustRate;     // how often a front crosses the field   (default 0.4)
+uniform float u_chaffDensity; // hash-gated fraction of dust released   (default 0.8)
 uniform float u_drift;        // how far downwind motes carry & fade   (default 1)
 uniform float u_moteSize;     // chaff fleck size, css px              (default 3)
+uniform float u_grassDensity; // density of the grass field            (default 1)
+uniform float u_grassHeight;  // height of the grass blades            (default 1)
 
 const vec3  BG         = vec3(0.030, 0.031, 0.040); // near-black field at rest
 const float HEAD_COUNT = 26.0;   // seed-heads across the rank (const, not a param)
@@ -53,6 +55,34 @@ float hash21(vec2 p) {
 float wheelW(float s, float c) {
   float d = abs(s - c);
   return max(0.0, 1.0 - min(d, 4.0 - d));
+}
+
+// distance from point p to segment a-b, returns param t along it via out
+float sdSeg(vec2 p, vec2 a, vec2 b, out float seg_t) {
+  vec2 pa = p - a, ba = b - a;
+  float h = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-5), 0.0, 1.0);
+  seg_t = h;
+  return length(pa - ba * h);
+}
+
+// signed gust bend at a normalised x (sum of the overlapping fronts' envelopes);
+// the same travelling fronts that shed chaff also lean the grass.
+float gustBendAt(float x, float t, float gustRate) {
+  float frontPeriod = 2.0 / gustRate;
+  float crossDur = 3.6;
+  float b = 0.0;
+  for (int fi = 0; fi < 4; fi++) {
+    float fId   = floor(t / frontPeriod) - float(fi);
+    float fHash = hash11(fId * 1.7 + 3.1);
+    float launch = (fId + 0.5 + (fHash - 0.5) * 0.5) * frontPeriod;
+    float prog = (t - launch) / crossDur;
+    float edge = prog * (1.0 + 2.0 * FRONT_LEN) - FRONT_LEN;
+    float fLive = smoothstep(0.0, 0.12, prog) * (1.0 - smoothstep(0.55, 1.15, prog));
+    float fAmp = fLive * (0.7 + 0.3 * fHash);
+    float dx = x - edge;
+    b += fAmp * exp(-(dx * dx) / (FRONT_LEN * FRONT_LEN * 0.5));
+  }
+  return b;
 }
 
 void main() {
@@ -132,7 +162,7 @@ void main() {
     // motes (const bound); each maps to a parent head along the rank via hash.
     // Releases are staggered along the front's crossing (each head sheds as the
     // edge reaches it) so the drift trails downwind like a comet, not a clump.
-    for (int mi = 0; mi < 22; mi++) {
+    for (int mi = 0; mi < 30; mi++) {
       float mF = float(mi);
       // per-mote hash bundle keyed on (front instance, mote index)
       vec2  hk = vec2(fId * 0.713 + 1.0, mF * 1.91 + 7.0);
@@ -211,72 +241,66 @@ void main() {
     headLight += fAmp;
   }
 
-  // ---- render the seed-head rank silhouette --------------------------------
-  // A row of HEAD_COUNT drooping heads. Each head is a thin stalk + a drooping
-  // seed cluster, leaning with the local bend. Heads stay below the lower
-  // quarter. Drawn near-black (silhouette) with a faint palette rim when bent.
+  // ---- dense grass field — the DOMINANT element ----------------------------
+  // A lush field of leaning grass-blade strokes fills the lower frame in several
+  // depth ranks; the same travelling gust fronts that shed chaff comb the blades
+  // downwind, lighting their tips as a wind ripple runs through. The dust motes
+  // then blow THROUGH this field rather than floating on black.
   {
-    // which head column are we near
-    float hx   = uv.x * HEAD_COUNT;
-    float hId  = floor(hx);
-    float hLoc = fract(hx) - 0.5;                 // -0.5..0.5 within the head slot
-    float hh   = hash11(hId * 7.3 + 1.0);
+    float refScale = min(res.x, res.y) / (max(u_pixelRatio, 1.0) * 400.0);
+    float gDens = max(u_grassDensity, 0.25);
+    float gH    = clamp(u_grassHeight, 0.3, 2.0);
+    for (int r = 0; r < 6; r++) {
+      float fr = float(r);
+      float rk = fr / 5.0;                          // 0 far .. 1 near
+      float baseY  = mix(0.50, -0.05, rk) * res.y;  // rows recede up the lower frame
+      float height = mix(0.16, 0.42, rk) * gH * res.y;
+      float spCss  = mix(7.0, 15.0, rk) / gDens;
+      float spacing = max(spCss * refScale * pr, 3.0);
+      float strokeW = mix(0.8, 1.6, rk) * pr;
+      float dim = mix(0.5, 1.0, rk);
 
-    float headXn = (hId + 0.5) / HEAD_COUNT;       // this head's normalised x
-    float rootY  = 0.085 + 0.045 * hash11(headXn * 51.0);
-    float height = 0.105 + 0.055 * hh;             // head reach (kept low)
-    // local bend pushes the tip downwind (right) and slightly down (droop+bow)
-    float lean   = colBend * (0.10 + 0.05 * hh);
+      float colF = fc.x / spacing;
+      for (int o = -1; o <= 1; o++) {
+        float idx   = floor(colF) + float(o);
+        float rootX = (idx + 0.5) * spacing;
+        float xN    = rootX / res.x;
+        float hsh   = hash11(idx * 1.37 + fr * 11.1);
+        float hsh2  = hash11(idx * 2.91 + fr * 5.3);
+        float bend  = gustBendAt(xN, t, gustRate);
+        float idle  = sin(t * 0.7 + hsh2 * 6.28 + idx * 0.5) * 0.06;
+        float lean  = bend * (0.5 + 0.5 * hsh) + idle;
 
-    // parametric stalk from root up to drooping tip; sample silhouette mask
-    // build a soft mask: distance from current pixel to the leaning stalk line.
-    float yy = uv.y;
-    float stalkT = clamp((yy - rootY) / max(height, 0.001), 0.0, 1.0);
-    // tip droops over: x offset grows with height (droop) + lean from gust
-    float droop  = stalkT * stalkT;                // quadratic droop
-    float baseX  = (hId + 0.5) / HEAD_COUNT;
-    float stalkX = baseX + (lean + 0.018) * droop;
-    float dStalk = abs(uv.x - stalkX) * aspect;
-    // stalk thickness in uv
-    float stalkW = 0.0016 + 0.0010 * hh;
-    float stalkMask = (1.0 - smoothstep(stalkW, stalkW * 2.2, dStalk))
-                    * step(rootY, yy) * (1.0 - smoothstep(height * 0.95, height, yy - rootY));
+        vec2  root  = vec2(rootX, baseY);
+        float topReach = height * (0.8 + 0.4 * hsh);
+        float tipDX = lean * topReach * 0.95;       // strong downwind comb
 
-    // seed cluster: a ripe drooping head near the tip — an elongated teardrop
-    // that hangs down and leans downwind, fatter than the stalk so it reads as
-    // a heavy nodding seed-head (wheat/oat/reed plume) rather than a bare twig.
-    vec2 tip = vec2(stalkX + (lean + 0.018) * 0.45, rootY + height);
-    vec2 dC  = (uv - tip); dC.x *= aspect;
-    // anisotropic: narrow in x, longer down the droop axis (hangs below tip)
-    float clW = 0.012 + 0.006 * hh;                // head half-width
-    float clH = 0.030 + 0.014 * hh;                // head length (drooping down)
-    // bias the vertical term so the mass hangs below the tip
-    float dy = dC.y + clH * 0.45;
-    float cluster = exp(-((dC.x * dC.x) / (clW * clW) + (dy * dy) / (clH * clH)) * 0.9);
-    cluster *= step(rootY, yy);
+        float best = 1e9, bestT = 0.0; vec2 prev = root;
+        for (int s = 1; s <= 4; s++) {
+          float tt = float(s) / 4.0;
+          float curve = pow(tt, 1.5);
+          vec2 p = root + vec2(tipDX * curve, topReach * tt);
+          float segT; float d = sdSeg(fc, prev, p, segT);
+          float gT = (float(s - 1) + segT) / 4.0;
+          if (d < best) { best = d; bestT = gT; }
+          prev = p;
+        }
+        float taper = mix(1.0, 0.22, bestT);
+        float hw    = strokeW * taper;
+        float blade = 1.0 - smoothstep(hw, hw + 1.3 * pr, best);
 
-    float headMask = clamp(stalkMask * 0.8 + cluster, 0.0, 1.0);
+        float sH = fr * 0.7 + hsh * 0.6 + 0.4;
+        float w0 = wheelW(sH,0.0), w1 = wheelW(sH,1.0), w2 = wheelW(sH,2.0), w3 = wheelW(sH,3.0);
+        vec3  hue = (c0*w0 + c1*w1 + c2*w2 + c3*w3) / max(w0+w1+w2+w3, 0.001);
 
-    // silhouette: darken toward true black where a head is (it occludes the
-    // faint ground glow), so heads read as near-black shapes at rest.
-    col = mix(col, BG * 0.35, headMask * 0.9);
-
-    // faint palette rim that the bent edges catch — only when this column is
-    // bent by a gust. Hue by head position, kept thin & dim.
-    float s  = headXn * 4.0;
-    float w0 = wheelW(s, 0.0), w1 = wheelW(s, 1.0), w2 = wheelW(s, 2.0), w3 = wheelW(s, 3.0);
-    vec3  rimTint = (c0 * w0 + c1 * w1 + c2 * w2 + c3 * w3) / max(w0 + w1 + w2 + w3, 0.001);
-    // rim sits on the edge of the head mask (gradient of the mask ~ its rim)
-    float rim = headMask * (1.0 - headMask) * 4.0;
-    float bend01 = clamp(colBend, 0.0, 1.0);
-    // steady resting rim + cluster glow so the seed-head rank always reads at the
-    // bottom (was near-black at rest), brightening as a gust bends it
-    col += rimTint * rim * (0.22 + bend01 * 0.85) * 0.20;
-    // a touch of cluster glow, always faintly lit (seed-head catching ground light)
-    col += rimTint * cluster * (0.09 + bend01 * 0.85) * 0.10;
+        float tipLit  = 0.4 + 0.6 * bestT;          // tips glow brightest
+        float windLit = 0.85 + 1.1 * abs(bend);     // wind ripple lights the comb
+        col += hue * blade * dim * (0.36 + 0.26 * tipLit) * windLit;
+      }
+    }
   }
 
-  // add the motes on top (they are the show)
+  // add the dust motes on top — chaff blowing through the grass
   col += moteAcc * 2.7;
 
   // gentle soft clamp so bright motes bloom without harsh clip

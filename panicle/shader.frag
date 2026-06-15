@@ -25,11 +25,13 @@ uniform vec3  u_palette[4];
 uniform float u_gustRate;     // how often combing gusts stream through      (default 0.4)
 uniform float u_comb;         // fiber downwind stretch + streak-glow surge   (default 1.0)
 uniform float u_fiberScale;   // css-px wavelength of the fiber texture       (default 5)
+uniform float u_height;       // plume height scale                          (default 1)
+uniform float u_particles;    // density of drifting seed-fluff particles     (default 1)
 
-const vec3  BG = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
+const vec3  BG = vec3(0.030, 0.031, 0.044); // near-black base
 
-// three plumes filling the frame
-const int   PLUMES = 3;
+// a denser stand of plumes filling the frame
+const int   PLUMES = 6;
 
 float hash11(float n) { return fract(sin(n) * 43758.5453123); }
 float hash21(vec2 p)  { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }
@@ -54,6 +56,18 @@ float fbm(vec2 p) {
     amp *= 0.5;
   }
   return s;
+}
+
+// cyclic triangular weight for a palette entry centred at c on a 0..4 wheel
+float wheelW(float s, float c) {
+  float d = abs(s - c);
+  return max(0.0, 1.0 - min(d, 4.0 - d));
+}
+// palette colour at wheel position s (0..4), no dynamic array indexing
+vec3 palWheel(float s, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
+  s = fract(s * 0.25) * 4.0;
+  float w0 = wheelW(s,0.0), w1 = wheelW(s,1.0), w2 = wheelW(s,2.0), w3 = wheelW(s,3.0);
+  return (c0*w0 + c1*w1 + c2*w2 + c3*w3) / max(w0+w1+w2+w3, 0.001);
 }
 
 void main() {
@@ -102,8 +116,9 @@ void main() {
     baseX += (hash11(fi * 9.1) - 0.5) * 0.10;
     float rootX = (baseX - 0.5) * aspect;              // aspect-true x
 
-    // per-plume character — tall plumes filling the frame at close range
-    float hgt   = 0.86 + 0.06 * hash11(fi * 3.7);      // head-top height (0..1)
+    // per-plume character — varied heights (some shorter, behind) for a fuller
+    // stand; scaled by the height param.
+    float hgt   = (0.62 + 0.30 * hash11(fi * 3.7)) * clamp(u_height, 0.4, 1.6); // head-top height
     float curve = (hash11(fi * 5.3) - 0.5) * 0.26;     // resting stem curvature
     float headLen = 0.62 + 0.12 * hash11(fi * 2.1);    // head length along stem
     float headW   = 0.12 + 0.05 * hash11(fi * 6.9);    // head half-width at fattest
@@ -212,35 +227,69 @@ void main() {
     // the stem catches a thin glow when the plume is bowing (combed), dark at rest
     float stemGlow = stemMask * (0.05 + activity * comb * 0.5);
 
-    // ---- colour: blend two adjacent palette colours base->fringe -----------
-    // each plume picks an adjacent pair (i selects), streak highlights push to a
-    // third. Three plumes -> related but unequal hues.
-    vec3 baseCol, midCol, hiCol;
-    if (i == 0) { baseCol = c0; midCol = c2; hiCol = c1; }
-    else if (i == 1) { baseCol = c1; midCol = c2; hiCol = c0; }
-    else { baseCol = c2; midCol = c1; hiCol = c3; }
+    // ---- colour: each plume picks a wheel position (varied across the stand),
+    // grading base->mid up the head and pushing to a third hue in the surge ----
+    float baseS  = hash11(fi * 4.9 + 1.3) * 4.0;
+    vec3  baseCol = palWheel(baseS,        c0, c1, c2, c3);
+    vec3  midCol  = palWheel(baseS + 1.0,  c0, c1, c2, c3);
+    vec3  hiCol   = palWheel(baseS + 2.0,  c0, c1, c2, c3);
     vec3 fiberCol = mix(baseCol, midCol, smoothstep(0.0, 1.0, hs));
-    // highlight pushes toward the third colour where the surge is hottest
     vec3 hotCol = mix(fiberCol, hiCol, clamp(surge * 0.9, 0.0, 1.0));
 
-    // accumulate: faint charcoal texture always, glow only when combed
-    glow += fiberCol * texBase * 0.30;
-    glow += hotCol  * (streakGlow * 1.55 + calmShimmer * 0.45);
-    // soft fringe bloom so the feathered tip melts into dark
-    glow += hiCol * fringe * surge * headMask * 0.55;
+    // accumulate: brighter resting texture (plumes read clearly, not charcoal) +
+    // surging streak glow when combed
+    glow += fiberCol * texBase * 0.62;
+    glow += hotCol  * (streakGlow * 1.9 + calmShimmer * 0.8);
+    // soft fringe bloom so the feathered tip glows and melts into the air
+    glow += hiCol * fringe * (surge + 0.15) * headMask * 0.7;
     // the bowing stem catches a thin line of the base colour
-    glow += baseCol * stemGlow * 0.6;
+    glow += baseCol * stemGlow * 0.7;
   }
 
   col += glow;
 
+  // ---- drifting seed-fluff particle field ----------------------------------
+  // pampas/foxtail panicles shed fine seed-fluff; a slow field of soft glowing
+  // motes drifts up and downwind through the air, filling the dead space around
+  // the plumes and adding life. Stateless: each mote's position is f(t, hash).
+  float pcount = clamp(u_particles, 0.0, 2.0);
+  for (int m = 0; m < 40; m++) {
+    float fm = float(m);
+    if (hash11(fm * 1.7 + 0.3) > pcount * 0.55 + 0.1) continue; // density gate
+    float hx = hash11(fm + 0.5);
+    float hy = hash11(fm + 4.0);
+    float hs2 = hash11(fm + 9.0);
+    // slow upward + downwind drift, wrapping seamlessly
+    float spd = 0.012 + 0.020 * hs2;
+    float my = fract(hy + t * spd);                  // rises and wraps
+    float mx = fract(hx + t * 0.010 * (0.5 + hs2)    // gentle downwind carry
+                     + 0.04 * sin(t * 0.4 + fm));    // wobble
+    vec2 mp = vec2((mx - 0.5) * aspect, my);
+    vec2 dpos = p - mp;
+    float dpx = length(dpos) * res.y;
+    float r = (1.6 + 2.4 * hs2) * pr;
+    float core = exp(-(dpx*dpx) / (r*r*2.0));
+    float halo = exp(-(dpx*dpx) / (r*r*16.0));
+    // fade near the top (fluff dissipating) + faint twinkle
+    float fade = (1.0 - smoothstep(0.7, 1.0, my)) * smoothstep(0.0, 0.08, my);
+    float tw = 0.6 + 0.4 * sin(t * (1.0 + 2.0*hs2) + fm * 2.3);
+    vec3 fluffCol = palWheel(hs2 * 4.0, c0, c1, c2, c3);
+    fluffCol = mix(fluffCol, vec3(0.9, 0.92, 1.0), 0.25);
+    col += fluffCol * (core * 0.7 + halo * 0.25) * fade * tw * 0.5;
+  }
+
   // gentle vignette keeps frame edges dark, composed framing
   vec2 vuv = uv - 0.5;
-  float vign = 1.0 - smoothstep(0.55, 1.15, length(vuv * vec2(1.1, 0.95)));
-  col *= mix(0.7, 1.0, vign);
+  float vign = 1.0 - smoothstep(0.55, 1.18, length(vuv * vec2(1.1, 0.95)));
+  col *= mix(0.74, 1.0, vign);
+
+  // saturation + contrast lift so the plumes register vividly (were too muted)
+  float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  col = mix(vec3(lum), col, 1.25);                 // boost saturation
+  col = max(col, 0.0);
 
   // soft tonemap so a peak gust never blows to flat white
-  col = col / (1.0 + col * 0.62);
+  col = col / (1.0 + col * 0.5);
 
   gl_FragColor = vec4(col, 1.0);
 }

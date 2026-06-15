@@ -4,7 +4,7 @@
   "family": "Sough",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "wind", "seeds", "particles", "organic"],
-  "description": "A low rank of ripe seed-heads leans in from the bottom edge as dim drooping silhouettes that never rise past the frame's lower quarter. Invisible gust fronts sweep across the rank; each head a front bends sheds a few glowing chaff motes that lift, stream downwind on shallow ballistic arcs, tumble and fade before leaving the frame. Every mote's position is a pure function of the shared gust schedule and a per-mote hash, so the field is stateless and seamlessly looping; motes take their hue from their parent head's position along the rank, blending through all four palette colours, while the bent heads catch only a faint rim. Between gusts the air empties back to near-black through long becalmed calms.",
+  "description": "A lush field of grass fills the lower frame in receding depth ranks, leaning strokes combed downwind as travelling gust fronts ripple across and light their tips. Each front shakes a drift of glowing chaff motes loose from the grass that lift, stream downwind on shallow ballistic arcs, tumble and fade — dust blowing through the field rather than floating on black. Every mote's position is a pure function of the shared gust schedule and a per-mote hash, so the field is stateless and seamlessly looping; motes blend their hue through all four palette colours.",
   "entry": "shader.frag",
   "params": [
     {
@@ -14,7 +14,25 @@
       "max": 1.2,
       "step": 0.01,
       "default": 0.4,
-      "effect": "How often a gust front crosses the rank and sheds a new drift of chaff; low leaves long becalmed calms, high keeps the air busy with overlapping releases."
+      "effect": "How often a gust front combs the grass and shakes loose a new drift of chaff; low leaves long calms, high keeps the air busy with overlapping releases."
+    },
+    {
+      "uniform": "u_grassDensity",
+      "label": "Grass density",
+      "min": 0.4,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How thickly the grass blades pack the field, from a sparse stand to a dense lush meadow."
+    },
+    {
+      "uniform": "u_grassHeight",
+      "label": "Grass height",
+      "min": 0.4,
+      "max": 1.8,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Height of the grass blades, from low turf to tall waving stalks filling the frame."
     },
     {
       "uniform": "u_chaffDensity",
@@ -22,8 +40,8 @@
       "min": 0.2,
       "max": 1,
       "step": 0.01,
-      "default": 0.8,
-      "effect": "Hash-gated fraction of candidate motes that actually release per gust, thinning the drift to a few lonely flecks or filling it out into a thick shed."
+      "default": 0.85,
+      "effect": "Hash-gated fraction of candidate motes that actually release per gust, thinning the dust to a few flecks or filling the air with a thick shed."
     },
     {
       "uniform": "u_drift",
@@ -44,5 +62,6 @@
       "effect": "CSS-pixel size of each chaff fleck, from fine drifting dust to coarse confetti."
     }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }
