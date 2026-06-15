@@ -32,6 +32,9 @@ uniform float u_rotate;      // grid rotation (degrees)
 uniform float u_distort;     // sine-warp distortion of the grid
 uniform float u_points;      // number of ripple emitters (1..4)
 uniform float u_splash;      // reach of each localized splash (frac of screen)
+uniform float u_random;      // jitter of the splash origins
+uniform float u_rndSeed;     // which random arrangement
+uniform float u_overlay;     // visible ripple-ring overlay strength
 
 const float BG        = 0.039;   // #0A -> ~0.04
 const float DOT_CSS   = 2.2;     // dot radius
@@ -39,6 +42,8 @@ const float ARM_CSS   = 5.2;     // cross arm length at full morph
 const float THICK_CSS = 1.6;     // cross thickness at full morph
 
 float sdCircle(vec2 p, float r) { return length(p) - r; }
+
+float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }
 
 // spread positions for the extra ripple emitters (fractions of half-extent),
 // shifted as a group by the Origin params. Emitter 0 sits at the origin itself.
@@ -111,27 +116,39 @@ void main() {
   float splashR = max(u_splash, 0.05) * max(res.x, res.y);
   float coreGlow = 0.0;
   float wv = 0.0;
+  float crestSum = 0.0;   // visible ripple-ring overlay, accumulated per splash
   for (int i = 0; i < 4; i++) {
     if (float(i) >= nPts) break;
-    vec2 emit = ctr + (emitOffset(i) + vec2(u_originX, u_originY)) * (res * 0.5);
-    float di = distance(dotCtr, emit);
-    float ring = max(0.0, sin((di / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + float(i) * 1.7));
-    float fall = smoothstep(splashR, 0.0, di);          // 1 at the source, 0 past reach
-    wv = max(wv, ring * fall);
-    coreGlow = max(coreGlow, smoothstep(splashR * 0.10, 0.0, distance(fc, emit)));
+    // splash origin: preset spread + Origin shift + optional random jitter
+    vec2 jit = (vec2(hash11(float(i) + u_rndSeed * 7.13), hash11(float(i) + 41.0 + u_rndSeed * 7.13)) - 0.5) * u_random * 1.4;
+    vec2 emit = ctr + (emitOffset(i) + vec2(u_originX, u_originY) + jit) * (res * 0.5);
+    float phase = float(i) * 1.7;
+    // dot/cross morph sampled at the cell centre
+    float dd = distance(dotCtr, emit);
+    float ring = max(0.0, sin((dd / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + phase));
+    float fdot = smoothstep(splashR, 0.0, dd);
+    wv = max(wv, ring * fdot);
+    // continuous ring overlay sampled per-fragment so the rings read between dots
+    float dp = distance(pf, emit);
+    float wp = sin((dp / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + phase);
+    crestSum += smoothstep(0.35, 1.0, wp) * smoothstep(splashR, 0.0, dp);
+    coreGlow = max(coreGlow, smoothstep(splashR * 0.10, 0.0, dp));
   }
   float m = clamp(wv * u_rippleAmp, 0.0, 1.0);
   // resting bias: shift the whole field toward dot (-) or cross (+)
   float mEff = clamp(m + u_morphBias, 0.0, 1.0);
 
-  // shape morph: shrinking dot blended into a growing cross
-  float dotR  = mix(DOT_CSS * u_dotSize, 0.0, mEff) * pr;
-  float arm   = mix(DOT_CSS * u_dotSize, ARM_CSS * u_crossSize, mEff) * pr;
-  float thick = mix(DOT_CSS * u_dotSize, THICK_CSS * u_crossSize, mEff) * pr;
+  // shape morph: shrinking dot blended into a growing cross. Sizes scale with
+  // refScale (same as spacing) so the dot/cross-to-cell ratio is constant across
+  // resolutions - the small poster and the fullscreen view now match.
+  float ss    = pr * refScale;
+  float dotR  = mix(DOT_CSS * u_dotSize, 0.0, mEff) * ss;
+  float arm   = mix(DOT_CSS * u_dotSize, ARM_CSS * u_crossSize, mEff) * ss;
+  float thick = mix(DOT_CSS * u_dotSize, THICK_CSS * u_crossSize, mEff) * ss;
   float dDot   = sdCircle(local, dotR);
   float dCross = sdCross(local, arm, thick);
   float shape  = mix(dDot, dCross, smoothstep(0.15, 0.85, mEff));
-  float aa     = mix(1.4, 0.32, clamp(u_crisp, 0.0, 1.0)) * pr;   // lower = crisper
+  float aa     = mix(1.4, 0.32, clamp(u_crisp, 0.0, 1.0)) * ss;   // lower = crisper
   float mask   = 1.0 - smoothstep(-aa, aa, shape);
 
   // rainbow tint by angle from the wave origin, slowly rotating, blended with the
@@ -148,10 +165,10 @@ void main() {
   // a soft bright bloom right at each splash centre so the ripple source reads
   col += paletteRamp(fract(u_time * 0.05)) * coreGlow * 0.20 * u_glow;
 
-  // faint smooth glow along the wavefront so the crest reads between dots
-  float wavePix = sin((distance(pf, worigin) / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed);
-  float crest   = smoothstep(0.90, 1.0, wavePix);
-  col += paletteRamp(fract(hue + 0.5)) * crest * 0.045 * u_glow;
+  // visible ripple-ring overlay: each splash draws its own expanding rings that
+  // fade into each other where they overlap, so the water-ripple read is explicit
+  // (not just the dot/cross morph). u_overlay sets how strongly the rings show.
+  col += paletteRamp(fract(hue + 0.5)) * crestSum * u_overlay * 0.16 * u_glow;
 
   gl_FragColor = vec4(col, 1.0);
 }
