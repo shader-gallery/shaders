@@ -20,6 +20,8 @@ uniform float u_seam;    // gold seam width in CSS px        (default 3.0)
 uniform float u_fine;    // fine secondary cracks 0..1       (default 0.6)
 uniform float u_glaze;   // ceramic glaze sheen + depth      (default 0.7)
 uniform float u_light;   // raking-light drift speed        (default 0.4)
+uniform float u_terminate; // how much cracks taper/break at ends (default 0)
+uniform float u_marble;    // marble veining in the glaze body    (default 0)
 
 float hash21(vec2 p) { p = fract(p * vec2(123.34, 345.45)); p += dot(p, p + 34.345); return fract(p.x * p.y); }
 float vnoise(vec2 p) {
@@ -73,6 +75,12 @@ void main() {
   float w = (max(u_seam, 0.6) * pr / mn) * max(u_density, 1.0) * 0.5 + 0.012;
 
   float crack = crackAt(uv, w, u_fine);
+  // crack termination: a slow noise gates the seam strength so cracks taper out and
+  // end naturally instead of running unbroken. u_terminate sets how aggressively the
+  // ends fade; the smoothstep band keeps the terminations soft, not chopped.
+  float termN = fbm(uv * 1.3 + 51.0);
+  float term  = mix(1.0, smoothstep(0.30, 0.56, termN), clamp(u_terminate, 0.0, 1.0));
+  crack *= term;
   // gradient -> rounded gold-ridge normal
   float e = 0.012;
   vec2  grad = vec2(crackAt(uv + vec2(e, 0.0), w, u_fine) - crackAt(uv - vec2(e, 0.0), w, u_fine),
@@ -100,6 +108,15 @@ void main() {
   vec3  glaze = wheelCol(0.07 + shardHue * 0.5, c0, c1, c2, c3);
   glaze = mix(vec3(dot(glaze, vec3(0.3, 0.5, 0.2))), glaze, 0.62);
   glaze *= 0.26 + 0.26 * shardDepth;
+  // marble veining: domain-warped sinusoidal veins coloured from the palette and
+  // blended into the ceramic body so it reads as veined marble rather than a flat
+  // glaze. u_marble fades the whole effect (0 = the original solid shard tone).
+  float mturb = fbm(uv * 1.7 + 21.0);
+  float vein  = 0.5 + 0.5 * sin((uv.x * 1.3 + uv.y * 0.7) * 3.4 + mturb * 6.0);
+  vein = pow(vein, 2.2);
+  vec3 marbleTint = wheelCol(0.42 + shardHue * 0.3 + vein * 0.35, c0, c1, c2, c3);
+  marbleTint = mix(vec3(dot(marbleTint, vec3(0.33))), marbleTint, 0.7) * (0.30 + 0.30 * shardDepth);
+  glaze = mix(glaze, mix(glaze, marbleTint, vein * 0.85), clamp(u_marble, 0.0, 1.0));
   // soft sheen from a gentle glaze normal under the raking light
   float ge = 0.02;
   vec2  pg = vec2(fbm((uv + vec2(ge, 0.0)) * 1.6 + 4.0) - fbm((uv - vec2(ge, 0.0)) * 1.6 + 4.0),
