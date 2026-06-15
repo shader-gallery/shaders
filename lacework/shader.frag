@@ -150,13 +150,19 @@ void main() {
   // refScale (same as spacing) so the dot/cross-to-cell ratio is constant across
   // resolutions - the small poster and the fullscreen view now match.
   float ss    = pr * refScale;
-  float dotR  = mix(DOT_CSS * u_dotSize, 0.0, mEff) * ss;
-  float arm   = mix(DOT_CSS * u_dotSize, ARM_CSS * u_crossSize * u_crossLength, mEff) * ss;
-  float thick = mix(DOT_CSS * u_dotSize, THICK_CSS * u_crossSize * u_crossThick, mEff) * ss;
+  // floor the thinnest features to ~0.7px so the smallest dot/cross settings draw
+  // as a crisp sub-px line rather than a washed-out sub-pixel blur. The dot floor
+  // fades with the morph so the dot can still vanish into the cross.
+  float minPx = 0.7 * pr;
+  float dotR  = max(mix(DOT_CSS * u_dotSize, 0.0, mEff) * ss, minPx * (1.0 - mEff));
+  float arm   = max(mix(DOT_CSS * u_dotSize, ARM_CSS * u_crossSize * u_crossLength, mEff) * ss, minPx);
+  float thick = max(mix(DOT_CSS * u_dotSize, THICK_CSS * u_crossSize * u_crossThick, mEff) * ss, minPx);
   float dDot   = sdCircle(local, dotR);
   float dCross = sdCross(local, arm, thick);
   float shape  = mix(dDot, dCross, smoothstep(0.15, 0.85, mEff));
-  float aa     = mix(1.4, 0.32, clamp(u_crisp, 0.0, 1.0)) * ss;   // lower = crisper
+  // AA is a fixed ~1px screen-space edge (NOT scaled by refScale); scaling it with
+  // refScale widened the edge at high res and blurred the small marks.
+  float aa     = mix(1.4, 0.3, clamp(u_crisp, 0.0, 1.0)) * pr;   // lower = crisper
   float mask   = 1.0 - smoothstep(-aa, aa, shape);
 
   // rainbow tint by angle from the wave origin, slowly rotating, blended with the
@@ -176,7 +182,12 @@ void main() {
   // visible ripple-ring overlay: each splash draws its own expanding rings that
   // fade into each other where they overlap, so the water-ripple read is explicit
   // (not just the dot/cross morph). u_overlay sets how strongly the rings show.
-  col += paletteRamp(fract(hue + 0.5)) * crestSum * u_overlay * 0.16 * u_glow;
+  // NB: tint with a CONTINUOUS per-fragment hue (from pf, not the quantised cell
+  // centre dotCtr) - using the cell hue here painted the overlay in flat per-cell
+  // colour blocks, which read as square artifacts in the smooth ring blend.
+  vec2  dpx   = pf - worigin;
+  float huePx = fract((atan(dpx.y, dpx.x) + 3.14159265) / 6.2831853 + t * 0.015);
+  col += paletteRamp(fract(huePx + 0.5)) * crestSum * u_overlay * 0.16 * u_glow;
 
   // pre-quantisation dither: the smooth backlight/ripple colour blends band into
   // blocky steps when written to the renderer 8-bit offscreen buffer (the post

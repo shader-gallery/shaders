@@ -75,7 +75,7 @@
       "min": 0.3,
       "max": 3.0,
       "step": 0.01,
-      "default": 0.37,
+      "default": 0.3,
       "effect": "Arm length and thickness of the crosses at full morph. Small keeps tidy plus-signs; large throws bold stitched X-bars across the cells."
     },
     {
@@ -210,7 +210,7 @@
       "min": 0.3,
       "max": 3.0,
       "step": 0.01,
-      "default": 1.0,
+      "default": 1.59,
       "effect": "Distance between the visible ripple rings, independent of the dot/cross morph. Low packs many tight concentric rings around each splash; high spreads a few widely-spaced rings."
     },
     {
@@ -219,7 +219,7 @@
       "min": 0.2,
       "max": 3.0,
       "step": 0.01,
-      "default": 1.0,
+      "default": 0.55,
       "effect": "Length of the cross arms independent of their thickness (on top of Cross size). Small makes stubby plus-marks; large stretches long thin spokes radiating from each lit cell."
     },
     {
@@ -228,7 +228,7 @@
       "min": 0.2,
       "max": 3.0,
       "step": 0.01,
-      "default": 1.0,
+      "default": 0.2,
       "effect": "Thickness of the cross arms independent of their length. Small draws fine hairline crosses; large fattens them into bold blocky plus-marks."
     }
   ],
