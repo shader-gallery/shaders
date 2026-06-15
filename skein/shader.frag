@@ -18,6 +18,7 @@ uniform float u_line;    // tube core weight in CSS px      (default 3.0)
 uniform float u_flow;    // speed of the streaming charge   (default 0.6)
 uniform float u_glow;    // halo / glow strength 0..1       (default 0.7)
 uniform float u_wave;    // undulation amplitude 0..0.5     (default 0.3)
+uniform float u_waveSpeed; // undulation travel speed        (default 0.7)
 uniform float u_rotate;  // spin the ribbon, degrees         (default 0)
 uniform float u_scatter; // per-row vertical jitter 0..1     (default 0)
 uniform float u_depth;   // per-row near/far spread 0..1     (default 0)
@@ -53,7 +54,7 @@ void main(){
   for (int k=-1;k<=1;k++){
     float yId=floor(uv.y)+float(k);
     float jit=(hash21(vec2(yId,5.0)+sd)-0.5)*u_scatter*0.7;
-    float wave=u_wave*sin(uv.x*1.2 + yId*1.7 + u_seed*1.37 + t*0.7);
+    float wave=u_wave*sin(uv.x*1.2 + yId*1.7 + u_seed*1.37 + t*u_waveSpeed);
     float cy=yId+0.5+jit+wave;
     float dd=abs(uv.y-cy);
     if (dd<best){ best=dd; bestId=yId; }
