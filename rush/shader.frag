@@ -147,10 +147,14 @@ vec3 skyAt(float yA, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
 // horizon behind the reeds. Composites the hills into `base`. `yA` is px above
 // the horizon (waterline) — feed the mirrored height for the reflection pass.
 // `hs` (u_hills) raises/lowers the ridges; `crest` tints the dusk-lit hilltops.
-vec3 hills(vec3 base, float xPx, float yA, float pr, float skyH, float hs, vec3 crest) {
+vec3 hills(vec3 base, float xPx, float yA, float pr, float skyH, float hs, vec3 crest, vec3 hillHue) {
   float x = xPx / pr;
   float aa = 2.0 * pr;
   vec3 c = base;
+  // solid hill hue: a deep cool base and a hazier lifted version (NO sky mixed
+  // in, so the ridges read as opaque landforms rather than transparent washes).
+  vec3 hillDeep = mix(hillHue, vec3(0.0), 0.82);
+  vec3 hillHaze = mix(hillDeep, hillHue, 0.55);
   // FOUR receding ridges drawn back -> front. The back ranges sit HIGHER and
   // hazier (atmospheric perspective), the near ones LOWER and darker, so each
   // ridge peeks above the one in front of it — layered horizons selling depth.
@@ -161,11 +165,13 @@ vec3 hills(vec3 base, float xPx, float yA, float pr, float skyH, float hs, vec3 
     float ampH  = skyH * hs * (0.022 + 0.030 * (1.0 - fk));  // back rolls more broadly
     float freq  = 0.0024 + 0.0030 * fk;                      // near ridges finer-grained
     float h = baseH + ampH * (0.6 * sin(x * freq + seed) + 0.4 * sin(x * freq * 2.1 + seed * 1.7));
-    float m = smoothstep(0.0, aa, h - yA);
-    // colour: far ridges hazed toward the sky, near ridges near-black silhouettes
-    vec3 ridgeCol = mix(mix(base, vec3(0.06, 0.06, 0.10), 0.5),
-                        vec3(0.012, 0.012, 0.026), fk);
-    c = mix(c, ridgeCol, m * (0.7 + 0.3 * fk));
+    float m = smoothstep(0.0, aa, h - yA);                   // 1 below the ridgeline
+    // per-ridge tone (far hazier, near deeper) + a vertical gradient within the
+    // ridge: lighter at the crest where dusk catches it, darkening downward.
+    vec3 tone = mix(hillHaze, hillDeep, fk);
+    float vg  = clamp((h - yA) / (skyH * 0.20), 0.0, 1.0);   // 0 crest .. 1 deep
+    vec3 fillCol = tone * mix(1.18, 0.72, vg);
+    c = mix(c, fillCol, m);                                  // OPAQUE fill, no sky bleed
     // a dusk-lit crest skims the nearest ridge's top edge
     if (k == 3) c += crest * exp(-abs(h - yA) / (2.5 * pr)) * step(-6.0*pr, h - yA) * 0.16;
   }
@@ -204,7 +210,7 @@ void main() {
     // the sun glow
     col += sunCol * exp(-length(fc - sun) / (res.y * 0.18)) * 0.6;
     // far-shore rolling hills behind the reeds (depth / scene-setting)
-    col = hills(col, fc.x, fc.y - waterY, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35));
+    col = hills(col, fc.x, fc.y - waterY, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35), mix(c0, c1, 0.45));
 
     float sil; vec3 glow;
     rank(fc, pr, spacing, waterY, 0.0, sil, glow, c0, c1, c2);
@@ -236,7 +242,7 @@ void main() {
                   * smoothstep(0.0, 60.0 * pr, depth) * ripple;
     // reflected far-shore hills, just under the horizon (mirrored, dimmed, rippled)
     float hfade = exp(-depth / (res.y * 0.55));
-    col = mix(col, hills(col, fc.x + shimmer, depth, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35)),
+    col = mix(col, hills(col, fc.x + shimmer, depth, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35), mix(c0, c1, 0.45)),
               0.8 * (0.5 + 0.5 * hfade) * rippleBright);
     vec2 q = vec2(fc.x + shimmer, waterY + depth * 1.18); // stretched mirror
     float sil; vec3 glow;
