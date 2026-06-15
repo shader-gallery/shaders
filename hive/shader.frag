@@ -17,6 +17,9 @@ uniform float u_scale;   // cell size in CSS px            (default 72)
 uniform float u_line;    // tube core weight in CSS px      (default 2.8)
 uniform float u_flow;    // speed of the chasing charge     (default 0.6)
 uniform float u_glow;    // halo / glow strength 0..1       (default 0.7)
+uniform float u_weld;    // 0 per-cell chase .. 1 continuous (default 0)
+uniform float u_colorBlend; // 0 per-cell hue .. 1 continuous (default 0)
+uniform float u_seed;    // pattern re-roll                 (default 0)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -37,7 +40,7 @@ void main(){
   float t=u_time;
 
   float refScale=min(res.x,res.y)/(max(pr,1.0)*400.0);
-  float cell=max(u_scale,18.0)*refScale*pr;
+  float cell=max(u_scale,8.0)*refScale*pr;
   vec2  uv=(fc-ctr)/cell;
 
   // two interleaved hex lattices; nearest centre wins
@@ -59,13 +62,19 @@ void main(){
     c0=vec3(0.231,0.510,0.965); c1=vec3(0.659,0.333,0.969);
     c2=vec3(0.133,0.827,0.933); c3=vec3(0.957,0.247,0.369);
   }
-  float hue=dot(cid,vec2(0.08,0.06))+hash21(floor(cid+0.5))*0.12+t*0.02;
+  vec2  cidi=floor(cid+0.5);
+  vec2  sd=vec2(u_seed*31.7,u_seed*17.3);
+  float hueCell=dot(cid,vec2(0.08,0.06))+hash21(cidi+sd)*0.12;  // stepped per cell
+  float hueCont=dot(uv,vec2(0.08,0.06));                        // continuous field
+  float hue=mix(hueCell,hueCont,u_colorBlend)+t*0.02;
   vec3 pathCol=wheelCol(hue,c0,c1,c2,c3);
 
   // charge chases around the rim of each cell (angle about its centre)
   float ang=atan(gv.y,gv.x)/6.2831853; // -0.5..0.5
-  float dirn=mod(floor(cid.x+cid.y+0.5),2.0)<0.5?1.0:-1.0;
-  float phase=ang*3.0*dirn - t*u_flow*0.5 + hash21(floor(cid+0.5))*3.0;
+  float dirn=hash21(cidi+sd+vec2(7.3,1.9))<0.5?1.0:-1.0;
+  float angPhase=ang*3.0*dirn + hash21(cidi+sd)*3.0;  // per-cell rim chase
+  float globPhase=dot(uv,vec2(0.62,0.46))*1.6;        // one wave sweeping the comb
+  float phase=mix(angPhase,globPhase,u_weld) - t*u_flow*0.5;
   float pulse=0.5+0.5*sin(6.2831853*phase);
   pulse=pow(pulse,3.0);
 
