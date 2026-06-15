@@ -23,6 +23,11 @@ uniform float u_seed;    // pattern re-roll for the fill    (default 0)
 uniform float u_fill;    // density of filled cells 0..1    (default 0)
 uniform float u_fillSize; // filled-dot size within cell    (default 0.8)
 uniform float u_fade;    // filled cells twinkle 0..1       (default 0)
+uniform float u_centerX; // radial origin x, short-axis units (default 0)
+uniform float u_centerY; // radial origin y, short-axis units (default 0)
+uniform float u_rotate;  // spin the wheel, degrees          (default 0)
+uniform float u_tilt;    // fore/back perspective tilt -1..1 (default 0)
+uniform float u_skew;    // left/right lean -1..1            (default 0)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -36,12 +41,25 @@ void main(){
   float pr=u_pixelRatio;
   vec2  fc=gl_FragCoord.xy;
   vec2  res=u_resolution;
-  vec2  ctr=res*0.5;
+  vec2  sctr=res*0.5;                                   // screen centre (vignette/ground)
+  float mn=min(res.x,res.y);
+  vec2  octr=sctr+vec2(u_centerX,u_centerY)*(0.5*mn);   // movable radial origin
   float t=u_time;
 
-  float refScale=min(res.x,res.y)/(max(pr,1.0)*400.0);
+  float refScale=mn/(max(pr,1.0)*400.0);
   float cell=max(u_scale,8.0)*refScale*pr;
-  vec2  uv=(fc-ctr)/cell;
+
+  // place the origin, spin it, then a perspective-ish shear: skew leans the wheel
+  // left/right with height, tilt rocks it fore/back with width, so the flat disc
+  // can read as lying back in space.
+  vec2  p=fc-octr;
+  float rad=u_rotate*0.0174532925;
+  float ca=cos(rad), sa=sin(rad);
+  p=vec2(ca*p.x+sa*p.y,-sa*p.x+ca*p.y);
+  float nx=p.x/(0.5*mn), ny=p.y/(0.5*mn);
+  p.x*=1.0+u_skew*ny;
+  p.y*=1.0+u_tilt*nx-u_skew*0.18*ny;
+  vec2  uv=p/cell;
 
   float rr=length(uv);
   float ang=atan(uv.y,uv.x);
@@ -97,7 +115,7 @@ void main(){
   float fhue=hueR+ang/6.2831853+hash21(cid+sd+vec2(1.3,2.7))*0.08;
   vec3 fillAdd=wheelCol(fhue,c0,c1,c2,c3)*(fs*fd*fade)*(0.30+0.45*u_glow);
 
-  float vr=length((fc-ctr)/res);
+  float vr=length((fc-sctr)/res);
   vec3 ground=wheelCol(0.55+vr*0.3+t*0.01,c0,c1,c2,c3)*0.16;
 
   vec3 col=ground+fillAdd+pathCol*lit;
