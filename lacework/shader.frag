@@ -35,6 +35,8 @@ uniform float u_splash;      // reach of each localized splash (frac of screen)
 uniform float u_random;      // jitter of the splash origins
 uniform float u_rndSeed;     // which random arrangement
 uniform float u_overlay;     // visible ripple-ring overlay strength
+uniform float u_ringWidth;   // thickness of the ripple-ring band
+uniform float u_ringSpacing; // spacing between the visible ripple rings
 
 const float BG        = 0.039;   // #0A -> ~0.04
 const float DOT_CSS   = 2.2;     // dot radius
@@ -128,10 +130,14 @@ void main() {
     float ring = max(0.0, sin((dd / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + phase));
     float fdot = smoothstep(splashR, 0.0, dd);
     wv = max(wv, ring * fdot);
-    // continuous ring overlay sampled per-fragment so the rings read between dots
+    // continuous ring overlay sampled per-fragment so the rings read between dots.
+    // The overlay has its own spacing (u_ringSpacing) and band width (u_ringWidth),
+    // independent of the dot/cross morph wavelength.
     float dp = distance(pf, emit);
-    float wp = sin((dp / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + phase);
-    crestSum += smoothstep(0.35, 1.0, wp) * smoothstep(splashR, 0.0, dp);
+    float ringFreq = max(u_ripples, 0.1) / max(u_ringSpacing, 0.1);
+    float wp = sin((dp / (u_wavelength * pr)) * 6.2831853 * ringFreq - t * u_waveSpeed + phase);
+    float lo = mix(0.85, -0.25, clamp(u_ringWidth, 0.0, 1.0));
+    crestSum += smoothstep(lo, 1.0, wp) * smoothstep(splashR, 0.0, dp);
     coreGlow = max(coreGlow, smoothstep(splashR * 0.10, 0.0, dp));
   }
   float m = clamp(wv * u_rippleAmp, 0.0, 1.0);

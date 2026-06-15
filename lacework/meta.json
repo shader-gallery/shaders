@@ -194,6 +194,24 @@
       "step": 0.01,
       "default": 0.7,
       "effect": "Strength of the visible expanding ripple rings drawn around each splash (the water-ripple overlay, separate from the dot/cross morph). 0 shows only the morphing lace; high paints bright rings that fade into each other where splashes overlap."
+    },
+    {
+      "uniform": "u_ringWidth",
+      "label": "Ring thickness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "Thickness of the visible ripple-ring band. Low draws fine hairline rings; high swells them into broad soft bands of light radiating from each splash."
+    },
+    {
+      "uniform": "u_ringSpacing",
+      "label": "Ring spacing",
+      "min": 0.3,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Distance between the visible ripple rings, independent of the dot/cross morph. Low packs many tight concentric rings around each splash; high spreads a few widely-spaced rings."
     }
   ],
   "post": {
