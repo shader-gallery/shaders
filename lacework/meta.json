@@ -66,7 +66,7 @@
       "min": 0.3,
       "max": 3.0,
       "step": 0.01,
-      "default": 0.74,
+      "default": 0.3,
       "effect": "Radius of the resting dots. Small reads as a fine pin-prick halftone; large fattens them into bold beads before they morph to crosses."
     },
     {
@@ -75,7 +75,7 @@
       "min": 0.3,
       "max": 3.0,
       "step": 0.01,
-      "default": 1.0,
+      "default": 0.37,
       "effect": "Arm length and thickness of the crosses at full morph. Small keeps tidy plus-signs; large throws bold stitched X-bars across the cells."
     },
     {
@@ -93,7 +93,7 @@
       "min": 0.25,
       "max": 4.0,
       "step": 0.05,
-      "default": 2.4,
+      "default": 1.2,
       "effect": "How many concentric morph rings span the field. Low is one broad slow wave; high packs many tight dot-to-cross bands rippling outward together."
     },
     {
@@ -156,7 +156,7 @@
       "min": 1.0,
       "max": 4.0,
       "step": 1.0,
-      "default": 3.0,
+      "default": 1.0,
       "effect": "How many distinct ripple splashes dot the field at once - like raindrops on still water. Each radiates its own concentric rings that fade out past the Splash reach; combined so separate sources stay legible. Positioned as a group by Origin X/Y."
     },
     {
@@ -212,6 +212,24 @@
       "step": 0.01,
       "default": 1.0,
       "effect": "Distance between the visible ripple rings, independent of the dot/cross morph. Low packs many tight concentric rings around each splash; high spreads a few widely-spaced rings."
+    },
+    {
+      "uniform": "u_crossLength",
+      "label": "Cross length",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Length of the cross arms independent of their thickness (on top of Cross size). Small makes stubby plus-marks; large stretches long thin spokes radiating from each lit cell."
+    },
+    {
+      "uniform": "u_crossThick",
+      "label": "Cross thickness",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Thickness of the cross arms independent of their length. Small draws fine hairline crosses; large fattens them into bold blocky plus-marks."
     }
   ],
   "post": {

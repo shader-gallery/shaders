@@ -37,6 +37,8 @@ uniform float u_rndSeed;     // which random arrangement
 uniform float u_overlay;     // visible ripple-ring overlay strength
 uniform float u_ringWidth;   // thickness of the ripple-ring band
 uniform float u_ringSpacing; // spacing between the visible ripple rings
+uniform float u_crossLength; // cross arm length (independent of thickness)
+uniform float u_crossThick;  // cross arm thickness (independent of length)
 
 const float BG        = 0.039;   // #0A -> ~0.04
 const float DOT_CSS   = 2.2;     // dot radius
@@ -149,8 +151,8 @@ void main() {
   // resolutions - the small poster and the fullscreen view now match.
   float ss    = pr * refScale;
   float dotR  = mix(DOT_CSS * u_dotSize, 0.0, mEff) * ss;
-  float arm   = mix(DOT_CSS * u_dotSize, ARM_CSS * u_crossSize, mEff) * ss;
-  float thick = mix(DOT_CSS * u_dotSize, THICK_CSS * u_crossSize, mEff) * ss;
+  float arm   = mix(DOT_CSS * u_dotSize, ARM_CSS * u_crossSize * u_crossLength, mEff) * ss;
+  float thick = mix(DOT_CSS * u_dotSize, THICK_CSS * u_crossSize * u_crossThick, mEff) * ss;
   float dDot   = sdCircle(local, dotR);
   float dCross = sdCross(local, arm, thick);
   float shape  = mix(dDot, dCross, smoothstep(0.15, 0.85, mEff));
