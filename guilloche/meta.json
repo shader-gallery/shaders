@@ -77,6 +77,15 @@
       "step": 1.0,
       "default": 0.0,
       "effect": "Rotates the whole woven braid to any angle, so the bands can run level, on a diagonal, or vertically while the frame stays put."
+    },
+    {
+      "uniform": "u_blend",
+      "label": "Color blend",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Softens the hard line where one tube crosses another; 0 is a crisp over-under edge, higher feathers the boundary and fades between the two tube colours."
     }
   ],
   "defaultPalette": "peacock",
