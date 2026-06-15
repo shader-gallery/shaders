@@ -240,7 +240,8 @@
     "saturation": 1.1,
     "contrast": 1.06,
     "dither": 1.0,
-    "vignette": 0.26
+    "vignette": 0.26,
+    "grain": 0.0
   },
   "defaultPalette": "neon"
 }
