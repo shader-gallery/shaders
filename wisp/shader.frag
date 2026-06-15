@@ -22,8 +22,10 @@ uniform float u_flameSize;    // teardrop height, css px                   (defa
 uniform float u_count;        // flames across the frame (field density)   (default 9)
 uniform float u_flicker;      // FBM interior flicker amplitude            (default 0.8)
 uniform float u_trailLength;  // length of each flame's tapering tail       (default 0.6)
-uniform float u_glow;         // breathing marsh-gas atmosphere fill       (default 0.8)
-uniform float u_colorSpread;  // per-flame hue variety across the palette   (default 0.85)
+uniform float u_glow;         // breathing marsh-gas atmosphere fill       (default 0.7)
+uniform float u_colorSpread;  // per-flame hue variety across the palette   (default 0.68)
+uniform float u_brightness;   // overall flame emission multiplier         (default 1.0)
+uniform float u_saturation;   // flame colour vividness                    (default 1.25)
 
 const vec3  BG = vec3(0.026, 0.028, 0.036); // near-black marsh base
 const float TWO_PI = 6.28318530718;
@@ -131,7 +133,7 @@ void main() {
       float w0 = wheelW(hue,0.0), w1 = wheelW(hue,1.0), w2 = wheelW(hue,2.0), w3 = wheelW(hue,3.0);
       vec3 tint = (c0*w0 + c1*w1 + c2*w2 + c3*w3) / max(w0+w1+w2+w3, 0.001);
       float tlum = dot(tint, vec3(0.299, 0.587, 0.114));
-      tint = clamp(mix(vec3(tlum), tint, 1.28), 0.0, 1.0);   // +saturation for pop
+      tint = clamp(mix(vec3(tlum), tint, u_saturation), 0.0, 1.0);  // vividness
 
       // guttering flicker
       vec2 fcoord = local * vec2(3.2, 2.4) + vec2(h0 * 30.0, -t * (2.2 + u_flicker * 2.4));
@@ -160,10 +162,12 @@ void main() {
       tail *= exp(-local.x * local.x / 0.012);
       float bead = 0.5 + 0.5 * sin(ty * 9.0 - t * 2.0 + h0 * TWO_PI);
 
-      col += tint * body * 2.0 * swell;
-      col += mix(tint, vec3(1.0), 0.55) * body * core * 1.5 * swell;
-      col += tint * halo * 0.55 * swell;
-      col += tint * tail * bead * 0.20 * swell;   // faint path trace, not a streak
+      vec3 em = vec3(0.0);
+      em += tint * body * 2.0 * swell;
+      em += mix(tint, vec3(1.0), 0.55) * body * core * 1.5 * swell;
+      em += tint * halo * 0.55 * swell;
+      em += tint * tail * bead * 0.20 * swell;     // faint path trace, not a streak
+      col += em * u_brightness;
     }
   }
 
