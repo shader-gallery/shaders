@@ -27,6 +27,7 @@ uniform float u_braidDepth;  // sine amplitude about each band axis            (
 uniform float u_glint;       // brightness of specular sparks at crossings     (default 1)
 uniform float u_random;      // scatter each strand start phase                (default 0)
 uniform float u_tube;        // round strands into rotating tubes              (default 0)
+uniform float u_rotate;      // rotate the whole braid in degrees              (default 0)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black steel base ~#09090B
 const float BANDS    = 9.0;    // number of horizontal band axes (rows of strands)
@@ -55,6 +56,11 @@ void main() {
 
   vec3 col = BG;
 
+  // rotate the whole braid about the centre; the band math below runs in this
+  // pattern coordinate while the vignette stays in true screen space.
+  float pa = radians(u_rotate);
+  vec2  pc = mat2(cos(pa), -sin(pa), sin(pa), cos(pa)) * (fc - ctr) + ctr;
+
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
   if (dot(c0, c0) + dot(c1, c1) + dot(c2, c2) + dot(c3, c3) < 1e-5) {
     c0 = vec3(0.231, 0.510, 0.965); c1 = vec3(0.659, 0.333, 0.969);
@@ -69,7 +75,7 @@ void main() {
   float kx      = 6.2831853 / (WAVES_CSS * pr);  // longitudinal angular freq
 
   // which band row are we in, and the y of its axis
-  float bandId  = floor(fc.y / bandH);
+  float bandId  = floor(pc.y / bandH);
   float axisY   = (bandId + 0.5) * bandH;
 
   // accumulate the strands of THIS band (the only ones that can reach this pixel,
@@ -95,9 +101,9 @@ void main() {
     float phase = fsi * 1.5708 + bandId * 0.6 + u_random * rphase;
     // longitudinal travel: each strand drifts at its own incommensurate rate
     float travel = t * u_waveSpeed * (0.55 + fsi * 0.17);
-    float ang   = fc.x * kx * harm + phase + travel;
+    float ang   = pc.x * kx * harm + phase + travel;
     float sy    = axisY + amp * sin(ang);
-    float dsign = fc.y - sy;
+    float dsign = pc.y - sy;
     float d     = abs(dsign);
 
     // over/under depth: cosine staggered per strand gives a smoothly migrating
@@ -137,7 +143,7 @@ void main() {
   // whole effect fades to the flat engraved line at u_tube = 0.
   float theta  = asin(clamp(litNrm, -1.0, 1.0));    // angle across the tube
   float roundv = cos(theta);                        // 1 at crown, 0 at the rim
-  float bar    = 0.5 + 0.5 * sin(theta * 3.0 + fc.x * kx * 2.0 - t * (0.8 + u_waveSpeed * 1.5));
+  float bar    = 0.5 + 0.5 * sin(theta * 3.0 + pc.x * kx * 2.0 - t * (0.8 + u_waveSpeed * 1.5));
   float roll   = pow(bar, 3.0) * roundv;            // helical specular band
   vec3  overCol = mix(litCol, litCol * mix(0.45, 1.2, roundv), u_tube);
 

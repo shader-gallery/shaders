@@ -21,7 +21,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.05,
-      "default": 0.35,
+      "default": 0.45,
       "effect": "Multiplies the longitudinal phase travel of the strands; 0 freezes a static engraved braid, 2 visibly re-weaves the lozenges every few seconds."
     },
     {
@@ -30,7 +30,7 @@
       "min": 0.5,
       "max": 8.0,
       "step": 0.05,
-      "default": 1.6,
+      "default": 6.6,
       "effect": "Width of each strand stroke in CSS pixels \u2014 hairline banknote engraving at the minimum, thick ribbon strands that swell into solid woven bands at the maximum."
     },
     {
@@ -48,7 +48,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.05,
-      "default": 1.0,
+      "default": 0.15,
       "effect": "Brightness of the specular sparks where strands cross; 0 leaves the bare unjeweled weave, 2 sets a bright jewel at every lozenge corner."
     },
     {
@@ -57,7 +57,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.0,
+      "default": 0.66,
       "effect": "Scatters where each strand's wave starts and ends; 0 is the orderly aligned braid, higher offsets every strand by a random phase so the weave looks hand-drawn and irregular."
     },
     {
@@ -66,14 +66,24 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.0,
+      "default": 0.24,
       "effect": "Rounds the flat strands into 3D tubes and runs a helical highlight around them so they appear to rotate; 0 is the flat engraved line, higher gives glossy spinning rods (best read with thicker strokes)."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Rotation",
+      "min": -180.0,
+      "max": 180.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Rotates the whole woven braid to any angle, so the bands can run level, on a diagonal, or vertically while the frame stays put."
     }
   ],
   "defaultPalette": "peacock",
   "post": {
     "bloom": 0.6,
     "bloomRadius": 4.0,
+    "vignette": 0.26,
     "backdrop": 0.4,
     "backdropScale": 1.2,
     "saturation": 1.12,
