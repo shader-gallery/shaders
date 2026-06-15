@@ -21,7 +21,6 @@ uniform float u_wanderSpeed;  // drift speed of each flame within its cell (defa
 uniform float u_flameSize;    // teardrop height, css px                   (default 64)
 uniform float u_count;        // flames across the frame (field density)   (default 9)
 uniform float u_flicker;      // FBM interior flicker amplitude            (default 0.8)
-uniform float u_trailLength;  // length of each flame's tapering tail       (default 0.6)
 uniform float u_glow;         // breathing marsh-gas atmosphere fill       (default 0.7)
 uniform float u_colorSpread;  // per-flame hue variety across the palette   (default 0.68)
 uniform float u_brightness;   // overall flame emission multiplier         (default 1.0)
@@ -156,7 +155,7 @@ void main() {
       float halo = exp(-dot(hc, hc) * 2.1);
 
       // short tapering tail below the bulb (cheap; no path resample)
-      float tailLen = 0.5 + 1.4 * u_trailLength;
+      float tailLen = 1.16;                           // fixed (param removed)
       float ty = (-local.y - 0.3) / tailLen;          // 0 at base .. 1 at tail end
       float tail = smoothstep(0.0, 0.06, ty) * (1.0 - smoothstep(0.0, 1.0, ty));
       tail *= exp(-local.x * local.x / 0.012);
