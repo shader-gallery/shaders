@@ -75,7 +75,7 @@
       "min": 0.0,
       "max": 3.0,
       "step": 0.05,
-      "default": 0.2,
+      "default": 0.15,
       "effect": "How fast each punch-mark glint flickers, independent of how many twinkle; 0 freezes the sparkle mid-shimmer, high sets it racing."
     },
     {
@@ -120,7 +120,7 @@
       "min": -180.0,
       "max": 180.0,
       "step": 1.0,
-      "default": 34.0,
+      "default": 49.0,
       "effect": "Bearing of the burnished sheen raking across the strapwork; rotate it to move the lit faces of the figure."
     },
     {
@@ -129,7 +129,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.05,
-      "default": 0.3,
+      "default": 0.4,
       "effect": "Speed the sheen sweeps along the figure; 0 holds a fixed still gradient, higher rakes the lamplight slowly across the burnished metal."
     }
   ],
