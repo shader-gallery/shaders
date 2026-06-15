@@ -24,6 +24,8 @@ uniform float u_jitter;  // per-cord position scatter 0..1  (default 0)
 uniform float u_depth;   // per-cord depth spread 0..1      (default 0)
 uniform float u_fill;    // density of filled diamonds 0..1 (default 0)
 uniform float u_fillSize; // filled-diamond size within cell (default 0.8)
+uniform float u_fade;    // squares breathe in/out 0..1     (default 0)
+uniform float u_offset;  // squares slide off-centre 0..1   (default 0)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -111,12 +113,18 @@ void main(){
   float ch=hash21(cellId+u_seed*vec2(3.7,1.9));
   float filled=step(1.0-u_fill, ch);
   float cellDepth=1.0-hash21(cellId+u_seed*vec2(1.3,2.7))*u_depth*0.7;
-  float edge=max(abs(du-cellId.x),abs(dv-cellId.y));   // 0 centre .. 0.5 cord edge
+  // per-cell offset slides the block off-centre so it can reach past the cell and
+  // underlap the cords (which draw on top)
+  vec2 cellOff=(vec2(hash21(cellId+vec2(8.0,3.0)+K1),hash21(cellId+vec2(2.0,9.0)+K1))-0.5)*u_offset*0.6;
+  float edge=max(abs(du-cellId.x-cellOff.x),abs(dv-cellId.y-cellOff.y));
   float r=0.46*clamp(u_fillSize,0.0,1.0);
   float sq=smoothstep(r,r-0.07,edge)*filled;
+  // each block breathes in and out on its own phase so they twinkle
+  float fadePh=hash21(cellId+u_seed*vec2(5.1,2.9));
+  float fade=mix(1.0, 0.5+0.5*sin(6.2831853*(t*0.12+fadePh)), u_fade);
   float cellHue=dot(cellId,vec2(0.12,0.12))+hash21(cellId+K1)*0.12+t*0.02;
   vec3 cellCol=wheelCol(cellHue,c0,c1,c2,c3);
-  float fillLit=sq*cellDepth*(0.30+0.45*u_glow);
+  float fillLit=sq*cellDepth*fade*(0.30+0.45*u_glow);
 
   float rr=length((fc-ctr)/res);
   vec3 ground=wheelCol(0.55+rr*0.3+t*0.01,c0,c1,c2,c3)*0.16;
