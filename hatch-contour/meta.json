@@ -8,14 +8,14 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.32, "effect": "Speed of the invisible plume's drift through the hatching; 0 holds a frozen still-life of curved shading, 2 sends the ghost form billowing visibly across the frame." },
+      "default": 0.24, "effect": "Speed of the invisible plume's drift through the hatching; 0 holds a frozen still-life of curved shading, 2 sends the ghost form billowing visibly across the frame." },
     { "uniform": "u_spacing", "label": "Hatch gap", "min": 3.0, "max": 14.0, "step": 1.0,
-      "default": 6.0, "effect": "Distance between hatch lines in CSS pixels — dense plate-engraving texture at the minimum, open sketchy strokes at the maximum." },
+      "default": 3.0, "effect": "Distance between hatch lines in CSS pixels — dense plate-engraving texture at the minimum, open sketchy strokes at the maximum." },
     { "uniform": "u_ink", "label": "Ink", "min": 0.2, "max": 1.5, "step": 0.01,
-      "default": 1.05, "effect": "How strongly the ghost field modulates line weight; low yields near-uniform faint hatching, high carves deep chiaroscuro with bare paper-dark highlights and heavy black masses." },
+      "default": 1.25, "effect": "How strongly the ghost field modulates line weight; low yields near-uniform faint hatching, high carves deep chiaroscuro with bare paper-dark highlights and heavy black masses." },
     { "uniform": "u_warp", "label": "Bend", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.75, "effect": "How far the strokes bend along the flow; 0 collapses back to straight Hatch diagonals, high values curl the lattice into deep wood-engraving contours that wrap the form." }
+      "default": 0.22, "effect": "How far the strokes bend along the flow; 0 collapses back to straight Hatch diagonals, high values curl the lattice into deep wood-engraving contours that wrap the form." }
   ],
-  "post": { "bloom": 0.55, "bloomRadius": 4.0, "backdrop": 0.6, "backdropScale": 1.15, "saturation": 1.1, "contrast": 1.05, "dither": 1.0 },
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "backdrop": 0.6, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.06, "vignette": 0.26, "dither": 1.0 },
   "defaultPalette": "ember"
 }
