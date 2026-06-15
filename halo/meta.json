@@ -3,14 +3,15 @@
   "slug": "halo",
   "family": "Shoal",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "radial", "water", "light", "slow"],
-  "description": "Snell's window seen from underwater: one bright wavering disc of surface light hangs high in the frame, its interior a soft warm-to-cool palette blend brightest at centre, like sky read through a heaving surface. The rim frays with ridged noise into filamental tongues where total internal reflection breaks, and outside it the field falls quickly into deep blue-black. The fray crawls slowly around the disc, the radius breathes, and the interior shimmers — all very slow, nothing that resets.",
+  "tags": ["dark", "glow", "loop", "radial", "space", "eclipse", "stars", "slow"],
+  "description": "Total solar eclipse: a dark occulting moon hangs high against a slow-twinkling starfield while a bright corona blazes around its limb, its edge frayed by ridged noise into the filamental streamers and prominences of a real eclipse. A thin warm chromosphere rings the limb and a diamond-ring point flares at one side. The corona crawls slowly around the disc, the radius breathes, and the streamers shimmer — all very slow, nothing that resets.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_haloRadius", "label": "Halo radius", "min": 160.0, "max": 600.0, "step": 1.0, "default": 320.0, "effect": "CSS-pixel radius of the Snell's-window disc, from a distant porthole to a frame-filling ceiling of light." },
-    { "uniform": "u_fray", "label": "Fray depth", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "Depth of the rim's ridged-noise fraying — 0 leaves a clean breathing circle, 2 tears long filamental tongues from the edge." },
-    { "uniform": "u_waverSpeed", "label": "Waver speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.18, "effect": "How fast the rim fray crawls around the disc and the interior shimmer rolls." }
+    { "uniform": "u_haloRadius", "label": "Moon radius", "min": 120.0, "max": 460.0, "step": 1.0, "default": 200.0, "effect": "CSS-pixel radius of the occulting moon, from a small distant eclipse to a frame-filling one with a sprawling corona." },
+    { "uniform": "u_fray", "label": "Corona reach", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "Depth and reach of the corona streamers — 0 leaves a tight ring at the limb, 2 streams long feathery prominences far out into space." },
+    { "uniform": "u_waverSpeed", "label": "Waver speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.18, "effect": "How fast the corona streamers crawl around the disc and shimmer." },
+    { "uniform": "u_starDensity", "label": "Star density", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "How thickly stars fill the surrounding deep space — 0 is an empty void, 2 a dense crowded field." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.7 }
+  "post": { "bloom": 0.8 }
 }

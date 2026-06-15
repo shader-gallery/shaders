@@ -12,7 +12,7 @@
     "volumetric",
     "slow"
   ],
-  "description": "A fan of slanted volumetric light beams pours from the upper-left corner and crosses the frame diagonally — a few soft-edged shafts separated by dark gaps, each blooming and dying on its own slow phase while the whole fan rocks a few degrees over about a minute, like moonlight bent through unseen water.",
+  "description": "One to three fans of slanted volumetric light beams pour from chosen points around the frame and cross it diagonally — crepuscular rays in bunches, a few soft-edged shafts separated by dark gaps, each blooming and dying on its own slow phase while the fans rock a few degrees over about a minute, like moonlight bent through unseen water.",
   "entry": "shader.frag",
   "params": [
     {
@@ -41,6 +41,33 @@
       "step": 1,
       "default": 130,
       "effect": "CSS-pixel width of a typical shaft — narrow gives many slivers of light, wide gives two or three broad columns."
+    },
+    {
+      "uniform": "u_sources",
+      "label": "Light sources",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "effect": "How many points cast crepuscular fans — 1 a single corner shaft, 2 adds a mirrored fan from the opposite side, 3 adds a high overhead burst that lights the dark corners."
+    },
+    {
+      "uniform": "u_sourceX",
+      "label": "Source X",
+      "min": -0.3,
+      "max": 1.3,
+      "step": 0.01,
+      "default": -0.05,
+      "effect": "Horizontal position of the primary light source as a fraction of frame width — negative sits it off the left edge, past 1 off the right."
+    },
+    {
+      "uniform": "u_sourceY",
+      "label": "Source Y",
+      "min": -0.3,
+      "max": 1.3,
+      "step": 0.01,
+      "default": 1.05,
+      "effect": "Vertical position of the primary light source (1 is the top edge) — above 1 it sits off the top so the beams rake down into the frame."
     }
   ],
   "defaultPalette": "midnight",

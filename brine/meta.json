@@ -4,16 +4,18 @@
   "family": "Shoal",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "ice", "water", "crystal", "vertical"],
-  "description": "A brinicle: an icy finger of descending supercold brine hangs off-centre from the top, a faceted translucent column glinting and breathing frost feathers, ending above a faintly glowing frosted patch of seabed in near-black still water.",
+  "description": "A brinicle forest: a ceiling of supercold descending brine fingers hangs from the top edge, a field of faceted translucent crystalline columns of varying width and depth, each glinting and breathing frost feathers as a refractive shimmer streams down its interior. Nearer fingers are wide and bright, farther ones slim and dim; a frosted ice band caps them along the top and deep cold water fills between.",
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_streamSpeed", "label": "Stream speed", "min": 0.0, "max": 1.5, "step": 0.05,
-      "default": 0.4, "effect": "Rate of the downward interior shimmer and the sinking wisp, pacing the facet glints along the column." },
-    { "uniform": "u_column", "label": "Column width", "min": 24.0, "max": 140.0, "step": 1.0,
-      "default": 64.0, "effect": "CSS-pixel width of the icy column, from a delicate hanging needle to a thick frozen pillar." },
+      "default": 0.4, "effect": "Rate of the downward interior shimmer that sinks through each finger, pacing the facet glints." },
+    { "uniform": "u_column", "label": "Finger width", "min": 24.0, "max": 140.0, "step": 1.0,
+      "default": 60.0, "effect": "Typical CSS-pixel width of a brine finger, from delicate hanging needles to thick frozen pillars." },
     { "uniform": "u_feather", "label": "Frost feathers", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "Extent of the frost feathers fanning from the column's flanks — 0 leaves a bare glassy finger, 2 grows wide lacy crystalline fans." }
+      "default": 1.0, "effect": "Extent of the frost feathers fanning from each finger's flanks — 0 leaves bare glassy fingers, 2 grows wide lacy crystalline fans that fill between them." },
+    { "uniform": "u_density", "label": "Crowding", "min": 0.4, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "How tightly the fingers crowd the frame — low leaves airy gaps of dark water, high packs them into a dense frozen curtain." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.5 }
+  "post": { "bloom": 0.6 }
 }

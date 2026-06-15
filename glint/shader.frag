@@ -26,7 +26,8 @@ uniform vec3  u_palette[4];
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_heaveSpeed;  // swell + flicker speed             (default 0.35)
 uniform float u_glintCss;    // highlight height in css px        (default 2.5)
-uniform float u_pathCss;     // column width at bottom, css px     (default 340)
+uniform float u_pathCss;     // central moonbeam width, css px     (default 640)
+uniform float u_density;     // glitter density across the sea    (default 1.2)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float HORIZON_Y   = 0.685;  // horizon as fraction up the frame (upper third)
@@ -64,7 +65,8 @@ void main() {
 
   float heave = max(u_heaveSpeed, 0.0);
   float glintH = max(u_glintCss, 0.5) * pr;            // highlight half-height-ish
-  float pathW  = max(u_pathCss, 40.0) * pr;            // column width at bottom (px)
+  float pathW  = max(u_pathCss, 40.0) * pr;            // central moonbeam width (px)
+  float density = clamp(u_density, 0.3, 3.0);          // glitter columns multiplier
 
   // ---- horizon + sky -------------------------------------------------------
   float horizonPx = HORIZON_Y * res.y;
@@ -116,23 +118,22 @@ void main() {
   float rowId    = floor(rowCoord);
   float rowF     = fract(rowCoord);
 
-  // Column coordinate: the glitter path widens toward the bottom (near) and is a
-  // thin lane near the horizon (perspective convergence). Path half-width in uv:
-  float nearHalf = (pathW * 0.5) / res.x;               // bottom half-width (uv.x)
-  // full width at the bottom (near), converging to a sliver at the horizon
-  float pathHalf = nearHalf * mix(1.0, 0.11, yb);
-  float halfCells = max(pathHalf * aspect, 0.001);
-
-  // horizontal cell index across the path; cell size scales so ~same count of
-  // glints per row regardless of width (anisotropic, stretched horizontally).
-  float colsPerRow = 16.0;                              // glints across the lane (denser)
-  float u2 = (uv.x - colX) * aspect;                    // centred, aspect-corrected
-  float colNorm = u2 / max(halfCells, 1e-3);            // -1..1 inside the lane
-  float colCoord = (colNorm * 0.5 + 0.5) * colsPerRow;  // 0..colsPerRow
+  // Column coordinate: the glitter now spans the FULL width of the sea so the
+  // frame fills edge-to-edge, but it concentrates into a bright central
+  // moonbeam. Columns are laid across the whole width; a beam envelope
+  // brightens + densifies the centre while the flanks keep a sparser, dimmer
+  // sparkle so the water is never dead-black. `u_pathCss` sets the beam width
+  // (wide floods evenly, narrow gives a tight central lane).
+  float colsAcross = 34.0 * density;                    // glint columns across full width
+  float colCoord = uv.x * colsAcross;
   float colId    = floor(colCoord);
   float colF     = fract(colCoord);
 
-  float insideLane = 1.0 - smoothstep(0.92, 1.0, abs(colNorm));
+  float dxC   = (uv.x - colX) * aspect;                 // centred, aspect-corrected
+  float beamW = (pathW / max(res.x, 1.0)) * aspect;     // beam half-spread
+  float beam  = exp(-(dxC * dxC) / max(beamW * beamW * 0.5, 1e-3)); // 1 centre -> 0 edge
+  // flank floor: glitter persists across the whole sea, just dimmer/sparser
+  float insideLane = mix(0.30, 1.0, beam);
 
   // per-glint random seed (stable across the cell)
   vec2  cellSeed = vec2(rowId, colId);
@@ -153,7 +154,7 @@ void main() {
   // toward the horizon (rowPx small there) and columns are wider near the
   // bottom — exactly the density/size grading the spec calls for.
   float rowPx = horizonPx * (1.0 / max(depth, 1.0)) * 0.95; // px height of a row band
-  float colPx = (2.0 * halfCells * res.x) / colsPerRow;     // px width of a col cell
+  float colPx = res.x / max(colsAcross, 1.0);               // px width of a col cell
   rowPx = max(rowPx, 1.0);
   colPx = max(colPx, 1.0);
 
@@ -184,7 +185,10 @@ void main() {
   // dense so it still reads as a band
   float depthFade = mix(1.0, 0.62, smoothstep(1.0, 45.0, depth));
 
-  float glint = spark * flick * insideLane * waterMask * depthFade;
+  // flanks keep fewer active glints (sparser away from the beam) so the centre
+  // still reads as the moonbeam while the sea fills with scattered sparkle.
+  float laneGate = step(rnd2 * 0.72, insideLane);
+  float glint = spark * flick * insideLane * laneGate * waterMask * depthFade;
 
   // ---- glint colour: shifts subtly along the path -------------------------
   // hue drifts with depth + a slow time roll, blended from the palette. The wheel
@@ -200,7 +204,7 @@ void main() {
   glintCol = mix(glintCol, vec3(0.85, 0.90, 1.0), 0.18);
 
   // ---- the spine sheen: faint cool vertical glow down the column ----------
-  float spine = exp(-(colNorm * colNorm) * 2.0) * waterMask;
+  float spine = beam * waterMask;
   // brighter near the horizon where the column converges
   spine *= mix(0.35, 1.0, yb);
   col += moonHue * spine * 0.07;
@@ -211,9 +215,9 @@ void main() {
   col += moonHue * bgSwell * 0.012 * waterMask * (1.0 - insideLane * 0.6);
 
   // ---- composite glints ----------------------------------------------------
-  col += glintCol * glint * 2.7;
+  col += glintCol * glint * 3.4;
   // a soft bloom under each bright glint
-  col += glintCol * exp(-gd * 0.5) * flick * insideLane * waterMask * depthFade * 0.36;
+  col += glintCol * exp(-gd * 0.5) * flick * insideLane * laneGate * waterMask * depthFade * 0.5;
 
   // gentle vignette to keep frame edges dark and composed
   vec2  vp = (uv - vec2(0.5, 0.5));
