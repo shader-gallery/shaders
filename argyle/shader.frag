@@ -105,31 +105,35 @@ void main(){
   float lit1=(core1*(0.85+1.0*pulse1)+halo1*(0.7+0.6*pulse1))*depth1*w1;
   float lit2=(core2*(0.85+1.0*pulse2)+halo2*(0.7+0.6*pulse2))*depth2*w2;
 
-  // random filled diamonds: each cell (centred on integer du,dv) may be filled as
-  // a solid glowing block, classic-argyle style, chosen by a per-cell hash so
-  // u_fill sets how many light up and u_seed re-rolls which. A diamond sits UNDER
-  // the crossing cords so the overlapping lines still read on top.
-  vec2 cellId=floor(vec2(du,dv)+0.5);
-  float ch=hash21(cellId+u_seed*vec2(3.7,1.9));
-  float filled=step(1.0-u_fill, ch);
-  float cellDepth=1.0-hash21(cellId+u_seed*vec2(1.3,2.7))*u_depth*0.7;
-  // u_offset slides the block from its cell centre toward the cord crossing at
-  // its corner, so at 1 the squares line up directly under where the lines cross
-  vec2 anchor=cellId+vec2(0.5,0.5)*u_offset;
-  float edge=max(abs(du-anchor.x),abs(dv-anchor.y));
+  // random filled diamonds: each cell may fill as a solid glowing block, classic
+  // argyle style. u_offset slides the block from its cell centre (0) toward the
+  // cord crossing at its corner (1, lined up directly under where the lines
+  // cross). Because an offset block sits over a CORNER it spans four cells, so we
+  // scan the 3x3 neighbourhood and add each filled block whole - otherwise the
+  // block gets clipped to the cell it nominally belongs to.
   float r=0.46*clamp(u_fillSize,0.0,1.0);
-  float sq=smoothstep(r,r-0.07,edge)*filled;
-  // each block breathes in and out on its own phase so they twinkle
-  float fadePh=hash21(cellId+u_seed*vec2(5.1,2.9));
-  float fade=mix(1.0, 0.5+0.5*sin(6.2831853*(t*0.12+fadePh)), u_fade);
-  float cellHue=dot(cellId,vec2(0.12,0.12))+hash21(cellId+K1)*0.12+t*0.02;
-  vec3 cellCol=wheelCol(cellHue,c0,c1,c2,c3);
-  float fillLit=sq*cellDepth*fade*(0.30+0.45*u_glow);
+  vec2 base=floor(vec2(du,dv)+0.5);
+  vec3 fillCol=vec3(0.0);
+  for (int gi=-1;gi<=1;gi++){
+    for (int gj=-1;gj<=1;gj++){
+      vec2 cId=base+vec2(float(gi),float(gj));
+      float fl=step(1.0-u_fill, hash21(cId+u_seed*vec2(3.7,1.9)));
+      vec2 anchor=cId+vec2(0.5,0.5)*u_offset;
+      float e=max(abs(du-anchor.x),abs(dv-anchor.y));
+      float s=smoothstep(r,r-0.07,e)*fl;
+      float cd=1.0-hash21(cId+u_seed*vec2(1.3,2.7))*u_depth*0.7;
+      float fph=hash21(cId+u_seed*vec2(5.1,2.9));
+      float fd=mix(1.0,0.5+0.5*sin(6.2831853*(t*0.12+fph)),u_fade);
+      float chue=dot(cId,vec2(0.12,0.12))+hash21(cId+K1)*0.12+t*0.02;
+      fillCol+=wheelCol(chue,c0,c1,c2,c3)*(s*cd*fd);
+    }
+  }
+  vec3 fillAdd=fillCol*(0.30+0.45*u_glow);
 
   float rr=length((fc-ctr)/res);
   vec3 ground=wheelCol(0.55+rr*0.3+t*0.01,c0,c1,c2,c3)*0.16;
 
-  vec3 col=ground+cellCol*fillLit;
+  vec3 col=ground+fillAdd;
   col+=pathCol*max(lit1,lit2);
   col+=pathCol*max(core1*w1,core2*w2)*max(pulse1,pulse2)*0.7;
 
