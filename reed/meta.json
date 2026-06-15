@@ -7,15 +7,19 @@
   "description": "A palisade of upright glowing tubes filling the frame edge to edge, like an LED light strip stood on end or an equalizer at rest. Each reed carries its own palette hue and a bright pulse of charge rises continuously up its length over a softly lit ground.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_scale", "label": "Reed spacing", "min": 24.0, "max": 140.0, "step": 2.0,
-      "default": 64.0, "effect": "Spacing between the vertical tubes in CSS pixels - a dense fence of fine reeds at the minimum, a few broad columns at the maximum." },
+    { "uniform": "u_scale", "label": "Reed spacing", "min": 12.0, "max": 140.0, "step": 1.0,
+      "default": 34.0, "effect": "Spacing between the tubes in CSS pixels - a dense fence of fine reeds at the minimum, a few broad columns at the maximum." },
     { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 9.0, "step": 0.1,
-      "default": 3.0, "effect": "Core thickness of each glowing reed in CSS pixels, from a hairline filament to a fat neon rod." },
+      "default": 4.8, "effect": "Core thickness of each glowing reed in CSS pixels, from a hairline filament to a fat neon rod." },
     { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
-      "default": 0.6, "effect": "Speed of the charge rising up the reeds; 0 freezes the light as static beads, high sends it racing skyward." },
+      "default": 0.15, "effect": "Speed of the charge rising up the reeds; 0 freezes the light as static beads, high sends it racing skyward." },
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.7, "effect": "Strength of the soft halo around each reed; low is a crisp drawn line, high a luminous bloom that floods the gaps with colour." }
+      "default": 0.16, "effect": "Strength of the soft halo around each reed; low is a crisp drawn line, high a luminous bloom that floods the gaps with colour." },
+    { "uniform": "u_rotate", "label": "Rotation", "min": -90.0, "max": 90.0, "step": 1.0,
+      "default": 0.0, "effect": "Tilts the whole palisade; 0 stands the reeds upright, 90 lays them flat as horizontal rails, anything between leans them on a diagonal." },
+    { "uniform": "u_seed", "label": "Pattern", "min": 0.0, "max": 50.0, "step": 1.0,
+      "default": 0.0, "effect": "Reshuffles which hue each reed takes, rearranging the colour mix across the palisade without moving the tubes." }
   ],
-  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "vignette": 0.26, "dither": 1.0 },
   "defaultPalette": "spectral"
 }

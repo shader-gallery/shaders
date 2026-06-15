@@ -13,10 +13,12 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
-uniform float u_scale;   // reed spacing in CSS px        (default 64)
-uniform float u_line;    // tube core weight in CSS px     (default 3.0)
-uniform float u_flow;    // speed of the rising charge     (default 0.6)
-uniform float u_glow;    // halo / glow strength 0..1      (default 0.7)
+uniform float u_scale;   // reed spacing in CSS px        (default 34)
+uniform float u_line;    // tube core weight in CSS px     (default 4.8)
+uniform float u_flow;    // speed of the rising charge     (default 0.15)
+uniform float u_glow;    // halo / glow strength 0..1      (default 0.16)
+uniform float u_rotate;  // orientation of the palisade, degrees (default 0)
+uniform float u_seed;    // reshuffles the per-reed hues   (default 0)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -34,10 +36,15 @@ void main(){
   float t=u_time;
 
   float refScale=min(res.x,res.y)/(max(pr,1.0)*400.0);
-  float cell=max(u_scale,18.0)*refScale*pr;
-  vec2  uv=(fc-ctr)/cell;
+  float cell=max(u_scale,8.0)*refScale*pr;
+  // rotate the whole palisade about screen centre (u_rotate in degrees) so the
+  // reeds can stand upright, lie flat, or lean at any angle
+  float rad=u_rotate*0.0174532925;
+  float ca=cos(rad), sa=sin(rad);
+  vec2  pp=fc-ctr;
+  vec2  uv=vec2(ca*pp.x+sa*pp.y, -sa*pp.x+ca*pp.y)/cell;
 
-  // nearest vertical reed centreline
+  // nearest reed centreline (reeds run along the rotated y axis)
   float colId=floor(uv.x);
   float d=abs(fract(uv.x)-0.5);
 
@@ -51,7 +58,7 @@ void main(){
     c0=vec3(0.231,0.510,0.965); c1=vec3(0.659,0.333,0.969);
     c2=vec3(0.133,0.827,0.933); c3=vec3(0.957,0.247,0.369);
   }
-  float hue=colId*0.13+hash21(vec2(colId,7.0))*0.1+t*0.02;
+  float hue=colId*0.13+hash21(vec2(colId,7.0)+u_seed*vec2(1.7,2.3))*0.1+t*0.02;
   vec3 pathCol=wheelCol(hue,c0,c1,c2,c3);
 
   // charge rises up each reed; neighbouring reeds offset so it shimmers
