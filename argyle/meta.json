@@ -7,15 +7,25 @@
   "description": "Two families of diagonal glowing tubes cross into a diamond weave, one riding brighter over the other so the lattice reads as woven luminous cord. Charge travels each diagonal and the hue shifts diamond to diamond over a softly lit ground.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_scale", "label": "Diamond size", "min": 28.0, "max": 160.0, "step": 2.0,
-      "default": 70.0, "effect": "Size of each woven diamond in CSS pixels - a fine tight weave at the minimum, broad open lattice at the maximum." },
+    { "uniform": "u_scale", "label": "Diamond size", "min": 12.0, "max": 160.0, "step": 1.0,
+      "default": 42.0, "effect": "Size of each woven diamond in CSS pixels - a fine tight weave at the minimum, broad open lattice at the maximum." },
     { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 8.0, "step": 0.1,
-      "default": 3.0, "effect": "Core thickness of each glowing cord in CSS pixels, from a hairline thread to a fat neon rope." },
+      "default": 2.4, "effect": "Core thickness of each glowing cord in CSS pixels, from a hairline thread to a fat neon rope." },
     { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
-      "default": 0.6, "effect": "Speed of the charge travelling the diagonals; 0 freezes the light as static beads, high sends it weaving across the frame." },
+      "default": 0.2, "effect": "Speed of the charge travelling the diagonals; 0 freezes the light as static beads, high sends it weaving across the frame." },
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.7, "effect": "Strength of the soft halo around each cord; low is a crisp drawn weave, high a luminous bloom that fills the diamonds with colour." }
+      "default": 0.45, "effect": "Strength of the soft halo around each cord; low is a crisp drawn weave, high a luminous bloom that fills the diamonds with colour." },
+    { "uniform": "u_rotate", "label": "Rotation", "min": -45.0, "max": 45.0, "step": 1.0,
+      "default": 0.0, "effect": "Turns the weave; 0 is a diagonal diamond lattice, 45 an upright basket weave, anything between a tilted mesh." },
+    { "uniform": "u_seed", "label": "Pattern", "min": 0.0, "max": 50.0, "step": 1.0,
+      "default": 0.0, "effect": "Re-rolls the colour mix and the per-cord depth and scatter into a fresh arrangement of the weave." },
+    { "uniform": "u_blend", "label": "Colour blend", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 1.0, "effect": "How the cord colours join across diamonds; 0 hard-switches the hue at every diamond a cord crosses, 1 blends them into one smooth continuous colour field." },
+    { "uniform": "u_jitter", "label": "Scatter", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Nudges each cord off the regular weave; 0 is a perfect lattice, higher scatters the diagonals into an irregular hand-woven mesh." },
+    { "uniform": "u_depth", "label": "Depth", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Spreads the cords across depth; 0 holds them all on one plane, higher makes some cords read as near (bright and fat) and others far (dim and thin) for a layered weave." }
   ],
-  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
-  "defaultPalette": "sherbet"
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "vignette": 0.26, "dither": 1.0 },
+  "defaultPalette": "spectral"
 }

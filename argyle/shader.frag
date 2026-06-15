@@ -13,10 +13,15 @@ uniform vec2  u_mouse;
 uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
-uniform float u_scale;   // diamond size in CSS px         (default 70)
-uniform float u_line;    // tube core weight in CSS px      (default 3.0)
-uniform float u_flow;    // speed of the travelling charge  (default 0.6)
-uniform float u_glow;    // halo / glow strength 0..1       (default 0.7)
+uniform float u_scale;   // diamond size in CSS px         (default 42)
+uniform float u_line;    // tube core weight in CSS px      (default 2.4)
+uniform float u_flow;    // speed of the travelling charge  (default 0.2)
+uniform float u_glow;    // halo / glow strength 0..1       (default 0.45)
+uniform float u_rotate;  // weave orientation, degrees      (default 0)
+uniform float u_seed;    // reshuffles the per-diamond hues (default 0)
+uniform float u_blend;   // 0 = hard per-diamond colours, 1 = blended (default 1)
+uniform float u_jitter;  // per-cord position scatter 0..1  (default 0)
+uniform float u_depth;   // per-cord depth spread 0..1      (default 0)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -34,43 +39,73 @@ void main(){
   float t=u_time;
 
   float refScale=min(res.x,res.y)/(max(pr,1.0)*400.0);
-  float cell=max(u_scale,18.0)*refScale*pr;
-  vec2  uv=(fc-ctr)/cell;
+  float cell=max(u_scale,8.0)*refScale*pr;
+  // rotate the weave about screen centre (u_rotate in degrees) - a diagonal
+  // diamond weave at 0, an upright basket weave near 45
+  float rad=u_rotate*0.0174532925;
+  float ca=cos(rad), sa=sin(rad);
+  vec2  pp=fc-ctr;
+  vec2  uv=vec2(ca*pp.x+sa*pp.y, -sa*pp.x+ca*pp.y)/cell;
 
   // two diagonal coordinate families
   float du=uv.x+uv.y, dv=uv.x-uv.y;
-  float d1=abs(fract(du)-0.5);
-  float d2=abs(fract(dv)-0.5);
-  bool  upper=d1<d2;                   // which family rides on top
-  float d=min(d1,d2)*0.70710678;       // perpendicular distance, cell units
-
   float lw=max(u_line,0.5)*refScale*pr/cell;
-  float core=smoothstep(lw,lw*0.25,d);
-  float halo=lw/(d+lw*1.4);
-  halo=halo*halo*(0.4+0.7*u_glow);
+  vec2 K1=u_seed*vec2(1.7,2.3), K2=u_seed*vec2(2.3,1.1);
+
+  // nearest cord in each family: each cord may be jittered off its nominal line
+  // and carries its own depth, so scan the three nearest in du and dv
+  float duId=0.0; float d1=1e9;
+  for (int i=-1;i<=1;i++){
+    float n=floor(du)+float(i);
+    float lu=n+0.5+(hash21(vec2(n,3.0)+K1)-0.5)*u_jitter*0.9;
+    float dd=abs(du-lu);
+    if (dd<d1){ d1=dd; duId=n; }
+  }
+  float dvId=0.0; float d2=1e9;
+  for (int i=-1;i<=1;i++){
+    float m=floor(dv)+float(i);
+    float lv=m+0.5+(hash21(vec2(7.0,m)+K2)-0.5)*u_jitter*0.9;
+    float dd=abs(dv-lv);
+    if (dd<d2){ d2=dd; dvId=m; }
+  }
+
+  float depth1=1.0-hash21(vec2(duId,11.0)+K1)*u_depth*0.7;
+  float depth2=1.0-hash21(vec2(13.0,dvId)+K2)*u_depth*0.7;
+  float lw1=lw*mix(0.6,1.0,depth1), lw2=lw*mix(0.6,1.0,depth2);
+  float pd1=d1*0.70710678, pd2=d2*0.70710678;   // perpendicular distance, cell units
+  float core1=smoothstep(lw1,lw1*0.25,pd1), core2=smoothstep(lw2,lw2*0.25,pd2);
+  float halo1=lw1/(pd1+lw1*1.4); halo1=halo1*halo1*(0.4+0.7*u_glow);
+  float halo2=lw2/(pd2+lw2*1.4); halo2=halo2*halo2*(0.4+0.7*u_glow);
+  float w1=(pd1<pd2)?1.0:0.78, w2=(pd2<pd1)?1.0:0.78;   // over/under shading
 
   vec3 c0=u_palette[0],c1=u_palette[1],c2=u_palette[2],c3=u_palette[3];
   if (dot(c0,c0)+dot(c1,c1)+dot(c2,c2)+dot(c3,c3)<1e-5){
     c0=vec3(0.231,0.510,0.965); c1=vec3(0.659,0.333,0.969);
     c2=vec3(0.133,0.827,0.933); c3=vec3(0.957,0.247,0.369);
   }
-  float hue=(floor(du)+floor(dv))*0.12+t*0.02;
+  // hue: u_blend crossfades from the hard per-diamond step (colour switches at
+  // every diamond a cord crosses) to a continuous bilinear field across (du,dv)
+  vec2 ip=floor(vec2(du,dv)), fp=fract(vec2(du,dv));
+  vec2 sp=fp*fp*(3.0-2.0*fp);
+  float g00=hash21(ip+K1), g10=hash21(ip+vec2(1.0,0.0)+K1);
+  float g01=hash21(ip+vec2(0.0,1.0)+K1), g11=hash21(ip+vec2(1.0,1.0)+K1);
+  float gcell=mix(mix(g00,g10,sp.x),mix(g01,g11,sp.x),sp.y);
+  float hueStep=(ip.x+ip.y)*0.12 + g00*0.10;
+  float hueSmooth=(du+dv)*0.12 + gcell*0.10;
+  float hue=mix(hueStep,hueSmooth,u_blend)+t*0.02;
   vec3 pathCol=wheelCol(hue,c0,c1,c2,c3);
 
-  float along=upper?du:dv;
-  float dirn=upper?1.0:-1.0;
-  float phase=along*0.5*dirn - t*u_flow*0.5;
-  float pulse=0.5+0.5*sin(6.2831853*phase);
-  pulse=pow(pulse,3.0);
-
-  float weave=upper?1.0:0.78;          // over/under shading
-  float lit=(core*(0.85+1.0*pulse)+halo*(0.7+0.6*pulse))*weave;
+  // charge travels each diagonal (du family +, dv family -)
+  float pulse1=pow(0.5+0.5*sin(6.2831853*(du*0.5 - t*u_flow*0.5)),3.0);
+  float pulse2=pow(0.5+0.5*sin(6.2831853*(-dv*0.5 - t*u_flow*0.5)),3.0);
+  float lit1=(core1*(0.85+1.0*pulse1)+halo1*(0.7+0.6*pulse1))*depth1*w1;
+  float lit2=(core2*(0.85+1.0*pulse2)+halo2*(0.7+0.6*pulse2))*depth2*w2;
 
   float rr=length((fc-ctr)/res);
   vec3 ground=wheelCol(0.55+rr*0.3+t*0.01,c0,c1,c2,c3)*0.16;
 
-  vec3 col=ground+pathCol*lit;
-  col+=pathCol*core*pulse*0.7*weave;
+  vec3 col=ground+pathCol*max(lit1,lit2);
+  col+=pathCol*max(core1*w1,core2*w2)*max(pulse1,pulse2)*0.7;
 
   float vign=1.0-smoothstep(0.7,1.35,rr);
   col*=mix(0.9,1.0,vign);
