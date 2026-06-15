@@ -27,6 +27,10 @@ uniform float u_surgeRate;    // how often surge fronts roll through    (default
 uniform float u_sway;         // how far blades lean / overshoot        (default 1)
 uniform float u_bladeWidth;   // ribbon width in CSS px                 (default 14)
 uniform float u_rimGlow;      // brightness of the climbing edge light  (default 1)
+uniform float u_density;      // forest crowding (spacing scale)        (default 1)
+uniform float u_randomize;    // per-blade variation: 0 uniform .. 1    (default 1)
+uniform float u_height;       // blade height scale                     (default 1)
+uniform float u_rays;         // crepuscular god-ray intensity          (default 1)
 
 const vec3  BG          = vec3(0.020, 0.034, 0.052); // deep underwater base (blue)
 const float SPACING_CSS = 74.0;   // css px between ribbon roots (nearest rank)
@@ -79,7 +83,7 @@ void main() {
              + pow(0.5 + 0.5 * sin(rc * 1.7 - 1.3 + t * 0.03), 9.0) * 0.7
              + pow(0.5 + 0.5 * sin(rc * 0.6 + 2.1 - t * 0.02), 5.0) * 0.5;
   rays *= smoothstep(0.05, 0.9, depth);     // pour from the surface down
-  col += mix(c2, vec3(1.0), 0.4) * rays * 0.06;
+  col += mix(c2, vec3(1.0), 0.4) * rays * 0.06 * clamp(u_rays, 0.0, 2.0);
 
   // faint caustic shimmer on the upper water
   float caus = vnoise(fc / (90.0 * pr) + vec2(0.0, -t * 0.15));
@@ -99,12 +103,17 @@ void main() {
   // cross-section light for cylindrical blade volume (from upper-left, toward viewer)
   vec2 Lc = normalize(vec2(-0.5, 0.86));
 
+  // swash-style controls: forest crowding, per-blade variation, blade height
+  float dens = clamp(u_density, 0.6, 1.6);
+  float rnd  = clamp(u_randomize, 0.0, 1.0);   // 0 = even rank, 1 = full scatter
+  float hgt  = clamp(u_height, 0.5, 1.4);
+
   // ---- depth-layered kelp forest: far -> near ------------------------------
   for (int L = 0; L < LAYERS; L++) {
     float fl  = float(L) / float(LAYERS - 1);   // 0 far .. 1 near
     float dim = mix(0.5, 1.0, fl);
     float widthScale = mix(0.55, 1.0, fl);
-    float spacing = spacingN * mix(0.62, 1.0, fl);   // far ranks denser
+    float spacing = spacingN * mix(0.62, 1.0, fl) / dens;   // far ranks denser; u_density crowds
     float floorLift = (1.0 - fl) * res.y * 0.16;     // far holdfasts sit higher
     float haze = (1.0 - fl) * 0.55;                  // far ranks hazed blue
     float topScale = mix(0.80, 1.0, fl);             // far blades shorter
@@ -115,13 +124,16 @@ void main() {
       float fi    = float(i);
       float seed  = fi + fl * 23.0;
       float rootX = (fi + 0.5) * spacing + xoff;
-      rootX += (hash11(seed + 3.1) - 0.5) * spacing * 0.45;
-      float anchorY = floorLift + floorH * (0.35 + 0.55 * hash11(seed + 7.7));
+      // u_randomize pulls each blade's jitter / height / wave toward the mean, so
+      // 0 yields an even rank of identical blades and 1 the full natural scatter.
+      rootX += (hash11(seed + 3.1) - 0.5) * spacing * 0.45 * rnd;
+      float anchorY = floorLift + floorH * (0.35 + 0.55 * mix(0.5, hash11(seed + 7.7), rnd));
 
-      float hPhase = hash11(seed + 1.3) * TWO_PI;
-      float hLen   = 0.78 + 0.22 * hash11(seed + 9.2);
+      float hPhase = mix(0.5, hash11(seed + 1.3), rnd) * TWO_PI;
+      float hLen   = 0.78 + 0.22 * mix(0.5, hash11(seed + 9.2), rnd);
       float tipY   = mix(colTop * 0.62, colTop * 0.94, hLen) * topScale + floorLift * 0.5;
-      float wig    = 0.5 + 0.6 * hash11(seed + 5.5);
+      tipY = anchorY + (tipY - anchorY) * hgt;       // u_height scales blade length
+      float wig    = 0.5 + 0.6 * mix(0.5, hash11(seed + 5.5), rnd);
 
       float dx1 = (rootX - frontX) / frontW;
       float dx2 = (rootX - frontX2) / frontW;

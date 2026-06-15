@@ -14,7 +14,15 @@
     { "uniform": "u_bladeWidth", "label": "Blade width", "min": 6.0, "max": 28.0, "step": 1.0,
       "default": 15.0, "effect": "CSS-pixel width of the kelp ribbons, from straps to broad fronds." },
     { "uniform": "u_rimGlow", "label": "Rim glow", "min": 0.2, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "Brightness of the edge light that climbs the blades while they bend." }
+      "default": 1.0, "effect": "Brightness of the edge light that climbs the blades while they bend." },
+    { "uniform": "u_density", "label": "Crowding", "min": 0.6, "max": 1.6, "step": 0.05,
+      "default": 1.0, "effect": "How tightly the blades crowd the forest — low spreads them into open water, high packs them into a dense stand." },
+    { "uniform": "u_randomize", "label": "Variation", "min": 0.0, "max": 1.0, "step": 0.05,
+      "default": 1.0, "effect": "Spread of per-blade root position, height, length and waviness — 0 lines them up as an even rank of identical blades, 1 gives the full natural scatter of a wild kelp stand." },
+    { "uniform": "u_height", "label": "Blade height", "min": 0.5, "max": 1.4, "step": 0.05,
+      "default": 1.0, "effect": "Overall length of the blades from holdfast to tip — low leaves a low turf, high streams tall fronds toward the surface." },
+    { "uniform": "u_rays", "label": "God-rays", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "Strength of the crepuscular light shafts slanting down through the water — 0 is flat dim water, high pours bright sunbeams from the surface." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.5 }
