@@ -19,6 +19,7 @@ uniform float u_flow;    // speed of the streaming charge   (default 0.6)
 uniform float u_glow;    // halo / glow strength 0..1       (default 0.7)
 uniform float u_wave;    // undulation amplitude 0..0.5     (default 0.3)
 uniform float u_waveSpeed; // undulation travel speed        (default 0.7)
+uniform float u_waveVary; // per-row wave randomization 0..1  (default 0)
 uniform float u_rotate;  // spin the ribbon, degrees         (default 0)
 uniform float u_scatter; // per-row vertical jitter 0..1     (default 0)
 uniform float u_depth;   // per-row near/far spread 0..1     (default 0)
@@ -48,13 +49,23 @@ void main(){
   vec2  uv=vec2(ca*pp.x+sa*pp.y,-sa*pp.x+ca*pp.y)/cell;
   vec2  sd=vec2(u_seed*31.7,u_seed*17.3);
 
-  // nearest of three candidate rows (own row and its two neighbours); each row is
-  // jittered vertically by Scatter and undulates on its own phase
+  // nearest candidate row; scan +-2 because Wave variance can swing a cable into a
+  // neighbour band. Each row is jittered vertically by Scatter and, under Wave
+  // variance, gets its own amplitude, wavelength, phase and travel speed/direction
   float best=1e3, bestId=0.0;
-  for (int k=-1;k<=1;k++){
+  for (int k=-2;k<=2;k++){
     float yId=floor(uv.y)+float(k);
     float jit=(hash21(vec2(yId,5.0)+sd)-0.5)*u_scatter*0.7;
-    float wave=u_wave*sin(uv.x*1.2 + yId*1.7 + u_seed*1.37 + t*u_waveSpeed);
+    float rA=hash21(vec2(yId,21.0)+sd);
+    float rF=hash21(vec2(yId,22.0)+sd);
+    float rP=hash21(vec2(yId,23.0)+sd);
+    float rS=hash21(vec2(yId,24.0)+sd);
+    float dir=hash21(vec2(yId,25.0)+sd)<0.5?-1.0:1.0;
+    float amp=u_wave*mix(1.0, 0.35+1.3*rA, u_waveVary);
+    float frq=1.2*mix(1.0, 0.5+1.1*rF, u_waveVary);
+    float spd=mix(1.0, dir*(0.3+1.6*rS), u_waveVary);
+    float phs=yId*1.7 + u_seed*1.37 + u_waveVary*rP*6.2831853;
+    float wave=amp*sin(uv.x*frq + phs + t*u_waveSpeed*spd);
     float cy=yId+0.5+jit+wave;
     float dd=abs(uv.y-cy);
     if (dd<best){ best=dd; bestId=yId; }
