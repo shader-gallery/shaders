@@ -176,5 +176,12 @@ void main() {
   // (not just the dot/cross morph). u_overlay sets how strongly the rings show.
   col += paletteRamp(fract(hue + 0.5)) * crestSum * u_overlay * 0.16 * u_glow;
 
+  // pre-quantisation dither: the smooth backlight/ripple colour blends band into
+  // blocky steps when written to the renderer 8-bit offscreen buffer (the post
+  // dither runs too late to help, and bloom resamples the banded buffer). Break
+  // it here with ~1 LSB of interleaved-gradient noise before the colour is stored.
+  float ign = fract(52.9829189 * fract(dot(fc + t * 1.7, vec2(0.06711056, 0.00583715))));
+  col += (ign - 0.5) / 255.0;
+
   gl_FragColor = vec4(col, 1.0);
 }
