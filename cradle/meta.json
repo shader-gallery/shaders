@@ -38,7 +38,7 @@
       "min": 0.0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.13,
+      "default": 0.08,
       "effect": "Rate the anchor ring breathes and rotates; 0 freezes a single crisp figure, higher slowly swings the whole envelope as the anchors glide."
     },
     {
@@ -65,7 +65,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.0,
+      "default": 0.05,
       "effect": "Randomizes the anchor spacing so the figure is no longer a perfectly symmetric star pinned to the centre; 0 is even and centred, 1 throws the anchors into a lopsided, off-centre web."
     },
     {
@@ -92,7 +92,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.79,
+      "default": 0.9,
       "effect": "How far each deeper level shrinks toward the centre. 0 stacks them flat on top of each other; high pushes the back levels far inward so the layers separate into distinct planes of depth."
     },
     {
@@ -101,7 +101,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.87,
+      "default": 0.83,
       "effect": "How much dimmer each deeper level gets. 0 keeps every level equally bright (busy); high fades the back layers into shadow so the front figure reads clearly in front of them."
     },
     {
@@ -110,7 +110,7 @@
       "min": -1.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.06,
+      "default": 0.17,
       "effect": "Rotates each deeper level a little further around the ring, so the layers fan apart instead of sitting concentric. Breaks the rotational symmetry and gives a parallax spin between planes; 0 stacks them aligned."
     },
     {
@@ -119,7 +119,7 @@
       "min": -1.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.08,
+      "default": 0.0,
       "effect": "Shears the whole figure off its centred axis - the top widens or narrows like a tilted plane - to break the left-right symmetry and add a vanishing-point lean. 0 is the upright symmetric figure."
     },
     {
@@ -146,7 +146,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.5,
+      "default": 0.02,
       "effect": "How strongly the pointer tilts the figure. 0 ignores the mouse; higher lets you lean the whole string-art plane left-right and fore-back by moving the cursor, on top of the fixed Perspective skew. Neutral when the pointer is centred or off the canvas."
     },
     {
@@ -155,7 +155,7 @@
       "min": 0.0,
       "max": 1.5,
       "step": 0.01,
-      "default": 1.0,
+      "default": 0.59,
       "effect": "Strength of the soft halo, glints and white anchor dots. 1 is the full neon bloom; lower keeps the crisp coloured line cores but cuts the white blow-out where many chords pile up, so the figure reads as fine coloured wire instead of glare."
     }
   ],
