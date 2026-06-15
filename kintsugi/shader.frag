@@ -56,12 +56,16 @@ float crackAt(vec2 p, float w, float fine) {
   float na = fbm(wp * 0.9 + 3.0);
   float nb = fbm(wp * 1.9 + 17.0);
   float nd = fbm(wp * 3.7 + 31.0);
+  float ne = fbm(wp * 5.1 + 47.0);   // a second fine field -> denser background crazing
   // primary crack at full width; the secondary and fine "background" cracks are
   // drawn THINNER than the primary so the main seams read in front and the lesser
   // network recedes behind them.
   float c = 1.0 - smoothstep(0.0, w, abs(na - 0.5));
   c = max(c, (1.0 - smoothstep(0.0, w * 0.65, abs(nb - 0.5))) * 0.7);
-  c = max(c, (1.0 - smoothstep(0.0, w * 0.42, abs(nd - 0.5))) * 0.5 * fine);
+  // two thin fine fields make the background crazing more prevalent without
+  // thickening it; both scale with `fine`.
+  c = max(c, (1.0 - smoothstep(0.0, w * 0.42, abs(nd - 0.5))) * 0.6 * fine);
+  c = max(c, (1.0 - smoothstep(0.0, w * 0.38, abs(ne - 0.5))) * 0.55 * fine);
   return clamp(c, 0.0, 1.0);
 }
 

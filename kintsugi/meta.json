@@ -39,7 +39,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.71,
+      "default": 0.56,
       "effect": "Amount of fine secondary craze threading between the main breaks; 0 leaves only the bold cracks, high webs the glaze with delicate hairline gold."
     },
     {
@@ -48,7 +48,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.43,
+      "default": 0.57,
       "effect": "Depth and sheen of the ceramic glaze under the raking light; low is a flat matte body, high a deep lustrous raku glaze with a moving catchlight."
     },
     {
@@ -57,7 +57,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 0.13,
+      "default": 0.21,
       "effect": "Speed the raking light drifts across the vessel, sweeping the glint along the gold ridges and the glaze sheen; 0 holds a fixed highlight."
     },
     {
@@ -66,7 +66,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.4,
+      "default": 0.75,
       "effect": "How much the cracks taper and break at their ends; 0 runs unbroken seams, higher fades them out so they terminate naturally like real crazing."
     },
     {
@@ -75,7 +75,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.5,
+      "default": 0.92,
       "effect": "Marble veining in the ceramic body; 0 is a solid glaze, higher swirls palette-toned veins through the surface like polished marble."
     }
   ],
