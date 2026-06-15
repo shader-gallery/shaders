@@ -132,6 +132,15 @@
       "step": 0.05,
       "default": 0.7,
       "effect": "Which reed depth stays sharp — 0 focuses the far small reeds, 1 the near large ones; the rest soften with distance from it."
+    },
+    {
+      "uniform": "u_baseRipple",
+      "label": "Base ripples",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.6,
+      "effect": "Concentric ripples spreading out from each reed base where the stem meets the water — 0 is a still surface, high sets every base rippling and breaking up the reflection around it."
     }
   ],
   "defaultPalette": "midnight",

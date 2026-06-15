@@ -38,6 +38,7 @@ uniform float u_hills;      // far-shore hill height (depth)          (default 1
 uniform float u_clump;      // reed clustering 0 even .. 1 tight      (default 0.5)
 uniform float u_dof;        // reed depth-of-field blur falloff       (default 0.5)
 uniform float u_focus;      // reed focal depth 0 far .. 1 near       (default 0.7)
+uniform float u_baseRipple; // ripple rings at the reed bases         (default 0.6)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float WATER_FRAC  = 0.66;   // waterline height as fraction up from bottom
@@ -109,7 +110,8 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag, vec3 bg,
                + cl * spacing * clump * 0.85;
     // per-stem depth for DoF: 0 far .. 1 near
     float dep  = hash11(id * 2.9);
-    float nearS = mix(0.62, 1.15, dep);            // near reeds larger, far smaller
+    float nearS = mix(0.42, 1.2, dep);             // far reeds much smaller; near larger
+    float widthS = mix(0.35, 1.2, dep);            // and far stems noticeably thinner
     // u_height scales the bed; per-stem factor spans 0.55..1.5 (tall/short mix)
     float hgt  = STEMH_CSS * pr * (0.55 + 0.95 * mix(0.5, hash11(id * 1.7), rnd)) * clamp(u_height, 0.4, 2.0) * nearS;
     float swayK = mix(1.0, 0.45 + 1.1 * hash11(id * 6.1), rnd);   // some lean more
@@ -121,7 +123,7 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag, vec3 bg,
     vec2 tip  = vec2(topx, waterY + hgt);
     vec2 mid  = vec2(root + amp * hgt * 0.42, waterY + hgt * 0.55);
 
-    float swk = stemHW * nearS;
+    float swk = stemHW * widthS;
     float d1 = sdCapsule(q, base, mid, swk);
     float d2 = sdCapsule(q, mid,  tip, swk * 0.85);
     float ds = min(d1, d2);
@@ -192,6 +194,32 @@ vec3 hills(vec3 base, float xPx, float yA, float pr, float skyH, float hs, vec3 
   return c;
 }
 
+// concentric ripples spreading out from each reed base where the stem meets the
+// water. Returns a signed wave value (ring crests positive), flattened into the
+// low camera angle and confined to a band just below the waterline.
+float baseRipples(vec2 fc, float waterY, float spacing, float pr, float t) {
+  float depth = waterY - fc.y;
+  if (depth < 0.0) return 0.0;                  // sky side: no ripples
+  float rnd   = clamp(u_randomize, 0.0, 1.0);
+  float clump = clamp(u_clump, 0.0, 1.0);
+  float nearest = floor(fc.x / spacing);
+  float acc = 0.0;
+  for (int i = -3; i <= 3; i++) {
+    float id = nearest + float(i);
+    // match the rank's clumped root so the rings sit under the actual stems
+    float cl = sin(id * 0.7) + 0.6 * sin(id * 1.7 + 1.3);
+    float root = (id + 0.5) * spacing
+               + (hash11(id * 4.3) - 0.5) * spacing * 0.5 * rnd
+               + cl * spacing * clump * 0.85;
+    // elliptical distance, flattened vertically for the low viewing angle
+    vec2 d = (fc - vec2(root, waterY)) / vec2(spacing * 1.1, spacing * 0.42);
+    float r  = length(d);
+    float ph = hash11(id * 5.0) * 6.2831853;    // each base on its own phase
+    acc += sin(r * 7.0 - t * 1.6 + ph) * exp(-r * 1.7);   // outward-fading rings
+  }
+  return acc * exp(-depth / (30.0 * pr));        // only near the waterline
+}
+
 void main() {
   float pr  = u_pixelRatio;
   vec2  fc  = gl_FragCoord.xy;
@@ -250,9 +278,14 @@ void main() {
                 * exp(-depth / (skyH * 1.1));
     col += sunCol * glint * 0.5;
 
-    // slow horizontal shimmer so the mirror wavers like calm water
+    // concentric ripples radiating from each reed base at the waterline
+    float baseR = clamp(u_baseRipple, 0.0, 2.0);
+    float rip   = baseRipples(fc, waterY, spacing, pr, t) * baseR;
+    // slow horizontal shimmer so the mirror wavers like calm water; the base
+    // ripples add their own local waver so the reflection breaks up around stems
     float shimmer = sin(fc.y * 0.05 / pr + t * 0.45) * 3.0 * pr
-                  * smoothstep(0.0, 60.0 * pr, depth) * ripple;
+                  * smoothstep(0.0, 60.0 * pr, depth) * ripple
+                  + rip * 4.0 * pr;
     // reflected far-shore hills, just under the horizon (mirrored, dimmed, rippled)
     float hfade = exp(-depth / (res.y * 0.55));
     col = mix(col, hills(col, fc.x + shimmer, depth, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35), mix(c0, c1, 0.45)),
@@ -265,6 +298,8 @@ void main() {
     // reflected reeds composited over the bright reflected sky, dimmed with depth
     float k = clamp(r, 0.0, 1.0) * (0.55 + 0.45 * fade) * rippleBright;
     col = col * (1.0 - sil * k) + silCol * k;
+    // dusk-lit crests on the ripple rings catch the sky/sun colour
+    col += mix(sunCol, c2, 0.5) * max(rip, 0.0) * 0.11;
   }
 
   // crisp bright waterline glint where reeds meet their reflection
