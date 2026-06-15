@@ -3,25 +3,141 @@
   "slug": "cradle",
   "family": "Loom",
   "author": "Erin Carter",
-  "tags": ["glow", "loop", "lines", "geometric", "threads", "string-art"],
+  "tags": [
+    "glow",
+    "loop",
+    "lines",
+    "geometric",
+    "threads",
+    "string-art"
+  ],
   "description": "Anchored string art: a ring of bright cradle-point anchors sits right on the screen edges, and from each anchor a fan of chords is strung to its neighbours k steps away. The overlapping chord families trace smooth glowing envelope curves - the cardioid, nephroid and rose shapes of classic string art - with glint beads sliding the strings and the anchor nodes burning brightest. The whole figure breathes and slowly re-strings itself.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_anchors", "label": "Anchors", "min": 3.0, "max": 24.0, "step": 1.0,
-      "default": 11.0, "effect": "Number of cradle-point anchors around the ring - few gives a stark angular star, many a finely sampled envelope that reads as smooth curves." },
-    { "uniform": "u_linesPer", "label": "Lines / anchor", "min": 1.0, "max": 12.0, "step": 1.0,
-      "default": 5.0, "effect": "How many chords fan out from each anchor (to neighbours 1..k steps away); each step adds another nested envelope family, so more lines build a denser layered web." },
-    { "uniform": "u_morphSpeed", "label": "Morph speed", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.3, "effect": "Rate the anchor ring breathes and rotates; 0 freezes a single crisp figure, higher slowly swings the whole envelope as the anchors glide." },
-    { "uniform": "u_line", "label": "Line weight", "min": 0.8, "max": 3.0, "step": 0.05,
-      "default": 1.4, "effect": "Core thickness of each chord in CSS px, with halo scaling alongside - thin reads as hairline wire, thick as soft neon string." },
-    { "uniform": "u_glintSpeed", "label": "Glint speed", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.7, "effect": "Travel speed of the bright beads sliding along the chords; at 0 they rest as fixed highlights, at max light visibly courses down every string." },
-    { "uniform": "u_scatter", "label": "Scatter", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.35, "effect": "Randomizes the anchor spacing so the figure is no longer a perfectly symmetric star pinned to the centre; 0 is even and centred, 1 throws the anchors into a lopsided, off-centre web." },
-    { "uniform": "u_tint", "label": "Line tint", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.9, "effect": "Colour of the chords: 0 strings them in plain white, 1 takes full palette hues per chord family so the envelopes read in rich colour instead of washing out white." }
+    {
+      "uniform": "u_anchors",
+      "label": "Anchors",
+      "min": 3.0,
+      "max": 24.0,
+      "step": 1.0,
+      "default": 11.0,
+      "effect": "Number of cradle-point anchors around the ring - few gives a stark angular star, many a finely sampled envelope that reads as smooth curves."
+    },
+    {
+      "uniform": "u_linesPer",
+      "label": "Lines / anchor",
+      "min": 1.0,
+      "max": 12.0,
+      "step": 1.0,
+      "default": 5.0,
+      "effect": "How many chords fan out from each anchor (to neighbours 1..k steps away); each step adds another nested envelope family, so more lines build a denser layered web."
+    },
+    {
+      "uniform": "u_morphSpeed",
+      "label": "Morph speed",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Rate the anchor ring breathes and rotates; 0 freezes a single crisp figure, higher slowly swings the whole envelope as the anchors glide."
+    },
+    {
+      "uniform": "u_line",
+      "label": "Line weight",
+      "min": 0.8,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.4,
+      "effect": "Core thickness of each chord in CSS px, with halo scaling alongside - thin reads as hairline wire, thick as soft neon string."
+    },
+    {
+      "uniform": "u_glintSpeed",
+      "label": "Glint speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Travel speed of the bright beads sliding along the chords; at 0 they rest as fixed highlights, at max light visibly courses down every string."
+    },
+    {
+      "uniform": "u_scatter",
+      "label": "Scatter",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Randomizes the anchor spacing so the figure is no longer a perfectly symmetric star pinned to the centre; 0 is even and centred, 1 throws the anchors into a lopsided, off-centre web."
+    },
+    {
+      "uniform": "u_tint",
+      "label": "Line tint",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "Colour of the chords: 0 strings them in plain white, 1 takes full palette hues per chord family so the envelopes read in rich colour instead of washing out white."
+    },
+    {
+      "uniform": "u_layers",
+      "label": "Depth levels",
+      "min": 1.0,
+      "max": 5.0,
+      "step": 1.0,
+      "default": 3.0,
+      "effect": "How many nested string-art webs are stacked into the frame. 1 is the flat single figure; higher adds receding levels that sit progressively inset and dimmer for a layered depth read."
+    },
+    {
+      "uniform": "u_depth",
+      "label": "Depth spacing",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How far each deeper level shrinks toward the centre. 0 stacks them flat on top of each other; high pushes the back levels far inward so the layers separate into distinct planes of depth."
+    },
+    {
+      "uniform": "u_depthFade",
+      "label": "Depth fade",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "How much dimmer each deeper level gets. 0 keeps every level equally bright (busy); high fades the back layers into shadow so the front figure reads clearly in front of them."
+    },
+    {
+      "uniform": "u_twist",
+      "label": "Layer twist",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.22,
+      "effect": "Rotates each deeper level a little further around the ring, so the layers fan apart instead of sitting concentric. Breaks the rotational symmetry and gives a parallax spin between planes; 0 stacks them aligned."
+    },
+    {
+      "uniform": "u_skew",
+      "label": "Perspective skew",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Shears the whole figure off its centred axis - the top widens or narrows like a tilted plane - to break the left-right symmetry and add a vanishing-point lean. 0 is the upright symmetric figure."
+    },
+    {
+      "uniform": "u_layerSeed",
+      "label": "Layer variation",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Re-lays the anchor jitter independently per level so the stacked webs are distinct figures rather than scaled copies. 0 makes every layer the same shape; high throws each level its own asymmetric arrangement."
+    }
   ],
-  "post": { "bloom": 0.85, "bloomRadius": 5.0, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "post": {
+    "bloom": 0.85,
+    "bloomRadius": 5.0,
+    "saturation": 1.1,
+    "contrast": 1.04,
+    "dither": 1.0
+  },
   "defaultPalette": "witchlight"
 }
