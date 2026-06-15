@@ -14,7 +14,17 @@
     { "uniform": "u_detail", "label": "Ornament", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.6, "effect": "Complexity of the foliate filigree; low is a clean simple motif, high crowds each medallion with intricate scrollwork." },
     { "uniform": "u_drift", "label": "Shimmer", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.4, "effect": "Speed of the gold shimmer travelling the filigree; 0 holds a still woven cloth, higher lets light roll slowly across the metal thread." }
+      "default": 0.4, "effect": "Speed of the gold shimmer travelling the filigree; 0 holds a still woven cloth, higher lets light roll slowly across the metal thread." },
+    { "uniform": "u_sway", "label": "Sway", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.4, "effect": "A slow back-and-forth drift of the whole pattern so the brocade reads as a gently swaying drape; 0 pins it to a flat static print." },
+    { "uniform": "u_morph", "label": "Morph", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.5, "effect": "How fast the foliate ornament evolves; 0 is a fixed motif, higher lets the filigree breathe and re-form while staying perfectly symmetric." },
+    { "uniform": "u_rotate", "label": "Rotation", "min": -180.0, "max": 180.0, "step": 1.0,
+      "default": 0.0, "effect": "Turns the whole wallpaper to hang the medallion repeat on any angle." },
+    { "uniform": "u_ground", "label": "Ground", "min": 0.3, "max": 2.0, "step": 0.01,
+      "default": 1.0, "effect": "Richness of the deep jewel ground; low sinks it to near-black velvet, high lifts the cloth to a brighter dyed silk." },
+    { "uniform": "u_gold", "label": "Gold", "min": 0.3, "max": 2.0, "step": 0.01,
+      "default": 1.0, "effect": "Brightness of the gold filigree; low is a tarnished thread tone-on-tone with the ground, high a bright burnished metal that blooms." }
   ],
   "post": { "bloom": 0.55, "bloomRadius": 4.0, "saturation": 1.1, "contrast": 1.06, "dither": 1.0 },
   "defaultPalette": "wine"

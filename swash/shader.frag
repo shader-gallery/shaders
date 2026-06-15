@@ -27,6 +27,8 @@ uniform float u_spacing;       // perpendicular css-px between lanes        (def
 uniform float u_streakLength;  // css-px length of each streak head->tail   (default 200)
 uniform float u_thickness;     // streak half-thickness across its lane, css px (default 2.4)
 uniform float u_angle;         // lane angle in degrees                      (default 20)
+uniform float u_density;       // along-lane dash frequency, 1 = baseline    (default 1.0)
+uniform float u_randomize;     // per-lane/dash variation amount, 0..1        (default 1.0)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 
@@ -80,10 +82,16 @@ void main() {
   // ---- continuous flow: dashes scroll along each lane, off one edge while new
   // ones enter the other — a travelling current, not a back-and-forth surge. ----
   float len    = max(u_streakLength, 8.0) * pr;
-  float seg    = len + spacing * 1.4 + len * 0.7;  // dash + gap pitch up the lane
+  // dash + gap pitch up the lane; u_density scales the inter-dash gap so a lane
+  // packs more (or fewer) dashes along its length without resizing the dashes.
+  float gap    = (spacing * 1.4 + len * 0.7) / max(u_density, 0.05);
+  float seg    = len + gap;
   float speed  = max(u_flowSpeed, 0.0);
-  // per-lane flow speed variation so lanes don't move in lockstep
-  float laneSpd = speed * (0.55 + 0.9 * hash11(laneId * 1.7 + 3.0));
+  // u_randomize scales every per-lane / per-dash deviation from a clean, uniform
+  // field: 0 = mechanically regular identical lanes, 1 = the full lively scatter.
+  float rnd     = clamp(u_randomize, 0.0, 1.0);
+  // per-lane flow speed variation so lanes don't move in lockstep (mean 1.0)
+  float laneSpd = speed * (1.0 + rnd * (0.9 * hash11(laneId * 1.7 + 3.0) - 0.45));
   // continuous scroll up the lane (features travel +along and exit the top edge)
   float scroll = t * laneSpd * 70.0 * pr;
   float alongS = along - scroll;
@@ -92,8 +100,8 @@ void main() {
   float cellK  = laneId * 2.3 + segId * 5.7;
 
   // each dash sits fixed within its scrolling segment, with a per-dash length
-  float dashLen = len * (0.7 + 0.6 * hash11(cellK + 11.0));
-  float base    = (segId + 0.15 + hash11(cellK + 7.3) * 0.5) * seg;
+  float dashLen = len * (1.0 + rnd * (0.6 * hash11(cellK + 11.0) - 0.3));
+  float base    = (segId + 0.15 + 0.25 + rnd * (hash11(cellK + 7.3) * 0.5 - 0.25)) * seg;
   float d       = base - alongS;          // >0 : tail side of this dash
   float along01 = clamp(d / dashLen, 0.0, 1.0);
   float headCap = 1.0 - smoothstep(0.0, 4.0 * pr, -d);
@@ -105,7 +113,7 @@ void main() {
   float grade = (1.0 - along01);
   grade = grade * grade;
   grade = 0.32 + 0.68 * grade;
-  float accent = (0.62 + 0.38 * hash11(cellK + 2.1)) * (0.85 + 0.15 * sin(t * 2.0 + cellK));
+  float accent = (0.81 + rnd * (0.38 * hash11(cellK + 2.1) - 0.19)) * (0.85 + 0.15 * sin(t * 2.0 + cellK));
 
   float streak = lane * body * grade * accent;
 
