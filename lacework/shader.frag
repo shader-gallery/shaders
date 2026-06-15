@@ -31,6 +31,7 @@ uniform float u_crisp;       // edge sharpness of the dots
 uniform float u_rotate;      // grid rotation (degrees)
 uniform float u_distort;     // sine-warp distortion of the grid
 uniform float u_points;      // number of ripple emitters (1..4)
+uniform float u_splash;      // reach of each localized splash (frac of screen)
 
 const float BG        = 0.039;   // #0A -> ~0.04
 const float DOT_CSS   = 2.2;     // dot radius
@@ -103,17 +104,23 @@ void main() {
   // radial wave -> morph amount m in 0..1. Several emitters can radiate ripples
   // at once; their wave phases sum and interfere into a richer morph field.
   float dCtr = distance(dotCtr, worigin);   // primary origin: drives hue + opacity
+  // Each ripple point is a LOCALIZED splash: concentric rings travel outward but
+  // their strength fades past the splash reach, so several distinct raindrop
+  // sources read on the field (combined by max) instead of one uniform texture.
   float nPts = max(floor(u_points + 0.5), 1.0);
-  float wv = -1.0;
+  float splashR = max(u_splash, 0.05) * max(res.x, res.y);
+  float coreGlow = 0.0;
+  float wv = 0.0;
   for (int i = 0; i < 4; i++) {
     if (float(i) >= nPts) break;
     vec2 emit = ctr + (emitOffset(i) + vec2(u_originX, u_originY)) * (res * 0.5);
     float di = distance(dotCtr, emit);
-    // each emitter radiates full-strength rings; max keeps the nearest crest so
-    // sources stay legible where their ripples overlap (raindrop-style).
-    wv = max(wv, sin((di / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + float(i) * 1.7));
+    float ring = max(0.0, sin((di / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + float(i) * 1.7));
+    float fall = smoothstep(splashR, 0.0, di);          // 1 at the source, 0 past reach
+    wv = max(wv, ring * fall);
+    coreGlow = max(coreGlow, smoothstep(splashR * 0.10, 0.0, distance(fc, emit)));
   }
-  float m = clamp(max(0.0, wv) * u_rippleAmp, 0.0, 1.0);
+  float m = clamp(wv * u_rippleAmp, 0.0, 1.0);
   // resting bias: shift the whole field toward dot (-) or cross (+)
   float mEff = clamp(m + u_morphBias, 0.0, 1.0);
 
@@ -137,6 +144,9 @@ void main() {
   float opacity = clamp(radial + m * 0.40, 0.0, 1.0);
 
   col += dotCol * mask * opacity * (1.05 + 0.6 * m) * u_glow;
+
+  // a soft bright bloom right at each splash centre so the ripple source reads
+  col += paletteRamp(fract(u_time * 0.05)) * coreGlow * 0.20 * u_glow;
 
   // faint smooth glow along the wavefront so the crest reads between dots
   float wavePix = sin((distance(pf, worigin) / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed);
