@@ -24,7 +24,9 @@
     { "uniform": "u_ground", "label": "Ground", "min": 0.3, "max": 2.0, "step": 0.01,
       "default": 1.0, "effect": "Richness of the deep jewel ground; low sinks it to near-black velvet, high lifts the cloth to a brighter dyed silk." },
     { "uniform": "u_gold", "label": "Gold", "min": 0.3, "max": 2.0, "step": 0.01,
-      "default": 1.0, "effect": "Brightness of the gold filigree; low is a tarnished thread tone-on-tone with the ground, high a bright burnished metal that blooms." }
+      "default": 1.0, "effect": "Brightness of the gold filigree; low is a tarnished thread tone-on-tone with the ground, high a bright burnished metal that blooms." },
+    { "uniform": "u_spacing", "label": "Spacing", "min": -0.4, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Gap between the medallions without changing the motif size or grid; 0 is the packed repeat, higher shrinks each figure to open airy negative space around it, negative crowds them until they nearly touch." }
   ],
   "post": { "bloom": 0.55, "bloomRadius": 4.0, "saturation": 1.1, "contrast": 1.06, "dither": 1.0 },
   "defaultPalette": "wine"

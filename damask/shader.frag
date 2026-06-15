@@ -23,6 +23,7 @@ uniform float u_sway;    // gentle drape sway of pattern  (default 0.4)
 uniform float u_morph;   // ornament slowly evolving      (default 0.5)
 uniform float u_ground;  // jewel ground richness         (default 1)
 uniform float u_gold;    // gold filigree intensity       (default 1)
+uniform float u_spacing; // gap between medallions         (default 0)
 
 float hash21(vec2 p) { p = fract(p * vec2(123.34, 345.45)); p += dot(p, p + 34.345); return fract(p.x * p.y); }
 float vnoise(vec2 p) {
@@ -66,10 +67,15 @@ void main() {
   vec2  p = vec2(uv.x, uv.y + colOdd * 0.5);
   vec2  cellId = floor(p);
   vec2  g = fract(p) - 0.5;
+  // element spacing: shrink each medallion within its cell to open the gaps
+  // between motifs. The repeat grid stays fixed; only the figure footprint
+  // changes, so higher spacing spreads the elements further apart.
+  float fill = clamp(1.0 - u_spacing * 0.6, 0.35, 1.3);
+  vec2  gs = g / fill;
 
   // fold into an N-fold dihedral kaleidoscope -> a perfectly symmetric motif
-  float r = length(g);
-  float ang = atan(g.y, g.x);
+  float r = length(gs);
+  float ang = atan(gs.y, gs.x);
   float N = max(floor(u_fold + 0.5), 2.0);
   float sector = 6.2831853 / N;
   float fa = mod(ang, sector);
