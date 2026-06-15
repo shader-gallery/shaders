@@ -4,17 +4,18 @@
   "family": "Sough",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "wind", "bamboo", "grove", "organic"],
-  "description": "A sparse grove of thick bamboo canes, near-black at rest. Gust fronts cross the grove cane by cane, and each struck cane answers from the ground up: a sparkle of node-ring glints climbs joint by joint to the leafy tip while the stiff top bows with an elastic overshoot, so light travels up the plant rather than across the field.",
+  "description": "A reed bed of round, cylinder-shaded bamboo canes in three depth-layered rows receding into the frame, each cane lit with a specular stripe and dark turning edges for real volume, divided by crisp swollen node rings. Gust fronts cross the bed cane by cane; each struck cane answers from the ground up as a sparkle of node glints climbs joint by joint to the leafy tip while the stiff top bows with an elastic overshoot.",
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_gustRate", "label": "Gust rate", "min": 0.08, "max": 1.2, "step": 0.01,
-      "default": 0.35, "effect": "How often gust fronts move through the grove." },
+      "default": 0.35, "effect": "How often gust fronts move through the reed bed." },
     { "uniform": "u_bend", "label": "Bend", "min": 0.2, "max": 2.0, "step": 0.05,
       "default": 0.8, "effect": "How far the canes tip and how brightly the climbing glint-run registers at each joint." },
-    { "uniform": "u_spacing", "label": "Cane spacing", "min": 32.0, "max": 72.0, "step": 1.0,
-      "default": 48.0, "effect": "CSS-pixel spacing between the thick canes, holding the grove at roughly six to ten visible culms." },
+    { "uniform": "u_spacing", "label": "Cane spacing", "min": 26.0, "max": 72.0, "step": 1.0,
+      "default": 42.0, "effect": "CSS-pixel spacing between canes in the nearest row, from a dense reed bed to a sparse stand." },
     { "uniform": "u_nodeGlow", "label": "Node glow", "min": 0.2, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "Brightness of the node-ring glints as the sparkle climbs each cane." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }

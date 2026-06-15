@@ -4,17 +4,18 @@
   "family": "Sough",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "wind", "wheat", "field", "organic"],
-  "description": "Three ranks of wheat stalks recede in shallow perspective on a near-black field, each a slender curved stroke topped by an awned seed-head. Invisible gust fronts sweep across as travelling waves of bow-and-spring-back, pouring a thin palette glow into the heads and awns in proportion to flex; between fronts the field settles near-still and near-dark.",
+  "description": "A glowing sea of wheat: many ranks of awned stalks recede from the horizon down to the foreground, each a slender curved stroke topped by a fine fuzzy bristle-fan seed-head. Invisible gust fronts sweep across as travelling waves of bow-and-spring-back, pouring iridescent palette light into the heads and bristles in proportion to flex, so a luminous ripple runs through the field under a faint dusk horizon.",
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_gustRate", "label": "Gust rate", "min": 0.1, "max": 1.5, "step": 0.05,
-      "default": 0.45, "effect": "How often gust fronts arrive to sweep the field." },
+      "default": 0.45, "effect": "How often gust fronts arrive to ripple across the sea of grass." },
     { "uniform": "u_bend", "label": "Bend", "min": 0.2, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "How deeply stalks bow under a front and how far the spring-back overshoots." },
-    { "uniform": "u_spacing", "label": "Stalk spacing", "min": 10.0, "max": 48.0, "step": 1.0,
-      "default": 22.0, "effect": "CSS-pixel spacing between stalks in the nearest rank, from dense thicket to sparse stand." },
+    { "uniform": "u_spacing", "label": "Stalk spacing", "min": 7.0, "max": 36.0, "step": 1.0,
+      "default": 14.0, "effect": "CSS-pixel spacing between stalks in the nearest rank, from a dense field of wheat to a sparse stand." },
     { "uniform": "u_headGlow", "label": "Head glow", "min": 0.2, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "How much brightness the seed-heads and awns catch at full flex." }
+      "default": 1.0, "effect": "How brightly the bristle-fan seed-heads glow, from a muted field to a vivid iridescent sea." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }

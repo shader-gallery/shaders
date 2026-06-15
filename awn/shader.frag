@@ -123,18 +123,20 @@ void main() {
   // base hue centre:       blends colour i toward neighbour i+1
   // hottest awn glint leans toward c3 (the fourth colour).
 
-  // iterate ranks back-to-front
-  for (int r = 0; r < 3; r++) {
+  // iterate ranks back-to-front — a deep sea of grass: many overlapping rows
+  // recede from the horizon down to the foreground so the whole lower frame
+  // fills with wheat, a wind rippling across the field.
+  for (int r = 0; r < 7; r++) {
     float fr   = float(r);
-    float rk   = fr / 2.0;                       // 0 far .. 1 near
-    float baseY = mix(0.46, 0.10, rk);           // root line
-    float height = mix(0.15, 0.52, rk);          // stalk height
-    float spCss  = u_spacing * mix(0.55, 1.0, rk); // far rank denser in css px
+    float rk   = fr / 6.0;                        // 0 far .. 1 near
+    float baseY = mix(0.60, -0.02, rk);           // root line (rows recede to horizon)
+    float height = mix(0.12, 0.46, rk);           // stalk height (overlap -> continuous sea)
+    float spCss  = u_spacing * mix(0.40, 1.0, rk); // far rows much denser in css px
     float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
-    float spacing = max(spCss * refScale * pr, 4.0);
-    float strokeW = mix(0.9, 1.7, rk) * pr;      // near stalks thicker
-    float dimDepth = mix(0.42, 1.0, rk);         // far rank dimmer
-    float rankPhase = (1.0 - rk) * 0.9;          // far struck a beat earlier
+    float spacing = max(spCss * refScale * pr, 3.0);
+    float strokeW = mix(0.7, 1.6, rk) * pr;       // near stalks thicker
+    float dimDepth = mix(0.55, 1.0, rk);          // far rows a touch dimmer
+    float rankPhase = (1.0 - rk) * 0.9;           // far struck a beat earlier
 
     // skip pixels well below this rank's root or far above its tip (cheap reject
     // not possible in unrolled loop sense, but we just let contributions be ~0)
@@ -174,16 +176,16 @@ void main() {
       float best = 1e9;
       float bestT = 0.0;
       vec2 prev = root;
-      // unrolled polyline (constant bounds): 8 segments up the stalk
-      for (int s = 1; s <= 8; s++) {
-        float tt = float(s) / 8.0;
+      // unrolled polyline (constant bounds): 6 segments up the stalk
+      for (int s = 1; s <= 6; s++) {
+        float tt = float(s) / 6.0;
         // curved profile: more lean accumulates toward the top (tt^1.6)
         float curve = pow(tt, 1.6);
         vec2 p = root + vec2(tipDX * curve, tipUp * tt);
         float segT;
         float d = sdSeg(fc, prev, p, segT);
         // global param along whole stalk for this segment
-        float gT = (float(s - 1) + segT) / 8.0;
+        float gT = (float(s - 1) + segT) / 6.0;
         if (d < best) { best = d; bestT = gT; }
         prev = p;
       }
@@ -224,8 +226,8 @@ void main() {
       // fuzzy bristled seed-head is awn's signature texture (vs culm's bare cane)
       vec2 headTip = tip + stalkDir * headLen * 0.9;
       float awns = 0.0;
-      for (int aI = 0; aI < 7; aI++) {
-        float af = (float(aI) - 3.0) / 3.0;        // -1 .. 1 fan spread
+      for (int aI = 0; aI < 5; aI++) {
+        float af = (float(aI) - 2.0) / 2.0;        // -1 .. 1 fan spread
         // bristle direction = stalk dir rotated slightly outward; flex spreads
         float ang = af * (0.22 + headFlex * 0.10);
         float cs = cos(ang), sn = sin(ang);
@@ -242,37 +244,38 @@ void main() {
       vec3 hotHue = mix(hue, c3, 0.55);
 
       // --- compose this stalk's contribution ---
-      // 1) charcoal silhouette body: very dark, just enough to read at rest
-      float bodyDark = stalk * 0.10 * dimDepth;
-      col = mix(col, BG * 0.4, bodyDark);          // darken toward near-black
+      // Emissive glowing blades (no charcoal darkening) so the field reads as a
+      // bright, luminous sea of wheat rather than dark silhouettes on black.
 
-      // 2) rim glow on the stalk edges, scaling with flex (curvature->light).
-      // raised resting term so the stalks always carry a soft glow (was a near-
-      // black charcoal that read as empty at the gallery's tile/poster scale).
-      float rim = (stalk * 0.55 + edge * 0.45) * (0.20 + headFlex * 0.85) * dimDepth;
-      col += hue * rim * 0.60 * glow;
+      // 1) the blade body: a soft glowing stroke, always lit, brighter with flex
+      float rim = (stalk * 0.7 + edge * 0.4) * (0.34 + headFlex * 0.82) * dimDepth;
+      col += hue * rim * 0.85 * glow;
 
-      // 3) seed head glow — brighter resting baseline
-      float headLitB = 0.17 + headFlex * 0.88;
-      col += hue * he * headLitB * dimDepth * 1.0 * glow;
+      // 2) seed head glow — strong resting baseline + iridescent flex hue shift
+      float headLitB = 0.30 + headFlex * 0.92;
+      vec3 iris = mix(hue, hotHue, 0.4 + 0.6 * headFlex); // head iridescence
+      col += iris * he * headLitB * dimDepth * 1.25 * glow;
       // hotter core when strongly flexed, leaning to c3
-      col += hotHue * he * headFlex * headFlex * dimDepth * 0.7 * glow;
+      col += hotHue * he * headFlex * headFlex * dimDepth * 0.8 * glow;
 
-      // 4) awns: thin bright bristles — fuller resting glow makes the fuzzy heads
-      // read at rest, the brightest at full flex
-      float awnLit = (0.22 + headFlex * 1.0);
-      col += mix(hue, hotHue, headFlex) * awns * awnLit * dimDepth * 1.15 * glow;
+      // 3) awns: the signature fine bristle fan — bright fuzzy heads at rest,
+      // brightest at full flex
+      float awnLit = (0.42 + headFlex * 1.0);
+      col += mix(hue, hotHue, headFlex) * awns * awnLit * dimDepth * 1.35 * glow;
     }
   }
 
-  // gentle horizon haze: a faint warm-dark lift near the implied horizon (~y0.5)
-  float horizon = exp(-pow((uv.y - 0.5) * 6.0, 2.0)) * 0.018;
+  // dusk gradient + horizon glow so the sky behind the sea isn't dead black and
+  // the grass tips read against a faint lit band near the horizon (~y0.62)
+  vec3 skyCol = mix(c0, c1, 0.5);
+  col += skyCol * smoothstep(1.0, 0.55, uv.y) * 0.035 * smoothstep(0.45, 0.85, uv.y);
+  float horizon = exp(-pow((uv.y - 0.62) * 5.0, 2.0)) * 0.05;
   col += mix(c2, c0, 0.5) * horizon;
 
-  // radial-ish vignette: keep top corners and far edges dark, lower-center alive
+  // soft vignette: keep the top corners composed but let the sea fill brightly
   vec2 vc = (fc / res - vec2(0.5, 0.42));
-  float vign = 1.0 - smoothstep(0.35, 0.95, length(vc * vec2(1.0, 1.15)));
-  col *= mix(0.55, 1.0, vign);
+  float vign = 1.0 - smoothstep(0.42, 1.05, length(vc * vec2(1.0, 1.1)));
+  col *= mix(0.72, 1.0, vign);
 
   // subtle filmic-ish soft clamp to avoid blown highlights at high glow
   col = col / (1.0 + col * 0.35);
