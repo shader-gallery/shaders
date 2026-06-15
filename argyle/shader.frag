@@ -22,6 +22,8 @@ uniform float u_seed;    // reshuffles the per-diamond hues (default 0)
 uniform float u_blend;   // 0 = hard per-diamond colours, 1 = blended (default 1)
 uniform float u_jitter;  // per-cord position scatter 0..1  (default 0)
 uniform float u_depth;   // per-cord depth spread 0..1      (default 0)
+uniform float u_fill;    // density of filled diamonds 0..1 (default 0)
+uniform float u_fillSize; // filled-diamond size within cell (default 0.8)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -101,10 +103,26 @@ void main(){
   float lit1=(core1*(0.85+1.0*pulse1)+halo1*(0.7+0.6*pulse1))*depth1*w1;
   float lit2=(core2*(0.85+1.0*pulse2)+halo2*(0.7+0.6*pulse2))*depth2*w2;
 
+  // random filled diamonds: each cell (centred on integer du,dv) may be filled as
+  // a solid glowing block, classic-argyle style, chosen by a per-cell hash so
+  // u_fill sets how many light up and u_seed re-rolls which. A diamond sits UNDER
+  // the crossing cords so the overlapping lines still read on top.
+  vec2 cellId=floor(vec2(du,dv)+0.5);
+  float ch=hash21(cellId+u_seed*vec2(3.7,1.9));
+  float filled=step(1.0-u_fill, ch);
+  float cellDepth=1.0-hash21(cellId+u_seed*vec2(1.3,2.7))*u_depth*0.7;
+  float edge=max(abs(du-cellId.x),abs(dv-cellId.y));   // 0 centre .. 0.5 cord edge
+  float r=0.46*clamp(u_fillSize,0.0,1.0);
+  float sq=smoothstep(r,r-0.07,edge)*filled;
+  float cellHue=dot(cellId,vec2(0.12,0.12))+hash21(cellId+K1)*0.12+t*0.02;
+  vec3 cellCol=wheelCol(cellHue,c0,c1,c2,c3);
+  float fillLit=sq*cellDepth*(0.30+0.45*u_glow);
+
   float rr=length((fc-ctr)/res);
   vec3 ground=wheelCol(0.55+rr*0.3+t*0.01,c0,c1,c2,c3)*0.16;
 
-  vec3 col=ground+pathCol*max(lit1,lit2);
+  vec3 col=ground+cellCol*fillLit;
+  col+=pathCol*max(lit1,lit2);
   col+=pathCol*max(core1*w1,core2*w2)*max(pulse1,pulse2)*0.7;
 
   float vign=1.0-smoothstep(0.7,1.35,rr);
