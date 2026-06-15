@@ -23,10 +23,13 @@ uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_pulseSpeed;    // contraction-cycle rate scale   (default 0.7)
-uniform float u_bellSize;      // dome radius in CSS px          (default 120)
-uniform float u_count;         // how many bells swim, 2..5      (default 4)
-uniform float u_brightness;    // bell emission multiplier, 0..2 (default 1.2)
+uniform float u_bellSize;      // dome radius in CSS px          (default 110)
+uniform float u_count;         // how many bells swim, 2..9      (default 7)
+uniform float u_brightness;    // bell emission multiplier, 0..2 (default 1.3)
 uniform float u_tentacleLag;   // tentacle phase lag, 0..1 pulse (default 0.45)
+uniform float u_glow;          // colored water atmosphere fill  (default 0.8)
+uniform float u_colorSpread;   // bell-to-bell hue variety       (default 0.85)
+uniform float u_saturation;    // bell colour vividness          (default 1.2)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const int   NBELLS   = 9;       // structured organisms, count-gated
@@ -76,9 +79,13 @@ void main() {
   }
   P0 = c0; P1 = c1; P2 = c2; P3 = c3;
 
-  // deep-water tint: faintly lit near the top, sinking to black
-  vec3 deep = mix(P0, P2, 0.5);
-  col += deep * (smoothstep(0.0, 1.0, 1.0 - vy)) * 0.022;
+  // --- colored water atmosphere: a slow drifting current of light through the
+  // column so the frame is never dead black. Brighter up top (sun-lit surface),
+  // sinking darker; faint vertical god-ray banding for depth. ---
+  vec3 deep = mix(P0, P2, 0.5 + 0.4 * sin(t * 0.08 + vy * 2.0));
+  float colm = 0.5 + 0.5 * sin(fc.x / max(res.x, 1.0) * 7.0 + t * 0.12);  // god-ray bands
+  float curtain = smoothstep(0.0, 1.0, vy);                                // 1 near top
+  col += deep * u_glow * (0.07 + 0.07 * colm) * (0.35 + 0.85 * curtain);
 
   float pulseSpeed = max(u_pulseSpeed, 0.01);
   float bellR      = max(u_bellSize, 1.0) * pr;          // dome radius, device px
@@ -93,12 +100,14 @@ void main() {
     float depth   = fract(fbi * 0.2637 + 0.15);            // 0 far .. 1 near
     float period  = mix(9.0, 5.0, fract(fbi * 0.4115 + 0.3)); // 5..9 s cycle
     float phOff   = fract(fbi * 0.7321 + 0.11);
-    float laneAng = mix(-0.35, 0.35, fract(fbi * 0.5550 + 0.2)); // diagonal lane slope
+    float laneAng = mix(-0.16, 0.16, fract(fbi * 0.5550 + 0.2)); // gentle lane slope (no edge clip)
     // keep lanes clear of the top/bottom edges so bells aren't clipped
     // evenly-spaced lane heights (by index) so the bells fill the frame
     // vertically instead of clustering; a small hash jitter avoids a rigid row
-    float laneY0  = mix(0.15, 0.85, (fbi + 0.5) / 9.0)
-                  + (fract(fbi * 0.3170 + 0.05) - 0.5) * 0.06;
+    // distribute lanes evenly by the live count, pulled inward so the domes
+    // never clip the top/bottom edges; small hash jitter breaks the rigid row.
+    float laneY0  = mix(0.26, 0.74, (fbi + 0.5) / max(u_count, 1.0))
+                  + (fract(fbi * 0.3170 + 0.05) - 0.5) * 0.05;
 
     // depth scales the body: far bells smaller and dimmer
     float dscale  = mix(0.55, 1.15, depth);
@@ -111,7 +120,9 @@ void main() {
     float margin  = rad * 2.2 + res.x * 0.25;
     float cx      = mix(-margin, res.x + margin, lane);
     float cy      = laneY0 * res.y + (cx - res.x * 0.5) * laneAng
-                    + sin(t * 0.25 * pulseSpeed + fbi * 2.1) * rad * 0.25;
+                    + sin(t * 0.25 * pulseSpeed + fbi * 2.1) * rad * 0.15;
+    // clamp the centre so a full dome never clips the top/bottom edge
+    cy = clamp(cy, rad * 1.1, res.y - rad * 1.25);
 
     // contraction cycle phase, plus a forward hop on each contraction
     float cyc     = t / period * pulseSpeed + phOff;
@@ -146,9 +157,13 @@ void main() {
     // bloom halo around the whole bell
     float halo = exp(-rr * rr * 1.1);
 
-    // tint: blend adjacent palette colours by depth + slow phase
-    float hue = depth * 1.3 + cyc * 0.05 + fbi * 0.9;
+    // tint: blend adjacent palette colours; spread controls bell-to-bell hue
+    // variety, saturation the vividness.
+    float hbase = fract(fbi * 0.9 + depth * 0.3);
+    float hue = 0.5 + (hbase - 0.5) * u_colorSpread + cyc * 0.05;
     vec3 tint = paletteMix(hue);
+    float blum = dot(tint, vec3(0.299, 0.587, 0.114));
+    tint = clamp(mix(vec3(blum), tint, u_saturation), 0.0, 1.0);
 
     float pump = mix(0.35, 1.0, contract);       // glow swells on contraction
     float emit = clamp(u_brightness, 0.0, 2.0);

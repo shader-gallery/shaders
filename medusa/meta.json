@@ -22,7 +22,7 @@
       "min": 50,
       "max": 200,
       "step": 1,
-      "default": 120,
+      "default": 110,
       "effect": "Dome radius in CSS pixels; all bells scale together (tentacle lengths follow) while keeping their drift lanes."
     },
     {
@@ -51,6 +51,33 @@
       "step": 0.01,
       "default": 0.45,
       "effect": "Phase delay, as a fraction of one pulse, between a bell's contraction and the whip of its tentacle curves — 0 moves them rigidly with the bell, 1 drags them a full pulse behind."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Atmosphere",
+      "min": 0,
+      "max": 2,
+      "step": 0.05,
+      "default": 0.8,
+      "effect": "Drifting colored water-glow and god-ray banding that fills the column so the frame never reads as dead black."
+    },
+    {
+      "uniform": "u_colorSpread",
+      "label": "Colour spread",
+      "min": 0,
+      "max": 1,
+      "step": 0.02,
+      "default": 0.85,
+      "effect": "How far the bell hues range across the palette; 0 is a single tint, 1 spreads the full set."
+    },
+    {
+      "uniform": "u_saturation",
+      "label": "Colour vividness",
+      "min": 0,
+      "max": 2,
+      "step": 0.05,
+      "default": 1.2,
+      "effect": "Vividness of the bell colours; 0 is greyscale, 1 is the raw palette, higher pushes saturation."
     }
   ],
   "defaultPalette": "midnight",
