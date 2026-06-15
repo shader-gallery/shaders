@@ -28,6 +28,10 @@ uniform float u_density;      // how tightly the fingers crowd the frame (defaul
 uniform float u_reach;        // overall hang length of the fingers (default 1)
 uniform float u_taper;        // tip sharpness: 0 blunt .. 1 fine needle (default 0.7)
 uniform float u_randomize;    // per-finger variation: 0 uniform .. 1 full scatter (default 1)
+uniform float u_pixTop;       // top frost-pixel band amount (default 1)
+uniform float u_pixBot;       // bottom frost-pixel band amount, opt-in (default 0)
+uniform float u_pixSize;      // frost-pixel cell size in CSS px (default 10)
+uniform float u_distort;      // refractive horizontal distortion amount (default 0)
 
 const vec3  BG  = vec3(0.030, 0.034, 0.046); // deep cold water
 const int   NCOL = 13;                        // brinicle fingers across the frame
@@ -170,6 +174,12 @@ void main() {
   vec3 coolWash = mix(c0, c2, 0.5);
   col += coolWash * 0.020 * smoothstep(1.0, 0.0, yT);   // brighter near ceiling
 
+  // refractive distortion: a horizontal wave travelling down the water warps the
+  // fingers + reflections + frost like disturbed glass (u_distort scales it, 0=clean).
+  float distort = clamp(u_distort, 0.0, 1.0);
+  float warp = distort * (0.022 * sin(uv.y * 16.0 - t * 0.7) + 0.011 * sin(uv.y * 39.0 + t * 0.45));
+  vec2 duv = vec2(uv.x + warp, uv.y);
+
   // ---- the brinicle forest: many fingers across the frame, depth-sorted -----
   // draw back (dim, slim) fingers first, front (bright, wide) last so additive
   // glow reads layered. Each slot jittered in x; depth from a hash.
@@ -188,16 +198,34 @@ void main() {
     float halfW = baseHalf * mix(0.45, 1.25, depth) * dens;
     float tipY  = mix(0.34, 0.92, h3r) * reach;     // u_reach scales hang length
     float dim   = mix(0.42, 1.0, depth);
-    col += finger(uv, yT, res, pr, t, speed, cx, halfW, tipY, fi*5.0, dim,
+    col += finger(duv, yT, res, pr, t, speed, cx, halfW, tipY, fi*5.0, dim,
                   feath, c0, c1, c2, c3);
   }
 
-  // ---- frosted ice ceiling capping the fingers along the top edge ----------
-  float ceil = smoothstep(0.16, 0.0, yT);               // 0..1 toward the top
-  // crystalline speckle along the ceiling so it reads as frozen, not a bar
-  float speck = hash11(floor(uv.x * res.x / (10.0*pr)) + floor(yT*res.y/(10.0*pr))*3.7);
-  col += coolWash * ceil * 0.10;
-  col += mix(coolWash, vec3(0.85,0.92,1.0), 0.5) * ceil * step(0.86, speck) * 0.5;
+  // ---- frosted pixel bands: crystalline speckle along the top (ice ceiling) and,
+  // opt-in, the bottom (frozen crust). Cell size + per-edge amount are controls, and
+  // the grid rides the distortion warp so the frost shimmers with the water. -------
+  float pxSize = max(u_pixSize, 2.0) * pr;
+  float pixTop = max(u_pixTop, 0.0);
+  float pixBot = max(u_pixBot, 0.0);
+  float gxP    = floor(duv.x * res.x / pxSize);
+  float gyP    = floor(yT * res.y / pxSize);
+
+  // top frosted band (ice ceiling). amount raises both coverage and brightness.
+  float topBand = smoothstep(0.16, 0.0, yT);
+  float speckT  = hash11(gxP + gyP * 3.7);
+  float thrT    = clamp(0.86 - (pixTop - 1.0) * 0.22, 0.45, 0.985);
+  col += coolWash * topBand * 0.10 * min(pixTop, 1.0);
+  col += mix(coolWash, vec3(0.85,0.92,1.0), 0.5) * topBand * step(thrT, speckT) * 0.5 * pixTop;
+
+  // bottom frosted band (frozen crust on the seabed) — opt-in via u_pixBot.
+  if (pixBot > 0.0001) {
+    float botBand = smoothstep(0.84, 1.0, yT);
+    float speckB  = hash11(gxP * 1.3 + gyP * 2.9 + 41.0);
+    float thrB    = clamp(0.86 - (pixBot - 1.0) * 0.22, 0.45, 0.985);
+    col += coolWash * botBand * 0.10 * min(pixBot, 1.0);
+    col += mix(coolWash, vec3(0.85,0.92,1.0), 0.5) * botBand * step(thrB, speckB) * 0.5 * pixBot;
+  }
 
   // gentle vignette so the frame edges stay composed
   vec2 vc = uv - vec2(0.5, 0.5);

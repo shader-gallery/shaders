@@ -8,20 +8,28 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_streamSpeed", "label": "Stream speed", "min": 0.0, "max": 1.5, "step": 0.05,
-      "default": 0.4, "effect": "Rate of the downward interior shimmer that sinks through each finger, pacing the facet glints." },
-    { "uniform": "u_column", "label": "Finger width", "min": 24.0, "max": 140.0, "step": 1.0,
-      "default": 60.0, "effect": "Typical CSS-pixel width of a brine finger, from delicate hanging needles to thick frozen pillars." },
+      "default": 0.05, "effect": "Rate of the downward interior shimmer that sinks through each finger, pacing the facet glints." },
+    { "uniform": "u_column", "label": "Finger width", "min": 24.0, "max": 180.0, "step": 1.0,
+      "default": 132.0, "effect": "Typical CSS-pixel width of a brine finger, from delicate hanging needles to thick frozen pillars." },
     { "uniform": "u_feather", "label": "Frost feathers", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "Extent of the frost feathers fanning from each finger's flanks — 0 leaves bare glassy fingers, 2 grows wide lacy crystalline fans that fill between them." },
+      "default": 1.4, "effect": "Extent of the frost feathers fanning from each finger's flanks — 0 leaves bare glassy fingers, 2 grows wide lacy crystalline fans that fill between them." },
     { "uniform": "u_density", "label": "Crowding", "min": 0.4, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "How tightly the fingers crowd the frame — low leaves airy gaps of dark water, high packs them into a dense frozen curtain." },
     { "uniform": "u_reach", "label": "Hang length", "min": 0.3, "max": 1.8, "step": 0.05,
-      "default": 1.0, "effect": "How far the fingers descend from the ceiling — low leaves short stubs near the top, high streams long icicles toward the bottom of the frame." },
+      "default": 1.15, "effect": "How far the fingers descend from the ceiling — low leaves short stubs near the top, high streams long icicles toward the bottom of the frame." },
     { "uniform": "u_taper", "label": "Tip sharpness", "min": 0.0, "max": 1.0, "step": 0.05,
-      "default": 0.7, "effect": "Sharpness of each finger's point — 0 is a blunt stalactite with a wide rounded tip, 1 a fine icicle needle tapering to nothing." },
+      "default": 1.0, "effect": "Sharpness of each finger's point — 0 is a blunt stalactite with a wide rounded tip, 1 a fine icicle needle tapering to nothing." },
     { "uniform": "u_randomize", "label": "Variation", "min": 0.0, "max": 1.0, "step": 0.05,
-      "default": 1.0, "effect": "Spread of per-finger depth, width, length and position — 0 lines them up as an even rank of identical fingers, 1 gives the full natural scatter of a real brinicle field." }
+      "default": 0.8, "effect": "Spread of per-finger depth, width, length and position — 0 lines them up as an even rank of identical fingers, 1 gives the full natural scatter of a real brinicle field." },
+    { "uniform": "u_pixTop", "label": "Top frost pixels", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.95, "effect": "Crystalline pixel speckle along the top ice ceiling — 0 removes the frosted band, 1 the default frost, 2 a brighter, denser crust of lit cells." },
+    { "uniform": "u_pixBot", "label": "Bottom frost pixels", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 0.75, "effect": "A matching pixel-frost band along the bottom edge (a frozen crust on the seabed) — 0 is off, raise it to crust the lower edge to taste." },
+    { "uniform": "u_pixSize", "label": "Pixel size", "min": 2.0, "max": 28.0, "step": 1.0,
+      "default": 4.0, "effect": "Cell size of the top and bottom frost pixels in CSS pixels — small is fine sparkle, large is chunky blocky frost." },
+    { "uniform": "u_distort", "label": "Distortion", "min": 0.0, "max": 1.0, "step": 0.05,
+      "default": 0.1, "effect": "A refractive horizontal wave that travels down the water, warping the fingers, reflections and frost like looking through disturbed glass — 0 is still and clean." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6 }
+  "post": { "bloom": 0.6, "vignette": 0.26, "backdrop": 0.15, "backdropScale": 1.2 }
 }
