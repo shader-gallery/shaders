@@ -30,6 +30,7 @@ uniform float u_morphBias;   // resting bias dot(-)..cross(+)
 uniform float u_crisp;       // edge sharpness of the dots
 uniform float u_rotate;      // grid rotation (degrees)
 uniform float u_distort;     // sine-warp distortion of the grid
+uniform float u_points;      // number of ripple emitters (1..4)
 
 const float BG        = 0.039;   // #0A -> ~0.04
 const float DOT_CSS   = 2.2;     // dot radius
@@ -37,6 +38,15 @@ const float ARM_CSS   = 5.2;     // cross arm length at full morph
 const float THICK_CSS = 1.6;     // cross thickness at full morph
 
 float sdCircle(vec2 p, float r) { return length(p) - r; }
+
+// spread positions for the extra ripple emitters (fractions of half-extent),
+// shifted as a group by the Origin params. Emitter 0 sits at the origin itself.
+vec2 emitOffset(int i) {
+  if (i == 0) return vec2(0.0, 0.0);
+  if (i == 1) return vec2(-0.55, 0.5);
+  if (i == 2) return vec2(0.6, -0.42);
+  return vec2(-0.48, -0.55);
+}
 
 vec3 paletteRamp(float h) {
   vec3 c = mix(u_palette[0], u_palette[1], smoothstep(0.00, 0.34, h));
@@ -90,10 +100,20 @@ void main() {
   vec2  dotCtr  = (cellId + 0.5) * spacing;
   vec2  local   = pf - dotCtr;
 
-  // radial wave -> morph amount m in 0..1 (count + amplitude controllable)
-  float dCtr = distance(dotCtr, worigin);
-  float wave = sin((dCtr / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed);
-  float m    = clamp(max(0.0, wave) * u_rippleAmp, 0.0, 1.0);
+  // radial wave -> morph amount m in 0..1. Several emitters can radiate ripples
+  // at once; their wave phases sum and interfere into a richer morph field.
+  float dCtr = distance(dotCtr, worigin);   // primary origin: drives hue + opacity
+  float nPts = max(floor(u_points + 0.5), 1.0);
+  float wv = -1.0;
+  for (int i = 0; i < 4; i++) {
+    if (float(i) >= nPts) break;
+    vec2 emit = ctr + (emitOffset(i) + vec2(u_originX, u_originY)) * (res * 0.5);
+    float di = distance(dotCtr, emit);
+    // each emitter radiates full-strength rings; max keeps the nearest crest so
+    // sources stay legible where their ripples overlap (raindrop-style).
+    wv = max(wv, sin((di / (u_wavelength * pr)) * 6.2831853 * max(u_ripples, 0.1) - t * u_waveSpeed + float(i) * 1.7));
+  }
+  float m = clamp(max(0.0, wv) * u_rippleAmp, 0.0, 1.0);
   // resting bias: shift the whole field toward dot (-) or cross (+)
   float mEff = clamp(m + u_morphBias, 0.0, 1.0);
 

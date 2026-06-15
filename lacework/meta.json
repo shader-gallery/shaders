@@ -39,7 +39,7 @@
       "min": 80.0,
       "max": 500.0,
       "step": 5.0,
-      "default": 220.0,
+      "default": 225.0,
       "effect": "Spacing of the concentric morph rings; short packs many dot-to-cross bands across the frame, long sweeps one broad wave."
     },
     {
@@ -48,7 +48,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 1.0,
+      "default": 1.14,
       "effect": "Brightness of the crisp dots/crosses themselves (the lace). Low keeps them subtle, high makes the halftone pop in vivid colour."
     },
     {
@@ -57,7 +57,7 @@
       "min": 0.0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.0,
+      "default": 0.58,
       "effect": "Strength of the four drifting glow blobs that flood soft colour behind the lace - the background fill. 0 leaves crisp dots on near-black (the original cleaner read); high washes the whole field in moving colour."
     },
     {
@@ -66,7 +66,7 @@
       "min": 0.3,
       "max": 3.0,
       "step": 0.01,
-      "default": 1.0,
+      "default": 0.74,
       "effect": "Radius of the resting dots. Small reads as a fine pin-prick halftone; large fattens them into bold beads before they morph to crosses."
     },
     {
@@ -84,7 +84,7 @@
       "min": 0.0,
       "max": 1.5,
       "step": 0.01,
-      "default": 1.0,
+      "default": 1.07,
       "effect": "How fully the passing wave morphs dots into crosses. Low barely flickers the shapes; high drives a strong visible ripple sweeping dot-to-cross across the frame."
     },
     {
@@ -93,7 +93,7 @@
       "min": 0.25,
       "max": 4.0,
       "step": 0.05,
-      "default": 1.0,
+      "default": 2.4,
       "effect": "How many concentric morph rings span the field. Low is one broad slow wave; high packs many tight dot-to-cross bands rippling outward together."
     },
     {
@@ -120,7 +120,7 @@
       "min": -1.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.0,
+      "default": 0.11,
       "effect": "Resting shape with no wave: negative holds everything as dots, 0 lets the wave do the work, positive biases the whole field toward crosses (a stitched-X lattice)."
     },
     {
@@ -129,7 +129,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.5,
+      "default": 0.6,
       "effect": "Edge hardness of the shapes. Low is soft glowing halftone dots; high snaps them to crisp high-contrast marks (the sharp halftone read)."
     },
     {
@@ -149,16 +149,26 @@
       "step": 0.01,
       "default": 0.0,
       "effect": "Sine-warps the grid so the rows ripple and bow instead of running straight - a woven, hand-laid distortion. 0 is a perfect grid."
+    },
+    {
+      "uniform": "u_points",
+      "label": "Ripple points",
+      "min": 1.0,
+      "max": 4.0,
+      "step": 1.0,
+      "default": 3.0,
+      "effect": "How many points the ripples radiate from at once. 1 is a single concentric source; higher adds more emitters (shifted as a group by Origin X/Y) whose overlapping rings interfere into a woven, multi-centre lacework."
     }
   ],
   "post": {
     "bloom": 0.4,
     "bloomRadius": 3.5,
     "backdrop": 0.0,
-    "backdropScale": 1.15,
+    "backdropScale": 1.2,
     "saturation": 1.1,
     "contrast": 1.06,
-    "dither": 1.0
+    "dither": 1.0,
+    "vignette": 0.26
   },
   "defaultPalette": "neon"
 }
