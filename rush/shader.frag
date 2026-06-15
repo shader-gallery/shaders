@@ -55,7 +55,7 @@ float drift(float id, float t, float spd) {
   float ph2 = hash11(id * 1.7) * 6.2831853;
   float s1 = sin(t * spd * 0.45 + ph1);
   float s2 = sin(t * spd * 0.78 + ph2) * 0.4;
-  return (s1 + s2) * 0.12;            // small amplitude -> a barely-there lean
+  return (s1 + s2) * 0.15;            // small amplitude -> a gentle, clearly-read lean
 }
 
 // distance from point p to a vertical-ish capsule segment a->b, half-width r
@@ -91,13 +91,17 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag,
   // walk a small fixed window of stems around this fragment (const bound)
   for (int i = -3; i <= 3; i++) {
     float id   = nearest + float(i);
-    float root = (id + 0.5) * spacing;             // x of the fixed root
-    // u_randomize pulls per-stem height/phase toward the mean (0 = even rank),
-    // u_height scales the whole reed bed taller or shorter.
+    // u_randomize spreads every per-stem trait (0 = even rank, 1 = wild scatter):
+    // root spacing, height (a wide tall/short mix), sway amount and head size.
     float rnd  = clamp(u_randomize, 0.0, 1.0);
-    float hgt  = STEMH_CSS * pr * (0.82 + 0.36 * mix(0.5, hash11(id * 1.7), rnd)) * clamp(u_height, 0.4, 1.6);
+    float root = (id + 0.5) * spacing + (hash11(id * 4.3) - 0.5) * spacing * 0.5 * rnd;
+    // u_height scales the bed; the per-stem factor now spans a wide 0.55..1.5 so
+    // some rushes stand tall and others stay short (a natural reed bed).
+    float hgt  = STEMH_CSS * pr * (0.55 + 0.95 * mix(0.5, hash11(id * 1.7), rnd)) * clamp(u_height, 0.4, 1.6);
+    float swayK = mix(1.0, 0.45 + 1.1 * hash11(id * 6.1), rnd);   // some lean more
+    float headSc = mix(1.0, 0.65 + 0.7 * hash11(id * 8.9), rnd);  // varied head size
     // each reed drifts on its own slow phase so the rank never moves in lockstep
-    float amp = drift(id, t, spd) * u_bend;
+    float amp = drift(id, t, spd) * u_bend * swayK;
 
     vec2 base = vec2(root, waterY);                 // root pinned to waterline
     // tip displaced by amp*hgt; mid-stem bows so it reads as a bend, not a tilt
@@ -111,38 +115,20 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag,
     float ds = min(d1, d2);
 
     // cattail head: a fat sausage sitting just below the tip on the stem
-    float headFrac = clamp(headLen / max(hgt, 1.0), 0.0, 0.5);
+    // (per-stem size variation via headSc)
+    float headLenK = headLen * headSc;
+    float headHWK  = headHW  * headSc;
+    float headFrac = clamp(headLenK / max(hgt, 1.0), 0.0, 0.5);
     vec2 hb = mix(mid, tip, 0.58 - headFrac * 0.5);
     vec2 ht = mix(mid, tip, 0.58 + headFrac * 0.5);
-    float dh = sdCapsule(q, hb, ht, headHW);
+    float dh = sdCapsule(q, hb, ht, headHWK);
 
     float aa = 1.5 * pr;
     float sStem = 1.0 - smoothstep(0.0, aa, ds);
     float sHead = 1.0 - smoothstep(0.0, aa, dh);
     sil = max(sil, max(sStem, sHead));
-
-    // glow ONLY when bent: a thin rim hugging the silhouette's downwind edge,
-    // plus a soft fill in the head. Strength scales with |amp| so the calm
-    // field stays near-black between fronts.
-    float lit = clamp((abs(amp) - 0.05) * 2.2, 0.0, 1.0);
-    float side = sign(amp + 1e-4);
-    // local stem centreline x at this height (so "downwind edge" tracks the bow)
-    float cx   = root + amp * (q.y - waterY) * 0.55;
-    float down = smoothstep(-stemHW * 0.5, stemHW * 1.2, side * (q.x - cx));
-    // tight rim that clings to the stem edge (not a wide plume)
-    float rim  = (1.0 - smoothstep(0.0, stemHW * 2.6, abs(ds))) * down;
-    // a soft outer bloom just outside the rim so bent stems read luminous
-    float bloom = exp(-max(ds, 0.0) / (3.0 * pr)) * down;
-    float stemGlow = (rim + bloom * 0.45) * lit;
-    // the head catches a soft warm rim of light on its lit flank
-    float headGlow = ((1.0 - smoothstep(0.0, headHW * 1.7, abs(dh)))
-                      + exp(-max(dh, 0.0) / (4.0 * pr)) * 0.5) * down * lit;
-
-    // stem colour blends two cool palette hues along the rank
-    float mixk = 0.5 + 0.5 * sin(id * 0.6);
-    vec3 stemCol = mix(c0, c1, mixk);
-    glow += stemCol * stemGlow * 1.1;
-    glow += c2 * headGlow * 1.5;                                 // warmer head rim
+    // no rim glow: the reeds read as clean dusk silhouettes; movement is carried
+    // by their gentle continuous sway and the wavering reflection alone.
   }
 }
 
@@ -163,18 +149,26 @@ vec3 skyAt(float yA, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
 // `hs` (u_hills) raises/lowers the ridges; `crest` tints the dusk-lit hilltops.
 vec3 hills(vec3 base, float xPx, float yA, float pr, float skyH, float hs, vec3 crest) {
   float x = xPx / pr;
-  // far ridge — low and gentle; near ridge — taller, in front
-  float hF = skyH * hs * (0.050 + 0.030 * (0.6*sin(x*0.0042 + 1.3) + 0.4*sin(x*0.0091 + 4.1)));
-  float hN = skyH * hs * (0.090 + 0.055 * (0.55*sin(x*0.0026 - 0.7) + 0.45*sin(x*0.0061 + 2.2)));
   float aa = 2.0 * pr;
   vec3 c = base;
-  // far hills: hazed by atmospheric perspective (don't go full black)
-  float mF = smoothstep(0.0, aa, hF - yA);
-  c = mix(c, mix(base, vec3(0.05, 0.05, 0.085), 0.55), mF * 0.9);
-  // near hills: darker silhouette occluding the far ridge, with a dusk-lit crest
-  float mN = smoothstep(0.0, aa, hN - yA);
-  c = mix(c, mix(base, vec3(0.015, 0.015, 0.03), 0.88), mN);
-  c += crest * exp(-abs(hN - yA) / (2.5 * pr)) * step(-6.0*pr, hN - yA) * 0.16;
+  // FOUR receding ridges drawn back -> front. The back ranges sit HIGHER and
+  // hazier (atmospheric perspective), the near ones LOWER and darker, so each
+  // ridge peeks above the one in front of it — layered horizons selling depth.
+  for (int k = 0; k < 4; k++) {
+    float fk   = float(k) / 3.0;                 // 0 = farthest .. 1 = nearest
+    float seed = float(k) * 7.31 + 0.4;
+    float baseH = skyH * hs * (0.130 - 0.082 * fk);          // back highest, front lowest
+    float ampH  = skyH * hs * (0.022 + 0.030 * (1.0 - fk));  // back rolls more broadly
+    float freq  = 0.0024 + 0.0030 * fk;                      // near ridges finer-grained
+    float h = baseH + ampH * (0.6 * sin(x * freq + seed) + 0.4 * sin(x * freq * 2.1 + seed * 1.7));
+    float m = smoothstep(0.0, aa, h - yA);
+    // colour: far ridges hazed toward the sky, near ridges near-black silhouettes
+    vec3 ridgeCol = mix(mix(base, vec3(0.06, 0.06, 0.10), 0.5),
+                        vec3(0.012, 0.012, 0.026), fk);
+    c = mix(c, ridgeCol, m * (0.7 + 0.3 * fk));
+    // a dusk-lit crest skims the nearest ridge's top edge
+    if (k == 3) c += crest * exp(-abs(h - yA) / (2.5 * pr)) * step(-6.0*pr, h - yA) * 0.16;
+  }
   return c;
 }
 
