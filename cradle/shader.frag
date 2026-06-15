@@ -29,6 +29,8 @@ uniform float u_twist;
 uniform float u_skew;
 uniform float u_layerSeed;
 uniform float u_reach;
+uniform float u_mouseTilt;
+uniform float u_glow;
 
 float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }
 
@@ -55,13 +57,15 @@ vec2 anchorPos(float idx, float nA, vec2 ctr, vec2 halfExt, float t, float morph
   return ctr + dir * tedge * br;
 }
 
-// perspective-ish shear: x stretches with height and y compresses toward the
-// top, tilting the whole figure off its symmetric centre to add a vanishing read.
-vec2 skewP(vec2 p, vec2 ctr, vec2 rad, float sk) {
+// perspective-ish shear on two axes: skx stretches x with height (left-right
+// lean), sky stretches y with width (fore/back tilt). Tilts the whole figure off
+// its symmetric centre to add a vanishing read; mouse can drive both axes.
+vec2 skewP(vec2 p, vec2 ctr, vec2 rad, float skx, float sky) {
   vec2 r = p - ctr;
+  float nx = r.x / max(rad.x, 1.0);
   float ny = r.y / max(rad.y, 1.0);
-  r.x *= 1.0 + sk * ny;
-  r.y *= 1.0 - sk * 0.18 * ny;
+  r.x *= 1.0 + skx * ny;
+  r.y *= 1.0 + sky * nx - skx * 0.18 * ny;
   return ctr + r;
 }
 
@@ -89,6 +93,14 @@ void main() {
   // off-frame (the bright nodes sit outside view); < 1 pulls them inside.
   vec2  radB = rad * max(u_reach, 0.2);
 
+  // mouse tilt: untouched mouse reads (0,0) - treat that as neutral so the poster
+  // is deterministic. Otherwise the pointer offset from centre drives both skew
+  // axes (x = left-right lean, y = fore/back tilt) scaled by u_mouseTilt.
+  vec2 mN = vec2(0.0);
+  if (u_mouse.x + u_mouse.y > 1.0) mN = clamp((u_mouse - ctr) / rad, -1.0, 1.0);
+  float skx = u_skew + mN.x * u_mouseTilt;
+  float sky = mN.y * u_mouseTilt;
+
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
   if (dot(c0,c0)+dot(c1,c1)+dot(c2,c2)+dot(c3,c3) < 1e-5) {
     c0 = vec3(0.231,0.510,0.965); c1 = vec3(0.659,0.333,0.969);
@@ -112,10 +124,10 @@ void main() {
 
     for (int i = 0; i < 24; i++) {
       if (float(i) >= nA) break;
-      vec2 A = skewP(anchorPos(float(i), nA, ctr, radL, t, u_morphSpeed, u_scatter, rotL, seedL), ctr, rad, u_skew);
+      vec2 A = skewP(anchorPos(float(i), nA, ctr, radL, t, u_morphSpeed, u_scatter, rotL, seedL), ctr, rad, skx, sky);
       for (int k = 1; k <= 12; k++) {
         if (float(k) > mPer) break;
-        vec2 B = skewP(anchorPos(mod(float(i) + float(k), nA), nA, ctr, radL, t, u_morphSpeed, u_scatter, rotL, seedL), ctr, rad, u_skew);
+        vec2 B = skewP(anchorPos(mod(float(i) + float(k), nA), nA, ctr, radL, t, u_morphSpeed, u_scatter, rotL, seedL), ctr, rad, skx, sky);
         float h;
         float d = segDistH(fc, A, B, h);
 
@@ -127,19 +139,23 @@ void main() {
         // line colour: u_tint mixes the chord between white (0) and full palette (1)
         vec3 lc = mix(vec3(1.0), cc, clamp(u_tint, 0.0, 1.0));
         float bead = exp(-pow((fract(h - t * u_glintSpeed * 0.25 + float(i) * 0.31) - 0.5) * 7.0, 2.0));
-        acc += lc * (core * 1.0 + halo) * (0.68 + 0.45 * bead) * dimL;
+        // u_glow scales the soft halo + glint boost; lower keeps the crisp colour
+        // cores but cuts the white bloom where many chords overlap.
+        acc += lc * (core * 1.0 + halo * u_glow) * (0.68 + 0.45 * bead * u_glow) * dimL;
       }
     }
 
 
     for (int i = 0; i < 24; i++) {
       if (float(i) >= nA) break;
-      vec2 A = skewP(anchorPos(float(i), nA, ctr, radL, t, u_morphSpeed, u_scatter, rotL, seedL), ctr, rad, u_skew);
+      vec2 A = skewP(anchorPos(float(i), nA, ctr, radL, t, u_morphSpeed, u_scatter, rotL, seedL), ctr, rad, skx, sky);
       float dn = length(fc - A);
       float node = exp(-pow(dn / (lwL * 3.5), 2.0));
       vec3 cc = wheelCol(float(i) / nA + t * 0.02 + hueL, c0, c1, c2, c3);
-      vec3 nc = mix(vec3(1.0), cc, clamp(u_tint, 0.0, 1.0) * 0.7 + 0.15);
-      acc += nc * node * 1.3 * dimL;
+      // node white-point eases toward palette colour as glow drops, so reducing
+      // glow tames the blown-out white anchor dots too.
+      vec3 nc = mix(cc, mix(vec3(1.0), cc, clamp(u_tint, 0.0, 1.0) * 0.7 + 0.15), clamp(u_glow, 0.0, 1.0));
+      acc += nc * node * 1.3 * dimL * (0.45 + 0.55 * u_glow);
     }
   }
 
