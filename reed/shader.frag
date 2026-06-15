@@ -19,6 +19,8 @@ uniform float u_flow;    // speed of the rising charge     (default 0.15)
 uniform float u_glow;    // halo / glow strength 0..1      (default 0.16)
 uniform float u_rotate;  // orientation of the palisade, degrees (default 0)
 uniform float u_seed;    // reshuffles the per-reed hues   (default 0)
+uniform float u_angle;   // per-reed lean randomization 0..1 (default 0)
+uniform float u_depth;   // per-reed depth spread 0..1       (default 0)
 
 float hash21(vec2 p){ p=fract(p*vec2(123.34,345.45)); p+=dot(p,p+34.345); return fract(p.x*p.y); }
 float wheelW(float s,float c){ float d=abs(s-c); return max(0.0,1.0-min(d,4.0-d)); }
@@ -44,35 +46,48 @@ void main(){
   vec2  pp=fc-ctr;
   vec2  uv=vec2(ca*pp.x+sa*pp.y, -sa*pp.x+ca*pp.y)/cell;
 
-  // nearest reed centreline (reeds run along the rotated y axis)
   float colId=floor(uv.x);
-  float d=abs(fract(uv.x)-0.5);
-
-  float lw=max(u_line,0.5)*refScale*pr/cell;
-  float core=smoothstep(lw,lw*0.25,d);
-  float halo=lw/(d+lw*1.4);
-  halo=halo*halo*(0.4+0.7*u_glow);
+  float lwBase=max(u_line,0.5)*refScale*pr/cell;
 
   vec3 c0=u_palette[0],c1=u_palette[1],c2=u_palette[2],c3=u_palette[3];
   if (dot(c0,c0)+dot(c1,c1)+dot(c2,c2)+dot(c3,c3)<1e-5){
     c0=vec3(0.231,0.510,0.965); c1=vec3(0.659,0.333,0.969);
     c2=vec3(0.133,0.827,0.933); c3=vec3(0.957,0.247,0.369);
   }
-  float hue=colId*0.13+hash21(vec2(colId,7.0)+u_seed*vec2(1.7,2.3))*0.1+t*0.02;
-  vec3 pathCol=wheelCol(hue,c0,c1,c2,c3);
 
-  // charge rises up each reed; neighbouring reeds offset so it shimmers
-  float phase=uv.y*0.5 - t*u_flow*0.5 + colId*0.37;
-  float pulse=0.5+0.5*sin(6.2831853*phase);
-  pulse=pow(pulse,3.0);
-
-  float lit=core*(0.85+1.0*pulse)+halo*(0.7+0.6*pulse);
+  // Each reed gets its own lean (u_angle) and depth (u_depth). A leaning reed
+  // drifts across columns with height, so sample a span of neighbours and add
+  // their glow - near reeds (depth~1) read brighter and fatter, far ones dimmer
+  // and thinner, giving a scattered field with depth. u_angle=u_depth=0 returns
+  // the clean upright palisade.
+  vec3 reeds=vec3(0.0);
+  for (int k=-3;k<=3;k++){
+    float j=colId+float(k);
+    float ha=hash21(vec2(j,11.0)+u_seed*vec2(1.7,2.3));   // lean
+    float hd=hash21(vec2(j,23.0)+u_seed*vec2(2.3,1.1));   // depth
+    float hh=hash21(vec2(j, 7.0)+u_seed*vec2(1.7,2.3));   // hue (matches old)
+    float aj=(ha-0.5)*u_angle*0.45;                       // lean in radians
+    float depth=1.0-hd*u_depth*0.7;                       // 1 near .. lower far
+    float cx=j+0.5;
+    vec2 dir=vec2(sin(aj),cos(aj));
+    float perp =abs((uv.x-cx)*dir.y - uv.y*dir.x);        // distance to the reed
+    float along=(uv.x-cx)*dir.x + uv.y*dir.y;             // position up the reed
+    float lwj=lwBase*mix(0.6,1.0,depth);                  // far reeds thinner
+    float corej=smoothstep(lwj,lwj*0.25,perp);
+    float haloj=lwj/(perp+lwj*1.4); haloj=haloj*haloj*(0.4+0.7*u_glow);
+    float hue=j*0.13+hh*0.1+t*0.02;
+    vec3 pc=wheelCol(hue,c0,c1,c2,c3);
+    float phase=along*0.5 - t*u_flow*0.5 + j*0.37;
+    float pls=0.5+0.5*sin(6.2831853*phase); pls=pow(pls,3.0);
+    float litj=(corej*(0.85+1.0*pls)+haloj*(0.7+0.6*pls))*depth;
+    reeds+=pc*litj;
+    reeds+=pc*corej*pls*0.7*depth;
+  }
 
   float rr=length((fc-ctr)/res);
   vec3 ground=wheelCol(0.55+rr*0.3+t*0.01,c0,c1,c2,c3)*0.16;
 
-  vec3 col=ground+pathCol*lit;
-  col+=pathCol*core*pulse*0.7;
+  vec3 col=ground+reeds;
 
   float vign=1.0-smoothstep(0.7,1.35,rr);
   col*=mix(0.9,1.0,vign);
