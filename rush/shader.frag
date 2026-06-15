@@ -29,6 +29,11 @@ uniform float u_gustRate;   // how often gust fronts cross the bed  (default 0.4
 uniform float u_bend;       // how far rushes bow & overshoot       (default 1.0)
 uniform float u_spacing;    // css-px between rushes (scaled by pr)  (default 26)
 uniform float u_reflect;    // brightness of the mirrored rank       (default 0.55)
+uniform float u_randomize;  // per-stem height/phase variation 0..1   (default 1)
+uniform float u_height;     // reed height scale                      (default 1)
+uniform float u_sunX;       // sun horizontal position 0..1           (default 0.6)
+uniform float u_ripple;     // water ripple / shimmer strength        (default 1)
+uniform float u_dusk;       // dusk sky brightness                    (default 1)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float WATER_FRAC  = 0.66;   // waterline height as fraction up from bottom
@@ -98,8 +103,11 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag,
   for (int i = -3; i <= 3; i++) {
     float id   = nearest + float(i);
     float root = (id + 0.5) * spacing;             // x of the fixed root
-    float hgt  = STEMH_CSS * pr * (0.82 + 0.36 * hash11(id * 1.7));
-    float ph   = hash11(id * 3.1) * 0.18;          // tiny per-stem timing jitter
+    // u_randomize pulls per-stem height/phase toward the mean (0 = even rank),
+    // u_height scales the whole reed bed taller or shorter.
+    float rnd  = clamp(u_randomize, 0.0, 1.0);
+    float hgt  = STEMH_CSS * pr * (0.82 + 0.36 * mix(0.5, hash11(id * 1.7), rnd)) * clamp(u_height, 0.4, 1.6);
+    float ph   = hash11(id * 3.1) * 0.18 * rnd;    // tiny per-stem timing jitter
 
     // the front reaches this stem when tInCyc passes its arrival time, set by
     // the stem's position across the screen (left stems bow first, right last).
@@ -162,7 +170,7 @@ vec3 skyAt(float yA, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
   vec3 s = mix(horizon, zenith, smoothstep(0.0, 0.85, yA));
   // a band of dusk glow hugging the horizon
   s += mix(c3, vec3(1.0,0.85,0.7), 0.3) * exp(-yA / 0.22) * 0.5;
-  return s * 0.55;                               // overall dusk brightness
+  return s * 0.55 * clamp(u_dusk, 0.3, 1.8);     // overall dusk brightness (u_dusk)
 }
 
 void main() {
@@ -182,8 +190,8 @@ void main() {
   float waterY  = res.y * (1.0 - WATER_FRAC); // device-px y of the waterline
   float skyH    = max(res.y - waterY, 1.0);
 
-  // low dusk sun sitting just above the horizon, slightly right of centre
-  float sunX = res.x * 0.60;
+  // low dusk sun sitting just above the horizon (u_sunX moves it along it)
+  float sunX = res.x * clamp(u_sunX, 0.05, 0.95);
   vec2  sun  = vec2(sunX, waterY + skyH * 0.10);
   vec3  sunCol = mix(c3, vec3(1.0, 0.9, 0.75), 0.4);
 
@@ -207,9 +215,10 @@ void main() {
     float depth = (waterY - fc.y);                 // px below the line
     float yR = depth / skyH;                       // mirrored sky height
     // rolling ripple bands travelling down the water
+    float ripple = clamp(u_ripple, 0.0, 2.0);
     float band = sin(depth * 0.045 / pr - t * 1.1)
                + 0.5 * sin(depth * 0.11 / pr + t * 0.7 + 1.3);
-    float rippleBright = 0.85 + 0.15 * band;
+    float rippleBright = 0.85 + 0.15 * band * ripple;
     // reflected dusk sky (a touch darker + desaturated, broken by ripples)
     vec3 reflSky = skyAt(yR, c0, c1, c2, c3) * 0.82 * rippleBright;
     col = reflSky;
@@ -222,7 +231,7 @@ void main() {
 
     // horizontal shimmer offset so the reed mirror wavers like real water
     float shimmer = sin(fc.y * 0.05 / pr + t * 1.3) * 3.0 * pr
-                  * smoothstep(0.0, 60.0 * pr, depth);
+                  * smoothstep(0.0, 60.0 * pr, depth) * ripple;
     vec2 q = vec2(fc.x + shimmer, waterY + depth * 1.18); // stretched mirror
     float sil; vec3 glow;
     rank(q, pr, spacing, waterY, 0.22, sil, glow, c0, c1, c2);

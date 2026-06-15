@@ -14,7 +14,17 @@
     { "uniform": "u_spacing", "label": "Reed spacing", "min": 10.0, "max": 48.0, "step": 1.0,
       "default": 18.0, "effect": "CSS-pixel spacing between rushes along the waterline, from a dense reed bed to a sparse stand." },
     { "uniform": "u_reflect", "label": "Reflection", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.9, "effect": "Strength of the mirrored reeds in the water, from just the reflected sky to deep vivid reed reflections." }
+      "default": 0.9, "effect": "Strength of the mirrored reeds in the water, from just the reflected sky to deep vivid reed reflections." },
+    { "uniform": "u_randomize", "label": "Variation", "min": 0.0, "max": 1.0, "step": 0.05,
+      "default": 1.0, "effect": "Spread of per-stem height and sway timing — 0 lines the rushes up as an even rank of identical reeds, 1 gives the full natural scatter of a wild reed bed." },
+    { "uniform": "u_height", "label": "Reed height", "min": 0.4, "max": 1.6, "step": 0.05,
+      "default": 1.0, "effect": "Overall height of the rushes from the waterline — low leaves a short marsh fringe, high stands tall reeds against the sky." },
+    { "uniform": "u_sunX", "label": "Sun position", "min": 0.05, "max": 0.95, "step": 0.01,
+      "default": 0.6, "effect": "Where the low dusk sun sits along the horizon — its glow and the shimmering glitter column below it slide with it." },
+    { "uniform": "u_ripple", "label": "Ripple", "min": 0.0, "max": 2.0, "step": 0.05,
+      "default": 1.0, "effect": "Strength of the water's ripple and shimmer — 0 stills it to a clean mirror, high churns the reflection into broken wavering bands." },
+    { "uniform": "u_dusk", "label": "Sky glow", "min": 0.3, "max": 1.8, "step": 0.05,
+      "default": 1.0, "effect": "Brightness of the dusk sky and its reflection — low sinks the scene toward night, high flares a vivid sunset glow." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.5 }
