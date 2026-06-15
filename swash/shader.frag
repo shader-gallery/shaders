@@ -92,8 +92,12 @@ void main() {
   float rnd     = clamp(u_randomize, 0.0, 1.0);
   // per-lane flow speed variation so lanes don't move in lockstep (mean 1.0)
   float laneSpd = speed * (1.0 + rnd * (0.9 * hash11(laneId * 1.7 + 3.0) - 0.45));
+  // per-lane constant phase so lanes are already staggered at t=0 — the streaks
+  // read as uneven from the first frame instead of starting aligned and only
+  // drifting apart over time. Scaled by rnd so randomize=0 stays a regular grid.
+  float lanePhase = rnd * hash11(laneId * 4.7 + 9.0) * seg;
   // continuous scroll up the lane (features travel +along and exit the top edge)
-  float scroll = t * laneSpd * 70.0 * pr;
+  float scroll = t * laneSpd * 70.0 * pr + lanePhase;
   float alongS = along - scroll;
   float segF   = alongS / seg;
   float segId  = floor(segF);
