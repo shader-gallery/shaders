@@ -3,15 +3,152 @@
   "slug": "filigree",
   "family": "Loom",
   "author": "Erin Carter",
-  "tags": ["dark", "grid", "lattice", "glow", "rainbow", "organic", "loop"],
+  "tags": [
+    "dark",
+    "grid",
+    "lattice",
+    "glow",
+    "rainbow",
+    "organic",
+    "loop"
+  ],
   "description": "A delicate ornamental lattice — a grid of thin glowing rounded-diamond outlines that pulse brighter in slow waves rolling across the field, like etched metal lacework catching light. Cell interiors stay near-black; the outlines trace palette colours by position.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_waveSpeed", "label": "Wave speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.45, "effect": "Speed the diagonal brightness wave rolls across the lace, lighting the diamonds in slow bands; 0 holds an even still net." },
-    { "uniform": "u_spacing", "label": "Lattice spacing", "min": 18.0, "max": 80.0, "step": 1.0, "default": 38.0, "effect": "Size of each diamond cell in CSS px - a dense fine ornamental lace at the minimum, an open airy net at the maximum." },
-    { "uniform": "u_line", "label": "Line weight", "min": 0.5, "max": 4.0, "step": 0.05, "default": 1.7, "effect": "Thickness of the lace strokes in CSS px - a delicate hairline filigree to a bold engraved lattice." },
-    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.1, "effect": "Brightness of the lace strokes and the node jewels where the diamonds meet; low is a quiet etched net, high a luminous woven mesh." }
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "Speed the diagonal brightness wave rolls across the lace, lighting the diamonds in slow bands; 0 holds an even still net."
+    },
+    {
+      "uniform": "u_spacing",
+      "label": "Lattice spacing",
+      "min": 18.0,
+      "max": 80.0,
+      "step": 1.0,
+      "default": 38.0,
+      "effect": "Size of each diamond cell in CSS px - a dense fine ornamental lace at the minimum, an open airy net at the maximum."
+    },
+    {
+      "uniform": "u_line",
+      "label": "Line weight",
+      "min": 0.5,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.7,
+      "effect": "Thickness of the lace strokes in CSS px - a delicate hairline filigree to a bold engraved lattice."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.1,
+      "effect": "Brightness of the lace strokes and the node jewels where the diamonds meet; low is a quiet etched net, high a luminous woven mesh."
+    },
+    {
+      "uniform": "u_dotSize",
+      "label": "Dot size",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Radius of the glowing centre jewel in each cell - the per-tile radial gradient. Small tightens it to a crisp point, large blooms a soft glow across the cell interior."
+    },
+    {
+      "uniform": "u_dotGlow",
+      "label": "Dot glow",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the centre jewels. 0 removes them for a pure outline lattice; high makes each cell centre a bright bead so the field reads as a net of lit nodes."
+    },
+    {
+      "uniform": "u_fill",
+      "label": "Cell fill",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Strength of a soft radial gradient filling each cell interior with the lace colour (instead of staying near-black). 0 keeps open etched cells; higher floods them into glowing tiles."
+    },
+    {
+      "uniform": "u_fillSize",
+      "label": "Fill radius",
+      "min": 0.1,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How far the interior fill gradient reaches across the cell. Small pools the glow near the centre; large pushes it out toward the diamond outline."
+    },
+    {
+      "uniform": "u_variation",
+      "label": "Tile variation",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Randomises each cell independently - brightness and hue offset - so the lattice stops reading as a perfect repeat. 0 is uniform; high scatters lit and dim ornate tiles."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Rotation",
+      "min": -90.0,
+      "max": 90.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Spins the whole lattice off the upright grid. 0 is axis-aligned diamonds; angled settings tilt the net diagonally across the frame."
+    },
+    {
+      "uniform": "u_tilt",
+      "label": "Tilt",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Perspective foreshorten - the lattice leans away so cells grow toward one edge and shrink toward the other, giving a receding tabletop depth. 0 is flat-on."
+    },
+    {
+      "uniform": "u_skew",
+      "label": "Skew",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Horizontal shear that slants the lattice columns, breaking the square symmetry into a rhomboid weave. 0 is upright."
+    },
+    {
+      "uniform": "u_lightAngle",
+      "label": "Light angle",
+      "min": 0.0,
+      "max": 360.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Bearing of the relief light that rakes across the diamond faces. Rotates which sides of each bevel catch the highlight."
+    },
+    {
+      "uniform": "u_lightAmt",
+      "label": "Light strength",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the steerable light shades the diamond facets. 0 is flat even lace; higher carves a beveled metal-relief read where lit faces shine and shadowed faces darken (like emboss, but on lacework)."
+    }
   ],
-  "post": { "bloom": 0.5, "bloomRadius": 4.0, "backdrop": 0.5, "backdropScale": 1.15, "saturation": 1.1, "dither": 1.0 },
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4.0,
+    "backdrop": 0.5,
+    "backdropScale": 1.15,
+    "saturation": 1.1,
+    "dither": 1.0
+  },
   "defaultPalette": "orchid"
 }
