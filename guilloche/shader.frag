@@ -28,7 +28,8 @@ uniform float u_glint;       // brightness of specular sparks at crossings     (
 uniform float u_random;      // scatter each strand start phase                (default 0)
 uniform float u_tube;        // round strands into rotating tubes              (default 0)
 uniform float u_rotate;      // rotate the whole braid in degrees              (default 0)
-uniform float u_blend;       // soften the hard edge between tube colours      (default 0)
+uniform float u_blend;       // blur overlapping strand colours together       (default 0)
+uniform float u_angle;       // shear the colour seams off vertical            (default 0)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black steel base ~#09090B
 const float BANDS    = 9.0;    // number of horizontal band axes (rows of strands)
@@ -93,8 +94,13 @@ void main() {
   float bestDepth = -1e9;   // larger depth = drawn on top (over-stroke)
   float prox      = 0.0;    // sum of soft proximities to every strand centreline
   float second    = 0.0;    // coverage of the 2nd-nearest strand (under-stroke)
-  vec3  secondCol = vec3(0.0); // colour of that under-stroke (for the blend control)
   float litNrm    = 0.0;    // signed cross-tube coord of the over-strand (-1..1)
+  vec3  colSum    = vec3(0.0); // depth-weighted colour sum (for the colour blur)
+  float wSum      = 0.0;
+
+  // colour blur: a sharp depth weighting picks a single winner (hard seams),
+  // a soft one averages the overlapping strands so their colours bleed together.
+  float sharp = mix(22.0, 1.6, clamp(u_blend, 0.0, 1.0));
 
   // a longitudinal coordinate phase so the whole braid is seamless
   for (int si = 0; si < 4; si++) {
@@ -114,30 +120,32 @@ void main() {
     float d     = abs(dsign);
 
     // over/under depth: cosine staggered per strand gives a smoothly migrating
-    // over-under braid (the larger value is the strand drawn on top)
-    float depth = cos(ang * 0.5 + fsi * 0.9 + travel * 0.5);
+    // over-under braid (the larger value is the strand drawn on top). u_angle adds
+    // a y-dependent shear so the colour seams tilt off vertical onto a diagonal.
+    float depth = cos(ang * 0.5 + fsi * 0.9 + travel * 0.5 + (pc.y / bandH) * u_angle * 3.0);
 
-    // antialiased stroke coverage of the engraved line. u_blend widens the soft
-    // edge so the hard line where one tube crosses another fades into a colour
-    // blend instead of a sharp cut (0 keeps the crisp engraved edge).
-    float edge = 1.3 * pr + u_blend * stroke * 1.2;
-    float cov = 1.0 - smoothstep(stroke, stroke + edge, d);
+    // antialiased stroke coverage of the engraved line
+    float cov = 1.0 - smoothstep(stroke, stroke + 1.3 * pr, d);
 
     // strand colour steps through the palette by global strand index
     vec3 sc = paletteAt(mod(fsi + bandId, 4.0), c0, c1, c2, c3);
 
     if (cov > 0.001) {
       if (depth > bestDepth) {
-        // demote the previous winner to the under-stroke (track its colour too)
-        if (litLine > second) { second = litLine; secondCol = litCol; }
+        // demote the previous winner to the under-stroke proximity
+        second  = max(second, litLine);
         bestDepth = depth;
         litLine   = cov;
         litCol    = sc;
         litNrm    = dsign / max(stroke, 0.5);   // for the rotating-tube shading
-      } else if (cov > second) {
-        second = cov;
-        secondCol = sc;
+      } else {
+        second = max(second, cov);
       }
+      // depth-weighted colour accumulation: sharp -> winner only (crisp seams),
+      // soft -> the overlapping strand colours average into a smooth blur.
+      float cw = cov * exp(depth * sharp);
+      colSum += sc * cw;
+      wSum   += cw;
     }
     // narrow proximity to this strand's centreline. Where two of these bumps
     // overlap, two strand centres are crossing → a jewel sits there. The width
@@ -156,17 +164,17 @@ void main() {
   float roundv = cos(theta);                        // 1 at crown, 0 at the rim
   float bar    = 0.5 + 0.5 * sin(theta * 3.0 + pc.x * kx * 2.0 - t * (0.8 + u_waveSpeed * 1.5));
   float roll   = pow(bar, 3.0) * roundv;            // helical specular band
-  vec3  overCol = mix(litCol, litCol * mix(0.45, 1.2, roundv), u_tube);
+
+  // base over-strand colour, blurred toward the overlapping strands by u_blend so
+  // the hard colour seams melt into smooth gradients (at 0 it is the crisp winner).
+  vec3 baseCol = mix(litCol, colSum / max(wSum, 0.001), u_blend);
+  vec3 overCol = mix(baseCol, baseCol * mix(0.45, 1.2, roundv), u_tube);
 
   // ENGRAVED STRANDS: dim, colour-tinted cuts in dark steel — light is structural,
   // so the bare strands stay restrained and the crossings carry the brightness.
   col += overCol * litLine * 0.58;
-  // under-stroke: at u_blend 0 it carries the over colour (the original crisp look);
-  // raising u_blend reveals the under-strand's own colour so the crossing fades
-  // between the two tube colours instead of a hard line.
-  vec3 underCol = mix(litCol, secondCol, u_blend);
-  col += underCol * second  * 0.30;
-  col += mix(litCol, vec3(1.0), 0.6) * roll * litLine * u_tube * 0.7;  // rolling highlight
+  col += baseCol * second  * 0.30;   // the under-stroke, dimmer, reads the braid
+  col += mix(baseCol, vec3(1.0), 0.6) * roll * litLine * u_tube * 0.7;  // rolling highlight
 
   // CROSSINGS: prox exceeds ~1 only where two centrelines coincide. That excess
   // is the lozenge corner where one strand crosses over another — set a jewel.

@@ -21,7 +21,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.05,
-      "default": 0.45,
+      "default": 0.25,
       "effect": "Multiplies the longitudinal phase travel of the strands; 0 freezes a static engraved braid, 2 visibly re-weaves the lozenges every few seconds."
     },
     {
@@ -30,7 +30,7 @@
       "min": 0.5,
       "max": 8.0,
       "step": 0.05,
-      "default": 6.6,
+      "default": 5.4,
       "effect": "Width of each strand stroke in CSS pixels \u2014 hairline banknote engraving at the minimum, thick ribbon strands that swell into solid woven bands at the maximum."
     },
     {
@@ -39,7 +39,7 @@
       "min": 0.1,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.7,
+      "default": 0.58,
       "effect": "Amplitude of each strand's sine about its band axis; low relaxes the field toward parallel pinstripes with rare shallow crossings, high weaves deep overlapping lozenges."
     },
     {
@@ -57,7 +57,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.66,
+      "default": 0.81,
       "effect": "Scatters where each strand's wave starts and ends; 0 is the orderly aligned braid, higher offsets every strand by a random phase so the weave looks hand-drawn and irregular."
     },
     {
@@ -75,7 +75,7 @@
       "min": -180.0,
       "max": 180.0,
       "step": 1.0,
-      "default": 0.0,
+      "default": 42.0,
       "effect": "Rotates the whole woven braid to any angle, so the bands can run level, on a diagonal, or vertically while the frame stays put."
     },
     {
@@ -84,11 +84,20 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.0,
-      "effect": "Softens the hard line where one tube crosses another; 0 is a crisp over-under edge, higher feathers the boundary and fades between the two tube colours."
+      "default": 0.69,
+      "effect": "Blurs the strand colours together where they overlap; 0 keeps crisp single-colour tubes with hard seams, higher averages the overlapping strands so the colours bleed into smooth gradients."
+    },
+    {
+      "uniform": "u_angle",
+      "label": "Seam angle",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": -0.53,
+      "effect": "Shears the over-under colour seams off vertical onto a diagonal; 0 leaves the upright crossings, higher tilts them so the colour breaks run at an angle across the weave."
     }
   ],
-  "defaultPalette": "peacock",
+  "defaultPalette": "daybreak",
   "post": {
     "bloom": 0.6,
     "bloomRadius": 4.0,
