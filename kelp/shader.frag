@@ -31,6 +31,10 @@ uniform float u_density;      // forest crowding (spacing scale)        (default
 uniform float u_randomize;    // per-blade variation: 0 uniform .. 1    (default 1)
 uniform float u_height;       // blade height scale                     (default 1)
 uniform float u_rays;         // crepuscular god-ray intensity          (default 1)
+uniform float u_caustic;      // background caustic shimmer intensity    (default 1)
+uniform float u_bubbles;      // bubble amount / brightness              (default 1)
+uniform float u_bubbleSize;   // bubble radius scale                     (default 1)
+uniform float u_distort;      // refractive horizontal distortion        (default 0)
 
 const vec3  BG          = vec3(0.020, 0.034, 0.052); // deep underwater base (blue)
 const float SPACING_CSS = 74.0;   // css px between ribbon roots (nearest rank)
@@ -85,10 +89,10 @@ void main() {
   rays *= smoothstep(0.05, 0.9, depth);     // pour from the surface down
   col += mix(c2, vec3(1.0), 0.4) * rays * 0.06 * clamp(u_rays, 0.0, 2.0);
 
-  // faint caustic shimmer on the upper water
+  // faint caustic shimmer on the upper water (u_caustic scales it)
   float caus = vnoise(fc / (90.0 * pr) + vec2(0.0, -t * 0.15));
   caus = pow(caus, 2.0);
-  col += c2 * caus * 0.05 * smoothstep(0.2, 1.0, depth);
+  col += c2 * caus * 0.05 * smoothstep(0.2, 1.0, depth) * clamp(u_caustic, 0.0, 2.0);
 
   float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
   float spacingN = SPACING_CSS * refScale * pr;
@@ -104,9 +108,16 @@ void main() {
   vec2 Lc = normalize(vec2(-0.5, 0.86));
 
   // swash-style controls: forest crowding, per-blade variation, blade height
-  float dens = clamp(u_density, 0.6, 1.6);
+  float dens = clamp(u_density, 0.6, 2.2);
   float rnd  = clamp(u_randomize, 0.0, 1.0);   // 0 = even rank, 1 = full scatter
   float hgt  = clamp(u_height, 0.5, 1.4);
+
+  // refractive distortion: a vertical wave of horizontal displacement warps the
+  // blades + bulbs like light bent through stirring water (u_distort scales it).
+  float distort = clamp(u_distort, 0.0, 1.0);
+  float warpX = distort * (13.0 * pr) * (0.6 * sin(depth * 9.0 - t * 0.5)
+                                       + 0.4 * sin(depth * 19.0 + t * 0.32));
+  float fx = fc.x + warpX;   // distorted horizontal coordinate for the kelp
 
   // ---- depth-layered kelp forest: far -> near ------------------------------
   for (int L = 0; L < LAYERS; L++) {
@@ -142,8 +153,10 @@ void main() {
       float yLocal = fc.y - anchorY;
       float span   = max(tipY - anchorY, 1.0);
       float s = clamp(yLocal / span, 0.0, 1.0);
-      float taper = mix(0.82, 1.0, smoothstep(0.0, 0.08, s))
-                  * mix(1.0, 0.55, smoothstep(0.82, 1.0, s));
+      // natural kelp silhouette: a flared holdfast base gripping the floor, a full
+      // mid-blade, and a tip that tapers to a fine frayed point (not a blunt stub).
+      float taper = mix(1.18, 1.0, smoothstep(0.0, 0.14, s))
+                  * mix(1.0, 0.22, smoothstep(0.70, 1.0, s));
 
       float lag    = s * 1.4;
       float drive  = env * sin(t * surgeRate * TWO_PI * 0.5 - lag * 2.2);
@@ -159,7 +172,7 @@ void main() {
 
       float centerX = rootX + xOff;
       float w = halfW * taper;
-      float dxr = fc.x - centerX;
+      float dxr = fx - centerX;
       float adx = abs(dxr);
 
       float vmask = step(anchorY - 2.0*pr, fc.y)
@@ -188,6 +201,14 @@ void main() {
       vec3 bodyCol = kelpCol * shade * (0.7 + 0.5 * env) * dim;
       col = mix(col, bodyCol, body * 0.94);
 
+      // ---- holdfast: a dark rooted clump gripping the seafloor at the base -----
+      float hbd  = length((vec2(fx, fc.y) - vec2(rootX, anchorY))
+                          / vec2(w * 1.8 + 2.0*pr, floorH * 0.40));
+      float tend = 0.55 + 0.45 * sin((fx - rootX) / (3.0*pr) + hash11(seed + 4.4) * 6.0);
+      float hold = (1.0 - smoothstep(0.40, 1.0, hbd)) * step(fc.y, anchorY + floorH * 0.55);
+      vec3  holdCol = mix(vec3(0.09, 0.07, 0.05), rampCol * 0.55, 0.30);
+      col = mix(col, holdCol, hold * (0.42 + 0.30 * tend) * dim);
+
       // ---- surge rim light on the downstream edge ----
       float bendDir  = sign(bend + 0.0001);
       float edgeX    = dxr * bendDir;
@@ -201,34 +222,42 @@ void main() {
       float bloom = exp(-edgeDist / (3.5*pr)) * vmask * flex * downMask;
       col += rampCol * bloom * 0.24 * dim * u_rimGlow;
 
-      // ---- float bulb at the bent tip ----
-      float bulbY = tipY - 8.0*pr;
+      // ---- float bulb (gas bladder) at the bent tip — amber and translucent,
+      // present on only some blades the way real kelp pneumatocysts are ----
+      float hasBulb = step(0.42, hash11(seed + 8.8));
+      float bulbY = tipY - 7.0*pr;
       float tipX  = rootX + (bend + idle) * spacing * 1.05
                     + sin(5.0 + hPhase) * wig * (7.0*pr) * 0.8
                     + (18.0*pr) * (hash11(seed + 2.2) > 0.5 ? 1.0 : -1.0) * wig;
-      vec2  bp    = vec2(fc.x - tipX, fc.y - bulbY);
-      float bulbR = max(halfW * 0.42, 2.0*pr);
-      float bd    = length(bp / vec2(bulbR, bulbR * 2.4));
-      float bulb  = 1.0 - smoothstep(0.6, 1.0, bd);
-      float bulbLit = 0.18 + 0.82 * flex;
-      col += c3 * bulb * 0.55 * bulbLit * dim * u_rimGlow;
-      col += c3 * exp(-bd*2.2) * 0.06 * flex * dim * u_rimGlow;
+      vec2  bp    = vec2(fx - tipX, fc.y - bulbY);   // fx carries the distortion warp
+      float bulbR = max(halfW * 0.55, 2.2*pr);
+      float bd    = length(bp / vec2(bulbR, bulbR * 1.6));   // rounder, less elongated
+      float bulb  = 1.0 - smoothstep(0.55, 1.0, bd);
+      float bulbLit = 0.26 + 0.74 * flex;
+      vec3  bulbCol = mix(rampCol, vec3(0.95, 0.78, 0.42), 0.5);   // amber float
+      col += bulbCol * bulb * 0.55 * bulbLit * dim * hasBulb;
+      col += vec3(0.98,0.92,0.70) * (1.0 - smoothstep(0.0, 0.42, bd)) * 0.18 * bulbLit * dim * hasBulb;
+      col += bulbCol * exp(-bd*2.0) * 0.05 * (0.4 + 0.6*flex) * dim * hasBulb;
     }
   }
 
-  // ---- rising bubbles drifting up through the column ------------------------
+  // ---- rising bubbles drifting up through the column (u_bubbles amount/bright,
+  // u_bubbleSize radius) ------------------------------------------------------
+  float bAmt  = clamp(u_bubbles, 0.0, 2.0);
+  float bSize = clamp(u_bubbleSize, 0.3, 3.0);
   for (int m = 0; m < 20; m++) {
     float fm = float(m);
+    float bvis = step(hash11(fm + 8.0), min(bAmt, 1.0));   // thin the count when low
     float mx = hash11(fm + 0.5) * res.x;
     float wob = sin(t * (0.4 + 0.5*hash11(fm+2.0)) + fm) * 14.0*pr;
     float my = mod(hash11(fm + 4.0) * res.y + t * (10.0 + 14.0*hash11(fm+6.0)) * pr, res.y);
     vec2  mp = vec2(fc.x - (mx + wob), fc.y - my);
     float md = length(mp);
-    float r  = (1.5 + 2.5*hash11(fm+3.0)) * pr;
+    float r  = (1.5 + 2.5*hash11(fm+3.0)) * pr * bSize;
     // bubble: bright thin rim + faint core
     float ring = exp(-pow((md - r) / (1.2*pr), 2.0));
     float core = exp(-md*md / (r*r*0.8));
-    col += mix(c2, vec3(0.9,0.95,1.0), 0.5) * (ring * 0.5 + core * 0.18) * 0.7;
+    col += mix(c2, vec3(0.9,0.95,1.0), 0.5) * (ring * 0.5 + core * 0.18) * 0.7 * bvis * bAmt;
   }
 
   // gentle vignette + darker seafloor band to seat the holdfasts
