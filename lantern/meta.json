@@ -15,6 +15,12 @@
       "effect": "Amount of interior caustic web and radial rib detail; at 0 the lanterns soften toward plain glow, at 1 the internal structure reads sharply." },
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
       "effect": "Overall emission of every lantern." },
+    { "uniform": "u_atmosphere", "label": "Atmosphere", "min": 0.0, "max": 2.0, "step": 0.05, "default": 0.8,
+      "effect": "Drifting colored water-glow that fills the frame between lanterns so it never reads as dead black." },
+    { "uniform": "u_colorSpread", "label": "Colour spread", "min": 0.0, "max": 1.0, "step": 0.02, "default": 0.85,
+      "effect": "How far the lantern hues range across the palette; 0 is a single tint, 1 spreads the full set." },
+    { "uniform": "u_saturation", "label": "Colour vividness", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.2,
+      "effect": "Vividness of the lantern colours; 0 is greyscale, 1 is the raw palette, higher pushes saturation." },
     { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 1.0,
       "effect": "Strength of the lantern that follows the pointer; 0 disables pointer interaction entirely." }
   ],

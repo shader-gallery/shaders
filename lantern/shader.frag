@@ -24,6 +24,9 @@ uniform float u_speed;     // drift/breathing/caustic speed multiplier (default 
 uniform float u_size;      // lantern radius multiplier                (default 1)
 uniform float u_glow;      // overall emission multiplier              (default 1)
 uniform float u_structure; // interior caustic + rib detail, 0..1      (default 0.7)
+uniform float u_atmosphere;// colored water-glow fill                  (default 0.8)
+uniform float u_colorSpread;// lantern-to-lantern hue variety          (default 0.85)
+uniform float u_saturation;// lantern colour vividness                 (default 1.2)
 uniform float u_mouseInfluence; // pointer lantern strength, 0=off     (default 1)
 
 const float BG = 0.035;   // deep-water base, ~#09090B
@@ -92,21 +95,23 @@ void main() {
   float t   = u_time * u_speed;
   float structure = clamp(u_structure, 0.0, 1.0);
 
-  // faint depth gradient + slow caustic shimmer so the water isn't flat
-  float depth   = 0.018 * (1.0 - uv.y * 0.6);
-  float shimmer = 0.012 * (0.5 + 0.5 * sin(uv.x * 3.0 + t * 0.25))
-                        * (0.5 + 0.5 * sin(uv.y * 2.3 - t * 0.20));
-  vec3 col = vec3(BG) + vec3(0.02, 0.03, 0.05) * (depth + shimmer);
+  // colored water atmosphere: a slow drifting glow field so the frame is never
+  // dead black between the lanterns; brighter up top, with a soft caustic crawl.
+  vec3 atm = mix(pal(0), pal(2), 0.5 + 0.4 * sin(uv.x * 2.4 + t * 0.12));
+  atm = mix(atm, pal(1), 0.25 + 0.25 * sin(uv.y * 1.8 - t * 0.1));
+  float depth   = 0.5 + 0.5 * (-uv.y);                 // brighter toward the top
+  float shimmer = 0.5 + 0.5 * sin(uv.x * 3.0 + t * 0.25) * sin(uv.y * 2.3 - t * 0.20);
+  vec3 col = vec3(BG) + atm * u_atmosphere * (0.05 + 0.07 * shimmer) * (0.45 + 0.7 * depth);
 
   // five structured lanterns, anchored across the frame and wandering on small
   // looping orbits, each cycling through the four palette colours.
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 8; i++) {
     float fi = float(i);
     float ph = fi * 1.2566;
     float sp = 0.09 + 0.035 * fi;
 
-    vec2 anchor = vec2(0.66 * sin(fi * 2.3 + 0.7),
-                       0.36 * cos(fi * 1.7 + 1.1));
+    vec2 anchor = vec2(0.86 * sin(fi * 2.3 + 0.7),
+                       0.40 * cos(fi * 1.7 + 1.1));
     vec2 c = anchor + vec2(
       0.24 * sin(t * sp + ph) + 0.10 * cos(t * sp * 0.6 + ph * 1.7),
       0.20 * cos(t * sp * 0.8 + ph * 1.3) + 0.09 * sin(t * sp * 0.5 + ph)
@@ -123,16 +128,19 @@ void main() {
 
     vec3 L = lantern(d, r, fi * 0.37, t, structure);
 
-    // two adjacent palette hues per orb, slowly shifting over time
-    float sel = mod(fi + t * 0.05, 4.0);
+    // two adjacent palette hues per orb; spread controls hue variety, saturation
+    // the vividness.
+    float sel = mod(fi * mix(0.0, 1.7, u_colorSpread) + t * 0.05 + 0.5, 4.0);
     vec3  cc  = mix(pal(int(sel)), pal(int(mod(sel + 1.0, 4.0))), fract(sel));
-    vec3  rimCol = mix(cc, vec3(1.0), 0.30);          // membrane reads brighter
-    vec3  ribCol = mix(cc, vec3(1.0), 0.22);          // ribs keep palette hue
+    float clum = dot(cc, vec3(0.299, 0.587, 0.114));
+    cc = clamp(mix(vec3(clum), cc, u_saturation), 0.0, 1.0);
+    vec3  rimCol = mix(cc, vec3(1.0), 0.18);          // membrane reads brighter
+    vec3  ribCol = mix(cc, vec3(1.0), 0.12);          // ribs keep palette hue
 
     float em = mix(0.6, 1.0, br) * u_glow;
-    col += cc     * L.x * 0.5 * em;                   // interior + caustic web
-    col += rimCol * L.y * 0.55 * em;                  // bright membrane rim
-    col += ribCol * L.z * 0.62 * em;                  // nucleus + ribs
+    col += cc     * L.x * 0.62 * em;                  // interior + caustic web
+    col += rimCol * L.y * 0.72 * em;                  // bright membrane rim
+    col += ribCol * L.z * 0.80 * em;                  // nucleus + ribs
   }
 
   // faint pointer-following lantern so the field reacts when hovered
@@ -143,8 +151,8 @@ void main() {
   }
 
   // tone curve: overlaps keep glowing without blowing to white; deep base kept
-  col = col / (col + vec3(0.9));
-  col = pow(col, vec3(0.9));
+  col = col / (col + vec3(0.62));
+  col = pow(col, vec3(0.85));
 
   gl_FragColor = vec4(col, 1.0);
 }
