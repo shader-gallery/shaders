@@ -3,31 +3,143 @@
   "slug": "rush",
   "family": "Sough",
   "author": "Erin Carter",
-  "tags": ["dark", "glow", "loop", "wind", "reeds", "water", "reflection", "organic"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "wind",
+    "reeds",
+    "water",
+    "reflection",
+    "organic"
+  ],
   "description": "A rank of cattail rushes silhouetted against a glowing dusk sky along a waterline, with a low sun on the horizon — and below, a prominent rippling reflection of the whole scene: the reflected dusk sky, a shimmering sun-glitter column, and the dark mirrored reeds wavering on the water. A gust front crosses the bed stem by stem, each rush bowing and overshooting with glow gathering on its downwind edge, the reflection echoing every gesture a beat late.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_gustRate", "label": "Sway speed", "min": 0.1, "max": 1.5, "step": 0.05,
-      "default": 0.4, "effect": "Pace of the reeds' gentle continuous sway — low is a barely-there drift, high a livelier breeze." },
-    { "uniform": "u_bend", "label": "Sway amount", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "How far the rushes lean as they drift — 0 holds them dead still, high leans them well over." },
-    { "uniform": "u_spacing", "label": "Reed spacing", "min": 10.0, "max": 48.0, "step": 1.0,
-      "default": 18.0, "effect": "CSS-pixel spacing between rushes along the waterline, from a dense reed bed to a sparse stand." },
-    { "uniform": "u_reflect", "label": "Reflection", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.9, "effect": "Strength of the mirrored reeds in the water, from just the reflected sky to deep vivid reed reflections." },
-    { "uniform": "u_randomize", "label": "Variation", "min": 0.0, "max": 1.0, "step": 0.05,
-      "default": 1.0, "effect": "Spread of per-stem height and sway timing — 0 lines the rushes up as an even rank of identical reeds, 1 gives the full natural scatter of a wild reed bed." },
-    { "uniform": "u_height", "label": "Reed height", "min": 0.4, "max": 1.6, "step": 0.05,
-      "default": 1.0, "effect": "Overall height of the rushes from the waterline — low leaves a short marsh fringe, high stands tall reeds against the sky." },
-    { "uniform": "u_sunX", "label": "Sun position", "min": 0.05, "max": 0.95, "step": 0.01,
-      "default": 0.6, "effect": "Where the low dusk sun sits along the horizon — its glow and the shimmering glitter column below it slide with it." },
-    { "uniform": "u_ripple", "label": "Ripple", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "Strength of the water's ripple and shimmer — 0 stills it to a clean mirror, high churns the reflection into broken wavering bands." },
-    { "uniform": "u_dusk", "label": "Sky glow", "min": 0.3, "max": 1.8, "step": 0.05,
-      "default": 1.0, "effect": "Brightness of the dusk sky and its reflection — low sinks the scene toward night, high flares a vivid sunset glow." },
-    { "uniform": "u_hills", "label": "Hills", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 1.3, "effect": "Height of the rolling far-shore hills behind the reeds (and their reflection) — 0 is a flat open horizon, high raises distant hills to sell the lake's depth." }
+    {
+      "uniform": "u_gustRate",
+      "label": "Sway speed",
+      "min": 0.1,
+      "max": 1.5,
+      "step": 0.05,
+      "default": 0.2,
+      "effect": "Pace of the reeds' gentle continuous sway — low is a barely-there drift, high a livelier breeze."
+    },
+    {
+      "uniform": "u_bend",
+      "label": "Sway amount",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.3,
+      "effect": "How far the rushes lean as they drift — 0 holds them dead still, high leans them well over."
+    },
+    {
+      "uniform": "u_spacing",
+      "label": "Reed spacing",
+      "min": 10.0,
+      "max": 48.0,
+      "step": 1.0,
+      "default": 10.0,
+      "effect": "CSS-pixel spacing between rushes along the waterline, from a dense reed bed to a sparse stand."
+    },
+    {
+      "uniform": "u_reflect",
+      "label": "Reflection",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "Strength of the mirrored reeds in the water, from just the reflected sky to deep vivid reed reflections."
+    },
+    {
+      "uniform": "u_randomize",
+      "label": "Variation",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Spread of per-stem height and sway timing — 0 lines the rushes up as an even rank of identical reeds, 1 gives the full natural scatter of a wild reed bed."
+    },
+    {
+      "uniform": "u_height",
+      "label": "Reed height",
+      "min": 0.4,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.6,
+      "effect": "Overall height of the rushes from the waterline — low leaves a short marsh fringe, high stands tall reeds against the sky."
+    },
+    {
+      "uniform": "u_sunX",
+      "label": "Sun position",
+      "min": 0.05,
+      "max": 0.95,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Where the low dusk sun sits along the horizon — its glow and the shimmering glitter column below it slide with it."
+    },
+    {
+      "uniform": "u_ripple",
+      "label": "Ripple",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Strength of the water's ripple and shimmer — 0 stills it to a clean mirror, high churns the reflection into broken wavering bands."
+    },
+    {
+      "uniform": "u_dusk",
+      "label": "Sky glow",
+      "min": 0.3,
+      "max": 1.8,
+      "step": 0.05,
+      "default": 1.3,
+      "effect": "Brightness of the dusk sky and its reflection — low sinks the scene toward night, high flares a vivid sunset glow."
+    },
+    {
+      "uniform": "u_hills",
+      "label": "Hills",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 2.0,
+      "effect": "Height of the rolling far-shore hills behind the reeds (and their reflection) — 0 is a flat open horizon, high raises distant hills to sell the lake's depth."
+    },
+    {
+      "uniform": "u_clump",
+      "label": "Clustering",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "default": 0.5,
+      "effect": "How tightly the rushes gather into dense clumps with open gaps between them — 0 is an even rank, 1 bunches them into tight stands."
+    },
+    {
+      "uniform": "u_dof",
+      "label": "Depth of field",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "default": 0.5,
+      "effect": "Blur falloff for reeds away from the focal plane — 0 keeps the whole bed sharp, high melts the out-of-focus reeds into a soft haze for depth."
+    },
+    {
+      "uniform": "u_focus",
+      "label": "Focus",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.05,
+      "default": 0.7,
+      "effect": "Which reed depth stays sharp — 0 focuses the far small reeds, 1 the near large ones; the rest soften with distance from it."
+    }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.5 }
+  "post": {
+    "bloom": 0.5,
+    "grain": 0.025,
+    "grainSize": 1.6,
+    "grainSpeed": 10,
+    "vignette": 0.26
+  }
 }

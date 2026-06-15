@@ -35,6 +35,9 @@ uniform float u_sunX;       // sun horizontal position 0..1           (default 0
 uniform float u_ripple;     // water ripple / shimmer strength        (default 1)
 uniform float u_dusk;       // dusk sky brightness                    (default 1)
 uniform float u_hills;      // far-shore hill height (depth)          (default 1)
+uniform float u_clump;      // reed clustering 0 even .. 1 tight      (default 0.5)
+uniform float u_dof;        // reed depth-of-field blur falloff       (default 0.5)
+uniform float u_focus;      // reed focal depth 0 far .. 1 near       (default 0.7)
 
 const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float WATER_FRAC  = 0.66;   // waterline height as fraction up from bottom
@@ -71,51 +74,58 @@ float wheelW(float s, float c) {
   return max(0.0, 1.0 - min(d, 4.0 - d));
 }
 
-// Evaluate the rank silhouette + its glow at a sample point `q` (device px),
-// using a bend that is sampled with an optional time-lag `lag` (for the
-// reflection's late answer) and a vertical wobble already folded into `q`.
-// Writes accumulated silhouette coverage into `sil` and glow colour into `glow`.
-void rank(vec2 q, float pr, float spacing, float waterY, float lag,
-          out float sil, out vec3 glow, vec3 c0, vec3 c1, vec3 c2) {
+// Evaluate the reed-bed silhouette at sample point `q` (device px). Reeds carry a
+// per-stem DEPTH: near reeds are larger and sharp, far reeds smaller, hazier and
+// edge-blurred (depth of field). Composites premultiplied into `sil` (coverage)
+// and `silCol` (colour), hazing far reeds toward the supplied background `bg`.
+void rank(vec2 q, float pr, float spacing, float waterY, float lag, vec3 bg,
+          out float sil, out vec3 silCol, vec3 c0, vec3 c1, vec3 c2) {
   sil = 0.0;
-  glow = vec3(0.0);
+  silCol = vec3(0.0);
 
   float stemHW  = STEM_CSS * pr;
   float headHW  = HEAD_CSS * pr;
   float headLen = HEADLEN_CSS * pr;
   float t       = u_time - lag;
 
-  float spd     = max(u_gustRate, 0.001);   // now paces the gentle continuous sway
+  float spd   = max(u_gustRate, 0.001);   // paces the gentle continuous sway
+  float rnd   = clamp(u_randomize, 0.0, 1.0);
+  float clump = clamp(u_clump, 0.0, 1.0); // 0 = even rank, 1 = tight clusters
+  float dof   = clamp(u_dof, 0.0, 1.5);
+  float focus = clamp(u_focus, 0.0, 1.0);
   float nearest = floor(q.x / spacing);
 
-  // walk a small fixed window of stems around this fragment (const bound)
-  for (int i = -3; i <= 3; i++) {
+  // the silhouette dark colour (a near-black tint of the local background)
+  vec3 reedDark = bg * 0.08 + vec3(0.004, 0.005, 0.010);
+
+  // wider window so clump-displaced / jittered stems are still captured
+  for (int i = -5; i <= 5; i++) {
     float id   = nearest + float(i);
-    // u_randomize spreads every per-stem trait (0 = even rank, 1 = wild scatter):
-    // root spacing, height (a wide tall/short mix), sway amount and head size.
-    float rnd  = clamp(u_randomize, 0.0, 1.0);
-    float root = (id + 0.5) * spacing + (hash11(id * 4.3) - 0.5) * spacing * 0.5 * rnd;
-    // u_height scales the bed; the per-stem factor now spans a wide 0.55..1.5 so
-    // some rushes stand tall and others stay short (a natural reed bed).
-    float hgt  = STEMH_CSS * pr * (0.55 + 0.95 * mix(0.5, hash11(id * 1.7), rnd)) * clamp(u_height, 0.4, 1.6);
+    // dense groupings: a low-frequency signal pulls stems together into clusters
+    // with open gaps between them (u_clump), on top of the per-stem jitter.
+    float cl   = sin(id * 0.7) + 0.6 * sin(id * 1.7 + 1.3);
+    float root = (id + 0.5) * spacing
+               + (hash11(id * 4.3) - 0.5) * spacing * 0.5 * rnd
+               + cl * spacing * clump * 0.85;
+    // per-stem depth for DoF: 0 far .. 1 near
+    float dep  = hash11(id * 2.9);
+    float nearS = mix(0.62, 1.15, dep);            // near reeds larger, far smaller
+    // u_height scales the bed; per-stem factor spans 0.55..1.5 (tall/short mix)
+    float hgt  = STEMH_CSS * pr * (0.55 + 0.95 * mix(0.5, hash11(id * 1.7), rnd)) * clamp(u_height, 0.4, 2.0) * nearS;
     float swayK = mix(1.0, 0.45 + 1.1 * hash11(id * 6.1), rnd);   // some lean more
-    float headSc = mix(1.0, 0.65 + 0.7 * hash11(id * 8.9), rnd);  // varied head size
-    // each reed drifts on its own slow phase so the rank never moves in lockstep
+    float headSc = mix(1.0, 0.65 + 0.7 * hash11(id * 8.9), rnd) * nearS;
     float amp = drift(id, t, spd) * u_bend * swayK;
 
     vec2 base = vec2(root, waterY);                 // root pinned to waterline
-    // tip displaced by amp*hgt; mid-stem bows so it reads as a bend, not a tilt
     float topx = root + amp * hgt * 0.55;
     vec2 tip  = vec2(topx, waterY + hgt);
     vec2 mid  = vec2(root + amp * hgt * 0.42, waterY + hgt * 0.55);
 
-    // two capsule segments approximate the bowed stem (root->mid, mid->tip)
-    float d1 = sdCapsule(q, base, mid, stemHW);
-    float d2 = sdCapsule(q, mid,  tip, stemHW * 0.85);
+    float swk = stemHW * nearS;
+    float d1 = sdCapsule(q, base, mid, swk);
+    float d2 = sdCapsule(q, mid,  tip, swk * 0.85);
     float ds = min(d1, d2);
 
-    // cattail head: a fat sausage sitting just below the tip on the stem
-    // (per-stem size variation via headSc)
     float headLenK = headLen * headSc;
     float headHWK  = headHW  * headSc;
     float headFrac = clamp(headLenK / max(hgt, 1.0), 0.0, 0.5);
@@ -123,12 +133,16 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag,
     vec2 ht = mix(mid, tip, 0.58 + headFrac * 0.5);
     float dh = sdCapsule(q, hb, ht, headHWK);
 
-    float aa = 1.5 * pr;
-    float sStem = 1.0 - smoothstep(0.0, aa, ds);
-    float sHead = 1.0 - smoothstep(0.0, aa, dh);
-    sil = max(sil, max(sStem, sHead));
-    // no rim glow: the reeds read as clean dusk silhouettes; movement is carried
-    // by their gentle continuous sway and the wavering reflection alone.
+    // depth of field: stems away from the focal plane get a wider edge feather
+    float defocus = abs(dep - focus) * dof;
+    float aa = (1.5 + 11.0 * defocus) * pr;
+    float s  = max(1.0 - smoothstep(0.0, aa, ds), 1.0 - smoothstep(0.0, aa, dh));
+    // far / out-of-focus reeds haze toward the background (atmospheric depth)
+    vec3 reedCol = mix(reedDark, bg, (1.0 - dep) * 0.45 + defocus * 0.30);
+    // premultiplied "over": nearer-looking later stems sit in front
+    float a = s * (1.0 - sil);
+    silCol += reedCol * a;
+    sil    += a;
   }
 }
 
@@ -212,11 +226,10 @@ void main() {
     // far-shore rolling hills behind the reeds (depth / scene-setting)
     col = hills(col, fc.x, fc.y - waterY, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35), mix(c0, c1, 0.45));
 
-    float sil; vec3 glow;
-    rank(fc, pr, spacing, waterY, 0.0, sil, glow, c0, c1, c2);
-    // backlit reeds: near-black silhouettes against the bright dusk sky
-    col = mix(col, col * 0.08 + vec3(0.004, 0.005, 0.010), sil);
-    col += glow * 1.0;                             // rim glow when bent
+    float sil; vec3 silCol;
+    rank(fc, pr, spacing, waterY, 0.0, col, sil, silCol, c0, c1, c2);
+    // backlit reeds composited over the dusk sky (premultiplied)
+    col = col * (1.0 - sil) + silCol;
   } else {
     // ----- the water: a PROMINENT reflection of the dusk sky + the reeds -----
     float depth = (waterY - fc.y);                 // px below the line
@@ -245,13 +258,13 @@ void main() {
     col = mix(col, hills(col, fc.x + shimmer, depth, pr, skyH, clamp(u_hills, 0.0, 2.0), mix(sunCol, c2, 0.35), mix(c0, c1, 0.45)),
               0.8 * (0.5 + 0.5 * hfade) * rippleBright);
     vec2 q = vec2(fc.x + shimmer, waterY + depth * 1.18); // stretched mirror
-    float sil; vec3 glow;
-    rank(q, pr, spacing, waterY, 0.22, sil, glow, c0, c1, c2);
+    float sil; vec3 silCol;
+    rank(q, pr, spacing, waterY, 0.22, col, sil, silCol, c0, c1, c2);
     float fade = exp(-depth / (res.y * 0.75));
     float r = clamp(u_reflect, 0.0, 1.5);
-    // dark reed mirror over the bright reflected sky (the reflection reads clearly)
-    col = mix(col, col * 0.14, sil * clamp(r, 0.0, 1.0) * (0.5 + 0.5*fade));
-    col += glow * 1.3 * r * fade * rippleBright;
+    // reflected reeds composited over the bright reflected sky, dimmed with depth
+    float k = clamp(r, 0.0, 1.0) * (0.55 + 0.45 * fade) * rippleBright;
+    col = col * (1.0 - sil * k) + silCol * k;
   }
 
   // crisp bright waterline glint where reeds meet their reflection
