@@ -14,7 +14,13 @@
     { "uniform": "u_feather", "label": "Frost feathers", "min": 0.0, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "Extent of the frost feathers fanning from each finger's flanks — 0 leaves bare glassy fingers, 2 grows wide lacy crystalline fans that fill between them." },
     { "uniform": "u_density", "label": "Crowding", "min": 0.4, "max": 2.0, "step": 0.05,
-      "default": 1.0, "effect": "How tightly the fingers crowd the frame — low leaves airy gaps of dark water, high packs them into a dense frozen curtain." }
+      "default": 1.0, "effect": "How tightly the fingers crowd the frame — low leaves airy gaps of dark water, high packs them into a dense frozen curtain." },
+    { "uniform": "u_reach", "label": "Hang length", "min": 0.3, "max": 1.8, "step": 0.05,
+      "default": 1.0, "effect": "How far the fingers descend from the ceiling — low leaves short stubs near the top, high streams long icicles toward the bottom of the frame." },
+    { "uniform": "u_taper", "label": "Tip sharpness", "min": 0.0, "max": 1.0, "step": 0.05,
+      "default": 0.7, "effect": "Sharpness of each finger's point — 0 is a blunt stalactite with a wide rounded tip, 1 a fine icicle needle tapering to nothing." },
+    { "uniform": "u_randomize", "label": "Variation", "min": 0.0, "max": 1.0, "step": 0.05,
+      "default": 1.0, "effect": "Spread of per-finger depth, width, length and position — 0 lines them up as an even rank of identical fingers, 1 gives the full natural scatter of a real brinicle field." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6 }

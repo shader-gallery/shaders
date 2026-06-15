@@ -25,6 +25,9 @@ uniform float u_streamSpeed;  // downward interior shimmer rate, paces glints (d
 uniform float u_column;       // typical finger width in CSS px, scaled by pixelRatio (default 60)
 uniform float u_feather;      // frost-feather fan extent (default 1)
 uniform float u_density;      // how tightly the fingers crowd the frame (default 1)
+uniform float u_reach;        // overall hang length of the fingers (default 1)
+uniform float u_taper;        // tip sharpness: 0 blunt .. 1 fine needle (default 0.7)
+uniform float u_randomize;    // per-finger variation: 0 uniform .. 1 full scatter (default 1)
 
 const vec3  BG  = vec3(0.030, 0.034, 0.046); // deep cold water
 const int   NCOL = 13;                        // brinicle fingers across the frame
@@ -52,7 +55,9 @@ vec3 finger(vec2 uv, float yT, vec2 res, float pr, float t, float speed,
   // hanging finger geometry: wide at the frozen ceiling, tapering steadily to a
   // sharp point — the unmistakable silhouette of an icicle (the clearest read).
   float along = clamp(yT / max(tipY, 0.001), 0.0, 1.0);  // 0 top .. 1 tip
-  float taper = mix(1.0, 0.10, pow(along, 1.3));
+  // tip sharpness is a control: blunt stalactite (wide tip) .. fine icicle needle
+  float tipFrac = mix(0.30, 0.02, clamp(u_taper, 0.0, 1.0));
+  float taper = mix(1.0, tipFrac, pow(along, 1.3));
   float wHere = halfW * taper;
 
   float dn = dxPx / max(wHere, 0.5);         // -1..1 across the finger
@@ -148,6 +153,8 @@ void main() {
   float baseHalf = max(u_column, 1.0) * 0.5;
   float feath    = clamp(u_feather, 0.0, 2.0);
   float dens     = clamp(u_density, 0.4, 2.0);
+  float reach    = clamp(u_reach, 0.3, 1.8);
+  float rnd      = clamp(u_randomize, 0.0, 1.0);
 
   // palette with house fallback
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
@@ -171,11 +178,15 @@ void main() {
     float h1 = hash11(fi*1.7 + 0.3);    // depth
     float h2 = hash11(fi*2.3 + 1.1);    // x jitter
     float h3 = hash11(fi*3.1 + 2.7);    // tip depth
-    float depth = h1;
+    // u_randomize pulls each finger's depth / x-jitter / tip toward the mean, so
+    // 0 gives an even rank of identical fingers and 1 the full natural scatter.
+    float depth = mix(0.5, h1, rnd);
+    float h2r   = mix(0.5, h2, rnd);
+    float h3r   = mix(0.5, h3, rnd);
     float slot  = (fi + 0.5) / float(NCOL);
-    float cx    = slot + (h2 - 0.5) * (0.85 / float(NCOL));
+    float cx    = slot + (h2r - 0.5) * (0.85 / float(NCOL));
     float halfW = baseHalf * mix(0.45, 1.25, depth) * dens;
-    float tipY  = mix(0.34, 0.92, h3);
+    float tipY  = mix(0.34, 0.92, h3r) * reach;     // u_reach scales hang length
     float dim   = mix(0.42, 1.0, depth);
     col += finger(uv, yT, res, pr, t, speed, cx, halfW, tipY, fi*5.0, dim,
                   feath, c0, c1, c2, c3);
