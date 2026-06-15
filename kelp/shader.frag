@@ -35,11 +35,13 @@ uniform float u_caustic;      // background caustic shimmer intensity    (defaul
 uniform float u_bubbles;      // bubble amount / brightness              (default 1)
 uniform float u_bubbleSize;   // bubble radius scale                     (default 1)
 uniform float u_distort;      // refractive horizontal distortion        (default 0)
+uniform float u_dof;          // depth-of-field blur falloff             (default 0.6)
+uniform float u_focus;        // focal depth plane 0 far .. 1 near       (default 0.85)
 
 const vec3  BG          = vec3(0.020, 0.034, 0.052); // deep underwater base (blue)
 const float SPACING_CSS = 74.0;   // css px between ribbon roots (nearest rank)
 const int   BLADES      = 14;     // ribbons per rank
-const int   LAYERS      = 3;      // depth-layered ranks (perspective)
+const int   LAYERS      = 5;      // depth-layered ranks (perspective)
 const float FLOOR_CSS   = 70.0;   // seafloor band height from the bottom (css px)
 const float WIDTH_MUL   = 3.2;    // ribbons are WIDE flat blades, not wires
 const float TWO_PI      = 6.2831853;
@@ -131,6 +133,13 @@ void main() {
     float halfW = max(u_bladeWidth, 0.5) * 0.5 * WIDTH_MUL * pr * widthScale;
     float xoff = fl * 37.0 * pr;                     // stagger ranks horizontally
 
+    // depth of field: ranks away from the focal plane soften (wider edge feather)
+    // and haze more, so the forest recedes into an organic blur rather than every
+    // rank being crisp. u_focus picks the sharp plane, u_dof the falloff strength.
+    float defocus  = abs(fl - clamp(u_focus, 0.0, 1.0)) * clamp(u_dof, 0.0, 1.5);
+    float edgeSoft = (2.0 + 16.0 * defocus) * pr;    // half-feather of the blade edge
+    haze = clamp(haze + defocus * 0.55, 0.0, 0.93);
+
     for (int i = 0; i < BLADES; i++) {
       float fi    = float(i);
       float seed  = fi + fl * 23.0;
@@ -176,8 +185,8 @@ void main() {
       float adx = abs(dxr);
 
       float vmask = step(anchorY - 2.0*pr, fc.y)
-                  * (1.0 - smoothstep(tipY - 4.0*pr, tipY + 2.0*pr, fc.y));
-      float body  = (1.0 - smoothstep(w - 2.0*pr, w + 2.0*pr, adx)) * vmask;
+                  * (1.0 - smoothstep(tipY - 4.0*pr - edgeSoft*0.5, tipY + 2.0*pr + edgeSoft*0.5, fc.y));
+      float body  = (1.0 - smoothstep(w - edgeSoft, w + edgeSoft, adx)) * vmask;
 
       // ---- cylindrical shading across the ribbon (volume, not a flat strip) ----
       float lx = clamp(dxr / max(w, 1.0), -1.0, 1.0);
