@@ -24,18 +24,18 @@
     { "uniform": "u_rays", "label": "God-rays", "min": 0.0, "max": 2.0, "step": 0.05,
       "default": 2.0, "effect": "Strength of the crepuscular light shafts slanting down through the water — 0 is flat dim water, high pours bright sunbeams from the surface." },
     { "uniform": "u_caustic", "label": "Caustics", "min": 0.0, "max": 2.0, "step": 0.05,
-      "default": 1.95, "effect": "Intensity of the rippling caustic light shimmer playing over the upper water — 0 is still, high dapples the column with moving light." },
+      "default": 0.8, "effect": "Intensity of the rippling caustic light shimmer playing over the upper water — 0 is still, high dapples the column with moving light." },
     { "uniform": "u_bubbles", "label": "Bubbles", "min": 0.0, "max": 2.0, "step": 0.05,
       "default": 2.0, "effect": "Amount and brightness of bubbles rising through the water — 0 clears them, high fills the column with a bright rising stream." },
     { "uniform": "u_bubbleSize", "label": "Bubble size", "min": 0.3, "max": 3.0, "step": 0.05,
-      "default": 0.7, "effect": "Size of the rising bubbles, from fine sparkling motes to fat slow orbs." },
+      "default": 0.8, "effect": "Size of the rising bubbles, from fine sparkling motes to fat slow orbs." },
     { "uniform": "u_distort", "label": "Distortion", "min": 0.0, "max": 1.0, "step": 0.05,
-      "default": 0.55, "effect": "A refractive wave that ripples the blades and bubbles horizontally as if seen through stirring water — 0 is clean and still." },
+      "default": 1.0, "effect": "A refractive wave that ripples the blades and bubbles horizontally as if seen through stirring water — 0 is clean and still." },
     { "uniform": "u_dof", "label": "Depth of field", "min": 0.0, "max": 1.5, "step": 0.05,
-      "default": 0.85, "effect": "How strongly ranks away from the focal plane blur and haze — 0 keeps every layer crisp, high melts the far layers into a soft organic backdrop." },
+      "default": 1.45, "effect": "How strongly ranks away from the focal plane blur and haze — 0 keeps every layer crisp, high melts the far layers into a soft organic backdrop." },
     { "uniform": "u_focus", "label": "Focus", "min": 0.0, "max": 1.0, "step": 0.05,
-      "default": 0.8, "effect": "Which depth plane stays sharp — 0 focuses the far back ranks, 1 the nearest blades; everything else softens with distance from it." }
+      "default": 1.0, "effect": "Which depth plane stays sharp — 0 focuses the far back ranks, 1 the nearest blades; everything else softens with distance from it." }
   ],
-  "defaultPalette": "midnight",
+  "defaultPalette": "tide",
   "post": { "bloom": 0.5, "vignette": 0.26, "backdropScale": 0.9 }
 }

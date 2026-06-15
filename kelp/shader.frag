@@ -62,6 +62,27 @@ float wheelW(float s, float c) {
   return max(0.0, 1.0 - min(d, 4.0 - d));
 }
 
+// ridged noise: sharp bright veins (1 on the ridge line, 0 in the troughs)
+float ridge(vec2 p) { return 1.0 - abs(2.0 * vnoise(p) - 1.0); }
+
+// water-surface caustics: two animated ridged-noise layers, domain-warped and
+// crossed into a bright interweaving net of refracted light — the cellular
+// caustic web sunlight casts onto everything underwater.
+float caustics(vec2 p, float t) {
+  // gentle domain warp so the net curves and breathes rather than sitting still
+  vec2 q = p + 0.30 * vec2(vnoise(p * 1.6 + vec2(0.0,  t * 0.18)),
+                           vnoise(p * 1.6 + vec2(7.3, -t * 0.13)));
+  // two crossed ridged layers -> thin bright filaments where their veins coincide
+  float r1 = ridge(q * 4.2 + vec2(0.0,      -t * 0.30));
+  float r2 = ridge(q * 5.0 + vec2(t * 0.22,  t * 0.16) + 11.0);
+  float net = pow(r1 * r2, 3.2) * 2.6;
+  // a finer third layer adds sparkling caustic detail
+  float r3 = ridge(q * 8.5 + vec2(-t * 0.18, t * 0.12) + 3.0);
+  net += pow(r1 * r3, 4.0) * 1.3;
+  float wide = pow(ridge(q * 1.8 + vec2(0.0, -t * 0.20)), 3.0) * 0.16; // faint broad shimmer
+  return net + wide;
+}
+
 void main() {
   float pr  = u_pixelRatio;
   vec2  fc  = gl_FragCoord.xy;
@@ -91,10 +112,15 @@ void main() {
   rays *= smoothstep(0.05, 0.9, depth);     // pour from the surface down
   col += mix(c2, vec3(1.0), 0.4) * rays * 0.06 * clamp(u_rays, 0.0, 2.0);
 
-  // faint caustic shimmer on the upper water (u_caustic scales it)
-  float caus = vnoise(fc / (90.0 * pr) + vec2(0.0, -t * 0.15));
-  caus = pow(caus, 2.0);
-  col += c2 * caus * 0.05 * smoothstep(0.2, 1.0, depth) * clamp(u_caustic, 0.0, 2.0);
+  // water-like caustics: a bright refracted net pouring over the scene from the
+  // surface, strongest up top and fading into the depths (u_caustic scales it).
+  float cAmt = clamp(u_caustic, 0.0, 2.0);
+  vec2  cuv  = fc / (150.0 * pr);
+  float caus = caustics(cuv, t);
+  vec3  causCol = mix(c2, vec3(0.82, 0.95, 1.0), 0.7);
+  col += causCol * caus * 0.07 * smoothstep(0.05, 1.0, depth) * cAmt;
+  // a brighter caustic ceiling so the surface area reads as lit, rippling water
+  col += causCol * caus * 0.16 * smoothstep(0.74, 1.0, depth) * cAmt;
 
   float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
   float spacingN = SPACING_CSS * refScale * pr;
