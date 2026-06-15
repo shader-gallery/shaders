@@ -20,9 +20,9 @@
       "uniform": "u_flameSize",
       "label": "Flame size",
       "min": 20,
-      "max": 120,
+      "max": 140,
       "step": 1,
-      "default": 40,
+      "default": 64,
       "effect": "Height of each teardrop flame in CSS pixels; width and halo scale proportionally."
     },
     {
@@ -31,7 +31,7 @@
       "min": 4,
       "max": 20,
       "step": 1,
-      "default": 12,
+      "default": 9,
       "effect": "How many wisps span the frame (field density); higher fills the marsh with a dense swarm."
     },
     {
@@ -51,6 +51,24 @@
       "step": 0.01,
       "default": 0.6,
       "effect": "How far back along its path each flame's beaded filament reaches; 0 removes the trail entirely, 1 draws a long ghostly strand of cold-fire droplets."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Atmosphere",
+      "min": 0,
+      "max": 2,
+      "step": 0.05,
+      "default": 0.8,
+      "effect": "Breathing marsh-gas glow that fills the frame behind the wisps so the field never reads as dead black."
+    },
+    {
+      "uniform": "u_colorSpread",
+      "label": "Colour spread",
+      "min": 0,
+      "max": 1,
+      "step": 0.02,
+      "default": 0.85,
+      "effect": "How far each flame's hue ranges across the palette; 0 is a single tint, 1 spreads the full set."
     }
   ],
   "defaultPalette": "midnight",

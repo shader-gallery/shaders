@@ -18,10 +18,12 @@ uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_wanderSpeed;  // drift speed of each flame within its cell (default 0.4)
-uniform float u_flameSize;    // teardrop height, css px                   (default 40)
-uniform float u_count;        // flames across the frame (field density)   (default 12)
+uniform float u_flameSize;    // teardrop height, css px                   (default 64)
+uniform float u_count;        // flames across the frame (field density)   (default 9)
 uniform float u_flicker;      // FBM interior flicker amplitude            (default 0.8)
 uniform float u_trailLength;  // length of each flame's tapering tail       (default 0.6)
+uniform float u_glow;         // breathing marsh-gas atmosphere fill       (default 0.8)
+uniform float u_colorSpread;  // per-flame hue variety across the palette   (default 0.85)
 
 const vec3  BG = vec3(0.026, 0.028, 0.036); // near-black marsh base
 const float TWO_PI = 6.28318530718;
@@ -30,6 +32,11 @@ float hash21(vec2 p) {
   p = fract(p * vec2(123.34, 345.45));
   p += dot(p, p + 34.345);
   return fract(p.x * p.y);
+}
+// cyclic triangular weight for palette entry centred at c on a 0..4 wheel
+float wheelW(float s, float c) {
+  float d = abs(s - c);
+  return max(0.0, 1.0 - min(d, 4.0 - d));
 }
 float vnoise(vec2 p) {
   vec2 i = floor(p), f = fract(p);
@@ -88,6 +95,16 @@ void main() {
 
   vec3 col = BG;
 
+  // breathing marsh-gas atmosphere: a low-freq colour field so the frame is
+  // never dead black between flames. Brighter low (over the water), drifting.
+  float yb0 = fc.y / res.y;
+  float marsh = 1.0 - smoothstep(0.0, 1.05, yb0);
+  vec2  hp = fc / res * vec2(3.0, 2.2) + vec2(t * 0.03, t * 0.05);
+  float hz = fbm(hp);
+  vec3  atmCol = mix(c0, c2, 0.5 + 0.4 * sin(t * 0.11 + fc.x / res.x * 3.0));
+  atmCol = mix(atmCol, c1, 0.25 * hz);
+  col += atmCol * u_glow * (0.05 + 0.13 * hz) * (0.45 + 0.75 * marsh);
+
   for (int dy = -1; dy <= 1; dy++) {
     for (int dx = -1; dx <= 1; dx++) {
       vec2 cid = base + vec2(float(dx), float(dy));
@@ -101,16 +118,20 @@ void main() {
                         cos(ds * 0.6 + h2 * TWO_PI) * 0.45 + sin(ds * 0.21 + h3 * TWO_PI) * 0.18);
       // static per-cell jitter (break the grid) + slow drift
       vec2 center = (cid + vec2(0.5)) * cell
-                  + (vec2(h2, h3) - 0.5) * cell * 0.6
-                  + drift * cell * 0.5;
+                  + (vec2(h2, h3) - 0.5) * cell * 0.8
+                  + drift * cell * 0.55;
 
-      float fh = flameH * (0.7 + 0.7 * h1);          // per-flame size variation
+      float fh = flameH * (0.6 + 0.95 * h1);         // per-flame size variation
       vec2 local = (fc - center) / fh;
-      if (dot(local, local) > 4.0) continue;          // cheap bound
+      if (dot(local, local) > 5.0) continue;          // cheap bound (halo fits 3x3)
 
-      // per-flame cool tint
-      float tk = fract(0.18 + h0 * 0.8);
-      vec3 tint = clamp(mix(mix(c2, c0, tk), c1, 0.30 * h2), 0.0, 1.0);
+      // per-flame tint across the FULL palette (varied, not just cool); spread
+      // controls how far apart the flame hues range.
+      float hue = mod((0.5 + (fract(h0 * 3.1 + h1 * 0.7) - 0.5) * u_colorSpread) * 4.0, 4.0);
+      float w0 = wheelW(hue,0.0), w1 = wheelW(hue,1.0), w2 = wheelW(hue,2.0), w3 = wheelW(hue,3.0);
+      vec3 tint = (c0*w0 + c1*w1 + c2*w2 + c3*w3) / max(w0+w1+w2+w3, 0.001);
+      float tlum = dot(tint, vec3(0.299, 0.587, 0.114));
+      tint = clamp(mix(vec3(tlum), tint, 1.28), 0.0, 1.0);   // +saturation for pop
 
       // guttering flicker
       vec2 fcoord = local * vec2(3.2, 2.4) + vec2(h0 * 30.0, -t * (2.2 + u_flicker * 2.4));
@@ -126,11 +147,11 @@ void main() {
 
       float swell = 0.6 + 0.4 * sin(t * (0.5 + h3) + h0 * TWO_PI);
 
-      // hot core in the bulb + soft halo
+      // hot core in the bulb + broad soft halo (the glowing-orb read)
       vec2 cc = local - vec2(0.0, -0.22);
       float core = exp(-dot(cc, cc) * 11.0);
-      vec2 hc = local * vec2(1.6, 0.85) - vec2(0.0, -0.05);
-      float halo = exp(-dot(hc, hc) * 2.4);
+      vec2 hc = local * vec2(1.2, 0.95) - vec2(0.0, -0.05);
+      float halo = exp(-dot(hc, hc) * 2.1);
 
       // short tapering tail below the bulb (cheap; no path resample)
       float tailLen = 0.5 + 1.4 * u_trailLength;
@@ -139,10 +160,10 @@ void main() {
       tail *= exp(-local.x * local.x / 0.012);
       float bead = 0.5 + 0.5 * sin(ty * 9.0 - t * 2.0 + h0 * TWO_PI);
 
-      col += tint * body * 1.7 * swell;
-      col += mix(tint, vec3(1.0), 0.6) * body * core * 1.15 * swell;
-      col += tint * halo * 0.22 * swell;
-      col += tint * tail * bead * 0.5 * swell;
+      col += tint * body * 2.0 * swell;
+      col += mix(tint, vec3(1.0), 0.55) * body * core * 1.5 * swell;
+      col += tint * halo * 0.55 * swell;
+      col += tint * tail * bead * 0.20 * swell;   // faint path trace, not a streak
     }
   }
 
