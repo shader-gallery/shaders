@@ -107,6 +107,11 @@ void main() {
   float headCap = 1.0 - smoothstep(0.0, 4.0 * pr, -d);
   float tailCap = 1.0 - smoothstep(dashLen - 6.0 * pr, dashLen, d);
   float body    = headCap * tailCap;
+  // toward the top of the density range the residual inter-dash gaps close into
+  // a single continuous flowing ribbon — at max the lane fills completely (the
+  // grade + colour sweep below still run along it, so it reads as flow, not a bar).
+  float fillBoost = smoothstep(1.6, 3.0, u_density);
+  body = mix(body, 1.0, fillBoost);
 
   // brightness graded along the streak: bright head -> dim tail, floored so the
   // whole dash reads; per-dash variation + a gentle twinkle keep the flow lively.
