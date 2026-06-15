@@ -8,16 +8,26 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_size", "label": "Cushion size", "min": 40.0, "max": 240.0, "step": 2.0,
-      "default": 120.0, "effect": "Size of each padded diamond cushion in CSS pixels - a dense fine quilting at the minimum, a few large plush pillows at the maximum." },
+      "default": 40.0, "effect": "Size of each padded diamond cushion in CSS pixels - a dense fine quilting at the minimum, a few large plush pillows at the maximum." },
     { "uniform": "u_relief", "label": "Relief", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.7, "effect": "Depth of the padding; low is a shallow pressed quilt, high swells the cushions into deep rounded pillows with sharp seam creases." },
+      "default": 1.0, "effect": "Depth of the padding; low is a shallow pressed quilt, high swells the cushions into deep rounded pillows with sharp seam creases." },
     { "uniform": "u_iris", "label": "Iridescence", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.8, "effect": "How far the shot-silk hue travels across each cushion and how fast it drifts; 0 is a near-solid satin, 1 a full rainbow sheen rolling over the relief." },
+      "default": 0.16, "effect": "How far the shot-silk hue travels across each cushion and how fast it drifts; 0 is a near-solid satin, 1 a full rainbow sheen rolling over the relief." },
     { "uniform": "u_sheen", "label": "Sheen", "min": 0.0, "max": 1.5, "step": 0.01,
-      "default": 0.7, "effect": "Strength of the satin specular highlight on each pucker - matte at 0, a wet glossy bloom at the maximum." },
+      "default": 0.09, "effect": "Strength of the satin specular highlight on each pucker - matte at 0, a wet glossy bloom at the maximum." },
     { "uniform": "u_scatter", "label": "Scatter", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.45, "effect": "Randomizes each button so it is not pinned dead-centre in its cushion; 0 is a perfectly regular quilt, 1 throws the pucker points around for a hand-stitched, irregular tuft." }
+      "default": 0.0, "effect": "Randomizes each button so it is not pinned dead-centre in its cushion; 0 is a perfectly regular quilt, 1 throws the pucker points around for a hand-stitched, irregular tuft." },
+    { "uniform": "u_shade", "label": "Light/Dark", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "Spread between the lit and shadowed satin; low lifts the shadows toward an even flat light, high drops the ambient floor and drives the diffuse into deep contrast." },
+    { "uniform": "u_lightaz", "label": "Light angle", "min": 0.0, "max": 360.0, "step": 1.0,
+      "default": 55.0, "effect": "Compass bearing of the key light across the cloth; rotate it to move the lit faces and shadows around each cushion." },
+    { "uniform": "u_lightel", "label": "Light height", "min": 5.0, "max": 85.0, "step": 1.0,
+      "default": 40.0, "effect": "How high the key light sits; low is a raking grazing light that throws long cushion shadows, high is a flatter top light." },
+    { "uniform": "u_rotate", "label": "Rotation", "min": -180.0, "max": 180.0, "step": 1.0,
+      "default": 0.0, "effect": "Turns the whole quilt off the 45-degree diamond onto any bias while the lighting stays put." },
+    { "uniform": "u_skew", "label": "Skew", "min": -1.5, "max": 1.5, "step": 0.01,
+      "default": 0.0, "effect": "Shears the lattice so the diamond cushions lean into rhombic tufts instead of upright squares." }
   ],
-  "post": { "bloom": 0.5, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.05, "dither": 1.0 },
-  "defaultPalette": "opal"
+  "post": { "bloom": 0.5, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.06, "vignette": 0.26, "dither": 1.0 },
+  "defaultPalette": "daybreak"
 }

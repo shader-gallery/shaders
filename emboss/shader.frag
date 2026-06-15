@@ -19,6 +19,11 @@ uniform float u_relief;  // relief depth 0..1            (default 0.7)
 uniform float u_iris;    // iridescence amount + drift   (default 0.8)
 uniform float u_sheen;   // satin specular strength      (default 0.7)
 uniform float u_scatter; // button scatter 0..1          (default 0.45)
+uniform float u_rotate;  // extra lattice rotation deg   (default 0)
+uniform float u_skew;    // lattice shear                (default 0)
+uniform float u_shade;   // light/dark depth 0..1        (default 0.5)
+uniform float u_lightaz; // key light azimuth degrees    (default 55)
+uniform float u_lightel; // key light elevation degrees  (default 40)
 
 float hash21(vec2 p) { p = fract(p * vec2(123.34, 345.45)); p += dot(p, p + 34.345); return fract(p.x * p.y); }
 vec2  hash22(vec2 p) { float n = hash21(p); return vec2(n, hash21(p + n + 7.7)); }
@@ -54,9 +59,13 @@ void main() {
   float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0);
   float cell = max(u_size, 24.0) * refScale * pr;
 
-  // diamond tufting: rotate the lattice 45 degrees
-  float ca = 0.70710678, sa = 0.70710678;
-  vec2 rc = vec2(fc.x * ca - fc.y * sa, fc.x * sa + fc.y * ca);
+  // diamond tufting: rotate the lattice 45 degrees, plus a user rotation/shear
+  // about the centre so the quilt can lean off the diamond and onto a bias.
+  float ang = radians(45.0 + u_rotate);
+  float ca = cos(ang), sa = sin(ang);
+  vec2 rel = fc - ctr;
+  vec2 rc = vec2(rel.x * ca - rel.y * sa, rel.x * sa + rel.y * ca);
+  rc.x += rc.y * u_skew;
   vec2 p = rc / cell;
 
   // height + analytic normal via finite differences
@@ -68,8 +77,10 @@ void main() {
   float depth = 1.2 + (1.0 - u_relief) * 3.0;       // larger = shallower
   vec3 N = normalize(vec3(-hx, -hy, e * depth));
 
-  // lighting: one soft key light, satin specular
-  vec3 L = normalize(vec3(0.45, 0.62, 0.65));
+  // lighting: one soft key light whose azimuth (compass bearing across the cloth)
+  // and elevation (how high/grazing) are both steerable, satin specular.
+  float az = radians(u_lightaz), el = radians(u_lightel);
+  vec3 L = normalize(vec3(cos(az) * cos(el), sin(az) * cos(el), sin(el)));
   vec3 V = vec3(0.0, 0.0, 1.0);
   vec3 Hh = normalize(L + V);
   float diff = max(dot(N, L), 0.0);
@@ -90,8 +101,12 @@ void main() {
   vec3 silk2 = wheelCol(irid + 0.5, c0, c1, c2, c3);
   silk = mix(silk, silk * (1.0 - u_iris) + silk * u_iris, 1.0); // keep saturated
 
-  // compose: lit satin body + iridescent specular + soft seam shadow
-  vec3 col = silk * (0.32 + 0.85 * diff);
+  // compose: lit satin body + iridescent specular + soft seam shadow.
+  // u_shade sets the light/dark spread: low lifts the shadows toward flat even
+  // light, high drops the ambient floor and drives the diffuse for deep contrast.
+  float amb   = 0.32 + (0.5 - u_shade) * 0.40;   // 0.5 -> 0.32 (the original floor)
+  float dgain = 0.85 + (u_shade - 0.5) * 0.70;   // 0.5 -> 0.85 (the original gain)
+  vec3 col = silk * (amb + dgain * diff);
   col += mix(vec3(1.0), silk2, 0.55) * spec * (0.5 + u_sheen) * 1.1;
   col *= mix(1.0, 0.72, rim);                        // deepen the seam folds
   col += silk * 0.10;                                // ambient floor (no dead-black)
