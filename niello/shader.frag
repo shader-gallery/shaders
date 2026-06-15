@@ -54,7 +54,7 @@ float ribbon(float v, float halfWidth) {
 }
 float strapField(vec2 uv) {
   float pi = 3.14159265;
-  float hw = 0.20; // ribbon half-width in field units (thickened so the figure reads)
+  float hw = 0.27; // ribbon half-width in field units (thickened so the figure reads)
 
   // Two families of parallel diagonal ribbons cross to make a basket weave.
   // Each family: cosine-spaced lanes; the ribbon hugs each lane crest.
@@ -68,7 +68,7 @@ float strapField(vec2 uv) {
   // concentric medallion rings tie the panel into a composed figure
   vec2  m = uv - 0.5;
   float r = length(m);
-  float rings = ribbon(sin(r * pi * 3.0 - 0.4), 0.22);
+  float rings = ribbon(sin(r * pi * 3.0 - 0.4), 0.28);
   // gate rings to a central medallion so they don't fill the whole panel
   rings *= 1.0 - smoothstep(1.05, 1.55, r);
 
@@ -82,7 +82,12 @@ void main() {
   vec2  ctr  = res * 0.5;
   float t    = u_time;
 
-  vec3 col = BG;
+  // bespoke dark-metal niello plate so the panel stands on its own ground instead
+  // of the gradient-mesh backdrop crutch: cool dark alloy at the rim lifting to a
+  // faint lamplit warmth toward the centre, a worked-silver field, never dead-black.
+  vec2  gp   = (fc - ctr) / res.y;
+  float lift = 1.0 - smoothstep(0.1, 1.2, length(gp));
+  vec3  col  = mix(vec3(0.020, 0.022, 0.030), vec3(0.064, 0.060, 0.080), lift);
 
   // ---- palette with house fallback (headless can leave the array zeroed) ----
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
@@ -127,10 +132,10 @@ void main() {
   // burnished silver: the interlace reads as the bright worked-metal SUBJECT, a
   // strong specular gradient catching lamplight, so the figure is legible at a
   // glance rather than dissolving into the stippled ground.
-  col += strapTint * strap * (0.10 + 0.40 * pow(sheen, 2.0)) * fig;
+  col += strapTint * strap * (0.16 + 0.58 * pow(sheen, 2.0)) * fig;
   // a crisp specular highlight running along the strapwork crests
   float strapHi = pow(sheen, 6.0) * strap;
-  col += mix(strapTint, vec3(0.92, 0.94, 1.0), 0.5) * strapHi * 0.45 * fig;
+  col += mix(strapTint, vec3(0.92, 0.94, 1.0), 0.5) * strapHi * 0.62 * fig;
 
   // ============== the stippled ground (scintillating punch marks) ============
   // punch grid spacing in device px (css convention)
@@ -147,7 +152,7 @@ void main() {
   float seed  = hash21(gid);
   float pcol  = hash21(gid + 17.0);          // colour index seed
   // jitter the punch position slightly so the grid never reads as a lattice
-  vec2  jit   = (vec2(hash21(gid + 3.7), hash21(gid + 9.1)) - 0.5) * spacing * 0.5;
+  vec2  jit   = (vec2(hash21(gid + 3.7), hash21(gid + 9.1)) - 0.5) * spacing * 0.28;
   float jd    = length(fc - (gc + jit));
   float punch = 1.0 - smoothstep(pr2 * 0.45, pr2 * 0.95, jd);
 
@@ -183,8 +188,9 @@ void main() {
   // when rate is near zero, fall back to a dim steady stipple (figure stays legible)
   float restless = spark * gate;
   float glintAmt = mix(STILL_DIM, restless, smoothstep(0.0, 0.25, rate));
-  // a touch of always-on twinkle floor so even calmed ground breathes
-  glintAmt = max(glintAmt, STILL_DIM * 0.6 * dimple);
+  // a touch of always-on twinkle floor so even calmed ground breathes; raised so
+  // the stipple reads as a continuous fine metal grain rather than lonely sparks
+  glintAmt = max(glintAmt, STILL_DIM * 1.05 * dimple);
 
   // glint colour: palette wheel by per-punch seed, gently drifting in time so
   // the ground's hue distribution slowly tides (no dynamic array indexing)
