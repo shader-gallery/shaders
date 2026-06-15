@@ -29,8 +29,8 @@
       "default": 0.0, "effect": "Shears the lattice so the diamond cushions lean into rhombic tufts instead of upright squares." },
     { "uniform": "u_tilt", "label": "Tilt", "min": -1.0, "max": 1.0, "step": 0.01,
       "default": 0.0, "effect": "Lays the quilt back in perspective; one edge recedes and its cushions shrink while the near edge swells, turning the flat tufting into a surface seen at an angle." },
-    { "uniform": "u_depth", "label": "Depth shade", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.6, "effect": "Strength of a light-to-shade gradient that follows the tilt and skew - the receding side sinks into shadow and the near side catches the light. Has no effect on a flat quilt; comes alive as you tilt or skew." }
+    { "uniform": "u_depth", "label": "Depth shade", "min": -1.0, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "Strength and direction of a light-to-shade gradient that follows the tilt and skew. Positive sinks the receding side into shadow and lights the near side; negative inverts it (near side darkens, far side catches the light); 0 is off. Has no effect on a flat quilt." }
   ],
   "post": { "bloom": 0.5, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.06, "vignette": 0.26, "dither": 1.0 },
   "defaultPalette": "daybreak"
