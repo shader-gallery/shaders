@@ -154,6 +154,17 @@ void rank(vec2 q, float pr, float spacing, float waterY, float lag,
   }
 }
 
+// dusk sky colour at a normalized height above the horizon (0 = waterline,
+// 1 = top of frame): warm glowing horizon grading to a cool violet zenith.
+vec3 skyAt(float yA, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
+  vec3 horizon = mix(c3, c2, 0.30);              // warm dusk (red/orange + teal)
+  vec3 zenith  = mix(c0, c1, 0.55);              // cool blue/violet up high
+  vec3 s = mix(horizon, zenith, smoothstep(0.0, 0.85, yA));
+  // a band of dusk glow hugging the horizon
+  s += mix(c3, vec3(1.0,0.85,0.7), 0.3) * exp(-yA / 0.22) * 0.5;
+  return s * 0.55;                               // overall dusk brightness
+}
+
 void main() {
   float pr  = u_pixelRatio;
   vec2  fc  = gl_FragCoord.xy;
@@ -169,53 +180,68 @@ void main() {
   float refScale = min(u_resolution.x, u_resolution.y) / (max(u_pixelRatio, 1.0) * 400.0);
   float spacing = max(u_spacing * refScale * pr, 4.0);
   float waterY  = res.y * (1.0 - WATER_FRAC); // device-px y of the waterline
+  float skyH    = max(res.y - waterY, 1.0);
 
-  // --- night sky: a faint vertical grade carrying a whisper of the 4th colour ---
-  vec3 col = BG;
-  float skyT = clamp((fc.y - waterY) / max(res.y - waterY, 1.0), 0.0, 1.0);
-  col += c3 * (0.018 + 0.045 * skyT) * smoothstep(-0.05, 0.4, skyT);
-  // soft moon-ish brightening high & slightly right
-  vec2 moon = vec2(res.x * 0.62, res.y * 0.9);
-  col += c3 * 0.05 * exp(-length(fc - moon) / (res.y * 0.55));
+  // low dusk sun sitting just above the horizon, slightly right of centre
+  float sunX = res.x * 0.60;
+  vec2  sun  = vec2(sunX, waterY + skyH * 0.10);
+  vec3  sunCol = mix(c3, vec3(1.0, 0.9, 0.75), 0.4);
 
+  vec3 col;
   bool above = fc.y >= waterY;
 
   if (above) {
-    // ----- the real rank, standing above the waterline -----
+    // ----- dusk sky + the rank silhouetted against it -----
+    float yA = (fc.y - waterY) / skyH;             // 0 horizon .. 1 top
+    col = skyAt(yA, c0, c1, c2, c3);
+    // the sun glow
+    col += sunCol * exp(-length(fc - sun) / (res.y * 0.18)) * 0.6;
+
     float sil; vec3 glow;
     rank(fc, pr, spacing, waterY, 0.0, sil, glow, c0, c1, c2);
-    // silhouette sits a hair above black so stems read against the sky
-    vec3 silCol = mix(col, BG * 0.55 + vec3(0.010, 0.012, 0.020), sil);
-    col = mix(col, silCol, sil);
-    col += glow * 0.9;
+    // backlit reeds: near-black silhouettes against the bright dusk sky
+    col = mix(col, col * 0.08 + vec3(0.004, 0.005, 0.010), sil);
+    col += glow * 1.0;                             // rim glow when bent
   } else {
-    // ----- the mirror in still black water -----
-    // water is darker than sky; reflect across the waterline with a vertical
-    // stretch, a soft time-lag, and a faint horizontal shimmer (water answers late)
-    col = BG * 0.6;
+    // ----- the water: a PROMINENT reflection of the dusk sky + the reeds -----
     float depth = (waterY - fc.y);                 // px below the line
-    float shimmer = sin(fc.y * 0.05 / pr + t * 1.3) * 2.2 * pr * smoothstep(0.0, 60.0 * pr, depth);
-    // mirror sample: stretch vertically (x1.18) so the reflection is elongated
-    vec2 q = vec2(fc.x + shimmer, waterY + depth * 1.18);
+    float yR = depth / skyH;                       // mirrored sky height
+    // rolling ripple bands travelling down the water
+    float band = sin(depth * 0.045 / pr - t * 1.1)
+               + 0.5 * sin(depth * 0.11 / pr + t * 0.7 + 1.3);
+    float rippleBright = 0.85 + 0.15 * band;
+    // reflected dusk sky (a touch darker + desaturated, broken by ripples)
+    vec3 reflSky = skyAt(yR, c0, c1, c2, c3) * 0.82 * rippleBright;
+    col = reflSky;
+    // reflected sun = a shimmering glitter column straight below the sun
+    float sunDx = (fc.x - sunX);
+    float glint = exp(-(sunDx*sunDx) / (res.x*res.x*0.010))
+                * (0.5 + 0.5 * sin(depth * 0.18 / pr - t * 3.0))
+                * exp(-depth / (skyH * 1.1));
+    col += sunCol * glint * 0.5;
+
+    // horizontal shimmer offset so the reed mirror wavers like real water
+    float shimmer = sin(fc.y * 0.05 / pr + t * 1.3) * 3.0 * pr
+                  * smoothstep(0.0, 60.0 * pr, depth);
+    vec2 q = vec2(fc.x + shimmer, waterY + depth * 1.18); // stretched mirror
     float sil; vec3 glow;
     rank(q, pr, spacing, waterY, 0.22, sil, glow, c0, c1, c2);
-    float fade = exp(-depth / (res.y * 0.6));       // reflection dims with depth
-    float r = clamp(u_reflect, 0.0, 1.0);
-    vec3 silCol = mix(col, BG * 0.30, sil);
-    col = mix(col, silCol, sil * r);
-    col += glow * 1.35 * r * fade;
+    float fade = exp(-depth / (res.y * 0.75));
+    float r = clamp(u_reflect, 0.0, 1.5);
+    // dark reed mirror over the bright reflected sky (the reflection reads clearly)
+    col = mix(col, col * 0.14, sil * clamp(r, 0.0, 1.0) * (0.5 + 0.5*fade));
+    col += glow * 1.3 * r * fade * rippleBright;
   }
 
-  // crisp waterline: a thin darker seam where rank meets mirror
+  // crisp bright waterline glint where reeds meet their reflection
   float lineD = abs(fc.y - waterY);
-  col = mix(col, BG * 0.4, (1.0 - smoothstep(0.0, 1.5 * pr, lineD)) * 0.7);
-  // a faint glint riding the waterline picks up the warm head colour
-  col += c2 * 0.04 * exp(-lineD / (3.0 * pr));
+  col += mix(sunCol, c2, 0.4) * 0.18 * exp(-lineD / (2.5 * pr));
 
   // gentle vignette keeps the frame composed
   vec2 uv = (fc - res * 0.5) / res;
-  float vign = 1.0 - smoothstep(0.35, 0.95, length(uv));
-  col *= mix(0.78, 1.0, vign);
+  float vign = 1.0 - smoothstep(0.42, 1.05, length(uv));
+  col *= mix(0.80, 1.0, vign);
 
+  col = col / (1.0 + col * 0.4);                   // soft tonemap
   gl_FragColor = vec4(col, 1.0);
 }

@@ -4,17 +4,18 @@
   "family": "Sough",
   "author": "Erin Carter",
   "tags": ["dark", "glow", "loop", "wind", "reeds", "water", "reflection", "organic"],
-  "description": "A rank of cattail rushes stands along a moonlit waterline, mirrored in still black water below. A gust front crosses the bed stem by stem — each rush bows and overshoots, glow gathering on its downwind edge and rimming its head — then springs back into a long stillness, the reflection echoing every gesture a beat late.",
+  "description": "A rank of cattail rushes silhouetted against a glowing dusk sky along a waterline, with a low sun on the horizon — and below, a prominent rippling reflection of the whole scene: the reflected dusk sky, a shimmering sun-glitter column, and the dark mirrored reeds wavering on the water. A gust front crosses the bed stem by stem, each rush bowing and overshooting with glow gathering on its downwind edge, the reflection echoing every gesture a beat late.",
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_gustRate", "label": "Gust rate", "min": 0.1, "max": 1.5, "step": 0.05,
       "default": 0.4, "effect": "How often gust fronts cross the reed bed." },
     { "uniform": "u_bend", "label": "Bend", "min": 0.2, "max": 2.0, "step": 0.05,
       "default": 1.0, "effect": "How far the rushes bow and overshoot when a front passes." },
-    { "uniform": "u_spacing", "label": "Reed spacing", "min": 12.0, "max": 56.0, "step": 1.0,
-      "default": 26.0, "effect": "CSS-pixel spacing between rushes along the waterline." },
-    { "uniform": "u_reflect", "label": "Reflection", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.55, "effect": "Brightness of the mirrored rank in the water, from absent to nearly as vivid as the reeds." }
+    { "uniform": "u_spacing", "label": "Reed spacing", "min": 10.0, "max": 48.0, "step": 1.0,
+      "default": 18.0, "effect": "CSS-pixel spacing between rushes along the waterline, from a dense reed bed to a sparse stand." },
+    { "uniform": "u_reflect", "label": "Reflection", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.9, "effect": "Strength of the mirrored reeds in the water, from just the reflected sky to deep vivid reed reflections." }
   ],
-  "defaultPalette": "midnight"
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5 }
 }
