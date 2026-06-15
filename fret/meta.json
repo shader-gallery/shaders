@@ -8,18 +8,18 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_scale", "label": "Cell size", "min": 12.0, "max": 160.0, "step": 1.0,
-      "default": 70.0, "effect": "Size of each path cell in CSS pixels - a dense fine labyrinth at the minimum, broad sweeping meanders at the maximum." },
+      "default": 37.0, "effect": "Size of each path cell in CSS pixels - a dense fine labyrinth at the minimum, broad sweeping meanders at the maximum." },
     { "uniform": "u_line", "label": "Line weight", "min": 1.0, "max": 8.0, "step": 0.1,
-      "default": 3.0, "effect": "Core thickness of the glowing path in CSS pixels, from a hairline trace to a fat neon conduit." },
+      "default": 2.3, "effect": "Core thickness of the glowing path in CSS pixels, from a hairline trace to a fat neon conduit." },
     { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
       "default": 0.6, "effect": "Speed of the bright currents travelling the paths; 0 freezes the light as static beads, high sends it coursing through the labyrinth." },
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.7, "effect": "Strength of the soft halo around each path; low is a crisp drawn line, high a luminous bloom that floods the maze with light." },
+      "default": 0.35, "effect": "Strength of the soft halo around each path; low is a crisp drawn line, high a luminous bloom that floods the maze with light." },
     { "uniform": "u_weld", "label": "Weld", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 1.0, "effect": "How the travelling light joins across cells; 0 segments it into beads with a hard seam at every tile edge, 1 welds the cells into one seamless coursing flow." },
     { "uniform": "u_seed", "label": "Pattern", "min": 0.0, "max": 50.0, "step": 1.0,
-      "default": 0.0, "effect": "Re-rolls which cells turn which way, shuffling the whole labyrinth into a fresh maze without changing its density or style." }
+      "default": 2.0, "effect": "Re-rolls which cells turn which way, shuffling the whole labyrinth into a fresh maze without changing its density or style." }
   ],
-  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "vignette": 0.26, "dither": 1.0 },
   "defaultPalette": "peacock"
 }
