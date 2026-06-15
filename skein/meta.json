@@ -1,0 +1,23 @@
+{
+  "name": "Skein",
+  "slug": "skein",
+  "family": "Filament",
+  "author": "Erin Carter",
+  "tags": ["glow", "loop", "tubes", "led", "wave", "ribbon", "cable", "rgb"],
+  "description": "Rows of horizontal glowing tubes undulate across the frame like a hank of ribbon cable, each row on its own sine and its own hue. Charge streams along the cables, alternate rows running opposite ways, over a softly lit ground.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Row spacing", "min": 22.0, "max": 130.0, "step": 2.0,
+      "default": 56.0, "effect": "Spacing between cable rows in CSS pixels - a dense stack of fine cables at the minimum, a few broad ribbons at the maximum." },
+    { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 9.0, "step": 0.1,
+      "default": 3.0, "effect": "Core thickness of each glowing cable in CSS pixels, from a hairline strand to a fat neon ribbon." },
+    { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
+      "default": 0.6, "effect": "Speed of the charge streaming along the cables; 0 freezes the light as static beads, high sends it racing across." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Strength of the soft halo around each cable; low is a crisp drawn strand, high a luminous bloom." },
+    { "uniform": "u_wave", "label": "Undulation", "min": 0.0, "max": 0.48, "step": 0.01,
+      "default": 0.3, "effect": "Amplitude of the sine undulation; 0 lays the cables dead straight, high swells them into deep rolling waves." }
+  ],
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "defaultPalette": "opal"
+}

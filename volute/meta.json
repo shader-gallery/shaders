@@ -1,0 +1,23 @@
+{
+  "name": "Volute",
+  "slug": "volute",
+  "family": "Filament",
+  "author": "Erin Carter",
+  "tags": ["glow", "loop", "tubes", "led", "spiral", "coil", "vortex", "rgb"],
+  "description": "A glowing tube wound into a spiral that fills the frame, charge spinning outward along the coil while the hue turns with each revolution. One arm or several over a softly lit ground.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Coil pitch", "min": 28.0, "max": 150.0, "step": 2.0,
+      "default": 66.0, "effect": "Radial distance between coils in CSS pixels - a tight dense whorl at the minimum, a few broad sweeps at the maximum." },
+    { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 9.0, "step": 0.1,
+      "default": 3.0, "effect": "Core thickness of the glowing coil in CSS pixels, from a hairline thread to a fat neon tube." },
+    { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
+      "default": 0.6, "effect": "Speed of the charge spinning outward along the coil; 0 freezes it, high sets the whole spiral whirling." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Strength of the soft halo around the coil; low is a crisp drawn line, high a luminous bloom filling the gaps." },
+    { "uniform": "u_arms", "label": "Arms", "min": 1.0, "max": 6.0, "step": 1.0,
+      "default": 1.0, "effect": "Number of interleaved spiral arms, from a single winding coil to a multi-armed pinwheel." }
+  ],
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "defaultPalette": "fuchsia"
+}

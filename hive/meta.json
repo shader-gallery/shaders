@@ -1,0 +1,21 @@
+{
+  "name": "Hive",
+  "slug": "hive",
+  "family": "Filament",
+  "author": "Erin Carter",
+  "tags": ["glow", "loop", "tubes", "led", "hexagon", "honeycomb", "network", "rgb"],
+  "description": "A honeycomb of glowing hexagonal tubes filling the frame edge to edge, with charge chasing around each cell rim and the hue drifting cell to cell. The outlines glow over a softly lit ground so the whole comb reads as one lit network.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Cell size", "min": 30.0, "max": 160.0, "step": 2.0,
+      "default": 72.0, "effect": "Size of each hexagonal cell in CSS pixels - a dense fine comb at the minimum, broad open cells at the maximum." },
+    { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 8.0, "step": 0.1,
+      "default": 2.8, "effect": "Core thickness of each glowing rim in CSS pixels, from a hairline outline to a fat neon edge." },
+    { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
+      "default": 0.6, "effect": "Speed of the charge chasing each cell rim; 0 freezes the light as static beads, high sends it racing around the comb." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Strength of the soft halo around each rim; low is a crisp drawn comb, high a luminous bloom that fills the cells with colour." }
+  ],
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "defaultPalette": "peacock"
+}

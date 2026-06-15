@@ -1,0 +1,21 @@
+{
+  "name": "Argyle",
+  "slug": "argyle",
+  "family": "Filament",
+  "author": "Erin Carter",
+  "tags": ["glow", "loop", "tubes", "led", "diamond", "weave", "lattice", "rgb"],
+  "description": "Two families of diagonal glowing tubes cross into a diamond weave, one riding brighter over the other so the lattice reads as woven luminous cord. Charge travels each diagonal and the hue shifts diamond to diamond over a softly lit ground.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Diamond size", "min": 28.0, "max": 160.0, "step": 2.0,
+      "default": 70.0, "effect": "Size of each woven diamond in CSS pixels - a fine tight weave at the minimum, broad open lattice at the maximum." },
+    { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 8.0, "step": 0.1,
+      "default": 3.0, "effect": "Core thickness of each glowing cord in CSS pixels, from a hairline thread to a fat neon rope." },
+    { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
+      "default": 0.6, "effect": "Speed of the charge travelling the diagonals; 0 freezes the light as static beads, high sends it weaving across the frame." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "Strength of the soft halo around each cord; low is a crisp drawn weave, high a luminous bloom that fills the diamonds with colour." }
+  ],
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0 },
+  "defaultPalette": "sherbet"
+}
