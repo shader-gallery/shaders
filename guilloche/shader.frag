@@ -69,10 +69,15 @@ void main() {
 
   // band geometry: split the frame into BANDS horizontal rows, each row a shared
   // axis about which STRANDS strands weave. Work in CSS px so it's DPR-stable.
+  // refScale holds the whole composition constant from thumbnail to fullscreen:
+  // the band height already scales with res.y, so the stroke width and the
+  // wavelength must scale the same way or the strands read fat in the small
+  // poster and thin at fullsize. (~1.0 at the 1280x800 poster.)
+  float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0);
   float bandH   = res.y / BANDS;           // device px per band row
   float amp     = bandH * 0.5 * clamp(u_braidDepth, 0.0, 1.0); // sine amplitude
-  float stroke  = max(u_stroke, 0.05) * pr;
-  float kx      = 6.2831853 / (WAVES_CSS * pr);  // longitudinal angular freq
+  float stroke  = max(u_stroke, 0.05) * refScale * pr;
+  float kx      = 6.2831853 / (WAVES_CSS * refScale * pr);  // longitudinal angular freq
 
   // which band row are we in, and the y of its axis
   float bandId  = floor(pc.y / bandH);
