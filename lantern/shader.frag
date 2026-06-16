@@ -27,10 +27,11 @@ uniform float u_structure; // interior caustic + rib detail, 0..1      (default 
 uniform float u_atmosphere;// colored water-glow fill                  (default 0.8)
 uniform float u_colorSpread;// lantern-to-lantern hue variety          (default 0.85)
 uniform float u_saturation;// lantern colour vividness                 (default 1.2)
-uniform float u_count;     // how many lanterns are alive, 3..16        (default 12)
-uniform float u_depth;     // randomized depth: far ones shrink+fade+blur(default 0.6)
+uniform float u_count;     // how many lanterns are alive, 3..48        (default 40)
+uniform float u_depth;     // randomized depth: far ones shrink+fade+blur(default 1)
+uniform float u_shape;     // per-lantern squash/tilt/rim distortion, 0..1(default 0.5)
 
-const int   MAX_LANTERNS = 32;  // GLSL needs a const loop bound; u_count culls
+const int   MAX_LANTERNS = 48;  // GLSL needs a const loop bound; u_count culls
 const float BG = 0.035;   // deep-water base, ~#09090B
 
 // cheap per-lantern hash for a stable random depth, 0..1
@@ -121,22 +122,24 @@ void main() {
     float ph = fi * 1.2566;
     float sp = 0.09 + 0.035 * fi;
 
-    // random depth 0 (near) .. 1 (far), scaled by u_depth
-    float dd = hash11(fi * 1.7 + 3.0) * clamp(u_depth, 0.0, 1.0);
+    // random depth 0 (near) .. 1 (far), skewed toward far so a dense haze of
+    // small faint lanterns sits behind a few big sharp near ones.
+    float dd = pow(hash11(fi * 1.7 + 3.0), 0.7) * clamp(u_depth, 0.0, 1.0);
 
-    vec2 anchor = vec2(0.86 * sin(fi * 2.3 + 0.7),
-                       0.40 * cos(fi * 1.7 + 1.1));
+    // hash-scattered anchor that fills the whole frame (no central void), with
+    // y pushed past the edges so bells crowd in from top and bottom too.
+    vec2 anchor = vec2(hash11(fi * 1.3 + 0.5) * 1.9 - 0.95,
+                       hash11(fi * 2.7 + 4.2) * 1.3 - 0.65);
     vec2 c = anchor + vec2(
       0.24 * sin(t * sp + ph) + 0.10 * cos(t * sp * 0.6 + ph * 1.7),
       0.20 * cos(t * sp * 0.8 + ph * 1.3) + 0.09 * sin(t * sp * 0.5 + ph)
     );
 
-    // breathing brightness + radius, out of phase per orb. Bigger than v1 so
-    // the structured bells read at fullsize and fill the frame. Far lanterns
-    // shrink toward half size.
+    // breathing brightness + radius, out of phase per orb. Far lanterns shrink
+    // hard (toward a third) for a deep, parallaxed field.
     float br = 0.55 + 0.45 * sin(t * (0.35 + 0.05 * fi) + ph * 2.0);
     float r  = mix(0.22, 0.36, 0.5 + 0.5 * sin(t * 0.3 + ph)) * u_size
-             * mix(1.0, 0.5, dd);
+             * mix(1.0, 0.32, dd);
 
     vec2 d = uv - c;
     // cheap cull: skip fragments well outside this lantern's bloom (wider when
@@ -144,9 +147,21 @@ void main() {
     float reach = r * mix(1.8, 2.4, dd);
     if (dot(d, d) > reach * reach) continue;
 
+    // per-lantern shape: squash to an oval, tilt off-axis, and a tri-lobe rim
+    // wobble so no two bells are the same circle. u_shape scales the whole
+    // effect; area-preserving squash keeps radii consistent.
+    float sh = clamp(u_shape, 0.0, 1.0);
+    float aspect = mix(1.0, mix(0.72, 1.4, hash11(fi * 3.1 + 1.0)), sh);
+    float tilt   = (hash11(fi * 5.7 + 9.0) - 0.5) * 2.6 * sh;
+    float cs = cos(tilt), sn = sin(tilt);
+    vec2 dl = vec2(cs * d.x + sn * d.y, -sn * d.x + cs * d.y);
+    dl = vec2(dl.x / aspect, dl.y * aspect);
+    float aw = atan(dl.y, dl.x);
+    dl *= 1.0 + sh * 0.14 * sin(aw * 3.0 + fi * 2.0);
+
     // far lanterns lose interior structure (toward plain soft glow)
     float structPer = structure * mix(1.0, 0.25, dd);
-    vec3 L = lantern(d, r, fi * 0.37, t, structPer, dd);
+    vec3 L = lantern(dl, r, fi * 0.37, t, structPer, dd);
 
     // two adjacent palette hues per orb; spread controls hue variety, saturation
     // the vividness.
