@@ -65,6 +65,16 @@ vec3 paletteRamp(float h) {
   return c;
 }
 
+// cyclic palette wheel: p0->p1->p2->p3->p0 with triangular weights, so a hue that
+// wraps around (fract 0/1) blends seamlessly instead of jumping p3->p0 like the
+// linear paletteRamp does (that jump showed as a hard colour seam in the overlay).
+float wheelW(float s, float c) { float d = abs(s - c); return max(0.0, 1.0 - min(d, 4.0 - d)); }
+vec3 wheelCol(float h) {
+  float s = fract(h) * 4.0;
+  float w0 = wheelW(s, 0.0), w1 = wheelW(s, 1.0), w2 = wheelW(s, 2.0), w3 = wheelW(s, 3.0);
+  return (u_palette[0] * w0 + u_palette[1] * w1 + u_palette[2] * w2 + u_palette[3] * w3) / max(w0 + w1 + w2 + w3, 0.001);
+}
+
 // thin plus/cross: union of a horizontal and a vertical bar
 float sdCross(vec2 p, float arm, float th) {
   p = abs(p);
@@ -177,7 +187,7 @@ void main() {
   col += dotCol * mask * opacity * (1.05 + 0.6 * m) * u_glow;
 
   // a soft bright bloom right at each splash centre so the ripple source reads
-  col += paletteRamp(fract(u_time * 0.05)) * coreGlow * 0.20 * u_glow;
+  col += wheelCol(u_time * 0.05) * coreGlow * 0.20 * u_glow;
 
   // visible ripple-ring overlay: each splash draws its own expanding rings that
   // fade into each other where they overlap, so the water-ripple read is explicit
@@ -187,7 +197,7 @@ void main() {
   // colour blocks, which read as square artifacts in the smooth ring blend.
   vec2  dpx   = pf - worigin;
   float huePx = fract((atan(dpx.y, dpx.x) + 3.14159265) / 6.2831853 + t * 0.015);
-  col += paletteRamp(fract(huePx + 0.5)) * crestSum * u_overlay * 0.16 * u_glow;
+  col += wheelCol(huePx + 0.5) * crestSum * u_overlay * 0.16 * u_glow;
 
   // pre-quantisation dither: the smooth backlight/ripple colour blends band into
   // blocky steps when written to the renderer 8-bit offscreen buffer (the post
