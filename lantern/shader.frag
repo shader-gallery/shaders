@@ -30,7 +30,7 @@ uniform float u_saturation;// lantern colour vividness                 (default 
 uniform float u_count;     // how many lanterns are alive, 3..16        (default 12)
 uniform float u_depth;     // randomized depth: far ones shrink+fade+blur(default 0.6)
 
-const int   MAX_LANTERNS = 16;  // GLSL needs a const loop bound; u_count culls
+const int   MAX_LANTERNS = 32;  // GLSL needs a const loop bound; u_count culls
 const float BG = 0.035;   // deep-water base, ~#09090B
 
 // cheap per-lantern hash for a stable random depth, 0..1
