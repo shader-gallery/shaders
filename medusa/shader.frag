@@ -57,6 +57,7 @@ float fbm(vec2 p) {
 // layers smaller/dimmer/slower, near layers bigger/brighter/faster.
 float bubbles(vec2 fc, vec2 res, float pr, float tb) {
   float acc = 0.0;
+  float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0); // resolution-stable size
   for (int L = 0; L < 3; L++) {
     float lf  = float(L) / 2.0;                       // 0 far .. 1 near
     float spd = mix(0.015, 0.05, lf) * max(u_bubbleSpeed, 0.0);
@@ -70,7 +71,7 @@ float bubbles(vec2 fc, vec2 res, float pr, float tb) {
     float by = fract(h2 - tb * spd);                  // rises, wraps inside the cell
     vec2  bp = (id + vec2(h1, by)) * cell;
     bp.x += sin(tb * 0.4 + h3 * 6.2831) * cell.x * 0.18;  // gentle wobble
-    float size = (1.2 + 2.0 * h3) * pr * mix(0.6, 1.7, lf) * max(u_bubbleSize, 0.05);
+    float size = (1.2 + 2.0 * h3) * refScale * pr * mix(0.6, 1.7, lf) * max(u_bubbleSize, 0.05);
     float d = length(fc - bp);
     // fade each mote in at the start of its rise and out at the end so it never
     // pops in/out at the wrap point.
@@ -111,7 +112,10 @@ void main() {
   float colm = 0.5 + 0.5 * sin(fc.x / res.x * 7.0 + t * 0.1);   // god-ray banding
   col += atm * u_glow * (0.06 + 0.05 * colm) * (0.3 + 0.85 * vy);
 
-  float bellR   = max(u_bellSize, 1.0) * pr;
+  // resolution-stable feature scale: anchors bell size to the frame so the
+  // composition matches at thumbnail and fullscreen (==1 at the 1280x800 poster).
+  float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0);
+  float bellR   = max(u_bellSize, 1.0) * refScale * pr;
   float stripeN = max(u_stripes, 1.0);
   float tentN   = max(u_tentacles, 3.0);
 
