@@ -100,10 +100,13 @@ void main() {
     float cy     = laneY * res.y + sin(t * 0.16 + phase * 1.3) * rad * 0.45;
     float vfade  = 1.0;
 
-    // cheap cull: this jelly only touches a column from bell-top to tentacle-tips
-    if (abs(fc.x - cx) > rad * 1.7) continue;
+    // cheap cull: a column from bell-top to tentacle-tips. The horizontal reach
+    // must contain the tentacles' full splay + sway (which grows with flow) or
+    // they get sliced at a hard vertical edge as they animate.
+    float reachX = rad * (2.4 + 1.0 * u_tentacleFlow);
+    if (abs(fc.x - cx) > reachX) continue;
     if (fc.y > cy + rad * 1.35) continue;
-    if (fc.y < cy - rad * 8.5) continue;
+    if (fc.y < cy - rad * 9.5) continue;
 
     vec2 b = (fc - vec2(cx, cy)) / rad;     // bell radii; b.y up, apex at +1
 
@@ -165,16 +168,19 @@ void main() {
 
     // ---- TENTACLES: long fine curtain streaming below, swaying continuously --
     float td = armY;                                   // depth below margin (down +)
-    if (td > 0.0 && td < 8.5) {
+    if (td > 0.0 && td < 9.0) {
       float spacing = 2.0 * bellW / tentN;
-      float strand  = floor(b.x / spacing + 0.5);
+      // strands splay apart with depth; divide by the splayed spacing so the
+      // nearest-strand pick stays correct (no popping as they spread).
+      float splayF  = 1.0 + 0.10 * td;
+      float strand  = floor(b.x / (spacing * splayF) + 0.5);
       float sx      = strand * spacing + (hash21(vec2(strand, fi)) - 0.5) * spacing * 0.3;
       if (abs(sx) < bellW * 1.02) {
         float h    = hash21(vec2(strand + 7.0, fi));
-        float len  = 4.5 + 3.5 * h;                    // per-strand length (radii)
-        float sway = u_tentacleFlow * sin(td * 1.0 - t * 1.1 + strand * 0.7 + phase);
-        float cxs  = sx * (1.0 + 0.12 * td)            // gentle fan-out with depth
-                   + sway * (0.12 + 0.16 * td);
+        float len  = 5.0 + 3.5 * h;                    // per-strand length (radii)
+        float swayAmp = u_tentacleFlow * (0.10 + 0.09 * td);   // bounded sway, grows w/ depth
+        float cxs  = sx * splayF
+                   + sin(td * 0.9 - t * 1.1 + strand * 0.7 + phase) * swayAmp;
         float dxt  = b.x - cxs;
         // cohesive ribbon: a soft-edged tapering shape, not a hairline
         float wTen = max(spacing * (0.34 + 0.16 * h) * smoothstep(len, 0.0, td), spacing * 0.08);
