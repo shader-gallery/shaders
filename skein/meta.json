@@ -2,7 +2,7 @@
   "name": "Skein",
   "slug": "skein",
   "family": "Filament",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "tubes", "led", "wave", "ribbon", "cable", "rgb"],
   "description": "Rows of horizontal glowing tubes undulate across the frame like a hank of ribbon cable, each row on its own sine and its own hue. Charge streams along the cables, alternate rows running opposite ways, over a softly lit ground.",
   "entry": "shader.frag",

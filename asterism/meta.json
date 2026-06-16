@@ -2,7 +2,7 @@
   "name": "Asterism",
   "slug": "asterism",
   "family": "Abyss",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "stars", "lines", "minimal", "calm"],
   "description": "A still star chart over true black: faint hash stars shimmer slowly while constellations materialise one glowing line-segment at a time, hold for a beat, then dissolve as the next is already being traced elsewhere — a perpetual relay of overlapping pen-drawn figures.",
   "entry": "shader.frag",

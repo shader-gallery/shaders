@@ -2,7 +2,7 @@
   "name": "Sprite",
   "slug": "sprite",
   "family": "Omen",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "lightning", "atmospheric", "episodic", "branching"],
   "description": "Upper-atmosphere red sprites over a night horizon: violet-to-rose tendrils flash down from the top edge and branch as they fall, each flash leaving a diffuse glowing head that lingers and slowly fades so the sky is never fully dark.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Culm",
   "slug": "culm",
   "family": "Sough",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "wind", "bamboo", "grove", "organic"],
   "description": "A grove of round, cylinder-shaded bamboo canes in three depth-layered rows that recede and haze into the frame, each cane lit with a specular stripe and dark turning edges for real volume and divided by crisp swollen node rings. A calm, continuous wind travels through the grove as a smooth wave — the canes lean and breathe without ever freezing — while light runs steadily up each cane, a sparkle of node glints climbing joint by joint to the leafy tip.",
   "entry": "shader.frag",

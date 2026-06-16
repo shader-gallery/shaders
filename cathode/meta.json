@@ -2,7 +2,7 @@
   "name": "Cathode",
   "slug": "cathode",
   "family": "Glitch",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["crt", "scanlines", "phosphor", "retro", "digital", "loop"],
   "description": "An old CRT tube — colour test-bars scrolling behind a barrel-curved screen, fine scanlines and an RGB aperture-grille mask over everything, a vsync roll bar sweeping down and the picture flickering inside a dark bezel. Retro, electronic, alive.",
   "entry": "shader.frag",

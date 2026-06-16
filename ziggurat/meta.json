@@ -2,7 +2,7 @@
   "name": "Ziggurat",
   "slug": "ziggurat",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "pyramid", "fog", "parallax", "raymarch"],
   "description": "One colossal raymarched stepped pyramid stands alone on a dark plain, terrace lips catching a knife-thin rim of light and a warm beacon burning at the summit. The camera rides a slow level orbit so near terraces slide across far ones in parallax while ground haze breathes around the base.",
   "entry": "shader.frag",

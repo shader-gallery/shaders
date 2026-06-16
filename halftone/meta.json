@@ -2,7 +2,7 @@
   "name": "Halftone",
   "slug": "halftone",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["halftone", "dots", "crisp", "print", "screen", "geometric", "loop"],
   "description": "A rotated print-screen of crisp dots whose size swells and shrinks with a drifting tone field — fat where the light pools, fine where it thins, tinted across the palette left to right. Clean, graphic, high-contrast.",
   "entry": "shader.frag",

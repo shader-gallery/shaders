@@ -2,7 +2,7 @@
   "name": "Glint",
   "slug": "glint",
   "family": "Shoal",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "glitter", "water", "horizon", "night"],
   "description": "Moonlight on dark open water: a horizon sits in the upper third and anisotropic specular highlights glitter across the whole sea, concentrating into a bright central moonbeam and thinning to scattered sparkle at the flanks. A slow two-swell heave rocks the glints up and down and flickers them asynchronously through zero, so the sea never resets.",
   "entry": "shader.frag",

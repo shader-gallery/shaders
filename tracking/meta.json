@@ -2,7 +2,7 @@
   "name": "Tracking",
   "slug": "tracking",
   "family": "Glitch",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["vhs", "tracking", "analog", "chroma-bleed", "glitch", "loop"],
   "description": "Bad VHS tracking — soft colour bands wobbling with tape jitter, chroma bleeding into red and blue ghosts, and a tracking-error band of snow rolling slowly up the picture while the bottom edge drops out. Warm analog decay.",
   "entry": "shader.frag",

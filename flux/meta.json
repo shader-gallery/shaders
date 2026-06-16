@@ -2,7 +2,7 @@
   "name": "Flux",
   "slug": "flux",
   "family": "Strata",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "fieldlines", "dipole", "arcs", "rainbow"],
   "description": "Two opposite magnetic poles hang in dark space, each a small soft core, and the analytic 2D dipole stream function is contoured into fine luminous field-line arcs sweeping pole to pole. Arcs compress into dense bright bundles where they dive into each core and relax into wide lazy curves at midfield, hue blending through the palette by arc index from the inner bundle outward. The poles orbit their common centre about once every ninety seconds while a slow contour-phase crawl slides each line along its own length — arcs continuously budding at one flank and absorbed at the other.",
   "entry": "shader.frag",

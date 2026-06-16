@@ -2,7 +2,7 @@
   "name": "Radar",
   "slug": "radar",
   "family": "Trace",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "radar", "waterfall", "scroll", "blips"],
   "description": "A bearing/time radar waterfall: the newest return is written along the top edge and the whole record feeds slowly downward like chart paper. Persistent contacts stack into luminous streaks that snake left and right as they descend and cool through the palette, while faint clutter dissolves into grain between hair-thin vertical bearing rulings.",
   "entry": "shader.frag",

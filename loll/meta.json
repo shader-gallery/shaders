@@ -2,7 +2,7 @@
   "name": "Loll",
   "slug": "loll",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "warm", "shadows", "rolling", "grain", "glow", "loop"],
   "description": "A warm lit field with big soft shadows rolling slowly across it — like sunlight through drifting cloud, the brightest glow held off-centre while broad dark lobes sweep over and cool the tone as they pass. Calm, golden, unhurried.",
   "entry": "shader.frag",

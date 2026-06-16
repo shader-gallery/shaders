@@ -2,7 +2,7 @@
   "name": "Starfall",
   "slug": "starfall",
   "family": "Abyss",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "starfield", "cosmic", "parallax", "glow", "rainbow", "organic", "loop"],
   "description": "A deep drifting starfield — three parallax layers of hash-placed stars raining down on a diagonal, each twinkling on its own phase, the brightest tinted from the palette, over a faint breathing nebula wash.",
   "entry": "shader.frag",

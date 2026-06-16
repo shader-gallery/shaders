@@ -2,7 +2,7 @@
   "name": "Gild",
   "slug": "gild",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "metal", "gold", "rings", "torus", "specular", "reflection", "loop"],
   "description": "Interlocking metal rings turning slowly on three axes — raymarched gold tori with mirror reflections of a palette-tinted studio, crisp speculars and grazing fresnel. A premium polished-metal object filling the frame.",
   "entry": "shader.frag",

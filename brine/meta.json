@@ -2,7 +2,7 @@
   "name": "Brine",
   "slug": "brine",
   "family": "Shoal",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ice", "water", "crystal", "vertical"],
   "description": "A brinicle forest: a ceiling of supercold descending brine fingers hangs from the top edge, a field of faceted translucent crystalline columns of varying width and depth, each glinting and breathing frost feathers as a refractive shimmer streams down its interior. Nearer fingers are wide and bright, farther ones slim and dim; a frosted ice band caps them along the top and deep cold water fills between.",
   "entry": "shader.frag",

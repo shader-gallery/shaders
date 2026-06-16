@@ -2,7 +2,7 @@
   "name": "Rondel",
   "slug": "rondel",
   "family": "Facet",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["rings", "arcs", "concentric", "bevel", "geometric", "loop"],
   "description": "Concentric beveled rings broken into arcs that rotate against one another — each band a raised ring with lit and shadowed edges, segments counter-spinning ring to ring around an off-centre hub. Bold, kinetic, machined.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Lattice",
   "slug": "lattice",
   "family": "Facet",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["grid", "perspective", "wireframe", "synthwave", "neon", "geometric", "loop"],
   "description": "A neon wireframe grid rushing toward a glowing horizon, a banded sun sitting on the skyline — the classic perspective floor receding to a vanishing point, lines fading into the dark. Bold, retro, kinetic.",
   "entry": "shader.frag",

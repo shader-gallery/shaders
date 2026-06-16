@@ -2,7 +2,7 @@
   "name": "Stele",
   "slug": "stele",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "grid", "slabs", "fog", "parallax", "raymarch"],
   "description": "A memorial field of flat-topped slabs on a strict grid, raymarched from a high eye tilted steeply down: rank on rank of dim lit rectangles converge into haze while the camera glides diagonally across the field, dark mist pooling in the alleys and rare slabs carrying a glowing inscribed seam.",
   "entry": "shader.frag",

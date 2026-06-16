@@ -2,7 +2,7 @@
   "name": "Panicle",
   "slug": "panicle",
   "family": "Sough",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "wind", "grass", "feather", "organic"],
   "description": "A stand of pampas plumes at close range — tall curved stems carrying feathery FBM-streaked heads in varied palette hues, glowing vividly with a fine seed-fluff drifting up and downwind through the air around them. When a gust combs through, streaks of light run lengthwise to the feathered fringe while the heads stream downwind and the stems bow late with a soft overshoot, the floating fluff shimmering between fronts.",
   "entry": "shader.frag",

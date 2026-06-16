@@ -2,7 +2,7 @@
   "name": "Prism",
   "slug": "prism",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "glass", "octahedron", "refraction", "dispersion", "geometry", "iridescent", "loop"],
   "description": "A solid of clear glass — an octahedron you see straight through, the palette environment bending and splitting into spectral colour as it refracts twice through the stone, with a bright fresnel rim where the surface turns away.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Cipher",
   "slug": "cipher",
   "family": "Glitch",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["matrix", "code-rain", "glyphs", "digital", "terminal", "loop"],
   "description": "Falling code rain — columns of flickering glyph cells streaming downward, each drop a bright leading character with a long fading trail, the symbols re-rolling as they fall. Classic terminal cascade in the palette's hue.",
   "entry": "shader.frag",

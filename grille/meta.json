@@ -2,7 +2,7 @@
   "name": "Grille",
   "slug": "grille",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["moire", "lines", "grating", "fringe", "crisp", "geometric", "loop"],
   "description": "Two line gratings laid over one another at a slight angle — bold coloured bars beating into broad moiré fringes that sweep as the pair turns, bright welds flaring where the lines coincide. Crisp, kinetic, op-art.",
   "entry": "shader.frag",

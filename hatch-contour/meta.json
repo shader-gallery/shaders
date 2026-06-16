@@ -2,7 +2,7 @@
   "name": "Hatch Contour",
   "slug": "hatch-contour",
   "family": "Burnish",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "etched", "crosshatch", "contour", "flow", "texture", "organic"],
   "description": "A Hatch variation: the whole crosshatch lattice is domain-warped along the drifting ghost field, so every burin stroke bends and flows around the hidden form like the curved lines of a wood engraving or a topographic map. Line curvature and tonal density agree, so the strokes wrap the volume and read as rounded relief rather than a flat screen.",
   "entry": "shader.frag",

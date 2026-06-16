@@ -2,7 +2,7 @@
   "name": "Welter",
   "slug": "welter",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "warm", "lava-lamp", "molten", "grain", "glow", "loop"],
   "description": "A boiling warm color field — molten poles of rust, ember and amber rise and roll through one another with turbulent edges, hot cores glowing brighter as blobs merge. A grainy lava-lamp churn rather than a still gradient.",
   "entry": "shader.frag",

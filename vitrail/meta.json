@@ -2,7 +2,7 @@
   "name": "Vitrail",
   "slug": "vitrail",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "stained-glass", "symmetry", "rose-window"],
   "description": "A stained-glass rose window built from the mirror-fold: concentric rings of leaded panes wheel around a bright central boss, each ring glowing its own palette hue. A slow tide of light blooms outward through the glass ring by ring while the whole window turns almost imperceptibly; the dark lead cames stay black so the panes read as backlit glass.",
   "entry": "shader.frag",

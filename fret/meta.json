@@ -2,7 +2,7 @@
   "name": "Fret",
   "slug": "fret",
   "family": "Filament",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "maze", "labyrinth", "circuit", "lines", "flow"],
   "description": "A living labyrinth: a Truchet weave of quarter-turn paths connects edge to edge into one continuous meander that fills the whole frame, no empty centre and no border band. The paths glow in slowly shifting palette hues while bright currents of light course along them like charge running through a circuit.",
   "entry": "shader.frag",

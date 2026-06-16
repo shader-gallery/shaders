@@ -2,7 +2,7 @@
   "name": "Peat",
   "slug": "peat",
   "family": "Smolder",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ember", "fire", "earth", "strata"],
   "description": "A cross-section of dark ground with faint soil strata; a buried seam smoulders from within, its travelling front never seen directly — read only as stitched threads of ember light leaking up through vertical fissures, graded warm-to-cool as it climbs and dies just short of the surface.",
   "entry": "shader.frag",

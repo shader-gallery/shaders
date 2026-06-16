@@ -2,7 +2,7 @@
   "name": "Hedron",
   "slug": "hedron",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "platonic", "polyhedron", "geometry", "solid", "shaded", "loop"],
   "description": "The five Platonic solids cross-fade one into the next — tetrahedron, cube, octahedron, dodecahedron, icosahedron — a single satin-shaded form forever rebuilding itself under a soft studio key and rim light. The keystone of the Polytope set: an exact SDF for each regular solid, beveled and slowly turning.",
   "entry": "shader.frag",

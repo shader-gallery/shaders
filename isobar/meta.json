@@ -2,7 +2,7 @@
   "name": "Isobar",
   "slug": "isobar",
   "family": "Strata",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "weather", "storm", "spiral", "drift"],
   "description": "A satellite night-pass over a stormy sea: two or three spiral storm systems hang on the near-black chart, each a pinwheel of soft luminous log-spiral rain bands winding into a small dark calm eye, hue blending through the palette by radius. Each pinwheel revolves about its own eye at a stately pace while the systems drift bodily across the chart and breathe — arms brightening and eyes tightening as a storm peaks, relaxing as it decays.",
   "entry": "shader.frag",

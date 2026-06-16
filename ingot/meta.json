@@ -2,7 +2,7 @@
   "name": "Ingot",
   "slug": "ingot",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["metal", "brushed", "anisotropic", "specular", "sheen", "surface", "glow", "loop"],
   "description": "A sheet of brushed metal catching the light — fine horizontal grooves scatter a broad anisotropic highlight that sweeps slowly across the surface, glinting along the brush lines. A close-up metal material rather than an object, filling the frame.",
   "entry": "shader.frag",

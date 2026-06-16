@@ -2,7 +2,7 @@
   "name": "Trellis",
   "slug": "trellis",
   "family": "Filament",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "tubes", "led", "grid", "circuit", "pcb", "rgb"],
   "description": "An orthogonal grid of glowing conduits with a bright pad lit at every junction, like a printed circuit board carrying charge along its traces. The current runs the nearer axis of each crossing so the whole lattice reads as one routed network over a softly lit ground.",
   "entry": "shader.frag",

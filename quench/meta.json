@@ -2,7 +2,7 @@
   "name": "Quench",
   "slug": "quench",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "metal", "molten", "liquid", "heightfield", "reflection", "loop"],
   "description": "A sea of molten metal stretching to a horizon — a raymarched wavy surface that mirrors a hot forge sky, with emissive lava pooling in the troughs between cooling crests and sharp glints riding the swell. A flowing metal surface rather than an object.",
   "entry": "shader.frag",

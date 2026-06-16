@@ -2,7 +2,7 @@
   "name": "Kelp",
   "slug": "kelp",
   "family": "Sough",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "underwater", "kelp", "current", "organic"],
   "description": "A kelp forest deep underwater: wide cylinder-shaded ribbon blades rise in depth-layered ranks from an uneven seafloor, rounded and translucent with curling bent-over tips and float bulbs, through a blue-teal depth gradient lit by crepuscular god-rays, caustic shimmer and rising bubbles. When a surge front rolls across the stand the downstream edges light, a rim of glow climbing each blade from deep-blue roots to pale tips.",
   "entry": "shader.frag",

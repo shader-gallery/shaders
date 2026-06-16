@@ -2,7 +2,7 @@
   "name": "Obelisk",
   "slug": "obelisk",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "spire", "fog", "parallax", "raymarch"],
   "description": "A single tapering needle crowned by a pyramidion rises alone out of a rolling sea of fog under an empty near-black sky. The camera rides a slow helical orbit, fog dropping away to reveal the shaft on the rise and climbing back over its base on the descent while the monument stands utterly still.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "ASCII",
   "slug": "ascii",
   "family": "Glitch",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["ascii", "data-grid", "terminal", "digital", "readout", "loop"],
   "description": "A live ASCII terminal — a grid of character cells flickering their values, a diagonal read-out sweep lighting cells bright as it crosses and fading behind, the rest holding a dim amber standby. A console mid-computation, all text.",
   "entry": "shader.frag",

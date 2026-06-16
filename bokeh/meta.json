@@ -2,7 +2,7 @@
   "name": "Bokeh",
   "slug": "bokeh",
   "family": "Noir",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "bokeh", "city", "parallax", "night"],
   "description": "A city seen through a fast lens at night: three depth layers of out-of-focus heptagonal light discs drift sideways with parallax and blink like distant signage, each tinted a palette hue and rimmed with the bright iris of a defocused camera.",
   "entry": "shader.frag",

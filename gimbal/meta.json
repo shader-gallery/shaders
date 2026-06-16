@@ -2,7 +2,7 @@
   "name": "Gimbal",
   "slug": "gimbal",
   "family": "Trace",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "gyroscope", "rings", "3d", "glint"],
   "description": "Three nested gyroscope rings tumble in implied 3D, each a circle projected to a luminous phosphor ellipse brighter on its near side. Where two rings cross, a glint blooms; the dance closes seamlessly over a long loop.",
   "entry": "shader.frag",

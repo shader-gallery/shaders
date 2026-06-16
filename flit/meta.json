@@ -2,7 +2,7 @@
   "name": "Flit",
   "slug": "flit",
   "family": "Umbra",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "moth", "lamp", "penumbra"],
   "description": "An unseen moth circles an unseen lamp and the wall records only its shadow — one small winged silhouette whose projected size and penumbra blur swing enormously with its orbit, ballooning into a soft frame-filling grey breath near the bulb then shrinking to a sharp thumb-sized cutout near the wall. The wall carries the lamp's round throw with a bright tinted ring at its limb, and the shadow's penumbra fringe glows faintly warm.",
   "entry": "shader.frag",

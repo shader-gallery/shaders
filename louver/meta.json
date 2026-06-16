@@ -2,7 +2,7 @@
   "name": "Louver",
   "slug": "louver",
   "family": "Umbra",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "blinds", "stripes", "penumbra", "lamp"],
   "description": "A low off-screen lamp washes a plaster wall while the shadow of venetian blinds stripes it on a slight diagonal — bottom bars knife-sharp, top bars melting into grey breath as each slat hangs farther from the wall. The slats tilt on one long breathing cycle while the lamp drifts sideways, shearing and stretching the bars with no reset.",
   "entry": "shader.frag",

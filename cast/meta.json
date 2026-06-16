@@ -2,7 +2,7 @@
   "name": "Cast",
   "slug": "cast",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "morph", "primitive", "geometry", "solid", "shaded", "loop"],
   "description": "One glossy solid caught forever mid-transformation — a sphere swelling into a rounded cube, collapsing to an octahedron, opening into a torus and back. Smooth SDF blends keep it liquid yet geometric, lit like a polished resin maquette.",
   "entry": "shader.frag",

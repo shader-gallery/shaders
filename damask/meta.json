@@ -2,7 +2,7 @@
   "name": "Damask",
   "slug": "damask",
   "family": "Burnish",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gold", "glow", "loop", "ornament", "brocade", "symmetry", "texture"],
   "description": "A brocade wallpaper of mirror-symmetric foliate medallions on a half-drop repeat. Each cell folds a noise field through an N-fold dihedral kaleidoscope into an ornate, perfectly symmetric motif; the deep jewel ground carries the pattern tone-on-tone like real damask while gold filigree outlines the ornament. Lit evenly across the whole frame, no dark midriff.",
   "entry": "shader.frag",

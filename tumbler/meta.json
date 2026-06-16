@@ -2,7 +2,7 @@
   "name": "Tumbler",
   "slug": "tumbler",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "shards", "symmetry", "jewel"],
   "description": "The feel of turning the tube: angular glass shards in the object cell that each tumble on their own axis while the mirror-fold reflects them. As the chips rotate and slide, the reflected figure keeps re-locking into fresh symmetric arrangements — the characteristic click-and-reshuffle of a kaleidoscope being turned, hard-edged chips of colour on near-black.",
   "entry": "shader.frag",

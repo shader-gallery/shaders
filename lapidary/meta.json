@@ -2,7 +2,7 @@
   "name": "Lapidary",
   "slug": "lapidary",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "gem", "icosahedron", "facet", "geometry", "crystal", "iridescent", "loop"],
   "description": "A cut gemstone — an icosahedron shaded flat per facet so each face catches the light as a hard plane, edges sparking white where two facets meet, with a slow iridescent fire that drifts across the stone as it turns.",
   "entry": "shader.frag",

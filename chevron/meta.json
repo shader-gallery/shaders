@@ -2,7 +2,7 @@
   "name": "Chevron",
   "slug": "chevron",
   "family": "Facet",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["chevron", "zigzag", "bevel", "ribbon", "geometric", "crisp", "loop"],
   "description": "Beveled chevron ribbons scrolling upward — bold zigzag bands with lit crests and shadowed edges so they read as folded 3D ribbon, colour stepping band to band. Confident, rhythmic, architectural.",
   "entry": "shader.frag",

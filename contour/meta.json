@@ -2,7 +2,7 @@
   "name": "Contour",
   "slug": "contour",
   "family": "Strata",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "contour", "topo", "organic", "rainbow"],
   "description": "A plan-view topographic map of terrain that doesn't exist: thin glowing isolines over a near-black base, every fifth index contour brighter and twice as wide, hue climbing the palette with elevation. The land deforms at geological patience while each line creeps uphill — crawling, pinching, merging and splitting in place.",
   "entry": "shader.frag",

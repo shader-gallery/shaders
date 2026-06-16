@@ -2,7 +2,7 @@
   "name": "Puddle",
   "slug": "puddle",
   "family": "Noir",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "neon", "reflection", "water", "city"],
   "description": "Dark wet asphalt carved by puddle patches that hold wobbling vertical smears of unseen neon — columns of palette colour stretched downward by a domain-warped reflection. The smears wobble slowly as the warp drifts, and hash-timed drips drop single expanding rings that bend the reflections for a second before fading.",
   "entry": "shader.frag",

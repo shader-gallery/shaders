@@ -2,7 +2,7 @@
   "name": "Incense",
   "slug": "incense",
   "family": "Smolder",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ember", "fire", "smoke"],
   "description": "Two or three hair-thin incense sticks stand at staggered heights in a near-black room, each tipped with a tiny incandescent ember that creeps strictly downward over minutes; dead ash lengthens above it while a thin smoke filament rises and fades, and an occasional spark pops off the glowing cap.",
   "entry": "shader.frag",

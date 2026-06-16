@@ -2,7 +2,7 @@
   "name": "Swash",
   "slug": "swash",
   "family": "Wake",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "water", "streaks", "graphic"],
   "description": "Dozens of thin diagonal streaks of light flow in parallel lanes across the frame like a travelling current, each dash scrolling steadily off one edge while new ones enter the other, lanes drifting at staggered speeds. Palette-graded from a bright head to a dim tail, bold and crisp against the near-black.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Ripple",
   "slug": "ripple",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dots", "grid", "ripple", "wave", "crisp", "geometric", "loop"],
   "description": "A grid of dots rippling like an LED matrix under water — concentric waves from two sources swell and shrink each dot as they pass and cross, crests brightening through the palette while troughs sink to near-black. Crisp, kinetic, rhythmic.",
   "entry": "shader.frag",

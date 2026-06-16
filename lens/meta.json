@@ -2,7 +2,7 @@
   "name": "Lens",
   "slug": "lens",
   "family": "Shoal",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "refraction", "lens", "organic", "slow"],
   "description": "Three large invisible lens blobs roam a faint dark field, magnifying and smearing the dim wisps behind them while a hairline palette-tinted rim ignites at each lens edge. Light bends instead of emitting — the subject is distortion itself, sloshing at the pace of shallow water.",
   "entry": "shader.frag",

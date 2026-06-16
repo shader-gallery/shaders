@@ -1,8 +1,8 @@
 {
   "name": "Honeycomb",
   "slug": "honeycomb",
-  "family": "Facet",
-  "author": "Erin Carter",
+  "family": "Hex",
+  "author": "E. T. Carter",
   "tags": ["hex", "grid", "bevel", "geometric", "crisp", "glow", "loop"],
   "description": "A beveled hexagonal grid catching light — chamfered cells with lit and shadowed edges, a glow travelling cell to cell through the comb while the rest sit in cool shadow. Confident hard-edged geometry with a premium machined feel.",
   "entry": "shader.frag",

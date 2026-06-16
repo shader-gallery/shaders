@@ -2,7 +2,7 @@
   "name": "Nacre",
   "slug": "nacre",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "glass", "iridescent", "soap-film", "thin-film", "fresnel", "glow", "loop"],
   "description": "A soap bubble caught in the light — a thin transparent film over a single sphere, swirling with thin-film interference colours that shift toward the rim and churn slowly across the surface, finished with a sharp highlight. Mostly see-through, all iridescence.",
   "entry": "shader.frag",

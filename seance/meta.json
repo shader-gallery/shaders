@@ -2,7 +2,7 @@
   "name": "Seance",
   "slug": "seance",
   "family": "Omen",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "fog", "organic", "ethereal", "occult"],
   "description": "A full-frame veil of near-black weave from behind which vague rounded forms press forward — brightening, stretching the cloth's highlights, and gathering a faint palette halo before relaxing back into the dark. Almost a face, almost a hand, then gone.",
   "entry": "shader.frag",

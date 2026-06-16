@@ -2,7 +2,7 @@
   "name": "Bough",
   "slug": "bough",
   "family": "Umbra",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "leaves", "organic", "penumbra", "lamp"],
   "description": "The shadow of a potted bough thrown on an insomniac's wall: elliptical leaves hung on curved stems, drawn purely as occlusion of an unseen lamp's glow. Each leaf carries a hashed occluder distance that sets its edge softness, so near leaves bite crisp while far ones swell into soft grey breaths; the cluster pivots in a heater draft and every leaf nods on its own phase, animating the blur itself.",
   "entry": "shader.frag",

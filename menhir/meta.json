@@ -2,7 +2,7 @@
   "name": "Menhir",
   "slug": "menhir",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "stones", "fog", "parallax", "raymarch"],
   "description": "A plain of scattered standing stones receding into luminous haze, raymarched as true 3D solids: tapered, slightly leaning prisms strewn across a jittered field while the camera dollies forward down a sinuous cleared lane, near menhirs sweeping past in parallax as far ones dissolve into a glowing horizon band, each stone edged with a thin rim of light where it meets the fog behind it.",
   "entry": "shader.frag",

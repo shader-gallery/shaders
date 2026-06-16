@@ -2,7 +2,7 @@
   "name": "Anthelion",
   "slug": "anthelion",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "halo", "light", "symmetry"],
   "description": "Named for the mirrored counter-sun halo — the luminous, higher-key end of the family. A blazing multi-hue core throws a corona of mirror-folded rays of uneven length, long spikes between short ones like a real sun corona, crossed by a finer counter-rotating spark fan and ringed by concentric arcs broken into glowing beads. Pure bent light rather than cut glass, radiant on a deep dusk-blue sky.",
   "entry": "shader.frag",

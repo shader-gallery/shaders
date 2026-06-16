@@ -1,8 +1,9 @@
 {
   "name": "Banner",
   "slug": "banner",
+  "shelf": "logo",
   "family": "Veil",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "cloth", "wind", "minimal", "emblem"],
   "description": "A single long swallow-tailed pennant hangs alone in an empty near-black field. A tapering cloth silhouette, pinned at the hoist, ripples under a travelling wind-wave that grows toward the free tail; sheen slides along the crests, hue drifts down its length, and a soft glowing ring emblem rides the surface, shearing and brightening as each wave passes beneath it.",
   "entry": "shader.frag",

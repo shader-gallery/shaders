@@ -2,7 +2,7 @@
   "name": "Whorl",
   "slug": "whorl",
   "family": "Rosette",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "particles", "spiral", "phyllotaxis", "radial"],
   "description": "A phyllotaxis bloom: two hundred glowing motes placed by the golden-angle spiral form a sunflower seed head drawn in light. Each dot ignites at the centre, brightens through mid-life, and dims away at the rim as the whole population streams outward at a felt-not-seen pace.",
   "entry": "shader.frag",

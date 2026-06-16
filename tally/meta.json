@@ -2,7 +2,7 @@
   "name": "Tally",
   "slug": "tally",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["led", "dot-matrix", "equalizer", "board", "crisp", "geometric", "loop"],
   "description": "An LED dot-matrix board running like a spectrum meter — columns of round LEDs bouncing to their own rhythm with peak-hold caps, lit dots grading cool-to-warm by height over a faint dark grid of off pixels. Crisp, rhythmic, electronic.",
   "entry": "shader.frag",

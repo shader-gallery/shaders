@@ -2,7 +2,7 @@
   "name": "Stitch",
   "slug": "stitch",
   "family": "Loom",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "embroidery", "cross-stitch", "sampler", "handmade"],
   "description": "Tiny glowing cross-stitches are planted one cell at a time by a bright needle glint working back and forth across a working band low in the frame. The whole frame is woven aida cloth — warp and weft thread ridges with embossed depth — bare below the needle, stitched above. Each completed row carries a hashed folk-sampler motif tinted from one palette colour; the finished cloth drifts slowly up-frame and dims into the dark, like work receding into memory.",
   "entry": "shader.frag",

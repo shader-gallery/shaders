@@ -2,7 +2,7 @@
   "name": "Dither",
   "slug": "dither",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dither", "bayer", "pixel", "retro", "crisp", "geometric", "loop"],
   "description": "An ordered Bayer dither over a slow folded gradient — chunky pixels stippling between a handful of palette levels the way an old indexed display would, the colour bands drifting and reshaping. Crisp, retro, low-bit.",
   "entry": "shader.frag",

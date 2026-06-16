@@ -2,7 +2,7 @@
   "name": "Phalanx",
   "slug": "phalanx",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "lattice", "octahedron", "field", "geometry", "depth", "fog", "loop"],
   "description": "A regiment of small octahedra marching out of the fog toward you — an endless lattice of solids, each cell tumbling on its own, dimming into depth so the field reads as deep parallax rather than a flat grid.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Awn",
   "slug": "awn",
   "family": "Sough",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "wind", "wheat", "field", "organic"],
   "description": "A glowing sea of wheat: many ranks of awned stalks recede from the horizon down to the foreground, each a slender curved stroke topped by a fine fuzzy bristle-fan seed-head. Invisible gust fronts sweep across as travelling waves of bow-and-spring-back, pouring iridescent palette light into the heads and bristles in proportion to flex, so a luminous ripple runs through the field under a faint dusk horizon.",
   "entry": "shader.frag",

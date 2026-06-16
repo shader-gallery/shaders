@@ -2,7 +2,7 @@
   "name": "Emboss",
   "slug": "emboss",
   "family": "Burnish",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "relief", "quilted", "iridescent", "satin", "texture"],
   "description": "A deep quilted surface of padded diamond cushions, pulled in at the button points and creased along the seams, lit as a soft satin so every pucker carries a specular bloom. The fabric is iridescent shot silk - hue shifts across the curve of each cushion and the highlights flash a complementary colour - sweeping slowly across the whole frame. All relief and colour, no flat grid.",
   "entry": "shader.frag",

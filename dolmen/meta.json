@@ -2,7 +2,7 @@
   "name": "Dolmen",
   "slug": "dolmen",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "portal", "stones", "fog", "parallax", "raymarch"],
   "description": "A single raymarched trilithon - two thick uprights bearing a tilted capstone - eclipses a broad setting glow on the horizon, with recumbent stones layered behind it and ground fog drifting at shin height. The camera traces a very slow wide orbit so the bright portal gap opens, narrows to a sliver as an upright eclipses the light, and opens again, a minutes-long eclipse cycle written purely by parallax.",
   "entry": "shader.frag",

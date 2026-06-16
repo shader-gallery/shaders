@@ -2,7 +2,7 @@
   "name": "Haze",
   "slug": "haze",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "posterize", "stepped", "haze", "grain", "glow", "loop"],
   "description": "A soft colour field quantised into stepped bands — a drifting haze posterised into discrete tones with a fine ordered-dither stipple softening the edges, like a low-bit gradient catching light. Calm, slightly retro, grainy.",
   "entry": "shader.frag",

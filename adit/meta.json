@@ -2,7 +2,7 @@
   "name": "Adit",
   "slug": "adit",
   "family": "Delve",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "mine", "timber", "lamps", "rails", "depth"],
   "description": "An off-axis glance down a timbered mine gallery: the black vanishing depth pinned in the lower-right third while sheared trapezoidal support frames - two posts and a cap beam - recede forever into it in an exponential scale series, each hung with one warm lamp. A pair of glowing rails crossed by dim sleepers converges on the same depth. Frames, rails and lamps all shrink away down the scale axis, the log-periodic wrap hidden under the edge fade at birth and the fog at death.",
   "entry": "shader.frag",

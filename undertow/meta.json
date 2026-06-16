@@ -2,7 +2,7 @@
   "name": "Undertow",
   "slug": "undertow",
   "family": "Wake",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "ripples", "interference", "waves", "glow", "rainbow", "organic", "loop"],
   "description": "Concentric ripples from three drifting sources interfere into a standing wave field, rendered as glowing contour bands over a deep dark base and tinted by phase and position into a restrained rainbow.",
   "entry": "shader.frag",

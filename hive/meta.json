@@ -1,8 +1,8 @@
 {
   "name": "Hive",
   "slug": "hive",
-  "family": "Filament",
-  "author": "Erin Carter",
+  "family": "Hex",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "tubes", "led", "hexagon", "honeycomb", "network", "rgb"],
   "description": "A honeycomb of glowing hexagonal tubes filling the frame edge to edge, with charge chasing around each cell rim and the hue drifting cell to cell. The outlines glow over a softly lit ground so the whole comb reads as one lit network.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Karst",
   "slug": "karst",
   "family": "Strata",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "mountains", "water", "reflection", "silhouette"],
   "description": "A Li River nocturne: a rank of rim-lit karst-tower silhouettes stands across the frame and hangs mirrored in dark still water, the reflection dimmer and broken by slow ripple shimmer, a breathing mist band veiling the towers' waists as the whole skyline drifts past at a slow boat's pace.",
   "entry": "shader.frag",

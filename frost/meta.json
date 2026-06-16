@@ -2,7 +2,7 @@
   "name": "Frost",
   "slug": "frost",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "glass", "frosted", "refraction", "fresnel", "glow", "loop"],
   "description": "A cluster of frosted-glass forms drifting and merging — raymarched 3D glass that refracts and reflects a soft palette-tinted environment, its surface scattering light into a milky translucence with a broad satin sheen. Reads as real rendered glass filling the frame.",
   "entry": "shader.frag",

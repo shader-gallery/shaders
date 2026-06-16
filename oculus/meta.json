@@ -2,7 +2,7 @@
   "name": "Oculus",
   "slug": "oculus",
   "family": "Delve",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "dome", "architecture", "panels", "depth"],
   "description": "Looking straight up into a coffered dome that climbs toward a small night-black oculus at centre. A log-polar grid of rounded-rectangle coffers, hue migrating ring by ring, rows born at the frame edge and falling upward into the dark focal depth — a continuous scale-travel that never arrives.",
   "entry": "shader.frag",

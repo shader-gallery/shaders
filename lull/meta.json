@@ -2,7 +2,7 @@
   "name": "Lull",
   "slug": "lull",
   "family": "Wake",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "water", "minimal", "ambient", "slow"],
   "description": "A faint static seascape — dim horizontal bands of dark water layered toward a barely-visible horizon, salted with a few sparse glints, rendered just above the threshold of visibility. Nothing within the scene moves; the entire field rides at anchor in a slow coupled sway-and-heave while a broad brightness tilt rocks across the frame in counterphase, like lamplight shifting across a deck.",
   "entry": "shader.frag",

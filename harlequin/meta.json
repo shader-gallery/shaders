@@ -2,7 +2,7 @@
   "name": "Harlequin",
   "slug": "harlequin",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "facet", "crystal", "symmetry"],
   "description": "A cut-crystal mandala of hard, flat facets. Where the rest of the family blurs, this keeps knife-sharp mirror seams: the folded field is quantised into diamond facets, each flat-shaded a single jewel hue with a bright bevel glinting at its edges. Inner and outer rings counter-rotate, so the diamond pattern shears and reshuffles as the stone slowly turns.",
   "entry": "shader.frag",

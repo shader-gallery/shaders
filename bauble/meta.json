@@ -2,7 +2,7 @@
   "name": "Bauble",
   "slug": "bauble",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "glass", "crystal", "refraction", "fresnel", "specular", "glow", "loop"],
   "description": "A single crystal ball filling the frame — a glass sphere refracting and reflecting a palette-tinted environment, its heart clouded with slow swirling smoke, a crisp studio highlight and a bright fresnel rim where the edge catches light. Reads as a real rendered glass orb.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Dune",
   "slug": "dune",
   "family": "Strata",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "dunes", "terrain", "organic", "drift"],
   "description": "A sand sea from directly above at night: long sinuous crest lines lit asymmetrically, a bright moonlit windward face falling off into a short dark slip face. The whole ridge system translates and reshapes downwind with geological patience.",
   "entry": "shader.frag",

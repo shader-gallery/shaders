@@ -2,7 +2,7 @@
   "name": "Parquet",
   "slug": "parquet",
   "family": "Facet",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["tiles", "parquet", "bevel", "rounded", "geometric", "crisp", "loop"],
   "description": "A floor of beveled rounded-rect planks, each pivoting ninety degrees on its own timer so the parquet endlessly re-lays itself — lit chamfers and shadowed edges giving every tile real depth. Crisp, kinetic, architectural.",
   "entry": "shader.frag",

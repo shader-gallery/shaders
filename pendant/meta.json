@@ -2,7 +2,7 @@
   "name": "Pendant",
   "slug": "pendant",
   "family": "Umbra",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "mobile", "discs", "penumbra", "lamp"],
   "description": "A hanging mobile turns in lamplight and the wall sees only its shadow — discs, a crescent, a slim bar — suspended at staggered heights from hairline threads. Each piece revolves about its thread axis so its projected shadow widens to a disc and thins to a bar; pieces hang at different distances so the top shapes hover blurry while the lowest nearly bites. The wall glow blends warm hues, penumbrae fringe cool, and the hot spot flares around each silhouette. Bodies emit nothing; the motion is read entirely in negative.",
   "entry": "shader.frag",

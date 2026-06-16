@@ -1,8 +1,9 @@
 {
   "name": "Festoon",
   "slug": "festoon",
+  "shelf": "logo",
   "family": "Veil",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "cloth", "bunting", "flags", "negative-space"],
   "description": "A single string of small triangular bunting pennants crosses the frame on a shallow diagonal, anchored high-left and running low off the right. Dozens of crisp flat-shaded SDF triangles, each in its own palette hue, hang from a barely-visible line over near-black. A gust of flutter travels down the string, lifting and snapping each flag's free tip one after another with a bright flash at the peak; between gusts the flags settle into gentle independent idle sway, so the chain is never still and never resets.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Gloaming",
   "slug": "gloaming",
   "family": "Abyss",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "sky", "stars", "gradient", "slow"],
   "description": "Blue hour deepening to night across the whole frame: a warm-to-indigo horizon glow fades and cools as fixed stars blink on one by one, until full night holds and a faint dawn tint rises to rinse them away. One imperceptibly slow closed colour cycle; nothing translates, all motion is luminance and hue.",
   "entry": "shader.frag",

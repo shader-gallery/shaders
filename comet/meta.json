@@ -2,7 +2,7 @@
   "name": "Comet",
   "slug": "comet",
   "family": "Abyss",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "space", "trail", "orbit", "minimal"],
   "description": "A single comet on a long elliptical orbit inside a dark void: a bright nucleus with a tight coma and an ion tail that always streams anti-sunward, flaring long through the fast perihelion whip and shrinking to a stub on the slow aphelion crawl, with a faint dust trail decaying along the recently travelled arc.",
   "entry": "shader.frag",

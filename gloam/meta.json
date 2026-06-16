@@ -2,7 +2,7 @@
   "name": "Gloam",
   "slug": "gloam",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "dark", "twilight", "cool", "grain", "glow", "loop"],
   "description": "A deep twilight color field — cool indigo and slate poles drift through near-black while one luminous pole blooms off-centre like the last light low in the sky. The dark anchor of the family: grainy, moody, glowing.",
   "entry": "shader.frag",

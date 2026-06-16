@@ -2,7 +2,7 @@
   "name": "Oubliette",
   "slug": "oubliette",
   "family": "Delve",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "stone", "square", "well", "depth", "descent"],
   "description": "A square masonry shaft seen straight down through a dungeon grate, falling to a black square focus, off-centre by default and movable. Running-bond stone courses are born at the edge and shrink course by course into the dark focus, mortar lines faintly aglow, the overhead grate fixed while the walls pour past it.",
   "entry": "shader.frag",

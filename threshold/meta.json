@@ -2,7 +2,7 @@
   "name": "Threshold",
   "slug": "threshold",
   "family": "Umbra",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "door", "spill", "penumbra", "minimal"],
   "description": "An unlit room read in negative: the only light is a thin blazing strip under a door, feathering up the floor in honest penumbra. At hash-scheduled intervals a passer-by crosses the lit hallway, two soft footstep lobes dimming and splitting the spill.",
   "entry": "shader.frag",

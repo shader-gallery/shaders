@@ -2,7 +2,7 @@
   "name": "Chamber",
   "slug": "chamber",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "mirror", "symmetry", "tiling", "wallpaper"],
   "description": "The three-mirror tube seen as wallpaper: a real kaleidoscope's triangular mirror chamber tiles the whole plane with reflected copies of one triangle, so the frame fills edge-to-edge with a repeating jewelled honeycomb instead of a single radial star. Coloured glass motes drift through the fundamental triangle while the lattice slowly slides and turns; cut-glass glints run the mirror seams.",
   "entry": "shader.frag",

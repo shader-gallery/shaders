@@ -2,7 +2,7 @@
   "name": "Escapement",
   "slug": "escapement",
   "family": "Trace",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "gears", "ticks", "clockwork", "rings"],
   "description": "Concentric toothed rings — the wheel train of a pocket watch seen face-on — advance in discrete ticks rather than smooth rotation, faster inner wheels shimmering while the outer turns with slow gravity. At a fixed pallet point on each ring the engaging tooth flares at the instant of the tick, its phosphor afterglow decaying until the next step. The gallery's only strictly stepped, discontinuous tempo.",
   "entry": "shader.frag",

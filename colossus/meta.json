@@ -2,7 +2,7 @@
   "name": "Colossus",
   "slug": "colossus",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "colossus", "fog", "parallax", "raymarch"],
   "description": "Two colossal seated figures flank a narrow defile, abstracted to stacked stone primitives and mirrored across the path, with further pairs receding into altitude haze. A raymarched 3D solid scene where the camera cranes vertically — rising from among the knees until the faces emerge from the fog overhead, then settling on a long sinusoidal cycle. A faint rim catches where mass meets brighter fog; an ember glows in the crevice where each figure meets its plinth.",
   "entry": "shader.frag",

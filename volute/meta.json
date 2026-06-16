@@ -2,7 +2,7 @@
   "name": "Volute",
   "slug": "volute",
   "family": "Filament",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "tubes", "led", "spiral", "coil", "vortex", "rgb"],
   "description": "A glowing tube wound into a spiral that fills the frame, charge spinning outward along the coil while the hue turns with each revolution. One arm or several over a softly lit ground.",
   "entry": "shader.frag",

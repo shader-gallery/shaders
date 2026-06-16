@@ -2,7 +2,7 @@
   "name": "Rime",
   "slug": "rime",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "ice", "glass", "subsurface", "frosted", "refraction", "loop"],
   "description": "A cluster of frosted ice spheres drifting in cold light — raymarched 3D ice that refracts the environment and glows from within with a soft subsurface luminance, brightest at the thin back-lit edges, finished with crisp glints. Crystalline and cold where Frost is milky.",
   "entry": "shader.frag",

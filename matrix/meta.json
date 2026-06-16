@@ -2,7 +2,7 @@
   "name": "Matrix",
   "slug": "matrix",
   "family": "Glitch",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["matrix", "digital-rain", "code", "glyphs", "terminal", "loop"],
   "description": "Digital rain — columns of glyphs cascading from the top, each stream led by a bright white shining character with a long trail fading from green to dark, the symbols re-rolling as they fall and columns running at their own speeds. The classic falling code.",
   "entry": "shader.frag",

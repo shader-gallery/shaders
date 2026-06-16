@@ -1,8 +1,9 @@
 {
   "name": "Scry",
   "slug": "scry",
+  "shelf": "logo",
   "family": "Omen",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "smoke", "mirror", "occult", "organic"],
   "description": "A tall, arch-topped obsidian mirror traced by a hairline of palette-tinted edge light, standing slightly off-centre on a near-black ground. Slow domain-warped smoke turns inside it in grey-violet, denser toward the base of the arch; at long intervals thin bright threads of almost-imagery rise toward the glass, sharpen to the edge of legibility, then sink back.",
   "entry": "shader.frag",

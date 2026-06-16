@@ -2,7 +2,7 @@
   "name": "Throat",
   "slug": "throat",
   "family": "Delve",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ice", "cave", "organic", "depth"],
   "description": "An ice-cave throat swallowing the view: concentric shelves of translucent ice with organic noise-displaced contours, cold rim light pooling in the bays, hue sliding through the palette by depth, and an exponential gullet of true black at center. Shelves and their frozen wobble descend the scale axis forever — a continuous zoom that never arrives.",
   "entry": "shader.frag",

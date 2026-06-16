@@ -2,7 +2,7 @@
   "name": "Pendulum",
   "slug": "pendulum",
   "family": "Trace",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "pendulum", "wave", "clockwork", "oscillators"],
   "description": "A row of glowing pendulum bobs hangs from an implied rail, each swinging on its own exact period with a faint phosphor smear behind it. Graded lengths follow the classic pendulum-wave series, so the row drifts order-to-chaos-to-order on one long seamless loop while bob colours blend across the row like a slow colour ribbon.",
   "entry": "shader.frag",

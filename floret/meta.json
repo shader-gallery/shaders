@@ -2,7 +2,7 @@
   "name": "Floret",
   "slug": "floret",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["phyllotaxis", "spiral", "dots", "sunflower", "crisp", "geometric", "loop"],
   "description": "A sunflower spiral of crisp dots — seeds placed on the golden angle so they pack into the interlocking Fermat spirals of phyllotaxis, colour grading outward by radius while a brightness pulse travels through the rings as the whole head turns.",
   "entry": "shader.frag",

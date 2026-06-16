@@ -2,7 +2,7 @@
   "name": "Lissajous",
   "slug": "lissajous",
   "family": "Trace",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "oscilloscope", "phosphor", "curve", "resonance"],
   "description": "A single bright phosphor dot traces a Lissajous figure on a near-black oscilloscope screen, trailing a tail of dimmer, wider samples. The frequency ratio drifts on a slow ~60s super-cycle, smearing into a woven knot then snapping into a simple resonance that holds steady before drifting on.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Bubble",
   "slug": "bubble",
   "family": "Bloom",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "rings", "rising", "pop"],
   "description": "Sparse thin glassy ring outlines rise through open darkness, growing slightly as they climb and carrying a single brighter highlight arc that suggests curved glass. At a hash-determined height each bubble pops — a quick expanding flash that dissolves into a soft fading glow — before re-seeding below the frame. Only the outlines and pop flashes emit light; interiors stay near-black.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Suffuse",
   "slug": "suffuse",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "pastel", "iridescent", "high-key", "grain", "glow", "loop"],
   "description": "A pastel wash that bleeds into itself — wide soft poles of opal blue, lilac, rose and mint drift so slowly they read as one suffused field, with a faint soap-bubble shimmer sweeping through. The softest, dreamiest member of the family.",
   "entry": "shader.frag",

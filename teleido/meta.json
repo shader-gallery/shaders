@@ -2,7 +2,7 @@
   "name": "Teleido",
   "slug": "teleido",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "mirror", "symmetry", "jewel"],
   "description": "The archetypal kaleidoscope: a single wedge of soft jewel-light blobs mirror-folded around the centre and slowly rotated, so the figure endlessly reshuffles as the unseen object cell drifts through the tube. Jewel hues bloom on near-black with a faint rim of light running the mirror seams, brightest at the luminous core and falling to a dark rim.",
   "entry": "shader.frag",

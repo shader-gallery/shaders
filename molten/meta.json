@@ -2,7 +2,7 @@
   "name": "Molten",
   "slug": "molten",
   "family": "Molten",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "chrome", "metal", "liquid", "specular", "reflection", "glow", "loop"],
   "description": "A cluster of liquid-chrome blobs merging and parting like mercury — raymarched 3D metal with mirror reflections of a palette-tinted studio environment, crisp specular highlights and grazing fresnel. Fills the frame as a close-up of flowing metal.",
   "entry": "shader.frag",

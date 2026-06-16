@@ -2,7 +2,7 @@
   "name": "Benday",
   "slug": "benday",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["benday", "dots", "comic", "pop-art", "high-key", "crisp", "loop"],
   "description": "Pop-art Ben-Day dots — a regular screen of bold flat dots over a light newsprint ground, each dot taking its colour from a drifting field underneath so colour blocks roll across the grid. Bright, graphic, comic-book.",
   "entry": "shader.frag",

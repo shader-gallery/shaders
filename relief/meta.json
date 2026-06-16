@@ -2,7 +2,7 @@
   "name": "Relief",
   "slug": "relief",
   "family": "Facet",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["contour", "topographic", "emboss", "relief", "geometric", "loop"],
   "description": "A slowly morphing topographic relief — elevation shaded by hillshade so the terrain reads as carved, threaded with crisp contour lines and heavier index lines. A premium embossed map, geometry from a height field.",
   "entry": "shader.frag",

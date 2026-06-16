@@ -2,7 +2,7 @@
   "name": "Glyphic",
   "slug": "glyphic",
   "family": "Glitch",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glyphs", "text-mode", "density", "ascii-art", "digital", "loop"],
   "description": "A drifting image rendered in characters — each cell a glyph whose density tracks the brightness beneath it, so soft blobs of light resolve into denser symbols while the dark thins to sparse marks. The whole scene re-typed as text-mode art.",
   "entry": "shader.frag",

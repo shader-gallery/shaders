@@ -2,7 +2,7 @@
   "name": "Lantern",
   "slug": "lantern",
   "family": "Bloom",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "orbs", "bloom", "glow", "rainbow", "organic", "deep-sea", "caustic", "loop"],
   "description": "Bioluminescent sea-lanterns — translucent glowing orbs drifting over dark water, each a structured lantern with a bright membrane rim, a shimmering caustic cell-web interior and fine filament ribs radiating from a hot nucleus. Overlaps bloom brighter as they breathe.",
   "entry": "shader.frag",

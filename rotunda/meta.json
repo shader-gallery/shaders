@@ -2,7 +2,7 @@
   "name": "Rotunda",
   "slug": "rotunda",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "columns", "ruin", "fog", "parallax", "raymarch"],
   "description": "The inside of a ruined circular temple: a ring of raymarched cylinder columns, some snapped to stumps, surrounds a low central altar with a single warm ember. The eye orbits slowly inside the ring so near columns process leftward as solid black bars while the far picket counter-drifts rightward through breathing fog.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Torii",
   "slug": "torii",
   "family": "Plinth",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "gates", "corridor", "fog", "parallax", "raymarch"],
   "description": "A processional avenue of gates running dead away from the eye: a single torii SDF (two round pillars, a long gently curved lintel, a lower tie-beam) repeated down the view axis by domain mod, each instance hash-leaned and hash-scaled a few percent off true. Dozens nest in one-point perspective, the nearest a huge near-black frame and the farthest dissolving into fog; the underside of every lintel catches a faint warm lantern rim while a thin ankle mist breathes between the pillars. The camera dollies forward forever down the centerline - only the eye moves.",
   "entry": "shader.frag",

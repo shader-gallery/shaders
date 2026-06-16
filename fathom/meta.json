@@ -2,7 +2,7 @@
   "name": "Fathom",
   "slug": "fathom",
   "family": "Strata",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ocean", "depth", "stipple", "halftone"],
   "description": "A bathymetric survey rendered as soundings, not lines: a fixed grid of small glowing depth dots whose size and brightness fall with the water depth beneath them, so the chart reads as a calm stipple field swallowed by one wandering abyssal void and a couple of lesser deeps. Dot hue slides through the palette with depth; the grid never moves while the hidden trench migrates and the deepest dots shimmer.",
   "entry": "shader.frag",

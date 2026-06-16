@@ -2,7 +2,7 @@
   "name": "Facet",
   "slug": "facet",
   "family": "Rosette",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "symmetry", "crystal", "jewel"],
   "description": "A cut-crystal jewel: the angle around centre is mirror-folded into N wedges and the folded space is partitioned into hard diamond facets — concentric facet rings of brick-offset wedgelets, each a flat crystal face catching a slowly-turning raking light, with sharp bright cut-lines glinting between them. Most faces sit deep in shadow while a few sparkle, so the gem twinkles as the light wanders, dark toward the corners.",
   "entry": "shader.frag",

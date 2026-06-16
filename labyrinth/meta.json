@@ -2,7 +2,7 @@
   "name": "Labyrinth",
   "slug": "labyrinth",
   "family": "Rosette",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "maze", "lines", "architecture", "shifting"],
   "description": "A full-frame orthogonal labyrinth of faintly glowing etched walls on a near-black plan. Wall segments slide along their grid axes on staggered eased schedules, perpetually rewiring the maze's topology, with soft glints blooming as walls dock into junctions.",
   "entry": "shader.frag",

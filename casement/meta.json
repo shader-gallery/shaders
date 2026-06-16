@@ -2,7 +2,7 @@
   "name": "Casement",
   "slug": "casement",
   "family": "Umbra",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "window", "projection", "penumbra"],
   "description": "A casement window's light thrown across an interior wall: one large bright trapezoid divided by the dark cross of mullion bars into four panes, sheared by projection from a light moving outside. As the source flattens the trapezoid leans and elongates toward a corner, the mullion shadows broaden and their penumbrae melt, then sharpen as it passes head-on — a leading rim of light tracing the edge it lands on first. The whole show is read in negative, looping with no visible reset through a grazing sliver.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Armature",
   "slug": "armature",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "polyhedron", "wireframe", "geometry", "solid", "cage", "glow", "loop"],
   "description": "A solid dodecahedron sealed inside a glowing icosahedral wire cage that turns the opposite way — shaded surface and see-through edge-tubes in one frame, the two solids sliding against each other as they counter-rotate.",
   "entry": "shader.frag",

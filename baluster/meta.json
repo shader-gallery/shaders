@@ -2,7 +2,7 @@
   "name": "Baluster",
   "slug": "baluster",
   "family": "Umbra",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "bars", "fan", "stairs", "penumbra"],
   "description": "A stair banister's shadow thrown up a wall: a fan of dark bars radiates from an off-screen anchor below the corner, tapering and graded from broad-soft to knife-sharp. An implied lamp swings on a slow pendulum downstairs, so the whole fan pivots and the bars scissor between deeper dark and lit wedges.",
   "entry": "shader.frag",

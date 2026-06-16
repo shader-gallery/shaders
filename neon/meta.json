@@ -1,8 +1,9 @@
 {
   "name": "Neon",
   "slug": "neon",
+  "shelf": "logo",
   "family": "Noir",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "neon", "flicker", "city", "minimal"],
   "description": "A single elegant neon tube hangs centered on a near-black wall, white-hot core in a wide coloured halo with a dim splash on the wall behind. It stutters to life, hums steady, falters once, relaxes dark, then re-ignites in the next palette colour over a four-cycle loop.",
   "entry": "shader.frag",

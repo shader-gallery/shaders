@@ -2,7 +2,7 @@
   "name": "Wisp",
   "slug": "wisp",
   "family": "Bloom",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "organic", "flame", "wander"],
   "description": "Two or three pale teardrop flames wander weightlessly over dark marsh water, their FBM-flickered bodies dragging thin fading filaments that trace the quasi-periodic path each one just travelled. A barely-there mist band breathes along the bottom edge; each flame carries a slightly different cool palette tint and the composite never visibly repeats.",
   "entry": "shader.frag",

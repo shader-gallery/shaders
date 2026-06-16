@@ -2,7 +2,7 @@
   "name": "Spoke",
   "slug": "spoke",
   "family": "Filament",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "tubes", "led", "radial", "starburst", "rays", "rgb"],
   "description": "A starburst of glowing tubes radiating from the centre, charge shooting outward along each ray while the hue steps spoke to spoke. A softly lit ground fills the wedges between.",
   "entry": "shader.frag",

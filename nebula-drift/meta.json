@@ -2,7 +2,7 @@
   "name": "Nebula Drift",
   "slug": "nebula-drift",
   "family": "Abyss",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "nebula", "gas", "dust", "texture", "depth", "organic"],
   "description": "A Nebula variation seen edge-on: a deep volumetric emission field of drifting palette-hued gas, threaded by serpentine dark dust lanes and Bok globules that silhouette against the backlight, and laced with thin bright ionization filaments. Two parallaxing depth layers and an off-centre luminous heart give real front-to-back depth.",
   "entry": "shader.frag",

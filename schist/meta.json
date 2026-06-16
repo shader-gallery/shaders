@@ -2,7 +2,7 @@
   "name": "Schist",
   "slug": "schist",
   "family": "Strata",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "rock", "bands", "texture", "mineral", "organic", "rainbow"],
   "description": "A slab of foliated metamorphic rock face-on: dense wavy mineral bands sweep diagonally across the frame, each layer a different restrained palette tint separated by thin dark cleavage seams, domain-warped into boudinage swells and pinches so it never reads as ruled stripes. Tiny mica flakes scattered along the foliation catch the light and twinkle. Dark rock, luminous mineral colour, everything creeping slowly with no loop seam.",
   "entry": "shader.frag",

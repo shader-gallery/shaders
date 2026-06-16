@@ -2,7 +2,7 @@
   "name": "Sigil",
   "slug": "sigil",
   "family": "Omen",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ritual", "geometric", "ember", "occult"],
   "description": "Branded runes on black iron: two or three angular, hash-generated sigils sit scattered across a near-black field, each at a different stage of cooling. A fresh brand glows near-white, then heat drains down the palette — rose to violet to ember — with thick stroke junctions holding their heat longest, until only a charred trace remains.",
   "entry": "shader.frag",

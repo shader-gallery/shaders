@@ -2,7 +2,7 @@
   "name": "Mandorla",
   "slug": "mandorla",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "guilloche", "lace", "symmetry"],
   "description": "An ornate guilloche rosette — the lacework end of the family, drawn in light rather than filled cells. Dozens of fine wavy rose-curves of different petal counts interweave into engraved lace, jewel nodes flaring where the threads cross. The whole rosette breathes as the curve amplitudes swell and ease, and turns slowly so the moire of crossing threads shimmers like a spun mandala.",
   "entry": "shader.frag",

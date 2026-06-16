@@ -2,7 +2,7 @@
   "name": "Hatch",
   "slug": "hatch",
   "family": "Burnish",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "etched", "crosshatch", "smoke", "organic"],
   "description": "A full-bleed crosshatch engraving whose line weight is carved by an invisible drifting FBM plume, so density alone reads as the tonal shading of smoke that is never drawn. The hatching never moves; a low raking light precesses across the static engraving like a coin tilted under lamplight.",
   "entry": "shader.frag",

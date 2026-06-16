@@ -2,7 +2,7 @@
   "name": "Medusa",
   "slug": "medusa",
   "family": "Bloom",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "organic", "ocean", "jellyfish", "drift"],
   "description": "Sea-nettle jellyfish drift down through deep water at staggered depths — each a translucent domed bell marked with radial stripes and a dark scalloped margin, trailing a frilly ruffled column of oral arms and a long curtain of fine tentacles that sway on a slow continuous current. No contraction pulse: the jellies simply sink and trail, looping with no visible reset.",
   "entry": "shader.frag",

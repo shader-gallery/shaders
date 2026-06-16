@@ -2,7 +2,7 @@
   "name": "Strut",
   "slug": "strut",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "wireframe", "icosahedron", "polyhedron", "geometry", "neon", "glow", "loop"],
   "description": "A single icosahedron drawn as a cage of glowing edge-tubes — see-through, so the far edges shine faintly through the near ones as it tumbles. All thirty edges accumulated volumetrically from the solid's face planes, neon on deep dark.",
   "entry": "shader.frag",

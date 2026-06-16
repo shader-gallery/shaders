@@ -2,7 +2,7 @@
   "name": "Packet",
   "slug": "packet",
   "family": "Glitch",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["data", "hex", "stream", "bus", "digital", "loop"],
   "description": "A live data bus — rows of byte cells streaming sideways at their own rates, values re-rolling as they pass, bright packet bursts travelling through the dim traffic while a read cursor sweeps the columns. Horizontal data flow, all signal.",
   "entry": "shader.frag",

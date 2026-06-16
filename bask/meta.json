@@ -2,7 +2,7 @@
   "name": "Bask",
   "slug": "bask",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "warm", "high-key", "sunrise", "grain", "glow", "loop"],
   "description": "A high-key warm color field — big soft blobs of peach, gold and coral drift over one another while a low dawn glow lifts from the bottom third like light through morning haze. Airy, bright, grainy; the antidote to dark backgrounds.",
   "entry": "shader.frag",

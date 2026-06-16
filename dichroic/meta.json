@@ -2,7 +2,7 @@
   "name": "Dichroic",
   "slug": "dichroic",
   "family": "Kaleido",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "kaleidoscope", "radial", "iridescent", "prismatic", "symmetry"],
   "description": "Dichroic glass: the mirror-fold is sampled at a slightly different angle per colour channel, so every reflected edge splits into an oil-slick iridescence — cyan on one flank, magenta on the other. Concentric shard bands swirl through the wedge and the seams flare with colour fringes where they cross, jewel-bright and restless on near-black.",
   "entry": "shader.frag",

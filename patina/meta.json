@@ -2,7 +2,7 @@
   "name": "Patina",
   "slug": "patina",
   "family": "Burnish",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "metal", "organic", "verdigris"],
   "description": "An aged bronze plate in time-lapse: thresholded FBM carves mottled verdigris stains over darker metal, each stain rimmed by a thin line of raw bright bronze where oxide meets polish. Nothing orbits and nothing roams — the patch interiors stay matte and dark while all the light lives at the slowly creeping coastline between corrosion and metal, advancing edges glittering with fresh oxide and retreating ones baring warm bronze glints.",
   "entry": "shader.frag",

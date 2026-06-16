@@ -2,7 +2,7 @@
   "name": "Stellate",
   "slug": "stellate",
   "family": "Polytope",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["3d", "raymarch", "stellation", "tetrahedron", "star", "geometry", "spike", "glow", "loop"],
   "description": "A stella octangula — two tetrahedra driven through each other into an eight-pointed star — turning slowly with its spike tips glowing hot, the whole compound breathing its points in and out.",
   "entry": "shader.frag",

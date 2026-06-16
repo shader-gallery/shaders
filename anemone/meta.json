@@ -2,7 +2,7 @@
   "name": "Anemone",
   "slug": "anemone",
   "family": "Bloom",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "organic", "radial", "breathing"],
   "description": "A bed of sea-anemone organisms filling dark water — each a ring of soft tentacle lobes built from polar petal SDFs, rim-lit with a warm core, breathing open and closed on a long eased cycle with the contraction rippling around the ring while tips sway and spiral. Blooms scatter on a jittered grid at varied sizes, lobe counts, breath phases and palette rotations, overlapping into a dense translucent anemone field.",
   "entry": "shader.frag",

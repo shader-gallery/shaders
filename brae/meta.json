@@ -2,7 +2,7 @@
   "name": "Brae",
   "slug": "brae",
   "family": "Sough",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "wind", "silhouette", "hill", "rim", "organic"],
   "description": "A near-black hillside climbs diagonally under a thin moonglow band, its crest a dense fringe of grass-blade silhouettes. Episodic gust fronts ripple along the edge as a traveling seam of rim-light - tips bow into the glow, overshoot, and ring back to dark, leaving the crest a still torn-paper silhouette between gusts.",
   "entry": "shader.frag",

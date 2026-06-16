@@ -2,7 +2,7 @@
   "name": "Beat",
   "slug": "beat",
   "family": "Moiré",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["moire", "rings", "interference", "crisp", "geometric", "glow", "loop"],
   "description": "Two concentric ring patterns beating against each other — a slow moiré rosette blooming and folding as the centres drift apart, crisp bright bands threading through near-black. Pure interference, hypnotic and graphic.",
   "entry": "shader.frag",

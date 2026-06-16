@@ -2,7 +2,7 @@
   "name": "Eddy",
   "slug": "eddy",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "swirl", "spiral", "galaxy", "grain", "glow", "loop"],
   "description": "A slow galactic swirl — colour poles smeared into spiral arms by a differential rotation that winds tighter toward a luminous off-centre core, inter-arm dust darkening between them. A drifting colour-field with a sense of rotation rather than a still gradient.",
   "entry": "shader.frag",

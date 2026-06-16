@@ -2,7 +2,7 @@
   "name": "Cubit",
   "slug": "cubit",
   "family": "Facet",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["isometric", "cubes", "3d", "geometric", "crisp", "loop"],
   "description": "A field of isometric cubes rising and falling like a block cityscape — each cube three shaded faces meeting at crisp seams, taller blocks catching more light. Confident hard-edged 3D geometry from flat shapes.",
   "entry": "shader.frag",

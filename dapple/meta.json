@@ -2,7 +2,7 @@
   "name": "Dapple",
   "slug": "dapple",
   "family": "Shoal",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "flecks", "water", "light", "organic"],
   "description": "Sunlight through a drifting mat of surface foliage: a sparse constellation of discrete, soft-edged elliptical sun-flecks on a near-black seabed, all sharing one projection slant and each tinted by position. A passing swell sways the whole constellation in coherent lockstep while fronds blink individual flecks out and back, and now and then one fleck pinches smoothly into two.",
   "entry": "shader.frag",

@@ -2,7 +2,7 @@
   "name": "Slick",
   "slug": "slick",
   "family": "Aura",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["gradient", "mesh", "iridescent", "oil-slick", "grain", "glow", "organic", "loop"],
   "description": "An iridescent oil-slick color field — broad palette poles fold and churn through one another like thin film on water, thin-film bands sweeping slow rainbows across the surface. Pure soft color, no hard structure, dusted with film grain.",
   "entry": "shader.frag",

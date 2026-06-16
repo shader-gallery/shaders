@@ -2,7 +2,7 @@
   "name": "Heartwood",
   "slug": "heartwood",
   "family": "Smolder",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ember", "fire", "wood", "rings"],
   "description": "The sawn end of a log: warm concentric growth rings and radial grain around an off-centre pith, with fire eating inward from the bark as a wandering annular ember rim graded warm-to-cool. Rings light as hairline preheat circles a beat before they burn; outside is ash with cooling sparks. The rim tightens to the pith and dies as a fresh face is already burning in.",
   "entry": "shader.frag",

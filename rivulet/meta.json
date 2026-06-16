@@ -2,7 +2,7 @@
   "name": "Rivulet",
   "slug": "rivulet",
   "family": "Noir",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "rain", "glass", "water", "organic"],
   "description": "A near-black pane in front of a softly blurred field of city colour; a handful of meandering water trails descend in hash-assigned columns, each crowned by a bright refractive bead that acts as a moving lens onto the smeared neon behind the glass.",
   "entry": "shader.frag",

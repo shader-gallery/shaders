@@ -2,7 +2,7 @@
   "name": "Lea",
   "slug": "lea",
   "family": "Sough",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "wind", "meadow", "overhead", "organic"],
   "description": "A meadow seen from directly above: a jittered grid of short grass-tuft strokes that lie near-black and almost still until an aperiodic gust band sweeps across, stretching and combing the tufts downwind so their far tips brighten — a travelling front of glowing dashes with calm dark meadow on either side.",
   "entry": "shader.frag",

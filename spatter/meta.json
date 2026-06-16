@@ -2,7 +2,7 @@
   "name": "Spatter",
   "slug": "spatter",
   "family": "Noir",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "paint", "splatter", "texture", "organic"],
   "description": "Thrown paint on a dark wall: a dense, clumping field of ragged-edged splats, each flanked by a spray of satellite droplets and trailing a thin drip, in palette hues chosen by position. Splats flare on impact then settle into slow-fading stains so many coexist as built-up texture, clumping heavier off-centre.",
   "entry": "shader.frag",

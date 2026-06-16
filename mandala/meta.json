@@ -2,7 +2,7 @@
   "name": "Mandala",
   "slug": "mandala",
   "family": "Rosette",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["glow", "loop", "radial", "petals", "ornament", "symmetry", "mandala"],
   "description": "A dense, multi-layered concentric mandala: many nested rings of glowing scalloped petals (alternating N and 2N symmetry per ring) laced together by radial spokes and studded with jewel dots, building an intricate ornament that fills the frame and breathes slowly. The line-work glows and takes graded palette hues by ring.",
   "entry": "shader.frag",

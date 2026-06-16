@@ -2,7 +2,7 @@
   "name": "Stride",
   "slug": "stride",
   "family": "Facet",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["stripes", "diagonal", "bevel", "ridge", "geometric", "crisp", "loop"],
   "description": "Bold diagonal bars sliding across the frame, each a beveled ridge with a lit chamfer and shadowed trailing edge so they read as extruded 3D slats. Confident, architectural, kinetic.",
   "entry": "shader.frag",

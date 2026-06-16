@@ -2,7 +2,7 @@
   "name": "Carrier",
   "slug": "carrier",
   "family": "Trace",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "waveform", "signal", "oscilloscope", "lines"],
   "description": "A rack of horizontal waveform traces, each a thin phosphor line with a soft glow halo, displaced by exact sums of sinusoids. Channels scroll laterally at a steady reading pace while slow envelopes swell, frequencies glide, and beats walk — patient radio traffic after midnight, ruled and precise, looping on a shared ~60s super-period.",
   "entry": "shader.frag",

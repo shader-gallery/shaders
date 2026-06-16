@@ -2,7 +2,7 @@
   "name": "Nebula",
   "slug": "nebula",
   "family": "Abyss",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "space", "clouds", "stars", "organic"],
   "description": "A Trifid-style emission/reflection nebula — billowing domain-warped gas fills the frame, a warm pink emission region glowing in the lower body and cooling to a blue reflection haze toward the top, woven along a noisy seam. Branching dark dust lanes carve trifurcating channels through the clouds while a dense field of varied stars twinkles behind and through them, with a couple of bright young stars embedded in the gas. Everything billows on slow unbounded drift.",
   "entry": "shader.frag",

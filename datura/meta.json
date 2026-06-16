@@ -2,7 +2,7 @@
   "name": "Datura",
   "slug": "datura",
   "family": "Rosette",
-  "author": "Erin Carter",
+  "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "flower", "hanging", "sway", "night"],
   "description": "Angel's-trumpet datura at night: two or three pendant trumpet blooms hang from an unseen branch along the top edge, glowing corolla outlines over faint translucent membranes, each long bell tapering to a five-pointed flared rim with a warm pool of light in its throat. The blooms sway on their own slow eased pendulums while throat glows breathe and fine pollen motes drift upward through the dark.",
   "entry": "shader.frag",
