@@ -25,8 +25,8 @@
       "effect": "Vividness of the jelly colours; 0 is greyscale, 1 is the raw palette, higher pushes saturation." },
     { "uniform": "u_stripes", "label": "Bell stripes", "min": 4, "max": 28, "step": 1, "default": 14,
       "effect": "Number of radial stripes marking each translucent bell." },
-    { "uniform": "u_tentacles", "label": "Tentacle density", "min": 5, "max": 36, "step": 1, "default": 16,
-      "effect": "How many fine tentacles hang in each jelly's trailing curtain." }
+    { "uniform": "u_tentacles", "label": "Tentacle density", "min": 4, "max": 30, "step": 1, "default": 10,
+      "effect": "How many tentacle ribbons hang in each jelly's trailing curtain." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6 }

@@ -117,30 +117,35 @@ void main() {
 
     vec3 jc = vec3(0.0);
 
-    // ---- BELL: upper dome with radial stripes + dark scalloped margin --------
+    // ---- BELL: a 3D dome shaded by a radial gradient over an oval ------------
     float ny = b.y;                                   // 0 at margin .. 1 at apex
-    float bellW = 1.18;
+    float bellW = 1.15;
     float hw = bellW * sqrt(max(1.0 - ny * ny, 0.0)); // ellipse half-width
-    // scalloped lower margin: the bell bottom is a wavy lobed curve, not a flat cut
-    float marg = 0.055 * sin(b.x / max(bellW, 0.1) * PI * (stripeN * 0.5));
+    // small scalloped lower margin: a subtle wavy lobed bottom edge
+    float marg = 0.04 * sin(b.x / max(bellW, 0.1) * PI * (stripeN * 0.5));
     float dome = smoothstep(0.05, -0.02, abs(b.x) - hw)
                * smoothstep(1.04, 0.97, ny)
-               * smoothstep(-0.10 + marg, 0.03 + marg, ny);
-    float phi = atan(b.x, max(ny, 0.02));             // angle from apex
-    float stripe = pow(0.5 + 0.5 * sin(phi * stripeN), 1.6);
-    float apex = smoothstep(0.15, 1.0, ny);
-    vec3  domeCol = tint * (0.32 + 0.9 * stripe) * (0.55 + 0.6 * apex);
-    // bright thin rim along the dome outline
-    float rim = smoothstep(0.07, 0.0, abs(abs(b.x) - hw)) * smoothstep(-0.04, 0.12, ny) * step(ny, 1.02);
-    // scalloped frilly margin: a lobed bright band riding the lower bell edge
+               * smoothstep(-0.05 + marg, 0.06 + marg, ny);
+    // oval radial gradient -> rounded 3D body (bright centre, limb-dark rim)
+    vec2  ec = vec2(b.x / bellW, (ny - 0.42) / 0.58); // oval centred mid-bell
+    float body3d = smoothstep(1.05, 0.0, length(ec)); // 1 centre .. 0 edge
+    // meridian stripes, subtle so the 3D gradient stays the dominant read
+    float phi = atan(b.x, max(ny, 0.02));
+    float stripe = 0.5 + 0.5 * sin(phi * stripeN);
+    vec3  domeCol = tint * (0.16 + 0.95 * body3d) * (0.78 + 0.34 * stripe);
+    // glossy top highlight sells the dome curvature
+    float hil = smoothstep(0.55, 0.0, length(vec2(b.x / bellW * 1.2, (ny - 0.72) / 0.32)));
+    // thin bright rim along the outline (small edge)
+    float rim = smoothstep(0.045, 0.0, abs(abs(b.x) - hw)) * smoothstep(0.0, 0.18, ny) * step(ny, 1.0);
+    // small scalloped frill hugging the lower edge
     float lobe = 0.5 + 0.5 * sin(phi * stripeN * 1.4);
-    float frill = smoothstep(0.15 + marg, marg, ny) * smoothstep(-0.18 + marg, -0.02 + marg, ny);
-    // halo
+    float frill = smoothstep(0.08 + marg, marg - 0.02, ny) * smoothstep(-0.11 + marg, -0.01 + marg, ny);
+    jc += domeCol * dome * 0.82;
+    jc += mix(tint, vec3(1.0), 0.5) * hil * dome * 0.45;          // top gloss
+    jc += mix(tint, vec3(1.0), 0.25) * rim * 0.4;                 // thin rim
+    jc += mix(tint, vec3(1.0), 0.15) * frill * (0.3 + 0.7 * lobe) * 0.4; // small frill
     float rr = length(vec2(b.x / bellW, ny));
-    jc += domeCol * dome * 0.75;
-    jc += mix(tint, vec3(1.0), 0.30) * rim * 0.55;
-    jc += mix(tint, vec3(1.0), 0.15) * frill * (0.25 + 0.85 * lobe) * 0.7;   // scalloped frill
-    jc += tint * exp(-rr * rr * 1.3) * 0.12 * smoothstep(-0.25, 0.1, ny);
+    jc += tint * exp(-rr * rr * 1.3) * 0.10 * smoothstep(-0.25, 0.1, ny);  // halo
 
     // ---- ORAL ARMS: frilly ruffled pale column hanging below the bell --------
     float armY = -b.y;                                 // 0 at margin, grows downward
@@ -158,17 +163,21 @@ void main() {
     if (td > 0.0 && td < 8.5) {
       float spacing = 2.0 * bellW / tentN;
       float strand  = floor(b.x / spacing + 0.5);
-      float sx      = strand * spacing + (hash21(vec2(strand, fi)) - 0.5) * spacing * 0.35;
-      if (abs(sx) < bellW * 1.06) {
+      float sx      = strand * spacing + (hash21(vec2(strand, fi)) - 0.5) * spacing * 0.3;
+      if (abs(sx) < bellW * 1.02) {
         float h    = hash21(vec2(strand + 7.0, fi));
         float len  = 4.5 + 3.5 * h;                    // per-strand length (radii)
-        float sway = u_tentacleFlow * sin(td * 1.15 - t * 1.1 + strand * 0.7 + phase);
-        float cxs  = sx + sway * (0.10 + 0.14 * td);   // curve grows with depth
+        float sway = u_tentacleFlow * sin(td * 1.0 - t * 1.1 + strand * 0.7 + phase);
+        float cxs  = sx * (1.0 + 0.12 * td)            // gentle fan-out with depth
+                   + sway * (0.12 + 0.16 * td);
         float dxt  = b.x - cxs;
-        float thick = 0.009 + 0.005 * h;
-        float line = exp(-dxt * dxt / (thick * thick));
-        float taper = smoothstep(len, len * 0.2, td) * smoothstep(0.0, 0.18, td);
-        jc += tint * line * taper * 0.36;
+        // cohesive ribbon: a soft-edged tapering shape, not a hairline
+        float wTen = max(spacing * (0.34 + 0.16 * h) * smoothstep(len, 0.0, td), spacing * 0.08);
+        float ribbon = smoothstep(wTen, wTen * 0.35, abs(dxt));
+        float taper  = smoothstep(len, len * 0.15, td) * smoothstep(0.0, 0.22, td);
+        // soft inner shading so each ribbon reads as a rounded translucent body
+        float shade  = 0.6 + 0.4 * (1.0 - abs(dxt) / max(wTen, 1e-3));
+        jc += tint * ribbon * taper * shade * 0.4;
       }
     }
 
