@@ -79,50 +79,47 @@ float caustic(vec2 q, float t) {
 vec3 jelly(vec2 p, float r, float seed, float t, vec3 col,
            float detail, float soft, float fr) {
   float rad = length(p) / max(r, 1e-3);
-  if (rad > 1.45) return vec3(0.0);
+  if (rad > 1.32) return vec3(0.0);   // hard cutoff < 1 grid cell -> no clipping
   float ang = atan(p.y, p.x);
 
-  // translucent body: soft luminous dome that fills to the rim
-  float body = pow(smoothstep(1.05, 0.0, rad), mix(1.15, 1.7, soft));
-  // bright membrane rim, slightly rippling; softer/wider when far
-  float ripple = 0.03 * sin(ang * 7.0 + t * 0.9 + seed * 5.0);
-  float rim = exp(-pow((rad - (0.9 + ripple)) * mix(7.0, 3.2, soft), 2.0));
-  // hot soft core
-  float core = exp(-rad * rad * mix(5.0, 3.0, soft));
+  // smooth translucent body: a soft luminous dome filling to the rim
+  float body = pow(smoothstep(1.0, 0.0, rad), mix(1.1, 1.6, soft));
+  // soft bright membrane rim, gently rippling; wider/softer when far
+  float ripple = 0.025 * sin(ang * 6.0 + t * 0.8 + seed * 5.0);
+  float rim = exp(-pow((rad - (0.88 + ripple)) * mix(6.0, 3.2, soft), 2.0));
+  // soft inner glow toward the centre
+  float core = exp(-rad * rad * mix(4.5, 3.0, soft));
 
   float inner = 0.0;
   if (detail > 0.01) {
-    // four gonad rings, the moon-jelly clover
-    inner += (0.5 + 0.5 * cos(ang * 4.0 + seed)) * exp(-pow((rad - 0.5) * 3.2, 2.0)) * 0.6;
-    // fine radial ribs, subtle
-    float ribN = 14.0 + floor(seed * 14.0);
-    float ribs = pow(0.5 + 0.5 * sin(ang * ribN + seed * 3.0), 4.0);
-    inner += ribs * smoothstep(0.15, 0.6, rad) * (1.0 - smoothstep(0.78, 1.0, rad)) * 0.4;
-    // caustic shimmer through the dome, near bells only (cost gate)
-    if (detail > 0.55) {
-      vec2 q = p / max(r, 1e-3) * 3.0 + seed * 7.0;
-      inner += caustic(q, t * 0.7 + seed * 4.0) * 0.5 * smoothstep(1.0, 0.2, rad);
+    // the four moon-jelly gonad lobes — smooth, no sharp spokes
+    inner += (0.5 + 0.5 * cos(ang * 4.0 + seed)) * exp(-pow((rad - 0.5) * 2.6, 2.0)) * 0.5;
+    // gentle caustic mottle through the dome, near bells only (cost gate)
+    if (detail > 0.5) {
+      vec2 q = p / max(r, 1e-3) * 2.6 + seed * 7.0;
+      inner += caustic(q, t * 0.7 + seed * 4.0) * 0.28 * smoothstep(0.95, 0.2, rad);
     }
     inner *= detail;
   }
 
-  // marginal tentacle fringe radiating just past the rim, waving (top-down)
+  // marginal tentacle fringe: a SHORT, fine, soft halo of many thin strands
+  // just past the rim (top-down) — a fuzzy margin, not long spikes.
   float fringe = 0.0;
   if (fr > 0.01) {
-    float flen = fr * 0.42;
-    float ro = (rad - 0.94) / max(flen, 1e-4);
+    float flen = fr * 0.18;
+    float ro = (rad - 0.9) / max(flen, 1e-4);
     if (ro > 0.0 && ro < 1.0) {
-      float wob = sin(t * 1.1 + seed * 5.0 + ang * 3.0) * 0.45;
-      float nFr = 24.0 + floor(seed * 28.0);
-      fringe = pow(0.5 + 0.5 * sin(ang * nFr + wob), 4.0)
-             * (1.0 - ro) * smoothstep(0.0, 0.18, ro);
+      float wob = sin(t * 1.0 + seed * 5.0 + ang * 2.0) * 0.3;
+      float nFr = 40.0 + floor(seed * 40.0);
+      fringe = pow(0.5 + 0.5 * sin(ang * nFr + wob), 2.0)
+             * (1.0 - ro) * smoothstep(0.0, 0.3, ro);
     }
   }
 
-  vec3 bodyC = mix(col, vec3(1.0), 0.28);   // tissue scatters toward white
+  vec3 bodyC = mix(col, vec3(1.0), 0.30);   // tissue scatters toward white
   vec3 rimC  = mix(col, vec3(1.0), 0.55);
-  return bodyC * (body * 0.6 + inner * 0.6 + core * 0.55)
-       + rimC  * (rim * 0.8 + fringe * 0.5);
+  return bodyC * (body * 0.62 + inner * 0.5 + core * 0.5)
+       + rimC  * (rim * 0.75 + fringe * 0.3);
 }
 
 // One parallax layer of jellies: a hash grid with one slowly-rising, looping,
@@ -138,11 +135,12 @@ vec3 hazeLayer(vec2 uv, float t, float scale, float drift, float detail,
       if (hash21(cc + so + 13.1) > 0.86) continue;       // organic gaps
       float h = hash21(cc + so);
       float rise = fract(hash21(cc + so + 5.0) + t * drift * (0.6 + 0.8 * h));
-      float sway = 0.10 * sin(t * 0.6 + h * 6.28);
-      vec2  jc = (cc + vec2(h + sway, rise)) / scale;
+      float sway = 0.08 * sin(t * 0.6 + h * 6.28);
+      vec2  jc = (cc + vec2(0.2 + 0.6 * h + sway, rise)) / scale;   // kept off cell edges
       vec2  p  = (uv - jc) * scale;
-      if (dot(p, p) > 2.4) continue;
-      float rr = mix(0.42, 0.86, h);
+      if (dot(p, p) > 1.0) continue;                     // splat fits inside a cell
+      // radius capped so the bell never exceeds the 3x3 neighbourhood (no clip)
+      float rr = mix(0.30, 0.58, h);
       float pulse = 0.85 + 0.15 * sin(t * 1.3 + h * 6.0);
       float vis = smoothstep(0.0, 0.12, rise) * (1.0 - smoothstep(0.86, 1.0, rise));
       vec3 c = satur(mix(t0, t1, h), sat);
@@ -174,8 +172,7 @@ void main() {
   // --- dense parallax jelly layers (the bulk of the bloom) ---
   if (u_haze > 0.01) {
     float hz = clamp(u_haze, 0.0, 1.0);
-    float fr = u_tentacles * 0.5;
-    vec3 L1 = hazeLayer(uv, t, mix(4.5,  9.0,  hz), 0.05,  0.5, 1.0, fr,  u_saturation, pal(2), pal(0),  2.0);
+    vec3 L1 = hazeLayer(uv, t, mix(4.5,  9.0,  hz), 0.05,  0.5, 1.0, 0.0, u_saturation, pal(2), pal(0),  2.0);
     vec3 L2 = hazeLayer(uv, t, mix(7.0,  14.0, hz), 0.042, 0.3, 0.8, 0.0, u_saturation, pal(0), pal(1), 23.0);
     vec3 L3 = hazeLayer(uv, t, mix(11.0, 22.0, hz), 0.032, 0.0, 0.6, 0.0, u_saturation, pal(1), pal(2), 51.0);
     vec3 L4 = hazeLayer(uv, t, mix(18.0, 36.0, hz), 0.024, 0.0, 0.42,0.0, u_saturation, pal(2), pal(0), 87.0);
