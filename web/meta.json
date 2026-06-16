@@ -8,75 +8,102 @@
     "glow",
     "loop",
     "spider",
-    "cobweb",
-    "mesh",
+    "dew",
+    "bokeh",
     "beads"
   ],
-  "description": "An irregular cobweb: silk threads stretched between scattered anchor points into a polygonal mesh of cells with no single hub. The threads waver and sag in the night air, dew beads sit in the cells and glint awake in a slow travelling chase, and each cell carries its own colour from the palette, the whole mesh filling the frame as a real web does.",
+  "description": "A dew-strung orb web seen close and at an angle, the way a macro lens catches it at dawn: faceted capture passes wind out from a single off-centre hub, but the silk is barely there - every thread is a dense string of dew pearls, and a shallow depth of field holds one band in sharp focus while the rest melts into soft glowing bokeh. The foreshortened sheet sags under gravity and the pearls glint awake in a slow chase out from the hub.",
   "entry": "shader.frag",
   "params": [
     {
-      "uniform": "u_density",
-      "label": "Mesh density",
-      "min": 3,
-      "max": 16,
-      "step": 0.5,
-      "default": 7,
-      "effect": "How many silk cells span the frame; low is a few big sweeping openings, high a fine dense net crowded with dew."
+      "uniform": "u_spokes",
+      "label": "Spokes",
+      "min": 7,
+      "max": 26,
+      "step": 1,
+      "default": 20,
+      "effect": "Number of radial silk spokes the capture thread is strung between; low gives a coarse web, high a fine many-sided one."
     },
     {
-      "uniform": "u_irregular",
-      "label": "Irregularity",
+      "uniform": "u_spacing",
+      "label": "Capture spacing",
+      "min": 14,
+      "max": 56,
+      "step": 1,
+      "default": 14,
+      "effect": "Radial gap between passes of the capture thread in CSS px; tight spacing crowds the web with fine dewy threads, wide gives sweeping passes."
+    },
+    {
+      "uniform": "u_beads",
+      "label": "Pearl density",
+      "min": 0.4,
+      "max": 3,
+      "step": 0.01,
+      "default": 1.49,
+      "effect": "How closely dew pearls are strung along each thread; low gives fat spaced droplets, high a fine close-strung string of beads."
+    },
+    {
+      "uniform": "u_facet",
+      "label": "Facet",
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.85,
-      "effect": "Anchor scatter: 0 is a perfectly regular woven net, toward 1 the anchors wander into a real tangled cobweb of uneven cells."
+      "default": 1,
+      "effect": "Shape of the capture thread between spokes: 0 smooth round rings, 1 straight chords bowing inward into an angular web."
     },
     {
-      "uniform": "u_warp",
-      "label": "Silk waver",
+      "uniform": "u_spiral",
+      "label": "Spiral wind",
       "min": 0,
-      "max": 1.5,
+      "max": 1,
       "step": 0.01,
-      "default": 0.45,
-      "effect": "How much the threads bow and curve organically; 0 holds them dead straight, high makes the silk wander like slack thread."
+      "default": 0.41,
+      "effect": "How much the capture thread winds outward as a continuous spiral rather than closing into separate rings."
     },
     {
       "uniform": "u_sag",
       "label": "Gravity sag",
       "min": 0,
-      "max": 1,
+      "max": 1.2,
       "step": 0.01,
-      "default": 0.3,
-      "effect": "Downward droop of the whole mesh, growing toward the bottom; 0 hangs it flat, high pulls the lower web into heavy sagging strands."
+      "default": 0.57,
+      "effect": "How far the hung web droops under its own weight; 0 a flat true wheel, high sags the lower web into heavy teardrop passes."
     },
     {
-      "uniform": "u_silk",
-      "label": "Silk glow",
+      "uniform": "u_tilt",
+      "label": "Perspective",
+      "min": 0,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Foreshortening of the web sheet; 0 is a flat front-on view, high tilts it away so it recedes across the frame like a macro shot."
+    },
+    {
+      "uniform": "u_dof",
+      "label": "Depth of field",
       "min": 0,
       "max": 2,
       "step": 0.01,
       "default": 1,
-      "effect": "Brightness of the thread mesh relative to the dew; low leaves a faint web of bright beads, high lights up every strand."
+      "effect": "Shallowness of focus; 0 keeps the whole web crisp, high blooms the out-of-focus dew into big soft bokeh discs."
     },
     {
-      "uniform": "u_threadWidth",
-      "label": "Silk weight",
-      "min": 0.3,
-      "max": 2.5,
+      "uniform": "u_focal",
+      "label": "Focal band",
+      "min": -0.4,
+      "max": 0.4,
       "step": 0.01,
-      "default": 1,
-      "effect": "Thickness of the silk strands, from a fine hairline to heavy roping."
+      "default": 0.12,
+      "effect": "Where the sharp in-focus band sits up or down the frame; the dew is crisp here and blurs away from it."
     },
     {
-      "uniform": "u_dewSize",
-      "label": "Dew size",
-      "min": 0.2,
-      "max": 2,
+      "uniform": "u_backlight",
+      "label": "Backlight",
+      "min": 0,
+      "max": 1.5,
       "step": 0.01,
-      "default": 1,
-      "effect": "Size of the dew beads caught in the cells, from tiny pinpoints to fat droplets."
+      "default": 0.74,
+      "effect": "A soft bespoke backlight glow behind the web, cool with a warm bloom; 0 is pure void, high a dawn-lit haze."
     },
     {
       "uniform": "u_glintSpeed",
@@ -84,23 +111,14 @@
       "min": 0.1,
       "max": 2,
       "step": 0.01,
-      "default": 0.5,
-      "effect": "Rate at which the dew beads light up in a travelling chase across the mesh, from a slow drift to a lively sparkle."
-    },
-    {
-      "uniform": "u_hueSpread",
-      "label": "Colour spread",
-      "min": 0,
-      "max": 1,
-      "step": 0.01,
-      "default": 0.7,
-      "effect": "Cell-to-cell colour variety; 0 tints the whole web one hue, 1 scatters the full palette rainbow across the cells."
+      "default": 0.26,
+      "effect": "Rate at which the dew pearls light up in a chase spiralling out from the hub, from a slow drift to a lively sparkle."
     }
   ],
-  "defaultPalette": "peacock",
+  "defaultPalette": "opal",
   "post": {
-    "bloom": 0.7,
-    "bloomRadius": 4.5,
+    "bloom": 0.8,
+    "bloomRadius": 5,
     "backdrop": 0,
     "saturation": 1.08,
     "dither": 1.0,
