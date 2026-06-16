@@ -92,12 +92,13 @@ void main() {
   float rowFrac = fract(prog);                    // 0..1 progress through current row
 
   // working band sits LOW so nearly the whole frame is finished cloth drifting up.
-  float bandY     = res.y * 0.14;
-  float scrollOff = prog * cell;                  // continuous upward travel of cloth
-  float clothY    = (fc.y - bandY) + scrollOff;   // device px in cloth space
-  float rowF      = clothY / cell;
-  float rowIdx    = floor(rowF);
-  float inRowY    = fract(rowF);
+  // cloth RISES: a row planted at the band drifts UP-frame as the build clock
+  // advances, so rowF decreases with screen height — above the band is older,
+  // already-finished cloth; below the band waits bare, unsewn cloth.
+  float bandY  = res.y * 0.14;
+  float rowF   = prog - (fc.y - bandY) / cell;
+  float rowIdx = floor(rowF);
+  float inRowY = fract(rowF);
 
   float colF   = fc.x / cell;
   float colIdx = floor(colF);
@@ -129,14 +130,15 @@ void main() {
 
   // ---- has this stitch been planted yet? ----
   float planted = 0.0;
-  if (rowIdx > rowInt + 0.5) {
-    planted = 1.0;                                // older rows fully done
+  if (rowIdx < rowInt - 0.5) {
+    planted = 1.0;                                // older rows above, fully done
   } else if (abs(rowIdx - rowInt) < 0.5) {
     planted = step(sweepCol, needleCol);          // current row up to the needle
   }
+  // rowIdx > rowInt -> future rows below the band, still bare cloth
 
   // ---- age / fade: rows drift up and dim into the dark (receding into memory) --
-  float age  = rowIdx - rowInt;                   // 0 at needle row, grows upward
+  float age  = rowInt - rowIdx;                   // 0 at needle row, grows upward (older)
   float fade = 1.0 - smoothstep(rowsLit * 0.35, rowsLit, age);
   fade       = clamp(fade, 0.0, 1.0);
 
