@@ -102,49 +102,48 @@ vec3 lantern(vec2 d, float r, float seed, float t, float structure, float soft) 
   return vec3(interior, rim, coreStruct);
 }
 
-// trailing tentacles below a hero bell. `p` is gravity-aligned (centred on the
-// bell, +y up) so they always hang straight down with sway regardless of the
-// bell's tilt. Returns a thin-strand glow intensity that fades in under the
-// rim and out at the tips.
-float tendrils(vec2 p, float r, float seed, float t, float len, float nStr) {
-  float top   = -r * 0.7;            // start just below the bell
-  float reach = r * len;
-  float yd    = top - p.y;           // >0 below the bell
-  if (yd <= 0.0 || yd >= reach || reach < 1e-4) return 0.0;
-  float u = yd / reach;              // 0 under the rim .. 1 at the tips
-  float spread = r * (0.62 - 0.42 * u);                       // curtain narrows
-  float sway   = (0.10 + 0.20 * u) * r * sin(yd * 7.0 / r - t * 1.1 + seed * 6.2);
-  float xn = (p.x + sway) / max(spread, 1e-4);                // -1..1 across
-  if (abs(xn) > 1.0) return 0.0;
-  float g    = abs(fract((xn * 0.5 + 0.5) * nStr) - 0.5) * 2.0;  // 0 at a strand
-  float line = pow(1.0 - g, 7.0);
-  float fade = smoothstep(0.0, 0.12, u) * (1.0 - smoothstep(0.72, 1.0, u));
-  float edge = 1.0 - smoothstep(0.7, 1.0, abs(xn));
-  return line * fade * edge;
+// marginal tentacle fringe around a hero bell, seen from above: fine strands
+// radiating just past the rim all the way around, gently waving. `rad`/`ang`
+// are the bell-local polar coords (rad=1 at the rim). Reads correctly from a
+// top-down view — no gravity-aligned curtain.
+float fringe(float rad, float ang, float seed, float t, float len, float nStr) {
+  float ro = (rad - 0.96) / max(len, 1e-4);   // 0 at the rim .. 1 at the tips
+  if (ro <= 0.0 || ro >= 1.0) return 0.0;
+  float wob  = sin(t * 1.1 + seed * 5.0 + ang * 3.0) * 0.45;   // lazy wave
+  float comb = pow(0.5 + 0.5 * sin(ang * nStr + wob), 4.0);    // thin strands
+  return comb * (1.0 - ro) * smoothstep(0.0, 0.18, ro);        // taper to tips
 }
 
-// dense field of small low-detail jellies in the deep water behind the hero
-// bells: one per grid cell, slowly rising and looping with a fade so it never
-// pops, very faint and squashed into soft domes with a tentacle smudge. Cheap:
-// a fixed 3x4 cell neighbourhood, hashes + a couple of exps each.
-vec3 farHaze(vec2 uv, float t, float dens, vec3 tint0, vec3 tint1) {
+// one parallax layer of low-detail jellies behind the hero bells: a hash grid
+// with one slowly-rising, looping, faintly-pulsing bell per cell. `detail`
+// gates how much shape it gets — near layers show a soft rim ring and the
+// four-gonad cross, far layers collapse to plain domes (cheap: no atan).
+vec3 hazeLayer(vec2 uv, float t, float scale, float driftRate, float detail,
+               vec3 tint0, vec3 tint1, float so) {
   vec3 acc = vec3(0.0);
-  float scale = mix(8.0, 30.0, dens);    // cells per unit -> jelly density
-  vec2 cellId = floor(uv * scale);
-  for (int oy = -2; oy <= 1; oy++) {
+  vec2 cellId = floor(uv * scale + so);
+  for (int oy = -1; oy <= 1; oy++) {
     for (int ox = -1; ox <= 1; ox++) {
       vec2 cc = cellId + vec2(float(ox), float(oy));
-      float h  = hash21(cc);
-      float h2 = hash21(cc + 7.3);
-      if (hash21(cc + 19.1) > 0.84) continue;        // some cells empty -> gaps
-      float rise = fract(h2 + t * (0.015 + 0.03 * h));
-      vec2  jc = (cc + vec2(h, rise)) / scale;        // jittered, rising centre
-      vec2  p  = (uv - jc) * scale;                   // cell-space offset
-      float rr = mix(0.18, 0.5, h);                   // tiny radius in cells
-      float rad = length(vec2(p.x, p.y * 1.35)) / rr; // gently squashed soft dome
-      float bell = exp(-rad * rad * 2.0);             // low-detail blob, no tail
-      float vis = smoothstep(0.0, 0.14, rise) * (1.0 - smoothstep(0.84, 1.0, rise));
-      acc += mix(tint0, tint1, h) * bell * vis;
+      float h = hash21(cc + so);
+      if (hash21(cc + so + 13.1) > 0.85) continue;       // organic gaps
+      float rise = fract(hash21(cc + so + 5.0) + t * driftRate * (0.6 + 0.8 * h));
+      float sway = 0.10 * sin(t * 0.6 + h * 6.28);
+      vec2  jc = (cc + vec2(h + sway, rise)) / scale;
+      vec2  p  = (uv - jc) * scale;
+      float rr = mix(0.34, 0.72, h);
+      vec2  pe = vec2(p.x, p.y * 1.2);                    // dome a touch wide
+      float rad = length(pe) / rr;
+      if (rad > 1.5) continue;                            // outside this bell
+      float pulse = 0.85 + 0.15 * sin(t * 1.3 + h * 6.0);
+      float lum = exp(-rad * rad * 1.8) * 0.7;            // soft dome
+      if (detail > 0.01) {
+        float ang = atan(pe.y, pe.x);
+        lum += exp(-pow((rad - 0.85) * 4.0, 2.0)) * 0.8 * detail;             // rim ring
+        lum += (0.5 + 0.5 * cos(ang * 4.0)) * exp(-pow((rad - 0.45) * 3.0, 2.0)) * 0.55 * detail; // 4 gonads
+      }
+      float vis = smoothstep(0.0, 0.13, rise) * (1.0 - smoothstep(0.85, 1.0, rise));
+      acc += mix(tint0, tint1, h) * lum * vis * pulse;
     }
   }
   return acc;
@@ -164,11 +163,15 @@ void main() {
   float shimmer = 0.5 + 0.5 * sin(uv.x * 3.0 + t * 0.25) * sin(uv.y * 2.3 - t * 0.20);
   vec3 col = vec3(BG) + atm * u_atmosphere * (0.05 + 0.07 * shimmer) * (0.45 + 0.7 * depth);
 
-  // dense low-detail jelly haze in the deep water, drawn first so the hero
-  // bells sit in front of it. Tinted by two palette hues, kept faint.
+  // three parallax layers of low-detail jellies in the deep water, drawn first
+  // so the hero bells sit in front. Near layer is bigger/brighter with rim +
+  // gonads; the far layers shrink, dim and lose detail toward plain domes.
   if (u_haze > 0.01) {
-    vec3 haze = farHaze(uv, t, clamp(u_haze, 0.0, 1.0), pal(2), pal(1));
-    col += haze * u_haze * 0.16 * (0.6 + 0.6 * depth);
+    float hz = clamp(u_haze, 0.0, 1.0);
+    vec3 near = hazeLayer(uv, t, mix(6.0,  13.0, hz), 0.06,  0.7, pal(2), pal(0),  0.0);
+    vec3 mid  = hazeLayer(uv, t, mix(10.0, 21.0, hz), 0.045, 0.3, pal(1), pal(2), 31.7);
+    vec3 far  = hazeLayer(uv, t, mix(16.0, 33.0, hz), 0.03,  0.0, pal(2), pal(1), 71.3);
+    col += (near * 0.14 + mid * 0.10 + far * 0.07) * hz * (0.55 + 0.6 * depth);
   }
 
   // up to MAX_LANTERNS structured lanterns, anchored across the frame and
@@ -209,17 +212,16 @@ void main() {
              * mix(1.0, 0.32, dd) * vSize;
 
     vec2 d = uv - c;
-    // per-jelly tentacle length (fades far ones out), and a strand count
-    float tentLen = u_tentacles * mix(1.6, 3.4, hash11(fi * 4.3 + 2.0))
-                  * mix(1.0, 0.5, dd);
-    float nStr    = 4.0 + floor(hash11(fi * 8.1 + 5.0) * 6.0);
-    // cheap cull: keep fragments inside the bell bloom OR the tentacle column
-    // hanging below it (so the tentacles are not clipped away).
+    // cheap cull: skip fragments well outside this bell's bloom (the marginal
+    // fringe sits at rad ~1.4, comfortably inside this reach)
     float reach = r * mix(1.8, 2.4, dd);
-    bool inBell = dot(d, d) <= reach * reach;
-    bool inTent = u_tentacles > 0.01 && d.y < 0.0
-               && d.y > -(r * tentLen + r * 0.3) && abs(d.x) < r * 0.95;
-    if (!inBell && !inTent) continue;
+    if (dot(d, d) > reach * reach) continue;
+
+    // per-jelly fringe length (as a fraction past the rim) and strand count;
+    // far jellies wear a shorter, finer fringe.
+    float fringeLen = u_tentacles * mix(0.18, 0.40, hash11(fi * 4.3 + 2.0))
+                    * mix(1.0, 0.6, dd);
+    float nFr = 22.0 + floor(hash11(fi * 8.1 + 5.0) * 34.0);
 
     // per-lantern shape: squash to an oval, tilt off-axis, and a tri-lobe rim
     // wobble so no two bells are the same circle. u_shape scales the whole
@@ -235,7 +237,7 @@ void main() {
 
     // far lanterns AND randomly low-detail ones lose interior structure
     float structPer = structure * mix(1.0, 0.25, dd) * vDetail;
-    vec3 L = inBell ? lantern(dl, r, fi * 0.37, t, structPer, dd) : vec3(0.0);
+    vec3 L = lantern(dl, r, fi * 0.37, t, structPer, dd);
 
     // two adjacent palette hues per orb; spread controls hue variety, the
     // per-jelly hue jitter nudges the selection so neighbours differ.
@@ -251,12 +253,13 @@ void main() {
     col += rimCol * L.y * 0.72 * em;                  // bright membrane rim
     col += ribCol * L.z * 0.80 * em;                  // nucleus + ribs
 
-    // tentacles hang straight down (gravity frame = raw d) so they trail below
-    // the bell however it tilts; tinted by the jelly's own hue, fainter than
-    // the bell and dimmed with depth.
-    if (inTent) {
-      float tend = tendrils(d, r, fi * 0.37, t, tentLen, nStr);
-      col += mix(cc, vec3(1.0), 0.1) * tend * 0.5 * em;
+    // marginal tentacle fringe radiating around the rim (top-down correct);
+    // tinted by the jelly's own hue, fainter than the bell.
+    if (u_tentacles > 0.01) {
+      float radL = length(dl) / max(r, 1e-3);
+      float angL = atan(dl.y, dl.x);
+      float fr = fringe(radL, angL, fi * 0.37, t, fringeLen, nFr);
+      col += mix(cc, vec3(1.0), 0.12) * fr * 0.45 * em;
     }
   }
 
