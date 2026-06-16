@@ -7,16 +7,16 @@
   "description": "A loom's warp — thin bright vertical threads on a near-black field that ripple side to side as a slow sinusoidal wave travels down them, with soft glow nodes blooming where a sweeping horizontal weft crosses, tinted across the palette by thread position.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_drift", "label": "Ripple drift", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.3, "effect": "Speed the sinusoidal ripple travels down the warp threads; 0 freezes the weave, high sends the wave coursing down at speed." },
+    { "uniform": "u_drift", "label": "Ripple drift", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.07, "effect": "Speed the sinusoidal ripple travels down the warp threads; 0 freezes the weave, high sends the wave coursing down at speed." },
     { "uniform": "u_amp", "label": "Ripple amplitude", "min": 0.0, "max": 20.0, "step": 0.1, "default": 9.0, "effect": "How far the threads sway side to side; low is a taut straight warp, high billows the weave into deep waves." },
-    { "uniform": "u_spacing", "label": "Thread spacing", "min": 12.0, "max": 60.0, "step": 1.0, "default": 28.0, "effect": "Distance between warp threads in CSS px - dense packed weave at the minimum, open sparse threads at the maximum." },
-    { "uniform": "u_thick", "label": "Thread width", "min": 0.5, "max": 5.0, "step": 0.1, "default": 1.4, "effect": "Half-width of each thread in CSS px, with its halo scaling alongside - fine hairline filaments to thick glowing cords." },
-    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.1, "effect": "Overall brightness of the threads and the weft glow nodes; low is a delicate quiet weave, high a luminous neon warp." },
-    { "uniform": "u_weft", "label": "Weft speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.22, "effect": "Speed the horizontal weft glow bands sweep up and down the warp, lighting nodes where they cross; 0 holds them still." },
-    { "uniform": "u_randomize", "label": "Thread randomize", "min": 0.0, "max": 1.5, "step": 0.05, "default": 0.0, "effect": "Per-thread jitter of position, ripple amplitude, phase, width and brightness; 0 is an even machine-true warp, high frays it into a hand-strung weave of uneven threads." },
+    { "uniform": "u_spacing", "label": "Thread spacing", "min": 12.0, "max": 60.0, "step": 1.0, "default": 17.0, "effect": "Distance between warp threads in CSS px - dense packed weave at the minimum, open sparse threads at the maximum." },
+    { "uniform": "u_thick", "label": "Thread width", "min": 0.5, "max": 5.0, "step": 0.1, "default": 2.1, "effect": "Half-width of each thread in CSS px, with its halo scaling alongside - fine hairline filaments to thick glowing cords." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0, "effect": "Overall brightness of the threads and the weft glow nodes; low is a delicate quiet weave, high a luminous neon warp." },
+    { "uniform": "u_weft", "label": "Weft speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.04, "effect": "Speed the horizontal weft glow bands sweep up and down the warp, lighting nodes where they cross; 0 holds them still." },
+    { "uniform": "u_randomize", "label": "Thread randomize", "min": 0.0, "max": 1.5, "step": 0.05, "default": 0.6, "effect": "Per-thread jitter of position, ripple amplitude, phase, width and brightness; 0 is an even machine-true warp, high frays it into a hand-strung weave of uneven threads." },
     { "uniform": "u_tilt", "label": "Thread slant", "min": -1.0, "max": 1.0, "step": 0.01, "default": 0.0, "effect": "Shears the whole warp off-vertical; 0 hangs the threads straight up, away from 0 tilts them into a leaning diagonal weave." },
-    { "uniform": "u_node", "label": "Node bloom", "min": 0.0, "max": 3.0, "step": 0.05, "default": 1.0, "effect": "Strength of the glow nodes that bloom where the weft crosses the warp; 0 leaves bare threads, high lights brilliant beads at every crossing." }
+    { "uniform": "u_node", "label": "Node bloom", "min": 0.0, "max": 3.0, "step": 0.05, "default": 0.2, "effect": "Strength of the glow nodes that bloom where the weft crosses the warp; 0 leaves bare threads, high lights brilliant beads at every crossing." }
   ],
-  "post": { "bloom": 0.6, "bloomRadius": 4.0, "backdrop": 0.55, "backdropScale": 1.2, "saturation": 1.08, "dither": 1.0 },
+  "post": { "bloom": 0.6, "bloomRadius": 4.0, "backdrop": 0.0, "backdropScale": 1.2, "vignette": 0.26, "saturation": 1.08, "dither": 1.0 },
   "defaultPalette": "spectral"
 }
