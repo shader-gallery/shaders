@@ -117,35 +117,40 @@ void main() {
 
     vec3 jc = vec3(0.0);
 
-    // ---- BELL: a 3D dome shaded by a radial gradient over an oval ------------
+    // ---- BELL: a 3D dome (radial-gradient oval) with a TWO-ARCH opening rim --
     float ny = b.y;                                   // 0 at margin .. 1 at apex
     float bellW = 1.15;
-    float hw = bellW * sqrt(max(1.0 - ny * ny, 0.0)); // ellipse half-width
-    // small scalloped lower margin: a subtle wavy lobed bottom edge
-    float marg = 0.04 * sin(b.x / max(bellW, 0.1) * PI * (stripeN * 0.5));
+    float xn = b.x / bellW;                            // -1..1 across the dome
+    float ev = sqrt(max(1.0 - xn * xn, 0.0));         // ellipse factor (1 centre, 0 sides)
+    float hw = bellW * sqrt(max(1.0 - ny * ny, 0.0)); // dome half-width at height ny
+    // dome cap: fills from the rim up to the apex
     float dome = smoothstep(0.05, -0.02, abs(b.x) - hw)
                * smoothstep(1.04, 0.97, ny)
-               * smoothstep(-0.05 + marg, 0.06 + marg, ny);
+               * smoothstep(-0.02, 0.07, ny);
     // oval radial gradient -> rounded 3D body (bright centre, limb-dark rim)
-    vec2  ec = vec2(b.x / bellW, (ny - 0.42) / 0.58); // oval centred mid-bell
+    vec2  ec = vec2(xn, (ny - 0.42) / 0.58);
     float body3d = smoothstep(1.05, 0.0, length(ec)); // 1 centre .. 0 edge
     // meridian stripes, subtle so the 3D gradient stays the dominant read
     float phi = atan(b.x, max(ny, 0.02));
     float stripe = 0.5 + 0.5 * sin(phi * stripeN);
     vec3  domeCol = tint * (0.16 + 0.95 * body3d) * (0.78 + 0.34 * stripe);
     // glossy top highlight sells the dome curvature
-    float hil = smoothstep(0.55, 0.0, length(vec2(b.x / bellW * 1.2, (ny - 0.72) / 0.32)));
-    // thin bright rim along the outline (small edge)
-    float rim = smoothstep(0.045, 0.0, abs(abs(b.x) - hw)) * smoothstep(0.0, 0.18, ny) * step(ny, 1.0);
-    // small scalloped frill hugging the lower edge
-    float lobe = 0.5 + 0.5 * sin(phi * stripeN * 1.4);
-    float frill = smoothstep(0.08 + marg, marg - 0.02, ny) * smoothstep(-0.11 + marg, -0.01 + marg, ny);
+    float hil = smoothstep(0.55, 0.0, length(vec2(xn * 1.2, (ny - 0.72) / 0.32)));
     jc += domeCol * dome * 0.82;
     jc += mix(tint, vec3(1.0), 0.5) * hil * dome * 0.45;          // top gloss
-    jc += mix(tint, vec3(1.0), 0.25) * rim * 0.4;                 // thin rim
-    jc += mix(tint, vec3(1.0), 0.15) * frill * (0.3 + 0.7 * lobe) * 0.4; // small frill
-    float rr = length(vec2(b.x / bellW, ny));
-    jc += tint * exp(-rr * rr * 1.3) * 0.10 * smoothstep(-0.25, 0.1, ny);  // halo
+
+    // opening rim as TWO arches the SAME WIDTH as the dome: a bright wavy FRONT
+    // lip (near, dips down) and a fainter BACK lip (far, arcs up) seen through the
+    // translucent bell -> a 3D bowl with a dark mouth the arms emerge from.
+    float oh   = 0.17;                                  // opening half-height
+    float scal = 0.04 * sin(xn * PI * stripeN * 0.5);  // scallop the front lip
+    float inW  = smoothstep(1.02, 0.96, abs(xn));
+    float frontRim = exp(-pow((ny - (-oh * ev + scal)) / 0.05, 2.0)) * inW;
+    float backRim  = exp(-pow((ny - ( oh * ev)) / 0.055, 2.0)) * inW;
+    jc += mix(tint, vec3(1.0), 0.32) * frontRim * 0.60;          // near lip (bright)
+    jc += mix(tint, vec3(1.0), 0.18) * backRim  * 0.30;          // far lip (faint, behind)
+    float rr = length(vec2(xn, ny));
+    jc += tint * exp(-rr * rr * 1.3) * 0.10 * smoothstep(-0.3, 0.1, ny);   // halo
 
     // ---- ORAL ARMS: frilly ruffled pale column hanging below the bell --------
     float armY = -b.y;                                 // 0 at margin, grows downward
@@ -181,7 +186,10 @@ void main() {
       }
     }
 
-    col += jc * em;
+    // fade the jelly out near the very bottom edge so trailing tentacles taper
+    // away instead of being hard-cropped by the frame.
+    float botFade = smoothstep(0.0, 0.12, fc.y / max(res.y, 1.0));
+    col += jc * em * botFade;
   }
 
   // vignette + soft tonemap
