@@ -12,7 +12,7 @@
     { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 8.0, "step": 0.1,
       "default": 1.5, "effect": "Core thickness of each glowing rim in CSS pixels, from a hairline outline to a fat neon edge." },
     { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
-      "default": 0.6, "effect": "Speed of the charge chasing each cell rim; 0 freezes the light as static beads, high sends it racing around the comb." },
+      "default": 0.91, "effect": "Speed of the charge chasing each cell rim; 0 freezes the light as static beads, high sends it racing around the comb." },
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.66, "effect": "Strength of the soft halo around each rim; low is a crisp drawn comb, high a luminous bloom that fills the cells with colour." },
     { "uniform": "u_weld", "label": "Weld", "min": 0.0, "max": 1.0, "step": 0.01,
@@ -28,6 +28,6 @@
     { "uniform": "u_fade", "label": "Twinkle", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.39, "effect": "Makes the filled cells breathe in and out, each on its own random phase, so the comb shimmers." }
   ],
-  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0, "vignette": 0.26 },
-  "defaultPalette": "peacock"
+  "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.0, "backdropScale": 0.3, "saturation": 1.1, "contrast": 1.04, "dither": 1.0, "vignette": 0.58, "grain": 0.0, "grainSize": 1.0, "aberration": 0.0 },
+  "defaultPalette": "neon"
 }
