@@ -37,6 +37,8 @@ uniform float u_starDensity;  // star field fill, 0 = empty sky .. 1 = crowded (
 uniform float u_starGlow;     // star brightness (default 0.45)
 uniform float u_starHue;      // star colour: 0 = palette-tinted .. 1 = white (default 0.3)
 uniform float u_starSpeed;    // star twinkle rate (default 1.0)
+uniform float u_sphere;       // 0 = flat black void .. 1 = shaded 3D dark orb (default 0.4)
+uniform float u_sphereLight;  // sphere light direction, degrees around the disc (default 130)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black field ~#09090B
 const float TAU      = 6.28318530718;
@@ -176,27 +178,65 @@ void main() {
   float limb = exp(-out1 / (2.5 * pr)) * 0.30;
   acc += gcol * (glow * current + limb * (0.7 + 0.3 * current));
 
-  // starfield filling the surrounding sky (controllable density/glow/colour/speed):
-  // hash-scattered twinkling stars with per-star size jitter in the dark sky.
+  // starfield: real stars, not blurry dots. crisp cores, a brightness skew so
+  // most are faint pinpricks and a rare few blaze, diffraction-spike glints on
+  // the bright ones, hash-jittered placement + colour. 3x3 cell scan so big
+  // stars and their spikes never clip at a cell boundary.
   float starSpd = max(u_starSpeed, 0.0);
-  float thr     = mix(0.97, 0.55, clamp(u_starDensity, 0.0, 1.0)); // density -> threshold
+  float thr     = mix(0.97, 0.55, clamp(u_starDensity, 0.0, 1.0)); // density -> star chance
+  float sHue    = clamp(u_starHue, 0.0, 1.0);
   vec2  sc      = fc / pr;
-  vec2  scell   = floor(sc / 24.0);
-  vec2  sfr     = fract(sc / 24.0) - 0.5;
-  float sh      = hash12(scell + 3.0);
-  float ssz     = mix(95.0, 42.0, hash12(scell + 17.0));   // per-star size jitter
-  float twk     = 0.45 + 0.55 * sin(u_time * starSpd * (0.4 + sh) + sh * 40.0);
-  float star    = step(thr, sh) * exp(-dot(sfr, sfr) * ssz) * twk;
-  vec3  scol    = mix(wheel(hash12(scell + 9.0), c0, c1, c2, c3),
-                      vec3(1.0), clamp(u_starHue, 0.0, 1.0));
-  acc += scol * star * max(u_starGlow, 0.0);
+  vec2  gid     = floor(sc / 26.0);
+  vec2  gf      = fract(sc / 26.0);
+  vec3  starAcc = vec3(0.0);
+  for (int yy = -1; yy <= 1; yy++) {
+    for (int xx = -1; xx <= 1; xx++) {
+      vec2  off = vec2(float(xx), float(yy));
+      vec2  id  = gid + off;
+      float sh  = hash12(id + 3.0);
+      if (sh > thr) {                                  // a star lives in this cell
+        vec2  pos = off + vec2(hash12(id + 5.1), hash12(id + 8.3)) - gf; // px->star, cell units
+        float r2  = dot(pos, pos);
+        float mag = pow(hash12(id + 11.7), 2.6);       // brightness skew: mostly faint
+        float tw  = 0.55 + 0.45 * sin(u_time * starSpd * (0.5 + sh) + sh * 40.0);
+        float core = exp(-r2 * mix(340.0, 120.0, mag)) // sharp pinprick (bigger when bright)
+                   + 0.45 * exp(-r2 * 64.0) * mag;     // soft bloom on bright ones
+        float spkL = mix(46.0, 13.0, mag);             // bright stars throw longer spikes
+        float glint = (exp(-pos.x * pos.x * 950.0) + exp(-pos.y * pos.y * 950.0))
+                    * exp(-r2 * spkL) * mag;
+        vec3  base = mix(wheel(hash12(id + 9.0), c0, c1, c2, c3), vec3(1.0), sHue);
+        base = mix(base, vec3(1.0), mag * 0.55);       // hot stars burn toward white
+        starAcc += base * (core + glint * 1.3) * mag * tw;
+      }
+    }
+  }
+  acc += starAcc * max(u_starGlow, 0.0) * 2.0;
 
-  // ---- compose: true-void disc, vignetted dark field, soft-knee tone map ----
-  float mask = smoothstep(R - aa, R + aa, d);    // 0 inside the void
+  // ---- compose: void disc (flat or shaded orb), vignetted field, tone map ----
+  float mask = smoothstep(R - aa, R + aa, d);    // 0 inside the void, 1 outside
   vec2  vrel = (fc - 0.5 * res) / max(res.y, 1.0); // screen-centred (vignette stays put)
   float vig  = 1.0 - 0.35 * smoothstep(0.45, 1.05, length(vrel));
   vec3  lit  = 1.0 - exp(-acc * 1.9);
   vec3  col  = (BG + lit) * vig * mask;
+
+  // optional 3D sphere shading inside the disc: a dark dimensional orb instead of
+  // a flat black cutout. fake hemisphere normal -> soft directional sheen, limb
+  // brightening (fresnel) and a centre->edge radial gradient, all kept dark so it
+  // still reads as an eclipse/black orb. u_sphere fades flat-void <-> shaded orb.
+  float sphAmt = clamp(u_sphere, 0.0, 1.0);
+  float inside = 1.0 - mask;
+  if (sphAmt * inside > 0.0) {
+    float nz   = sqrt(max(R * R - d * d, 0.0)) / max(R, 1.0); // hemisphere z
+    vec3  n    = vec3(rel / max(R, 1.0), nz);
+    float la   = radians(u_sphereLight);
+    vec3  L    = normalize(vec3(cos(la), sin(la), 0.7));
+    float dif  = max(dot(n, L), 0.0);
+    float fres = pow(1.0 - nz, 2.6);                         // limb glow
+    float rg   = smoothstep(0.0, 1.0, d / max(R, 1.0));      // centre->edge gradient
+    vec3  tint = wheel(a, c0, c1, c2, c3);
+    vec3  orb  = tint * (0.035 + 0.20 * dif + 0.13 * fres + 0.06 * rg);
+    col += orb * sphAmt * inside * vig;
+  }
 
   gl_FragColor = vec4(col, 1.0);
 }

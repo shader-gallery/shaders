@@ -11,10 +11,10 @@
       "uniform": "u_disc",
       "label": "Disc size",
       "min": 160,
-      "max": 560,
+      "max": 1600,
       "step": 1,
-      "default": 320,
-      "effect": "Diameter of the black void disc in CSS pixels; the filament rim scales with it."
+      "default": 560,
+      "effect": "Diameter of the void disc in CSS pixels; the filament rim scales with it. At the top of the range the orb overflows the frame, a planet-limb filling the screen."
     },
     {
       "uniform": "u_flickerSpeed",
@@ -22,16 +22,16 @@
       "min": 0.1,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.4,
+      "default": 0.55,
       "effect": "Rate of the per-filament brightness and length phases and of the rim's slow circumferential drift, from glacial smoulder to nervous shimmer."
     },
     {
       "uniform": "u_reach",
       "label": "Filament reach",
       "min": 20,
-      "max": 220,
+      "max": 260,
       "step": 1,
-      "default": 110,
+      "default": 206,
       "effect": "Maximum radial length the filaments extend beyond the rim in CSS pixels — a tight bright band at min, long searching streamers reaching toward the corners at max."
     },
     {
@@ -40,7 +40,7 @@
       "min": 32,
       "max": 256,
       "step": 1,
-      "default": 130,
+      "default": 188,
       "effect": "How many filaments ring the circumference — a sparse spiky crown at min, a dense continuous corona fur at max."
     },
     {
@@ -58,7 +58,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.25,
+      "default": 1,
       "effect": "How often a filament erupts into a long detaching streamer; 0 disables eruptions entirely, 1 keeps one arcing free somewhere most of the time."
     },
     {
@@ -67,7 +67,7 @@
       "min": -1,
       "max": 1,
       "step": 0.01,
-      "default": 0,
+      "default": -0.01,
       "effect": "Slides the eclipse disc left or right, in short-axis units, so it can sit off-centre in the frame."
     },
     {
@@ -76,7 +76,7 @@
       "min": -1,
       "max": 1,
       "step": 0.01,
-      "default": 0,
+      "default": -0.48,
       "effect": "Slides the eclipse disc up or down, in short-axis units."
     },
     {
@@ -85,7 +85,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.5,
+      "default": 0.12,
       "effect": "How thickly stars fill the surrounding sky — 0 an empty void, 1 a crowded field."
     },
     {
@@ -94,7 +94,7 @@
       "min": 0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.45,
+      "default": 0.53,
       "effect": "Brightness of the stars; 0 puts out the sky, high makes them blaze."
     },
     {
@@ -103,7 +103,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.3,
+      "default": 0.54,
       "effect": "Star tint — 0 dyes them with the palette like distant nebulae, 1 burns them to pure white."
     },
     {
@@ -112,10 +112,28 @@
       "min": 0,
       "max": 3,
       "step": 0.01,
-      "default": 1,
+      "default": 0.2,
       "effect": "Twinkle rate of the stars; 0 freezes them to a still field, high sets the whole sky shimmering."
+    },
+    {
+      "uniform": "u_sphere",
+      "label": "Sphere shading",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Renders the void as a shaded 3D dark orb instead of a flat black cutout — a soft directional sheen, limb glow and centre-to-edge gradient give it volume. 0 is the pure black hole."
+    },
+    {
+      "uniform": "u_sphereLight",
+      "label": "Sphere light",
+      "min": 0,
+      "max": 360,
+      "step": 1,
+      "default": 130,
+      "effect": "Direction the orb is lit from, in degrees around the disc, when sphere shading is up."
     }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.8, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.03, "vignette": 0.22 }
+  "post": { "bloom": 0.8, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.04, "vignette": 0.22 }
 }
