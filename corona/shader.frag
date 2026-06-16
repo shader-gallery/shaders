@@ -44,6 +44,8 @@ uniform float u_eruptReach;   // streamer length multiplier (default 1.0)
 uniform float u_eruptWidth;   // streamer thickness multiplier (default 1.0)
 uniform float u_warp;         // filament field warp: bends the rays into curved streams (default 0)
 uniform float u_warpScale;    // warp lobes around the rim, integer (default 3)
+uniform float u_rayDistort;   // per-ray ripple: wavy/kinked rays, not clean lines (default 0)
+uniform float u_rayFreq;      // ripple frequency along each ray (default 0.4)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black field ~#09090B
 const float TAU      = 6.28318530718;
@@ -131,8 +133,10 @@ void main() {
 
   vec3 acc = vec3(0.0);
 
-  // ---- rim filaments: pixel's slot plus neighbours (warp+curl can lean ±~3.5) ----
-  for (int k = -4; k <= 4; k++) {
+  float rfreq = mix(1.5, 8.0, clamp(u_rayFreq, 0.0, 1.0)); // ripple wiggles along the ray
+
+  // ---- rim filaments: pixel's slot plus neighbours (warp+curl+ripple lean ±~4.5) ----
+  for (int k = -5; k <= 5; k++) {
     float j  = slot + float(k);
     float jm = mod(j + SECT, SECT);              // wrapped id, seam-continuous
     float h1 = hash12(vec2(jm, 1.7));            // length
@@ -144,7 +148,13 @@ void main() {
     float curl   = (h3 - 0.5) * 0.9 * tAmp;      // sideways lean, slot units
     float angOff = curl * pow(max(t, 0.0), 1.4); // streak curves as it reaches
     float sway   = 0.22 * tAmp * sin(fl * (0.5 + 0.5 * h1) + h3 * TAU); // root wobble
-    float du     = u * SECT - (j + 0.5) - angOff - sway - warpF;
+    // per-ray ripple: a wavy/kinked lateral wobble travelling out along the ray,
+    // each filament its own phase + rate, fading in past the root so bases stay
+    // pinned to the rim. Makes the rays organic strands, not straight/curved lines.
+    float ripple = u_rayDistort * 1.15
+                 * sin(t * rfreq * (0.7 + 0.6 * h1) + h2 * TAU + fl * (0.4 + 0.7 * h3))
+                 * smoothstep(0.0, 0.22, t);
+    float du     = u * SECT - (j + 0.5) - angOff - sway - warpF - ripple;
     float ad     = abs(du) * slotArc;            // device px off the centreline
 
     // per-filament life: length swell + brightness flicker, hash-offset phases

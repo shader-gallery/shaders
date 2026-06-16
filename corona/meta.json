@@ -71,6 +71,24 @@
       "effect": "How many lobes the warp field wraps around the rim — few broad sweeps at min, many tight curls at max."
     },
     {
+      "uniform": "u_rayDistort",
+      "label": "Ray distortion",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Ripples each ray with a travelling wavy wobble so they read as living, kinked strands rather than clean straight or curved lines; the roots stay pinned to the rim. 0 is smooth rays."
+    },
+    {
+      "uniform": "u_rayFreq",
+      "label": "Ray ripple scale",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Frequency of the ray ripple — a few long undulations at min, a tight crinkle at max."
+    },
+    {
       "uniform": "u_eruptRate",
       "label": "Eruption rate",
       "min": 0,
