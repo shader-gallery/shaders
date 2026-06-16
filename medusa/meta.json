@@ -26,7 +26,13 @@
     { "uniform": "u_stripes", "label": "Bell stripes", "min": 4, "max": 28, "step": 1, "default": 15,
       "effect": "Baseline radial stripe count; each jelly varies a few stripes around it." },
     { "uniform": "u_tentacles", "label": "Tentacle density", "min": 4, "max": 30, "step": 1, "default": 7,
-      "effect": "Baseline tentacle-ribbon count; each jelly varies around it." }
+      "effect": "Baseline tentacle-ribbon count; each jelly varies around it." },
+    { "uniform": "u_bubbles", "label": "Microbubbles", "min": 0.0, "max": 2.0, "step": 0.05, "default": 0.8,
+      "effect": "Amount of tiny suspended particles drifting up through the water; 0 turns them off." },
+    { "uniform": "u_bubbleSize", "label": "Bubble size", "min": 0.2, "max": 3.0, "step": 0.05, "default": 1.0,
+      "effect": "Size of the microbubbles across all depth layers." },
+    { "uniform": "u_bubbleSpeed", "label": "Bubble speed", "min": 0.0, "max": 3.0, "step": 0.05, "default": 1.0,
+      "effect": "How fast the microbubbles rise through the frame." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6, "vignette": 0.26 }

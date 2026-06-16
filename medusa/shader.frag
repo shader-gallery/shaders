@@ -25,6 +25,9 @@ uniform float u_colorSpread;   // jelly-to-jelly hue variety        (default 0.8
 uniform float u_saturation;    // jelly colour vividness            (default 1.2)
 uniform float u_stripes;       // radial bell-stripe density        (default 14)
 uniform float u_tentacles;     // tentacle curtain density          (default 16)
+uniform float u_bubbles;       // microbubble amount, 0 = off       (default 0.8)
+uniform float u_bubbleSize;    // microbubble size                  (default 1.0)
+uniform float u_bubbleSpeed;   // microbubble rise speed            (default 1.0)
 
 const vec3  BG  = vec3(0.02, 0.03, 0.06); // deep-water base
 const int   NJ  = 8;                       // max jellies (count-gated)
@@ -49,6 +52,31 @@ float fbm(vec2 p) {
   for (int i = 0; i < 4; i++) { s += a * vnoise(p); p = p * 2.03 + vec2(11.0, 7.0); a *= 0.5; }
   return s;
 }
+// microbubbles: three parallax depth layers of tiny rising motes. Each layer is
+// a hash grid (one mote per cell, jittered + wobbling, rising with wrap), far
+// layers smaller/dimmer/slower, near layers bigger/brighter/faster.
+float bubbles(vec2 fc, vec2 res, float pr, float tb) {
+  float acc = 0.0;
+  for (int L = 0; L < 3; L++) {
+    float lf  = float(L) / 2.0;                       // 0 far .. 1 near
+    float spd = mix(0.015, 0.05, lf) * max(u_bubbleSpeed, 0.0);
+    float cellPx = (res.y * mix(0.05, 0.12, lf)) / clamp(u_bubbles, 0.3, 3.0);
+    vec2  cell = vec2(cellPx);
+    vec2  id   = floor(fc / cell);
+    float fL   = float(L) * 13.0;
+    float h1 = hash21(id + 0.5 + fL);
+    float h2 = hash21(id + 3.7 + fL);
+    float h3 = hash21(id + 7.1 + fL);
+    float by = fract(h2 - tb * spd);                  // rises, wraps inside the cell
+    vec2  bp = (id + vec2(h1, by)) * cell;
+    bp.x += sin(tb * 0.4 + h3 * 6.2831) * cell.x * 0.18;  // gentle wobble
+    float size = (1.2 + 2.0 * h3) * pr * mix(0.6, 1.7, lf) * max(u_bubbleSize, 0.05);
+    float d = length(fc - bp);
+    acc += exp(-(d * d) / (size * size)) * mix(0.35, 1.0, lf);
+  }
+  return acc;
+}
+
 // blend two adjacent palette entries on a 0..4 wheel
 vec3 paletteMix(float s) {
   s = fract(s) * 4.0;
@@ -216,6 +244,12 @@ void main() {
     // away instead of being hard-cropped by the frame.
     float botFade = smoothstep(0.0, 0.12, fc.y / max(res.y, 1.0));
     col += jc * em * botFade;
+  }
+
+  // microbubbles drifting up through the water at different depths
+  if (u_bubbles > 0.001) {
+    vec3 bubCol = mix(mix(P0, P2, 0.5), vec3(1.0), 0.6);
+    col += bubCol * bubbles(fc, res, pr, u_time) * u_bubbles * 0.5;
   }
 
   // vignette + soft tonemap
