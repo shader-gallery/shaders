@@ -79,47 +79,52 @@ float caustic(vec2 q, float t) {
 vec3 jelly(vec2 p, float r, float seed, float t, vec3 col,
            float detail, float soft, float fr) {
   float rad = length(p) / max(r, 1e-3);
-  if (rad > 1.32) return vec3(0.0);   // hard cutoff < 1 grid cell -> no clipping
+  float flen = fr * 0.30;                     // fringe length past the rim
+  if (rad > 1.06 + flen) return vec3(0.0);    // cutoff < 1 grid cell -> no clip
   float ang = atan(p.y, p.x);
 
-  // smooth translucent body: a soft luminous dome filling to the rim
-  float body = pow(smoothstep(1.0, 0.0, rad), mix(1.1, 1.6, soft));
-  // soft bright membrane rim, gently rippling; wider/softer when far
-  float ripple = 0.025 * sin(ang * 6.0 + t * 0.8 + seed * 5.0);
-  float rim = exp(-pow((rad - (0.88 + ripple)) * mix(6.0, 3.2, soft), 2.0));
-  // soft inner glow toward the centre
-  float core = exp(-rad * rad * mix(4.5, 3.0, soft));
+  // translucent body
+  float body = pow(smoothstep(1.02, 0.0, rad), mix(1.0, 1.55, soft));
+  // CRISP bright membrane rim (sharp when near, only softening with depth)
+  float rip = 0.025 * sin(ang * 6.0 + t * 0.8 + seed * 5.0);
+  float rim = exp(-pow((rad - (0.9 + rip)) * mix(13.0, 4.0, soft), 2.0));
+  // bright inner core
+  float core = exp(-rad * rad * mix(6.0, 3.0, soft));
 
   float inner = 0.0;
   if (detail > 0.01) {
-    // the four moon-jelly gonad lobes — smooth, no sharp spokes
-    inner += (0.5 + 0.5 * cos(ang * 4.0 + seed)) * exp(-pow((rad - 0.5) * 2.6, 2.0)) * 0.5;
-    // gentle caustic mottle through the dome, near bells only (cost gate)
-    if (detail > 0.5) {
-      vec2 q = p / max(r, 1e-3) * 2.6 + seed * 7.0;
-      inner += caustic(q, t * 0.7 + seed * 4.0) * 0.28 * smoothstep(0.95, 0.2, rad);
+    // four moon-jelly gonad lobes
+    inner += (0.5 + 0.5 * cos(ang * 4.0 + seed)) * exp(-pow((rad - 0.5) * 2.8, 2.0)) * 0.5;
+    // fine radial canal filaments — crisp thin lines, the interior detail,
+    // faded out before the rim so they read as canals, not a spoke wheel
+    float ribN = 16.0 + floor(seed * 18.0);
+    float ribs = pow(0.5 + 0.5 * sin(ang * ribN + sin(rad * 6.0 - t) * 0.8 + seed * 3.0), 6.0);
+    inner += ribs * smoothstep(0.12, 0.45, rad) * (1.0 - smoothstep(0.72, 0.95, rad)) * 0.55;
+    // caustic shimmer through the dome, near bells only (cost gate)
+    if (detail > 0.45) {
+      vec2 q = p / max(r, 1e-3) * 3.0 + seed * 7.0;
+      inner += caustic(q, t * 0.7 + seed * 4.0) * 0.4 * smoothstep(0.95, 0.2, rad);
     }
-    inner *= detail;
+    inner *= detail * mix(1.0, 0.45, soft);   // far bells blur out, near stay crisp
   }
 
-  // marginal tentacle fringe: a SHORT, fine, soft halo of many thin strands
-  // just past the rim (top-down) — a fuzzy margin, not long spikes.
+  // tentacle fringe: MANY fine thin strands radiating just past the rim, clearly
+  // visible but hair-fine (not chunky spikes); waves slowly, tapers to the tips.
   float fringe = 0.0;
   if (fr > 0.01) {
-    float flen = fr * 0.18;
     float ro = (rad - 0.9) / max(flen, 1e-4);
     if (ro > 0.0 && ro < 1.0) {
-      float wob = sin(t * 1.0 + seed * 5.0 + ang * 2.0) * 0.3;
-      float nFr = 40.0 + floor(seed * 40.0);
-      fringe = pow(0.5 + 0.5 * sin(ang * nFr + wob), 2.0)
-             * (1.0 - ro) * smoothstep(0.0, 0.3, ro);
+      float wob = sin(t * 1.0 + seed * 5.0 + ang * 2.0) * 0.35;
+      float nFr = 60.0 + floor(seed * 60.0);
+      float comb = pow(0.5 + 0.5 * sin(ang * nFr + wob), 3.0);
+      fringe = comb * (1.0 - ro * ro) * smoothstep(0.0, 0.15, ro);
     }
   }
 
-  vec3 bodyC = mix(col, vec3(1.0), 0.30);   // tissue scatters toward white
-  vec3 rimC  = mix(col, vec3(1.0), 0.55);
-  return bodyC * (body * 0.62 + inner * 0.5 + core * 0.5)
-       + rimC  * (rim * 0.75 + fringe * 0.3);
+  vec3 bodyC = mix(col, vec3(1.0), 0.26);   // tissue scatters toward white
+  vec3 rimC  = mix(col, vec3(1.0), 0.50);
+  return bodyC * (body * 0.55 + inner * 0.7 + core * 0.5)
+       + rimC  * (rim * 0.85 + fringe * 0.45);
 }
 
 // One parallax layer of jellies: a hash grid with one slowly-rising, looping,
@@ -186,8 +191,9 @@ void main() {
     float ph = fi * 1.2566;
     float sp = 0.09 + 0.035 * fi;
 
-    // depth, skewed toward far so big near bells sit over a deep field
-    float dd = pow(hash11(fi * 1.7 + 3.0), 0.7) * clamp(u_depth, 0.0, 1.0);
+    // depth, skewed toward NEAR so most hero bells stay big, crisp and detailed
+    // (the deep, blurred, faraway field is carried by the haze layers)
+    float dd = pow(hash11(fi * 1.7 + 3.0), 1.5) * clamp(u_depth, 0.0, 1.0);
 
     // per-bell randomization (scaled by u_variety)
     float var     = clamp(u_variety, 0.0, 1.0);
