@@ -90,8 +90,8 @@ void main() {
 
     float depth  = fract(fi * 0.2637 + 0.15);
     float phase  = fi * 2.3993;
-    float laneX  = mix(0.16, 0.84, fract(fi * 0.4115 + 0.13));
-    float laneY  = mix(0.46, 0.66, fract(fi * 0.5300 + 0.27));
+    float laneX  = mix(0.14, 0.86, fract(fi * 0.4115 + 0.13));
+    float laneY  = mix(0.40, 0.72, fract(fi * 0.5300 + 0.27));
 
     // per-jelly randomization so no two read the same: size, bell width, stripe
     // count, opening depth, tentacle density + length, and sway rate all vary.
@@ -106,6 +106,13 @@ void main() {
     float tentJ   = max(floor(tentN + (r2 - 0.5) * 6.0), 4.0);
     float lenSc   = 0.80 + 0.45 * r3;                       // tentacle length scale
     float swayR   = 0.80 + 0.50 * r4;                       // sway rate
+    // per-jelly lean (tilt) + slow rock so they aren't all dead level. Force a
+    // definite direction + minimum magnitude so every jelly visibly leans.
+    float tdir    = (r3 < 0.5) ? -1.0 : 1.0;
+    float tilt    = tdir * (0.18 + 0.22 * r1) + sin(t * (0.18 + 0.12 * r2) + phase) * 0.10;
+    float ca = cos(tilt), sa = sin(tilt);
+    float tiltT = tilt * 0.15;                              // tentacles hang near-vertical (gravity)
+    float caT = cos(tiltT), saT = sin(tiltT);
 
     // calm continuous motion: the jellies stay in frame, gently bobbing and
     // drifting sideways on the current (no pulse, no sink-through).
@@ -113,15 +120,16 @@ void main() {
     float cy     = laneY * res.y + sin(t * (0.13 + 0.06 * r4) + phase * 1.3) * rad * 0.45;
     float vfade  = 1.0;
 
-    // cheap cull: a column from bell-top to tentacle-tips. The horizontal reach
-    // must contain the tentacles' full splay + sway (grows with flow + width) or
-    // they get sliced at a hard vertical edge as they animate.
-    float reachX = rad * (bellW * 2.0 + 1.1 * u_tentacleFlow + 0.3);
+    // cheap cull: a column from bell-top to tentacle-tips. Must contain the tilt
+    // lean of the long tentacles plus sway, or they get sliced as they animate.
+    float reachX = rad * (bellW * 1.3 + 11.0 * abs(sin(tiltT)) + 0.8 * u_tentacleFlow + 0.5);
     if (abs(fc.x - cx) > reachX) continue;
-    if (fc.y > cy + rad * 1.35) continue;
-    if (fc.y < cy - rad * 9.5) continue;
+    if (fc.y > cy + rad * 1.5) continue;
+    if (fc.y < cy - rad * 10.0) continue;
 
-    vec2 b = (fc - vec2(cx, cy)) / rad;     // bell radii; b.y up, apex at +1
+    vec2 b0 = (fc - vec2(cx, cy)) / rad;    // bell radii; b.y up, apex at +1
+    vec2 b  = mat2(ca, sa, -sa, ca) * b0;   // bell + arms: full lean
+    vec2 bT = mat2(caT, saT, -saT, caT) * b0; // tentacles: droop back toward vertical
 
     // per-jelly colour
     float hbase = fract(fi * 0.9 + depth * 0.3);
@@ -179,21 +187,21 @@ void main() {
     }
 
     // ---- TENTACLES: long fine curtain streaming below, swaying continuously --
-    float td = armY;                                   // depth below margin (down +)
+    float td = -bT.y;                                  // depth below margin (down +)
     if (td > 0.0 && td < 9.0) {
       float spacing = 2.0 * bellW / tentJ;
-      // strands splay apart with depth; divide by the splayed spacing so the
-      // nearest-strand pick stays correct (no popping as they spread).
-      float splayF  = 1.0 + 0.10 * td;
-      float strand  = floor(b.x / (spacing * splayF) + 0.5);
-      float sx      = strand * spacing + (hash21(vec2(strand, fi)) - 0.5) * spacing * 0.3;
-      if (abs(sx) < bellW * 1.02) {
+      // tentacles hang as a curtain DIRECTLY under the bell (no fan-out) so they
+      // stay within the body; only a gentle sway moves them.
+      float strand  = floor(bT.x / spacing + 0.5);
+      float sx      = strand * spacing + (hash21(vec2(strand, fi)) - 0.5) * spacing * 0.25;
+      // roots well INSIDE the bell so the curtain stays within the dome's width
+      if (abs(sx) < bellW * 0.74) {
         float h    = hash21(vec2(strand + 7.0, fi));
         float len  = (5.0 + 3.5 * h) * lenSc;          // per-strand length (radii)
-        float swayAmp = u_tentacleFlow * (0.10 + 0.09 * td);   // bounded sway, grows w/ depth
-        float cxs  = sx * splayF
+        float swayAmp = u_tentacleFlow * (0.04 + 0.02 * td); // bounded so tips stay under the dome
+        float cxs  = sx
                    + sin(td * 0.9 - t * 1.1 * swayR + strand * 0.7 + phase) * swayAmp;
-        float dxt  = b.x - cxs;
+        float dxt  = bT.x - cxs;
         // cohesive ribbon: a soft-edged tapering shape, not a hairline
         float wTen = max(spacing * (0.34 + 0.16 * h) * smoothstep(len, 0.0, td), spacing * 0.08);
         float ribbon = smoothstep(wTen, wTen * 0.35, abs(dxt));
