@@ -88,10 +88,7 @@ void main() {
 
   float across  = clamp(u_count, 3.0, 20.0);
   float cell    = res.x / across;                  // square cell in device px
-  // resolution-stable flame size so the field matches at thumbnail & fullscreen
-  // (refScale == 1 at the 1280x800 poster, so the baked look is unchanged).
-  float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0);
-  float flameH  = max(u_flameSize, 4.0) * refScale * pr;
+  float flameH  = max(u_flameSize, 4.0) * pr;      // constant physical size
   float ds      = t * (0.10 + u_wanderSpeed * 0.55);
 
   vec2 g = fc / cell;

@@ -20,9 +20,7 @@
     { "uniform": "u_colorSpread", "label": "Colour spread", "min": 0.0, "max": 1.0, "step": 0.02, "default": 0.85,
       "effect": "How far the lantern hues range across the palette; 0 is a single tint, 1 spreads the full set." },
     { "uniform": "u_saturation", "label": "Colour vividness", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.2,
-      "effect": "Vividness of the lantern colours; 0 is greyscale, 1 is the raw palette, higher pushes saturation." },
-    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01, "default": 1.0,
-      "effect": "Strength of the lantern that follows the pointer; 0 disables pointer interaction entirely." }
+      "effect": "Vividness of the lantern colours; 0 is greyscale, 1 is the raw palette, higher pushes saturation." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6 }

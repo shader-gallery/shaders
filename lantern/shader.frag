@@ -27,7 +27,6 @@ uniform float u_structure; // interior caustic + rib detail, 0..1      (default 
 uniform float u_atmosphere;// colored water-glow fill                  (default 0.8)
 uniform float u_colorSpread;// lantern-to-lantern hue variety          (default 0.85)
 uniform float u_saturation;// lantern colour vividness                 (default 1.2)
-uniform float u_mouseInfluence; // pointer lantern strength, 0=off     (default 1)
 
 const float BG = 0.035;   // deep-water base, ~#09090B
 
@@ -141,15 +140,6 @@ void main() {
     col += cc     * L.x * 0.62 * em;                  // interior + caustic web
     col += rimCol * L.y * 0.72 * em;                  // bright membrane rim
     col += ribCol * L.z * 0.80 * em;                  // nucleus + ribs
-  }
-
-  // faint pointer-following lantern so the field reacts when hovered. Guard on
-  // u_mouse itself (0,0 when absent) — NOT the centred coords, which are non-zero
-  // at the origin and left a lantern stuck in the corner with no pointer.
-  if (dot(u_mouse, u_mouse) > 1.0 && u_mouseInfluence > 0.001) {
-    vec2 m = (u_mouse - 0.5 * res) / res.y;
-    vec3 L = lantern(uv - m, 0.24, 2.0, t, structure);
-    col += pal(2) * (L.x * 0.3 + L.y * 0.4 + L.z * 0.4) * 0.5 * u_mouseInfluence;
   }
 
   // tone curve: overlaps keep glowing without blowing to white; deep base kept
