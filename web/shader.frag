@@ -1,9 +1,9 @@
-// web (Loom) -- layered orb-weaver webs receding into the dark. Two or three
-// irregular radial webs hang at different depths from decorrelated hubs: the far
-// webs are smaller, finer, dimmer and softened by depth-of-field while the near
-// web is crisp and bright. Dew beads at the spoke-spiral crossings glint awake
-// in slow travelling sequence around each web, their colour drawn from the
-// palette by ring and angle, and the whole structure trembles in the night air.
+// web (Loom) -- an irregular cobweb: a tangle of silk threads stretched between
+// scattered anchor points into a polygonal mesh of cells, with no single hub.
+// The threads waver and sag in the night air, dew beads sit in the cells and
+// glint awake in a slow travelling chase, and each cell carries its own colour
+// drawn from the palette. The mesh has no centre, so it fills the frame as a
+// real web does instead of reading as a target.
 //
 // Uniforms provided by the runtime:
 //   u_time        seconds, monotonically increasing
@@ -20,31 +20,27 @@ uniform float u_pixelRatio;
 uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
-uniform float u_spokes;      // radial silk spokes per web            (default 13)
-uniform float u_spacing;     // radial gap between spiral passes, css px (default 34)
-uniform float u_tremble;     // night-air shiver amplitude            (default 0.5)
-uniform float u_glintSpeed;  // dew-bead lighting-up rate             (default 0.5)
-uniform float u_layers;      // stacked webs at receding depth, 1..3  (default 3)
-uniform float u_depthFade;   // brightness of the farthest web vs near (default 0.32)
-uniform float u_dof;         // depth-of-field softening on far webs   (default 1.6)
-uniform float u_irregular;   // spoke and spiral irregularity          (default 1.0)
-uniform float u_hueSpread;   // hue separation between near and far    (default 0.18)
+uniform float u_density;     // silk cells across the frame            (default 7)
+uniform float u_irregular;   // regular net 0 .. random cobweb 1       (default 0.85)
+uniform float u_warp;        // organic thread waver                   (default 0.45)
+uniform float u_sag;         // gravity droop of the whole mesh        (default 0.3)
+uniform float u_silk;        // thread glow                            (default 1.0)
+uniform float u_threadWidth; // silk strand weight                     (default 1.0)
+uniform float u_dewSize;     // dew bead size                          (default 1.0)
+uniform float u_glintSpeed;  // dew lighting-up chase rate             (default 0.5)
+uniform float u_hueSpread;   // cell-to-cell colour variety            (default 0.7)
 
-const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
-const float TAU      = 6.2831853;
-const float MAX_SPK  = 24.0;   // literal loop cap (param clamps below this)
-const float MAX_RING = 20.0;   // literal loop cap for dew rings along a spoke
+const vec3  BG  = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
+const float TAU = 6.2831853;
 
-// cheap hash helpers
+// cheap hashes
 float hash11(float n) { return fract(sin(n * 127.1) * 43758.5453); }
-
-// cyclic triangular weight for a palette entry centred at c on a 0..4 wheel
-float wheelW(float s, float c) {
-  float d = abs(s - c);
-  return max(0.0, 1.0 - min(d, 4.0 - d));
+vec2 hash2(vec2 p) {
+  p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+  return fract(sin(p) * 43758.5453);
 }
 
-// smooth value noise in 2D (for the tremble displacement)
+// smooth value noise (for the organic silk waver and sag wander)
 float vnoise(vec2 p) {
   vec2 i = floor(p), f = fract(p);
   f = f * f * (3.0 - 2.0 * f);
@@ -55,159 +51,133 @@ float vnoise(vec2 p) {
   return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
 }
 
-// one full orb-weaver web. seed decorrelates the spoke pattern and hub position;
-// zoom below 1 pushes the web farther (smaller on screen, finer rings); blur
-// widens the strokes and dew (depth-of-field); hueOff rotates its dew palette.
-// Returns the additive glow contribution before depth dimming.
-vec3 webLayer(vec2 fc, vec2 res, float t, float pr, float scale, float seed,
-              float zoom, float blur, float hueOff,
-              vec3 c0, vec3 c1, vec3 c2, vec3 c3) {
-  // per-layer hub: off-centre, jittered by seed so the webs do not stack
-  vec2 hubJit = (vec2(hash11(seed + 1.7), hash11(seed + 4.3)) - 0.5) * 0.34;
-  vec2 hub = res * (vec2(0.585, 0.610) + hubJit);
+// the jittered anchor offset for the cell at lattice coord g. jit interpolates
+// from a perfectly regular net (0) to a fully random cobweb (1); a small drift
+// keeps the silk breathing on a loop. Both voronoi passes must agree, so this
+// depends only on (g, t).
+vec2 anchor(vec2 g, float t, float jit) {
+  vec2 base = hash2(g);
+  vec2 o = mix(vec2(0.5), base, clamp(jit, 0.0, 1.0));
+  o += 0.045 * sin(t * 0.5 + TAU * base);
+  return o;
+}
 
-  // --- tremble: a few CSS px of smooth, continuous noise displacement ---
-  float trAmp = u_tremble * 6.0 * pr;
-  float ph = seed * 2.0;   // decorrelate each web's shiver phase
-  float nx = vnoise(fc * (0.9 / scale) + vec2(ph, t * 0.32))
-           + 0.5 * vnoise(fc * (2.1 / scale) + vec2(t * 0.47, 5.0 + ph));
-  float ny = vnoise(fc * (0.9 / scale) + vec2(t * 0.28, 9.0 + ph))
-           + 0.5 * vnoise(fc * (2.1 / scale) + vec2(3.0 + ph, t * 0.41));
-  vec2 sway = vec2(sin(t * 0.55 + 1.3 + ph), cos(t * 0.47 + ph)) * 0.85;
-  vec2 wobble = ((vec2(nx, ny) - 0.75) + sway) * trAmp;
+// voronoi mesh: returns edge distance (to the nearest cell boundary = silk
+// thread), site distance (to the nearest anchor = where dew sits) and the
+// chosen cell id, all in lattice units.
+void mesh(vec2 x, float t, float jit, out float edge, out float siteDist, out vec2 site) {
+  vec2 n = floor(x);
+  vec2 f = fract(x);
 
-  // zoom scales the hub-relative coordinate: a far web reads smaller and finer
-  vec2 p = (fc - hub + wobble) / max(zoom, 0.05);
-
-  float r   = length(p);
-  float ang = atan(p.y, p.x);   // -PI..PI
-
-  // strand half-thickness and dew radius; blur softens both for the far webs
-  float silk = (0.85 + blur) * pr;
-  float dewR = (3.4 + blur * 1.6) * pr;
-  float aa   = pr * 1.1 + blur * pr;
-
-  // ring gap (Archimedean pitch) from the css-px param
-  float refScale = min(res.x, res.y) / (max(pr, 1.0) * 400.0);
-  float ringGap = max(u_spacing, 6.0) * refScale * pr;
-  // low-amplitude wobble on the spiral radius so rings are not perfectly true
-  float spiralWobble = (vnoise(vec2(ang * 1.7, r * 0.004)) - 0.5) * ringGap * 0.35 * u_irregular;
-
-  float nSpk = clamp(floor(u_spokes + 0.5), 5.0, MAX_SPK);
-
-  // ---- radial spokes at hashed (irregular) angles ----
-  float spokeDist = 1e9;
-  float spokeIdx  = 0.0;
-  float spokeAng  = 0.0;
-  for (float i = 0.0; i < MAX_SPK; i += 1.0) {
-    if (i >= nSpk) break;
-    float jitter = (hash11(i * 3.17 + 1.0 + seed * 7.0) - 0.5) * (TAU / nSpk) * 0.55 * u_irregular;
-    float a = (i / nSpk) * TAU + jitter;
-    vec2 dir = vec2(cos(a), sin(a));
-    float along = dot(p, dir);
-    float perp  = abs(dot(p, vec2(-dir.y, dir.x)));
-    float d = along > 0.0 ? perp : 1e9;
-    if (d < spokeDist) { spokeDist = d; spokeIdx = i; spokeAng = a; }
-  }
-
-  // ---- spiral pass: Archimedean r = ringGap * k, with wobble ----
-  float rw = r + spiralWobble;
-  float ringId = floor(rw / ringGap + 0.5);
-  float ringDist = abs(rw - ringId * ringGap);
-
-  // fade the web out near the hub (tangle) and at the far edge
-  float inner = smoothstep(ringGap * 0.6, ringGap * 1.4, r);
-  float outerLim = scale * 0.62;
-  float outer = 1.0 - smoothstep(outerLim, outerLim + ringGap * 2.0, r);
-  float webMask = inner * outer;
-
-  // anti-aliased silk strokes
-  float spokeStroke = (1.0 - smoothstep(0.0, silk + aa, spokeDist)) * webMask;
-  float ringStroke  = (1.0 - smoothstep(0.0, silk + aa, ringDist)) * webMask;
-
-  // ---- dew beads at spoke x spiral intersections ----
-  float bead = 0.0;
-  float beadRingId = 0.0;
-  {
-    vec2 dir = vec2(cos(spokeAng), sin(spokeAng));
-    float best = 1e9;
-    for (float k = 1.0; k < MAX_RING; k += 1.0) {
-      float br = ringGap * k - spiralWobble;
-      if (br > outerLim + ringGap) break;
-      vec2 bc = dir * br;
-      float dd = length(p - bc);
-      if (dd < best) { best = dd; beadRingId = k; }
+  // pass 1: nearest anchor
+  vec2 mg = vec2(0.0), mr = vec2(0.0);
+  float md = 8.0;
+  for (int j = -1; j <= 1; j++) {
+    for (int i = -1; i <= 1; i++) {
+      vec2 g = vec2(float(i), float(j));
+      vec2 r = g + anchor(n + g, t, jit) - f;
+      float d = dot(r, r);
+      if (d < md) { md = d; mr = r; mg = g; }
     }
-    bead = exp(-(best * best) / (dewR * dewR));
   }
+  site = n + mg;
+  siteDist = sqrt(md);
 
-  // sequenced glint: a brightness wave travelling around the spiral
-  float angN = spokeIdx / nSpk;
-  float seq  = beadRingId * 1.6 + angN * 3.0;
-  float glint = 0.5 + 0.5 * sin(seq * 1.3 - t * u_glintSpeed * TAU * 0.22);
-  glint = pow(glint, 3.5);
-  float beadLight = mix(0.12, 1.0, glint);
+  // pass 2: distance to the perpendicular bisector edges around that anchor
+  md = 8.0;
+  for (int j = -2; j <= 2; j++) {
+    for (int i = -2; i <= 2; i++) {
+      vec2 g = mg + vec2(float(i), float(j));
+      vec2 r = g + anchor(n + g, t, jit) - f;
+      vec2 diff = r - mr;
+      float dd = dot(diff, diff);
+      if (dd > 1e-4) md = min(md, dot(0.5 * (mr + r), normalize(diff)));
+    }
+  }
+  edge = md;
+}
 
-  // palette: colour wanders by ring and angle, offset per layer by hueOff
-  float hue = fract(beadRingId * 0.14 + angN * 0.8 + t * 0.01 + hueOff) * 4.0;
-  float w0 = wheelW(hue, 0.0), w1 = wheelW(hue, 1.0), w2 = wheelW(hue, 2.0), w3 = wheelW(hue, 3.0);
-  vec3 dewCol = (c0 * w0 + c1 * w1 + c2 * w2 + c3 * w3) / max(w0 + w1 + w2 + w3, 0.001);
-
-  // silk colour: a cool tint pulled from the palette mid
-  vec3 silkCol = mix(c0, c2, 0.5);
-
-  // woven propagation: a brightness wave travels outward along the silk in step
-  // with the dew glint, so the threads shimmer as the chase passes
-  float silkWave = 0.5 + 0.5 * sin(rw / ringGap * 1.6 + angN * 3.0
-                                   - t * u_glintSpeed * TAU * 0.22);
-  silkWave = mix(0.32, 1.7, silkWave * silkWave);
-
-  // --- compose this web: luminous silk + bright dew glints ---
-  vec3 acc = vec3(0.0);
-  float silkAmt = spokeStroke + ringStroke;
-  acc += silkCol * silkAmt * 0.62 * silkWave;      // hairline strands, shimmering
-  acc += dewCol * bead * beadLight * webMask * 1.7; // dew core
-  acc += dewCol * bead * beadLight * webMask * 0.6; // soft bloom halo
-  acc += vec3(1.0) * bead * pow(glint, 3.0) * webMask * 0.55; // white-hot centre
-  return acc;
+// cyclic triangular palette weight on a 0..4 wheel
+float wheelW(float s, float c) {
+  float d = abs(s - c);
+  return max(0.0, 1.0 - min(d, 4.0 - d));
 }
 
 void main() {
-  float pr  = u_pixelRatio;
   vec2  fc  = gl_FragCoord.xy;
   vec2  res = u_resolution;
   float t   = u_time;
-  float scale = min(res.x, res.y);
+  float mn  = min(res.x, res.y);
 
-  // palette with a peacock fallback when none is themed
+  // square-cell, frame-centred coordinate
+  vec2 uv = (fc - 0.5 * res) / mn;
+
+  // palette with the house peacock fallback
   vec3 c0 = u_palette[0], c1 = u_palette[1], c2 = u_palette[2], c3 = u_palette[3];
   if (dot(c0, c0) + dot(c1, c1) + dot(c2, c2) + dot(c3, c3) < 1e-5) {
     c0 = vec3(0.231, 0.510, 0.965); c1 = vec3(0.659, 0.333, 0.969);
     c2 = vec3(0.133, 0.827, 0.933); c3 = vec3(0.957, 0.247, 0.369);
   }
 
-  float nLayers = clamp(floor(u_layers + 0.5), 1.0, 3.0);
-  vec3 accum = vec3(0.0);
-  // draw back-to-front so the near web reads on top of the far ones
-  for (float i = 2.0; i >= 0.0; i -= 1.0) {
-    if (i > nLayers - 1.0) continue;
-    float depth01 = nLayers > 1.0 ? i / (nLayers - 1.0) : 0.0; // 0 near .. 1 far
-    float dim    = mix(1.0, u_depthFade, depth01);
-    float blur   = u_dof * depth01;
-    float zoom   = mix(1.0, 0.72, depth01);
-    float hueOff = depth01 * u_hueSpread;
-    float seed   = i * 11.7;
-    accum += webLayer(fc, res, t, pr, scale, seed, zoom, blur, hueOff,
-                      c0, c1, c2, c3) * dim;
-  }
+  // lattice coordinate, then warp it: organic silk waver + a downward gravity
+  // sag that grows toward the bottom of the frame so the mesh droops.
+  vec2 x = uv * max(u_density, 1.0);
+  float w1 = vnoise(x * 0.6 + vec2(0.0, t * 0.05));
+  float w2 = vnoise(x * 0.6 + vec2(5.0, -t * 0.04));
+  x += u_warp * 0.8 * (vec2(w1, w2) - 0.5);
+  x.y += u_sag * (0.8 + 0.9 * (-uv.y)) * (0.6 + 0.5 * vnoise(x * 0.3));
 
-  // exposure tonemap so stacked additive glow saturates to colour, not white
-  accum = vec3(1.0) - exp(-accum * 1.15);
+  float edge, siteDist;
+  vec2  site;
+  mesh(x, t, u_irregular, edge, siteDist, site);
+
+  // --- silk threads on the cell borders ---
+  // hairline strand in lattice units, with a faint narrow glow; thread
+  // brightness varies cell to cell so the mesh is not a uniform tessellation
+  float hw   = 0.011 * u_threadWidth;
+  float aa   = 0.009;
+  float core = 1.0 - smoothstep(hw, hw + aa, edge);
+  float halo = exp(-edge * edge / (0.032 * 0.032));
+  float cellRand = hash11(dot(site, vec2(12.39, 7.91)) + 1.3);
+  float threadVar = 0.45 + 0.55 * hash11(dot(site, vec2(5.2, 1.7)) + 2.0);
+  float silkAmt = (core + 0.22 * halo) * threadVar;
+
+  // --- dew bead at each cell anchor, glinting in a travelling chase ---
+  float dewR = (0.045 + 0.02 * cellRand) * u_dewSize;
+  float bead = exp(-(siteDist * siteDist) / (dewR * dewR));
+  float glint = 0.5 + 0.5 * sin((site.x + site.y) * 1.15 + cellRand * TAU
+                                - t * u_glintSpeed * TAU * 0.22);
+  glint = pow(glint, 3.5);
+  float beadLight = mix(0.14, 1.0, glint);
+
+  // --- colour: each cell draws a hue from the palette wheel ---
+  float hueRand = hash11(dot(site, vec2(3.17, 9.73)) + 4.1);
+  float hue = fract(hueRand * clamp(u_hueSpread, 0.0, 1.0) + 0.12 + t * 0.01) * 4.0;
+  float k0 = wheelW(hue, 0.0), k1 = wheelW(hue, 1.0), k2 = wheelW(hue, 2.0), k3 = wheelW(hue, 3.0);
+  vec3 dewCol = (c0 * k0 + c1 * k1 + c2 * k2 + c3 * k3) / max(k0 + k1 + k2 + k3, 0.001);
+
+  // cool silk tint, faintly carrying the local cell hue
+  vec3 silkCol = mix(mix(c0, c2, 0.5), dewCol, 0.25);
+
+  // a brightness wave travelling along the silk in step with the dew chase
+  float silkWave = 0.5 + 0.5 * sin((site.x + site.y) * 1.15 + cellRand * TAU
+                                   - t * u_glintSpeed * TAU * 0.22 - 0.6);
+  silkWave = mix(0.45, 1.5, silkWave * silkWave);
+
+  // --- compose ---
+  vec3 accum = vec3(0.0);
+  accum += silkCol * silkAmt * 0.6 * u_silk * silkWave;       // silk mesh
+  accum += dewCol * bead * beadLight * 1.7;                    // dew core
+  accum += dewCol * bead * beadLight * 0.55;                   // dew halo
+  accum += vec3(1.0) * bead * pow(glint, 3.0) * 0.5;           // white-hot glint
+
+  // exposure tonemap so dense overlaps saturate to colour, not white
+  accum = vec3(1.0) - exp(-accum * 1.25);
 
   vec3 col = BG + accum;
 
-  // gentle radial falloff, floored so the webs read to the edges
-  float vign = 0.78 + 0.22 * (1.0 - smoothstep(0.5, 1.25, length((fc - res * 0.5) / res)));
+  // gentle radial falloff, floored so the mesh reads to the edges
+  float vign = 0.8 + 0.2 * (1.0 - smoothstep(0.5, 1.3, length(uv)));
   col *= vign;
 
   gl_FragColor = vec4(col, 1.0);

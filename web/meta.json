@@ -8,39 +8,75 @@
     "glow",
     "loop",
     "spider",
-    "radial",
-    "beads",
-    "tremble"
+    "cobweb",
+    "mesh",
+    "beads"
   ],
-  "description": "A single orb-weaver's web hung across the dark from an off-centre hub: a dozen-odd irregular radial spokes crossed by a slightly wonky Archimedean spiral. Hairline silk barely glows while dew beads at the crossings glint awake in slow travelling sequence around the web, their colour wandering through a restrained rainbow, the whole structure trembling a few pixels in the night air.",
+  "description": "An irregular cobweb: silk threads stretched between scattered anchor points into a polygonal mesh of cells with no single hub. The threads waver and sag in the night air, dew beads sit in the cells and glint awake in a slow travelling chase, and each cell carries its own colour from the palette, the whole mesh filling the frame as a real web does.",
   "entry": "shader.frag",
   "params": [
     {
-      "uniform": "u_spokes",
-      "label": "Spokes",
-      "min": 7,
-      "max": 24,
-      "step": 1,
-      "default": 13,
-      "effect": "Number of radial silk spokes, and therefore dew beads per ring; low is a sparse broken-looking web, high a fine dense wheel."
+      "uniform": "u_density",
+      "label": "Mesh density",
+      "min": 3,
+      "max": 16,
+      "step": 0.5,
+      "default": 7,
+      "effect": "How many silk cells span the frame; low is a few big sweeping openings, high a fine dense net crowded with dew."
     },
     {
-      "uniform": "u_spacing",
-      "label": "Ring spacing",
-      "min": 18,
-      "max": 64,
-      "step": 1,
-      "default": 34,
-      "effect": "Radial gap between spiral passes in CSS px; tight spacing gives many close rings crowded with dew, wide gives a few sweeping rings."
+      "uniform": "u_irregular",
+      "label": "Irregularity",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Anchor scatter: 0 is a perfectly regular woven net, toward 1 the anchors wander into a real tangled cobweb of uneven cells."
     },
     {
-      "uniform": "u_tremble",
-      "label": "Tremble",
+      "uniform": "u_warp",
+      "label": "Silk waver",
       "min": 0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.5,
-      "effect": "Amplitude of the night-air shiver displacing the whole web; 0 hangs it dead still, max makes the silk visibly quiver."
+      "default": 0.45,
+      "effect": "How much the threads bow and curve organically; 0 holds them dead straight, high makes the silk wander like slack thread."
+    },
+    {
+      "uniform": "u_sag",
+      "label": "Gravity sag",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Downward droop of the whole mesh, growing toward the bottom; 0 hangs it flat, high pulls the lower web into heavy sagging strands."
+    },
+    {
+      "uniform": "u_silk",
+      "label": "Silk glow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the thread mesh relative to the dew; low leaves a faint web of bright beads, high lights up every strand."
+    },
+    {
+      "uniform": "u_threadWidth",
+      "label": "Silk weight",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Thickness of the silk strands, from a fine hairline to heavy roping."
+    },
+    {
+      "uniform": "u_dewSize",
+      "label": "Dew size",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Size of the dew beads caught in the cells, from tiny pinpoints to fat droplets."
     },
     {
       "uniform": "u_glintSpeed",
@@ -49,52 +85,16 @@
       "max": 2,
       "step": 0.01,
       "default": 0.5,
-      "effect": "Rate at which dew beads light up in sequence around the web, from one slow circuit per half-minute to a lively sparkle chase."
-    },
-    {
-      "uniform": "u_layers",
-      "label": "Webs",
-      "min": 1,
-      "max": 3,
-      "step": 1,
-      "default": 3,
-      "effect": "How many webs hang at receding depths; 1 is a single near web, 3 stacks two fainter webs behind it for depth."
-    },
-    {
-      "uniform": "u_depthFade",
-      "label": "Depth fade",
-      "min": 0.1,
-      "max": 1,
-      "step": 0.01,
-      "default": 0.32,
-      "effect": "Brightness of the farthest web relative to the near one; low sinks the back webs into the dark, high brings them forward."
-    },
-    {
-      "uniform": "u_dof",
-      "label": "Depth of field",
-      "min": 0,
-      "max": 4,
-      "step": 0.05,
-      "default": 1.6,
-      "effect": "How much the far webs are softened out of focus; 0 keeps every web crisp, high blurs the back silk and dew into a haze."
-    },
-    {
-      "uniform": "u_irregular",
-      "label": "Irregularity",
-      "min": 0,
-      "max": 2,
-      "step": 0.01,
-      "default": 1,
-      "effect": "Spoke-angle and spiral-radius wonkiness; 0 is a perfect mechanical wheel, 1 a real orb-weaver's slightly crooked web, high a tangled mess."
+      "effect": "Rate at which the dew beads light up in a travelling chase across the mesh, from a slow drift to a lively sparkle."
     },
     {
       "uniform": "u_hueSpread",
-      "label": "Depth hue",
+      "label": "Colour spread",
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.18,
-      "effect": "How far the far webs' dew colour rotates away from the near web's, separating the depth planes by hue."
+      "default": 0.7,
+      "effect": "Cell-to-cell colour variety; 0 tints the whole web one hue, 1 scatters the full palette rainbow across the cells."
     }
   ],
   "defaultPalette": "peacock",
@@ -103,6 +103,7 @@
     "bloomRadius": 4.5,
     "backdrop": 0,
     "saturation": 1.08,
-    "dither": 1.0
+    "dither": 1.0,
+    "vignette": 0.26
   }
 }
