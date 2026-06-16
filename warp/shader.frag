@@ -25,11 +25,17 @@ uniform float u_drift;    // ripple travel speed          (default 0.3)
 uniform float u_glow;     // thread/node glow multiplier  (default 1)
 uniform float u_thick;    // thread half-width in CSS px   (default 1.4)
 uniform float u_weft;     // weft glow-band sweep speed    (default 0.22)
+uniform float u_randomize;// per-thread jitter: x / amp / phase / width / glow (default 0)
+uniform float u_tilt;     // slant the warp off-vertical (shear)              (default 0)
+uniform float u_node;     // weft glow-node bloom strength                    (default 1)
 
 const float BG          = 0.039;   // #0A -> ~0.04 near-black base
 const float WAVELEN_CSS = 240.0; // vertical wavelength of the travelling ripple
 
 const float TAU = 6.2831853;
+
+// cheap per-thread pseudo-random scalar in 0..1
+float hash11(float n) { return fract(sin(n * 91.3458) * 47453.5453); }
 
 // smooth per-thread colour from the 4-stop palette across x in 0..1
 vec3 threadTint(float x) {
@@ -68,33 +74,47 @@ void main() {
 
   // brighten where a weft band crosses a warp thread -> glow nodes
   float node = weft * (1.0 + 1.2 * weft);
+  float rnd  = max(u_randomize, 0.0);
+
+  // slant the whole warp off-vertical by shearing x with height (rotation)
+  float sx = fc.x + (fc.y - res.y * 0.5) * u_tilt;
 
   // accumulate the nearest few warp threads so anti-aliased lines overlap softly
-  float cell = floor(fc.x / spacing);
+  float cell = floor(sx / spacing);
   for (int k = -1; k <= 1; k++) {
     float id    = cell + float(k);
-    float baseX = (id + 0.5) * spacing;
+    // per-thread random scalars (stable per thread); rnd=0 leaves the even weave
+    float r1 = hash11(id * 1.7 + 0.1);
+    float r2 = hash11(id * 2.3 + 5.0);
+    float r3 = hash11(id * 3.1 + 9.0);
+    float r4 = hash11(id * 0.7 + 13.0);
+    float r5 = hash11(id * 5.0 + 21.0);
+    float baseX = (id + 0.5) * spacing + (r1 - 0.5) * spacing * 0.6 * rnd;
     float xN    = baseX / res.x;                 // 0..1 across screen
 
     // per-thread phase offset + slight amplitude variation so the weave
-    // breathes organically instead of rippling in lockstep
-    float ph   = id * 1.7;
-    float aMod = amp * (0.78 + 0.22 * sin(id * 0.9 + 1.3));
+    // breathes organically instead of rippling in lockstep; randomize adds more.
+    float ph   = id * 1.7 + r3 * TAU * rnd;
+    float aMod = amp * (0.78 + 0.22 * sin(id * 0.9 + 1.3)) * (1.0 + (r2 - 0.5) * 0.9 * rnd);
     float disp = aMod * sin(yPhase + ph) + 0.35 * aMod * sin(yPhase * 0.5 + ph);
     float threadX = baseX + disp;
 
     // distance from this fragment to the (rippling) thread
-    float d = abs(fc.x - threadX);
+    float d = abs(sx - threadX);
+
+    // per-thread width + brightness jitter (rnd=0 -> uniform)
+    float thickJ = thick * (1.0 + (r5 - 0.5) * 0.7 * rnd);
+    float bMod   = max(1.0 + (r4 - 0.5) * 0.8 * rnd, 0.1);
 
     // soft luminous core + a wide halo, both scaled by pixel ratio
-    float core = 1.0 - smoothstep(thick, thick + 2.5 * pr, d);
+    float core = 1.0 - smoothstep(thickJ, thickJ + 2.5 * pr, d);
     float halo = exp(-d / (8.0 * pr));
 
     vec3 tint = threadTint(xN);
     // resting glow + extra lift where a weft band crosses -> glow nodes
-    float lift = (0.50 + 0.95 * node) * u_glow;
-    col += tint * core * (0.80 * lift);
-    col += tint * halo * (0.26 * lift);
+    float lift = (0.50 + 0.95 * node * max(u_node, 0.0)) * u_glow;
+    col += tint * core * (0.80 * lift) * bMod;
+    col += tint * halo * (0.26 * lift) * bMod;
   }
   // a faint overall vertical falloff so edges sit darker (vignette-ish)
   float vy = smoothstep(0.0, 0.30, fc.y / res.y) * smoothstep(0.0, 0.30, 1.0 - fc.y / res.y);
