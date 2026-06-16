@@ -22,7 +22,7 @@
       "min": 0.1,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.18,
+      "default": 0.1,
       "effect": "Rate of the per-filament brightness and length phases and of the rim's slow circumferential drift, from glacial smoulder to nervous shimmer."
     },
     {
@@ -40,7 +40,7 @@
       "min": 32,
       "max": 256,
       "step": 1,
-      "default": 188,
+      "default": 256,
       "effect": "How many filaments ring the circumference — a sparse spiky crown at min, a dense continuous corona fur at max."
     },
     {
@@ -49,7 +49,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.8,
+      "default": 0.74,
       "effect": "How much the filaments writhe — curl, sway and length-swell amplitude. 0 is a calm radial fringe, 1 a roiling, agitated discharge."
     },
     {
@@ -58,7 +58,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0,
+      "default": 0.58,
       "effect": "Bends the straight rays into curved, swept streams via a standing distortion field that grows outward from the rim — the disc itself stays a clean circle. 0 is undistorted."
     },
     {
@@ -67,7 +67,7 @@
       "min": 1,
       "max": 8,
       "step": 1,
-      "default": 3,
+      "default": 6,
       "effect": "How many lobes the warp field wraps around the rim — few broad sweeps at min, many tight curls at max."
     },
     {
@@ -76,7 +76,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0,
+      "default": 0.6,
       "effect": "Ripples each ray with a travelling wavy wobble so they read as living, kinked strands rather than clean straight or curved lines; the roots stay pinned to the rim. 0 is smooth rays."
     },
     {
@@ -85,7 +85,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.4,
+      "default": 1,
       "effect": "Frequency of the ray ripple — a few long undulations at min, a tight crinkle at max."
     },
     {
@@ -94,7 +94,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 1,
+      "default": 0.71,
       "effect": "How often a filament erupts into a long detaching streamer; 0 disables eruptions entirely, 1 keeps one arcing free somewhere most of the time."
     },
     {
@@ -103,7 +103,7 @@
       "min": 1,
       "max": 4,
       "step": 1,
-      "default": 1,
+      "default": 3,
       "effect": "How many streamers erupt together each time — one lone prominence at 1, a multi-armed flare event at 4."
     },
     {
@@ -112,7 +112,7 @@
       "min": 0.3,
       "max": 2.5,
       "step": 0.01,
-      "default": 1,
+      "default": 0.7,
       "effect": "How far the streamers shoot beyond the corona — stubby tongues at min, long arcs flung clear across the frame at max."
     },
     {
@@ -121,7 +121,7 @@
       "min": 0.3,
       "max": 2.5,
       "step": 0.01,
-      "default": 1,
+      "default": 1.52,
       "effect": "Thickness of each streamer, from a fine whip to a broad luminous tongue of plasma."
     },
     {
