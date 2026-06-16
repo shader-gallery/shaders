@@ -153,9 +153,14 @@ vec3 hazeLayer(vec2 uv, float t, float scale, float drift, float detail, float s
       // radius kept clip-safe: visible cutoff (1.06 * 0.6 = 0.64 cell) stays
       // well under 1 cell so the 3x3 neighbourhood never clips a bell. Density
       // comes from many overlapping faint bells, not from oversizing them.
-      float rr = mix(0.42, 0.6, h);
+      // each bell grows small -> big -> small over its rise (loop-safe), and its
+      // OPACITY is locked to its current size: small bells are faded/transparent,
+      // large bells are opaque. Never big-and-fading or small-and-solid.
+      float grow = sin(rise * 3.14159265);            // 0 at birth/death, 1 at peak
+      float szN  = mix(0.55, 1.0, h) * grow;          // 0..1 current size
+      float rr   = mix(0.42, 0.6, h) * grow;
       float pulse = 0.85 + 0.15 * sin(t * 1.3 + h * 6.0);
-      float vis = smoothstep(0.0, 0.12, rise) * (1.0 - smoothstep(0.86, 1.0, rise));
+      float vis = szN * szN;                          // opacity proportional to size
       vec3 c = satur(mix(t0, t1, h), sat);
       acc += jelly(vec2(p.x, p.y * 1.12), rr, h * 3.7, t, c, detail, soft, fr) * vis * pulse * bright;
     }
