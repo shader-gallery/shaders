@@ -72,7 +72,10 @@ float bubbles(vec2 fc, vec2 res, float pr, float tb) {
     bp.x += sin(tb * 0.4 + h3 * 6.2831) * cell.x * 0.18;  // gentle wobble
     float size = (1.2 + 2.0 * h3) * pr * mix(0.6, 1.7, lf) * max(u_bubbleSize, 0.05);
     float d = length(fc - bp);
-    acc += exp(-(d * d) / (size * size)) * mix(0.35, 1.0, lf);
+    // fade each mote in at the start of its rise and out at the end so it never
+    // pops in/out at the wrap point.
+    float life = smoothstep(0.0, 0.14, by) * smoothstep(1.0, 0.86, by);
+    acc += exp(-(d * d) / (size * size)) * mix(0.35, 1.0, lf) * life;
   }
   return acc;
 }
