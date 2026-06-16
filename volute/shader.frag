@@ -25,7 +25,8 @@ uniform float u_fade;    // beads twinkle 0..1              (default 0)
 uniform float u_seed;    // pattern re-roll for the beads   (default 0)
 uniform float u_centerX; // vortex eye x, short-axis units  (default 0)
 uniform float u_centerY; // vortex eye y, short-axis units  (default 0)
-uniform float u_rotate;  // spin the whole spiral, degrees  (default 0)
+uniform float u_rotate;  // base spin of the whole spiral, deg (default 167)
+uniform float u_spin;    // auto-rotation speed, deg/sec     (default 6)
 uniform float u_tilt;    // fore/back perspective tilt -1..1 (default 0)
 uniform float u_skew;    // left/right lean -1..1           (default 0)
 
@@ -53,7 +54,7 @@ void main(){
   // left/right with height, tilt rocks it fore/back with width, so the flat coil
   // can read as a vortex tunnel lying back in space.
   vec2  p=fc-octr;
-  float rad=u_rotate*0.0174532925;
+  float rad=(u_rotate+t*u_spin)*0.0174532925;        // base angle + auto-spin
   float ca=cos(rad), sa=sin(rad);
   p=vec2(ca*p.x+sa*p.y,-sa*p.x+ca*p.y);
   float nx=p.x/(0.5*mn), ny=p.y/(0.5*mn);
