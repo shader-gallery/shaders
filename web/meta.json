@@ -50,14 +50,58 @@
       "step": 0.01,
       "default": 0.5,
       "effect": "Rate at which dew beads light up in sequence around the web, from one slow circuit per half-minute to a lively sparkle chase."
+    },
+    {
+      "uniform": "u_layers",
+      "label": "Webs",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 3,
+      "effect": "How many webs hang at receding depths; 1 is a single near web, 3 stacks two fainter webs behind it for depth."
+    },
+    {
+      "uniform": "u_depthFade",
+      "label": "Depth fade",
+      "min": 0.1,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.32,
+      "effect": "Brightness of the farthest web relative to the near one; low sinks the back webs into the dark, high brings them forward."
+    },
+    {
+      "uniform": "u_dof",
+      "label": "Depth of field",
+      "min": 0,
+      "max": 4,
+      "step": 0.05,
+      "default": 1.6,
+      "effect": "How much the far webs are softened out of focus; 0 keeps every web crisp, high blurs the back silk and dew into a haze."
+    },
+    {
+      "uniform": "u_irregular",
+      "label": "Irregularity",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Spoke-angle and spiral-radius wonkiness; 0 is a perfect mechanical wheel, 1 a real orb-weaver's slightly crooked web, high a tangled mess."
+    },
+    {
+      "uniform": "u_hueSpread",
+      "label": "Depth hue",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.18,
+      "effect": "How far the far webs' dew colour rotates away from the near web's, separating the depth planes by hue."
     }
   ],
   "defaultPalette": "peacock",
   "post": {
     "bloom": 0.7,
     "bloomRadius": 4.5,
-    "backdrop": 0.45,
-    "backdropScale": 1.2,
+    "backdrop": 0,
     "saturation": 1.08,
     "dither": 1.0
   }
