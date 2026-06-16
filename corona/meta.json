@@ -29,10 +29,28 @@
       "uniform": "u_reach",
       "label": "Filament reach",
       "min": 20,
-      "max": 160,
+      "max": 220,
       "step": 1,
-      "default": 70,
-      "effect": "Maximum radial length the filaments extend beyond the rim in CSS pixels — a tight bright band at min, long searching streamers at max."
+      "default": 110,
+      "effect": "Maximum radial length the filaments extend beyond the rim in CSS pixels — a tight bright band at min, long searching streamers reaching toward the corners at max."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Filament density",
+      "min": 32,
+      "max": 256,
+      "step": 1,
+      "default": 130,
+      "effect": "How many filaments ring the circumference — a sparse spiky crown at min, a dense continuous corona fur at max."
+    },
+    {
+      "uniform": "u_turbulence",
+      "label": "Turbulence",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "How much the filaments writhe — curl, sway and length-swell amplitude. 0 is a calm radial fringe, 1 a roiling, agitated discharge."
     },
     {
       "uniform": "u_eruptRate",
@@ -42,8 +60,62 @@
       "step": 0.01,
       "default": 0.25,
       "effect": "How often a filament erupts into a long detaching streamer; 0 disables eruptions entirely, 1 keeps one arcing free somewhere most of the time."
+    },
+    {
+      "uniform": "u_centerX",
+      "label": "Position X",
+      "min": -1,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Slides the eclipse disc left or right, in short-axis units, so it can sit off-centre in the frame."
+    },
+    {
+      "uniform": "u_centerY",
+      "label": "Position Y",
+      "min": -1,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Slides the eclipse disc up or down, in short-axis units."
+    },
+    {
+      "uniform": "u_starDensity",
+      "label": "Star density",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How thickly stars fill the surrounding sky — 0 an empty void, 1 a crowded field."
+    },
+    {
+      "uniform": "u_starGlow",
+      "label": "Star glow",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "Brightness of the stars; 0 puts out the sky, high makes them blaze."
+    },
+    {
+      "uniform": "u_starHue",
+      "label": "Star colour",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Star tint — 0 dyes them with the palette like distant nebulae, 1 burns them to pure white."
+    },
+    {
+      "uniform": "u_starSpeed",
+      "label": "Star twinkle",
+      "min": 0,
+      "max": 3,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Twinkle rate of the stars; 0 freezes them to a still field, high sets the whole sky shimmering."
     }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6 }
+  "post": { "bloom": 0.8, "bloomRadius": 4.0, "saturation": 1.12, "contrast": 1.03, "vignette": 0.22 }
 }

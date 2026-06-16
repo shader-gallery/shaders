@@ -27,11 +27,18 @@ uniform vec3  u_palette[4];
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_disc;         // void disc diameter, css px (default 320)
 uniform float u_flickerSpeed; // filament flicker + rim drift rate (default 0.4)
-uniform float u_reach;        // max filament reach beyond the rim, css px (default 70)
+uniform float u_reach;        // max filament reach beyond the rim, css px (default 110)
 uniform float u_eruptRate;    // streamer eruption frequency, 0 = never (default 0.25)
+uniform float u_density;      // filaments around the circumference (default 130)
+uniform float u_turbulence;   // filament writhe: curl + sway + swell amount (default 0.55)
+uniform float u_centerX;      // disc centre, short-axis units, -1..1 (default 0)
+uniform float u_centerY;      // disc centre, short-axis units, -1..1 (default 0)
+uniform float u_starDensity;  // star field fill, 0 = empty sky .. 1 = crowded (default 0.5)
+uniform float u_starGlow;     // star brightness (default 0.45)
+uniform float u_starHue;      // star colour: 0 = palette-tinted .. 1 = white (default 0.3)
+uniform float u_starSpeed;    // star twinkle rate (default 1.0)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black field ~#09090B
-const float SECT     = 96.0;          // filaments around the circumference
 const float TAU      = 6.28318530718;
 const float DRIFT    = 0.012;         // rim current, revolutions/sec at speed 1
 const float EPOCH    = 6.0;           // eruption scheduling period, seconds
@@ -69,14 +76,20 @@ void main() {
   }
 
   float spd     = max(u_flickerSpeed, 0.0);
-  float R       = max(u_disc, 40.0) * 0.5 * pr;  // void radius, device px
+  float SECT    = clamp(u_density, 16.0, 300.0); // filaments around the circumference
+  float turb    = clamp(u_turbulence, 0.0, 1.0);
   float reachPx = max(u_reach, 4.0) * pr;        // filament reach, device px
   float aa      = max(pr * 0.8, 0.8);
 
-  vec2  rel = fc - 0.5 * res;
+  // disc centre, movable: short-axis units about the screen centre
+  vec2  ctr = 0.5 * res + vec2(u_centerX, u_centerY) * res.y;
+  vec2  rel = fc - ctr;
   float d   = length(rel);
   float a   = atan(rel.y, rel.x) / TAU + 0.5;    // screen angle, 0..1
   float driftA = u_time * spd * DRIFT;           // rim current (rev)
+
+  float R   = max(u_disc, 40.0) * 0.5 * pr;      // clean circular void radius, device px
+
   float u   = fract(a - driftA);                 // drifting rim coordinate
   float slot = floor(u * SECT);
 
@@ -109,14 +122,15 @@ void main() {
     float h3 = hash12(vec2(jm, 23.5));           // curl + rate jitter
     float h4 = hash12(vec2(jm, 47.9));           // gain + hue jitter
 
-    float curl   = (h3 - 0.5) * 0.9;             // sideways lean, slot units
+    float tAmp   = mix(0.35, 1.7, turb);         // turbulence -> writhe amplitude
+    float curl   = (h3 - 0.5) * 0.9 * tAmp;      // sideways lean, slot units
     float angOff = curl * pow(max(t, 0.0), 1.4); // streak curves as it reaches
-    float sway   = 0.22 * sin(fl * (0.5 + 0.5 * h1) + h3 * TAU); // root wobble
+    float sway   = 0.22 * tAmp * sin(fl * (0.5 + 0.5 * h1) + h3 * TAU); // root wobble
     float du     = u * SECT - (j + 0.5) - angOff - sway;
     float ad     = abs(du) * slotArc;            // device px off the centreline
 
     // per-filament life: length swell + brightness flicker, hash-offset phases
-    float swell = 0.76 + 0.32 * sin(fl * (0.9 + 0.7 * h3) + h2 * TAU);
+    float swell = 0.76 + 0.32 * tAmp * sin(fl * (0.9 + 0.7 * h3) + h2 * TAU);
     float lenJ  = (0.30 + 0.70 * h1) * swell;
     float br    = 0.55 + 0.45 * sin(fl * (1.6 + 1.4 * h2) + h1 * TAU);
     br *= 0.75 + 0.25 * sin(fl * 0.37 + h4 * TAU);
@@ -125,7 +139,7 @@ void main() {
     float prof = pow(1.0 - tn, 1.6) * (1.0 - smoothstep(0.90, 1.0, tn));
     prof += exp(-t * 9.0) * 0.7;                 // bright anchor at the root
 
-    float w    = mix(1.5, 0.65, tn) * pr * 0.5;  // hairline, tapering half-width
+    float w    = mix(2.1, 0.8, tn) * pr * 0.5;   // tapering half-width
     float core = 1.0 - smoothstep(w - aa, w + aa, ad);
     float halo = exp(-(ad * ad) / (9.0 * pr * pr)) * 0.30;
 
@@ -156,26 +170,32 @@ void main() {
   // ---- faint diffuse ring-glow under the filaments + thin limb at the rim ----
   float out1 = max(d - R, 0.0);
   vec3  gcol = wheel(a, c0, c1, c2, c3);
-  float glow = exp(-out1 / max(reachPx * 0.40, 6.0)) * 0.14
-             + exp(-out1 / max(reachPx * 1.60, 24.0)) * 0.055
-             + exp(-out1 / max(reachPx * 4.50, 60.0)) * 0.028;
-  float limb = exp(-out1 / (2.5 * pr)) * 0.22;
+  float glow = exp(-out1 / max(reachPx * 0.40, 6.0)) * 0.20
+             + exp(-out1 / max(reachPx * 1.60, 24.0)) * 0.085
+             + exp(-out1 / max(reachPx * 4.50, 60.0)) * 0.045;
+  float limb = exp(-out1 / (2.5 * pr)) * 0.30;
   acc += gcol * (glow * current + limb * (0.7 + 0.3 * current));
 
-  // faint starfield filling the surrounding void (in-shader, replacing the backdrop):
-  // dim hash-scattered twinkling stars in the dark sky around the eclipse.
-  vec2  sc    = fc / pr;
-  vec2  scell = floor(sc / 24.0);
-  vec2  sfr   = fract(sc / 24.0) - 0.5;
-  float sh    = hash12(scell + 3.0);
-  float star  = step(0.85, sh) * exp(-dot(sfr, sfr) * 62.0)
-              * (0.45 + 0.55 * sin(u_time * (0.4 + sh) + sh * 40.0));
-  acc += wheel(hash12(scell + 9.0), c0, c1, c2, c3) * star * 0.45;
+  // starfield filling the surrounding sky (controllable density/glow/colour/speed):
+  // hash-scattered twinkling stars with per-star size jitter in the dark sky.
+  float starSpd = max(u_starSpeed, 0.0);
+  float thr     = mix(0.97, 0.55, clamp(u_starDensity, 0.0, 1.0)); // density -> threshold
+  vec2  sc      = fc / pr;
+  vec2  scell   = floor(sc / 24.0);
+  vec2  sfr     = fract(sc / 24.0) - 0.5;
+  float sh      = hash12(scell + 3.0);
+  float ssz     = mix(95.0, 42.0, hash12(scell + 17.0));   // per-star size jitter
+  float twk     = 0.45 + 0.55 * sin(u_time * starSpd * (0.4 + sh) + sh * 40.0);
+  float star    = step(thr, sh) * exp(-dot(sfr, sfr) * ssz) * twk;
+  vec3  scol    = mix(wheel(hash12(scell + 9.0), c0, c1, c2, c3),
+                      vec3(1.0), clamp(u_starHue, 0.0, 1.0));
+  acc += scol * star * max(u_starGlow, 0.0);
 
   // ---- compose: true-void disc, vignetted dark field, soft-knee tone map ----
   float mask = smoothstep(R - aa, R + aa, d);    // 0 inside the void
-  float vig  = 1.0 - 0.35 * smoothstep(0.45, 1.05, length(rel / max(res.y, 1.0)));
-  vec3  lit  = 1.0 - exp(-acc * 1.5);
+  vec2  vrel = (fc - 0.5 * res) / max(res.y, 1.0); // screen-centred (vignette stays put)
+  float vig  = 1.0 - 0.35 * smoothstep(0.45, 1.05, length(vrel));
+  vec3  lit  = 1.0 - exp(-acc * 1.9);
   vec3  col  = (BG + lit) * vig * mask;
 
   gl_FragColor = vec4(col, 1.0);
