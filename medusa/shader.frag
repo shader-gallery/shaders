@@ -27,7 +27,7 @@ uniform float u_stripes;       // radial bell-stripe density        (default 14)
 uniform float u_tentacles;     // tentacle curtain density          (default 16)
 
 const vec3  BG  = vec3(0.02, 0.03, 0.06); // deep-water base
-const int   NJ  = 6;                       // max jellies (count-gated)
+const int   NJ  = 8;                       // max jellies (count-gated)
 const float PI  = 3.14159265;
 
 vec3 P0, P1, P2, P3;
@@ -92,18 +92,31 @@ void main() {
     float phase  = fi * 2.3993;
     float laneX  = mix(0.16, 0.84, fract(fi * 0.4115 + 0.13));
     float laneY  = mix(0.46, 0.66, fract(fi * 0.5300 + 0.27));
-    float rad    = bellR * mix(0.62, 1.12, depth);
+
+    // per-jelly randomization so no two read the same: size, bell width, stripe
+    // count, opening depth, tentacle density + length, and sway rate all vary.
+    float r1 = hash21(vec2(fi, 1.70));
+    float r2 = hash21(vec2(fi, 9.20));
+    float r3 = hash21(vec2(fi, 4.50));
+    float r4 = hash21(vec2(fi, 7.10));
+    float rad     = bellR * mix(0.62, 1.12, depth) * mix(0.82, 1.20, r1);
+    float bellW   = 1.04 + 0.32 * r2;                       // bell width
+    float stripeJ = max(floor(stripeN + (r3 - 0.5) * 8.0), 5.0);
+    float ohJ     = 0.12 + 0.10 * r4;                       // opening depth
+    float tentJ   = max(floor(tentN + (r2 - 0.5) * 6.0), 4.0);
+    float lenSc   = 0.80 + 0.45 * r3;                       // tentacle length scale
+    float swayR   = 0.80 + 0.50 * r4;                       // sway rate
 
     // calm continuous motion: the jellies stay in frame, gently bobbing and
     // drifting sideways on the current (no pulse, no sink-through).
-    float cx     = laneX * res.x + sin(t * 0.09 + phase) * rad * 0.7;
-    float cy     = laneY * res.y + sin(t * 0.16 + phase * 1.3) * rad * 0.45;
+    float cx     = laneX * res.x + sin(t * (0.07 + 0.04 * r1) + phase) * rad * 0.7;
+    float cy     = laneY * res.y + sin(t * (0.13 + 0.06 * r4) + phase * 1.3) * rad * 0.45;
     float vfade  = 1.0;
 
     // cheap cull: a column from bell-top to tentacle-tips. The horizontal reach
-    // must contain the tentacles' full splay + sway (which grows with flow) or
+    // must contain the tentacles' full splay + sway (grows with flow + width) or
     // they get sliced at a hard vertical edge as they animate.
-    float reachX = rad * (2.4 + 1.0 * u_tentacleFlow);
+    float reachX = rad * (bellW * 2.0 + 1.1 * u_tentacleFlow + 0.3);
     if (abs(fc.x - cx) > reachX) continue;
     if (fc.y > cy + rad * 1.35) continue;
     if (fc.y < cy - rad * 9.5) continue;
@@ -122,7 +135,6 @@ void main() {
 
     // ---- BELL: a 3D dome (radial-gradient oval) with a TWO-ARCH opening rim --
     float ny = b.y;                                   // 0 at margin .. 1 at apex
-    float bellW = 1.15;
     float xn = b.x / bellW;                            // -1..1 across the dome
     float ev = sqrt(max(1.0 - xn * xn, 0.0));         // ellipse factor (1 centre, 0 sides)
     float hw = bellW * sqrt(max(1.0 - ny * ny, 0.0)); // dome half-width at height ny
@@ -135,7 +147,7 @@ void main() {
     float body3d = smoothstep(1.05, 0.0, length(ec)); // 1 centre .. 0 edge
     // meridian stripes, subtle so the 3D gradient stays the dominant read
     float phi = atan(b.x, max(ny, 0.02));
-    float stripe = 0.5 + 0.5 * sin(phi * stripeN);
+    float stripe = 0.5 + 0.5 * sin(phi * stripeJ);
     vec3  domeCol = tint * (0.16 + 0.95 * body3d) * (0.78 + 0.34 * stripe);
     // glossy top highlight sells the dome curvature
     float hil = smoothstep(0.55, 0.0, length(vec2(xn * 1.2, (ny - 0.72) / 0.32)));
@@ -145,8 +157,8 @@ void main() {
     // opening rim as TWO arches the SAME WIDTH as the dome: a bright wavy FRONT
     // lip (near, dips down) and a fainter BACK lip (far, arcs up) seen through the
     // translucent bell -> a 3D bowl with a dark mouth the arms emerge from.
-    float oh   = 0.17;                                  // opening half-height
-    float scal = 0.04 * sin(xn * PI * stripeN * 0.5);  // scallop the front lip
+    float oh   = ohJ;                                  // opening half-height (per jelly)
+    float scal = 0.04 * sin(xn * PI * stripeJ * 0.5);  // scallop the front lip
     float inW  = smoothstep(1.02, 0.96, abs(xn));
     float frontRim = exp(-pow((ny - (-oh * ev + scal)) / 0.05, 2.0)) * inW;
     float backRim  = exp(-pow((ny - ( oh * ev)) / 0.055, 2.0)) * inW;
@@ -169,7 +181,7 @@ void main() {
     // ---- TENTACLES: long fine curtain streaming below, swaying continuously --
     float td = armY;                                   // depth below margin (down +)
     if (td > 0.0 && td < 9.0) {
-      float spacing = 2.0 * bellW / tentN;
+      float spacing = 2.0 * bellW / tentJ;
       // strands splay apart with depth; divide by the splayed spacing so the
       // nearest-strand pick stays correct (no popping as they spread).
       float splayF  = 1.0 + 0.10 * td;
@@ -177,10 +189,10 @@ void main() {
       float sx      = strand * spacing + (hash21(vec2(strand, fi)) - 0.5) * spacing * 0.3;
       if (abs(sx) < bellW * 1.02) {
         float h    = hash21(vec2(strand + 7.0, fi));
-        float len  = 5.0 + 3.5 * h;                    // per-strand length (radii)
+        float len  = (5.0 + 3.5 * h) * lenSc;          // per-strand length (radii)
         float swayAmp = u_tentacleFlow * (0.10 + 0.09 * td);   // bounded sway, grows w/ depth
         float cxs  = sx * splayF
-                   + sin(td * 0.9 - t * 1.1 + strand * 0.7 + phase) * swayAmp;
+                   + sin(td * 0.9 - t * 1.1 * swayR + strand * 0.7 + phase) * swayAmp;
         float dxt  = b.x - cxs;
         // cohesive ribbon: a soft-edged tapering shape, not a hairline
         float wTen = max(spacing * (0.34 + 0.16 * h) * smoothstep(len, 0.0, td), spacing * 0.08);

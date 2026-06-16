@@ -7,27 +7,27 @@
   "description": "Sea-nettle jellyfish drift down through deep water at staggered depths — each a translucent domed bell marked with radial stripes and a dark scalloped margin, trailing a frilly ruffled column of oral arms and a long curtain of fine tentacles that sway on a slow continuous current. No contraction pulse: the jellies simply sink and trail, looping with no visible reset.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_driftSpeed", "label": "Drift speed", "min": 0.0, "max": 2.0, "step": 0.05, "default": 0.6,
+    { "uniform": "u_driftSpeed", "label": "Drift speed", "min": 0.0, "max": 2.0, "step": 0.05, "default": 0.85,
       "effect": "Speed of the slow sink, horizontal sway and tentacle flow." },
-    { "uniform": "u_bellSize", "label": "Bell size", "min": 60, "max": 300, "step": 1, "default": 150,
+    { "uniform": "u_bellSize", "label": "Bell size", "min": 60, "max": 300, "step": 1, "default": 84,
       "effect": "Bell radius in CSS pixels; the oral arms and tentacle length scale with it." },
-    { "uniform": "u_count", "label": "Jellyfish", "min": 1, "max": 6, "step": 1, "default": 3,
+    { "uniform": "u_count", "label": "Jellyfish", "min": 1, "max": 8, "step": 1, "default": 6,
       "effect": "How many jellyfish drift the frame at once, at staggered depths." },
-    { "uniform": "u_brightness", "label": "Brightness", "min": 0.0, "max": 3.0, "step": 0.05, "default": 1.3,
+    { "uniform": "u_brightness", "label": "Brightness", "min": 0.0, "max": 3.0, "step": 0.05, "default": 1.1,
       "effect": "Overall emission of the bells, arms and tentacles." },
     { "uniform": "u_tentacleFlow", "label": "Tentacle sway", "min": 0.0, "max": 2.0, "step": 0.05, "default": 0.6,
       "effect": "How far the tentacles and oral arms drift and curl in the current." },
-    { "uniform": "u_glow", "label": "Atmosphere", "min": 0.0, "max": 2.0, "step": 0.05, "default": 0.8,
+    { "uniform": "u_glow", "label": "Atmosphere", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.3,
       "effect": "Drifting colored water-glow and god-ray banding so the frame never reads as dead black." },
-    { "uniform": "u_colorSpread", "label": "Colour spread", "min": 0.0, "max": 1.0, "step": 0.02, "default": 0.85,
+    { "uniform": "u_colorSpread", "label": "Colour spread", "min": 0.0, "max": 1.0, "step": 0.02, "default": 0.42,
       "effect": "How far the jelly hues range across the palette; 0 is a single tint, 1 spreads the full set." },
     { "uniform": "u_saturation", "label": "Colour vividness", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.2,
       "effect": "Vividness of the jelly colours; 0 is greyscale, 1 is the raw palette, higher pushes saturation." },
-    { "uniform": "u_stripes", "label": "Bell stripes", "min": 4, "max": 28, "step": 1, "default": 14,
-      "effect": "Number of radial stripes marking each translucent bell." },
-    { "uniform": "u_tentacles", "label": "Tentacle density", "min": 4, "max": 30, "step": 1, "default": 10,
-      "effect": "How many tentacle ribbons hang in each jelly's trailing curtain." }
+    { "uniform": "u_stripes", "label": "Bell stripes", "min": 4, "max": 28, "step": 1, "default": 15,
+      "effect": "Baseline radial stripe count; each jelly varies a few stripes around it." },
+    { "uniform": "u_tentacles", "label": "Tentacle density", "min": 4, "max": 30, "step": 1, "default": 7,
+      "effect": "Baseline tentacle-ribbon count; each jelly varies around it." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6 }
+  "post": { "bloom": 0.6, "vignette": 0.26 }
 }
