@@ -12,7 +12,7 @@
     { "uniform": "u_line", "label": "Tube weight", "min": 1.0, "max": 9.0, "step": 0.1,
       "default": 1.9, "effect": "Core thickness of the glowing coil in CSS pixels, from a hairline thread to a fat neon tube." },
     { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.5, "step": 0.01,
-      "default": 0.16, "effect": "Speed of the charge spinning outward along the coil; 0 freezes it, high sets the whole spiral whirling." },
+      "default": 0.05, "effect": "Speed of the charge spinning outward along the coil; 0 freezes it, high sets the whole spiral whirling." },
     { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.25, "effect": "Strength of the soft halo around the coil; low is a crisp drawn line, high a luminous bloom filling the gaps." },
     { "uniform": "u_arms", "label": "Arms", "min": 1.0, "max": 6.0, "step": 1.0,
@@ -32,13 +32,13 @@
     { "uniform": "u_centerY", "label": "Centre Y", "min": -1.0, "max": 1.0, "step": 0.01,
       "default": -0.53, "effect": "Slides the vortex eye up or down, in short-axis units, so the spiral winds out from an off-centre point." },
     { "uniform": "u_rotate", "label": "Rotation", "min": 0.0, "max": 360.0, "step": 1.0,
-      "default": 167.0, "effect": "Base angle of the whole spiral about its eye, in degrees; the resting position the auto-spin turns from." },
+      "default": 0.0, "effect": "Base angle of the whole spiral about its eye, in degrees; the resting position the auto-spin turns from." },
     { "uniform": "u_spin", "label": "Spin", "min": -90.0, "max": 90.0, "step": 0.5,
-      "default": 6.0, "effect": "Auto-rotation speed in degrees per second; 0 holds the spiral still, positive turns it one way and negative the other for a slow hypnotic vortex." },
+      "default": 0.5, "effect": "Auto-rotation speed in degrees per second; 0 holds the spiral still, positive turns it one way and negative the other for a slow hypnotic vortex." },
     { "uniform": "u_tilt", "label": "Tilt", "min": -1.0, "max": 1.0, "step": 0.01,
-      "default": -0.69, "effect": "Rocks the coil fore and back in a perspective-ish tilt, so it reads as a vortex tunnel lying away from or toward the viewer." },
+      "default": 1.0, "effect": "Rocks the coil fore and back in a perspective-ish tilt, so it reads as a vortex tunnel lying away from or toward the viewer." },
     { "uniform": "u_skew", "label": "Skew", "min": -1.0, "max": 1.0, "step": 0.01,
-      "default": -1.0, "effect": "Leans the coil left or right, shearing the spiral off its upright axis for an angled, in-space read." }
+      "default": 0.27, "effect": "Leans the coil left or right, shearing the spiral off its upright axis for an angled, in-space read." }
   ],
   "post": { "bloom": 0.8, "bloomRadius": 4.5, "backdrop": 0.35, "backdropScale": 1.2, "saturation": 1.1, "contrast": 1.04, "dither": 1.0, "vignette": 0.26 },
   "defaultPalette": "fuchsia"
