@@ -185,10 +185,15 @@ void main() {
   // --- dense parallax jelly layers (the bulk of the bloom) ---
   if (u_haze > 0.01) {
     float hz = clamp(u_haze, 0.0, 1.0);
-    vec3 L1 = hazeLayer(uv, t, mix(2.8,  5.0,  hz), 0.05,  0.5,  0.30, 1.35, u_tentacles * 0.4, u_saturation, pal(2), pal(0),  2.0);
-    vec3 L2 = hazeLayer(uv, t, mix(5.0,  9.0,  hz), 0.042, 0.3,  0.45, 1.15, 0.0, u_saturation, pal(0), pal(1), 23.0);
-    vec3 L3 = hazeLayer(uv, t, mix(9.0,  17.0, hz), 0.032, 0.0,  0.62, 0.95, 0.0, u_saturation, pal(1), pal(2), 51.0);
-    vec3 L4 = hazeLayer(uv, t, mix(15.0, 28.0, hz), 0.024, 0.0,  0.82, 0.72, 0.0, u_saturation, pal(2), pal(0), 87.0);
+    // the background drifts on its own gentle clock so it stays alive even when
+    // the foreground Drift speed is near zero; u_speed still nudges its pace.
+    float bt = u_time * (0.15 + u_speed * 0.8);
+    // u_haze widens the grid density: sparse, scattered bells at low values,
+    // packed wall-to-wall at high. Near layers drift faster (parallax).
+    vec3 L1 = hazeLayer(uv, bt, mix(2.2,  6.0,  hz), 0.22, 0.5,  0.30, 1.35, u_tentacles * 0.4, u_saturation, pal(2), pal(0),  2.0);
+    vec3 L2 = hazeLayer(uv, bt, mix(4.0,  10.0, hz), 0.18, 0.3,  0.45, 1.15, 0.0, u_saturation, pal(0), pal(1), 23.0);
+    vec3 L3 = hazeLayer(uv, bt, mix(7.0,  18.0, hz), 0.14, 0.0,  0.62, 0.95, 0.0, u_saturation, pal(1), pal(2), 51.0);
+    vec3 L4 = hazeLayer(uv, bt, mix(12.0, 30.0, hz), 0.10, 0.0,  0.82, 0.72, 0.0, u_saturation, pal(2), pal(0), 87.0);
     col += (L1 + L2 + L3 + L4) * hz * u_glow * 0.62;
   }
 
