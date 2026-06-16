@@ -35,5 +35,5 @@
       "effect": "Vividness of the lantern colours; 0 is greyscale, 1 is the raw palette, higher pushes saturation." }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.6, "vignette": 0.26 }
+  "post": { "bloom": 0.6, "vignette": 0.26, "grain": 0 }
 }
