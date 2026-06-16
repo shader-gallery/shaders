@@ -13,7 +13,7 @@
       "min": 160,
       "max": 1600,
       "step": 1,
-      "default": 560,
+      "default": 1600,
       "effect": "Diameter of the void disc in CSS pixels; the filament rim scales with it. At the top of the range the orb overflows the frame, a planet-limb filling the screen."
     },
     {
@@ -22,7 +22,7 @@
       "min": 0.1,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.55,
+      "default": 0.18,
       "effect": "Rate of the per-filament brightness and length phases and of the rim's slow circumferential drift, from glacial smoulder to nervous shimmer."
     },
     {
@@ -49,8 +49,26 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.55,
+      "default": 0.8,
       "effect": "How much the filaments writhe — curl, sway and length-swell amplitude. 0 is a calm radial fringe, 1 a roiling, agitated discharge."
+    },
+    {
+      "uniform": "u_warp",
+      "label": "Filament warp",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Bends the straight rays into curved, swept streams via a standing distortion field that grows outward from the rim — the disc itself stays a clean circle. 0 is undistorted."
+    },
+    {
+      "uniform": "u_warpScale",
+      "label": "Warp lobes",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 3,
+      "effect": "How many lobes the warp field wraps around the rim — few broad sweeps at min, many tight curls at max."
     },
     {
       "uniform": "u_eruptRate",
@@ -62,12 +80,39 @@
       "effect": "How often a filament erupts into a long detaching streamer; 0 disables eruptions entirely, 1 keeps one arcing free somewhere most of the time."
     },
     {
+      "uniform": "u_eruptCount",
+      "label": "Eruption count",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 1,
+      "effect": "How many streamers erupt together each time — one lone prominence at 1, a multi-armed flare event at 4."
+    },
+    {
+      "uniform": "u_eruptReach",
+      "label": "Eruption length",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How far the streamers shoot beyond the corona — stubby tongues at min, long arcs flung clear across the frame at max."
+    },
+    {
+      "uniform": "u_eruptWidth",
+      "label": "Eruption width",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Thickness of each streamer, from a fine whip to a broad luminous tongue of plasma."
+    },
+    {
       "uniform": "u_centerX",
       "label": "Position X",
       "min": -1,
       "max": 1,
       "step": 0.01,
-      "default": -0.01,
+      "default": 0,
       "effect": "Slides the eclipse disc left or right, in short-axis units, so it can sit off-centre in the frame."
     },
     {
@@ -85,7 +130,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.12,
+      "default": 0.34,
       "effect": "How thickly stars fill the surrounding sky — 0 an empty void, 1 a crowded field."
     },
     {
@@ -94,7 +139,7 @@
       "min": 0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.53,
+      "default": 0.47,
       "effect": "Brightness of the stars; 0 puts out the sky, high makes them blaze."
     },
     {
@@ -103,7 +148,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.54,
+      "default": 0.16,
       "effect": "Star tint — 0 dyes them with the palette like distant nebulae, 1 burns them to pure white."
     },
     {
@@ -112,7 +157,7 @@
       "min": 0,
       "max": 3,
       "step": 0.01,
-      "default": 0.2,
+      "default": 0.37,
       "effect": "Twinkle rate of the stars; 0 freezes them to a still field, high sets the whole sky shimmering."
     },
     {
@@ -121,7 +166,7 @@
       "min": 0,
       "max": 1,
       "step": 0.01,
-      "default": 0.4,
+      "default": 0.67,
       "effect": "Renders the void as a shaded 3D dark orb instead of a flat black cutout — a soft directional sheen, limb glow and centre-to-edge gradient give it volume. 0 is the pure black hole."
     },
     {
@@ -130,7 +175,7 @@
       "min": 0,
       "max": 360,
       "step": 1,
-      "default": 130,
+      "default": 140,
       "effect": "Direction the orb is lit from, in degrees around the disc, when sphere shading is up."
     }
   ],

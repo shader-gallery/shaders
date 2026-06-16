@@ -39,6 +39,11 @@ uniform float u_starHue;      // star colour: 0 = palette-tinted .. 1 = white (d
 uniform float u_starSpeed;    // star twinkle rate (default 1.0)
 uniform float u_sphere;       // 0 = flat black void .. 1 = shaded 3D dark orb (default 0.4)
 uniform float u_sphereLight;  // sphere light direction, degrees around the disc (default 130)
+uniform float u_eruptCount;   // how many streamers erupt at once, 1..4 (default 1)
+uniform float u_eruptReach;   // streamer length multiplier (default 1.0)
+uniform float u_eruptWidth;   // streamer thickness multiplier (default 1.0)
+uniform float u_warp;         // filament field warp: bends the rays into curved streams (default 0)
+uniform float u_warpScale;    // warp lobes around the rim, integer (default 3)
 
 const vec3  BG       = vec3(0.035, 0.035, 0.043); // near-black field ~#09090B
 const float TAU      = 6.28318530718;
@@ -106,17 +111,28 @@ void main() {
   float gOn   = step(0.001, rate) * step(hash12(vec2(ep, 19.7)), 0.15 + 0.85 * rate);
   float act   = gOn * (1.0 - step(durF, ef));
   float ph    = clamp(ef / max(durF, 1e-3), 0.0, 1.0);
-  float eslot = floor(hash12(vec2(ep, 41.3)) * SECT);
+  float ea    = smoothstep(0.0, 0.05, ph) * (1.0 - smoothstep(0.78, 1.0, ph)); // erupt envelope
+  float eCount = clamp(u_eruptCount, 1.0, 4.0);
+  float eReach = max(u_eruptReach, 0.1);
+  float eWidth = max(u_eruptWidth, 0.1);
 
   float fl = u_time * spd;                       // shared flicker clock
+
+  // filament field warp: a smooth standing distortion (integer angular lobes ->
+  // seam-continuous across the -x cut) that bends the rays into curved streams,
+  // growing with distance from the rim. Leaves the disc itself a clean circle.
+  float wf   = floor(clamp(u_warpScale, 1.0, 8.0) + 0.5);
+  float warpF = u_warp * (0.65 * sin(a * TAU * wf + fl * 0.30)
+                        + 0.35 * sin(a * TAU * wf * 2.0 - fl * 0.21))
+              * pow(max(t, 0.0), 1.15) * 2.4;    // slot units
 
   // slow brightness current circling the rim with the drift (3 soft lobes)
   float current = 0.78 + 0.34 * sin((a - driftA * 1.6) * TAU * 3.0);
 
   vec3 acc = vec3(0.0);
 
-  // ---- rim filaments: pixel's slot plus neighbours (curl can lean ±2.5) ----
-  for (int k = -3; k <= 3; k++) {
+  // ---- rim filaments: pixel's slot plus neighbours (warp+curl can lean ±~3.5) ----
+  for (int k = -4; k <= 4; k++) {
     float j  = slot + float(k);
     float jm = mod(j + SECT, SECT);              // wrapped id, seam-continuous
     float h1 = hash12(vec2(jm, 1.7));            // length
@@ -128,7 +144,7 @@ void main() {
     float curl   = (h3 - 0.5) * 0.9 * tAmp;      // sideways lean, slot units
     float angOff = curl * pow(max(t, 0.0), 1.4); // streak curves as it reaches
     float sway   = 0.22 * tAmp * sin(fl * (0.5 + 0.5 * h1) + h3 * TAU); // root wobble
-    float du     = u * SECT - (j + 0.5) - angOff - sway;
+    float du     = u * SECT - (j + 0.5) - angOff - sway - warpF;
     float ad     = abs(du) * slotArc;            // device px off the centreline
 
     // per-filament life: length swell + brightness flicker, hash-offset phases
@@ -150,22 +166,28 @@ void main() {
 
     acc += fcol * (core + halo) * prof * br * (0.55 + 0.45 * h4) * current;
 
-    // rare eruption: this slot's filament arcs free, detaches, dissolves
-    if (act > 0.5 && abs(jm - eslot) < 0.5) {
-      float tipT  = STREAM_T * smoothstep(0.0, 0.50, ph);
-      float baseT = (STREAM_T - 0.1) * pow(smoothstep(0.30, 1.0, ph), 1.4);
-      float ea    = smoothstep(0.0, 0.05, ph) * (1.0 - smoothstep(0.78, 1.0, ph));
-      float win   = smoothstep(baseT - 0.18, baseT + 0.22, t)
-                  * (1.0 - smoothstep(tipT - 0.30, tipT + 0.04, t));
-      float wS    = mix(2.2, 0.8, clamp(t / STREAM_T, 0.0, 1.0)) * pr * 0.5;
-      float coreS = 1.0 - smoothstep(wS - aa, wS + aa, ad);
-      float haloS = exp(-(ad * ad) / (36.0 * pr * pr)) * 0.5;
-      acc += fcol * (coreS * 2.1 + haloS * 1.3) * win * ea;
+    // eruptions: up to eCount streamers per epoch arc free at distinct rim slots,
+    // each its own length jitter; eReach scales length, eWidth scales thickness.
+    for (int e = 0; e < 4; e++) {
+      if (act > 0.5 && float(e) < eCount) {
+        float eslotE = floor(hash12(vec2(ep, 41.3 + float(e) * 13.0)) * SECT);
+        if (abs(jm - eslotE) < 0.5) {
+          float sT    = STREAM_T * eReach * (0.7 + 0.6 * hash12(vec2(ep, 7.0 + float(e))));
+          float tipT  = sT * smoothstep(0.0, 0.50, ph);
+          float baseT = (sT - 0.1) * pow(smoothstep(0.30, 1.0, ph), 1.4);
+          float win   = smoothstep(baseT - 0.18, baseT + 0.22, t)
+                      * (1.0 - smoothstep(tipT - 0.30, tipT + 0.04, t));
+          float wS    = mix(2.2, 0.8, clamp(t / sT, 0.0, 1.0)) * pr * 0.5 * eWidth;
+          float coreS = 1.0 - smoothstep(wS - aa, wS + aa, ad);
+          float haloS = exp(-(ad * ad) / (36.0 * pr * pr * eWidth)) * 0.5;
+          acc += fcol * (coreS * 2.1 + haloS * 1.3) * win * ea;
 
-      // root flare lighting the local rim as the streamer lets go
-      float flare = exp(-t * 2.6) * exp(-du * du * 0.55)
-                  * smoothstep(0.0, 0.10, ph) * (1.0 - smoothstep(0.22, 0.55, ph));
-      acc += fcol * flare * 0.9;
+          // root flare lighting the local rim as the streamer lets go
+          float flare = exp(-t * 2.6) * exp(-du * du * 0.55)
+                      * smoothstep(0.0, 0.10, ph) * (1.0 - smoothstep(0.22, 0.55, ph));
+          acc += fcol * flare * 0.9;
+        }
+      }
     }
   }
 
