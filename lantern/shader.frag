@@ -53,7 +53,7 @@ float caustic(vec2 q, float t) {
           + sin((q.x - q.y) * 5.1 - t * 0.5 + 2.1)
           + sin(length(q) * 9.0 - t * 1.1);
   v = abs(v) * 0.2;                       // fold to ridges
-  return pow(1.0 - clamp(v, 0.0, 1.0), 3.0);
+  return pow(1.0 - clamp(v, 0.0, 1.0), 4.5);   // sharper cell-web veins
 }
 
 // structured lantern at local coords (uv-center). returns:
@@ -74,14 +74,14 @@ vec3 lantern(vec2 d, float r, float seed, float t, float structure) {
   float interior = (0.35 + 0.65 * web * structure) * inside
                  + 0.25 * outerHalo;
 
-  // membrane rim: a bright ring at the edge, slightly rippling
+  // membrane rim: a crisp bright ring at the edge, slightly rippling
   float ripple = 0.03 * sin(ang * 7.0 + t * 0.9 + seed * 5.0);
-  float rim = exp(-pow((rad - (0.92 + ripple)) * 9.0, 2.0));
+  float rim = exp(-pow((rad - (0.92 + ripple)) * 17.0, 2.0));
 
   // radial filament ribs from the nucleus, thin and glowing
   float ribCount = 9.0 + floor(seed * 6.0);
   float ribs = 0.5 + 0.5 * sin(ang * ribCount + sin(rad * 7.0 - t) * 1.2 + seed * 3.0);
-  ribs = pow(ribs, 4.0) * smoothstep(0.05, 0.45, rad) * (1.0 - smoothstep(0.7, 1.0, rad));
+  ribs = pow(ribs, 7.0) * smoothstep(0.05, 0.45, rad) * (1.0 - smoothstep(0.7, 1.0, rad));
   // hot nucleus
   float nucleus = exp(-rad * rad * 7.0);
   float coreStruct = nucleus * 1.4 + ribs * structure * 0.8;
