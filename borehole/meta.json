@@ -1,6 +1,7 @@
 {
   "name": "Borehole",
   "slug": "borehole",
+  "shelf": "rework",
   "family": "Delve",
   "author": "E. T. Carter",
   "tags": [

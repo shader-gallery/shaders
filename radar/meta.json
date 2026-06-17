@@ -1,6 +1,7 @@
 {
   "name": "Radar",
   "slug": "radar",
+  "shelf": "rework",
   "family": "Trace",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "radar", "waterfall", "scroll", "blips"],

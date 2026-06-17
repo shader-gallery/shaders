@@ -1,6 +1,7 @@
 {
   "name": "Bokeh",
   "slug": "bokeh",
+  "shelf": "rework",
   "family": "Noir",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "bokeh", "city", "parallax", "night"],

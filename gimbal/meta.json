@@ -1,6 +1,7 @@
 {
   "name": "Gimbal",
   "slug": "gimbal",
+  "shelf": "rework",
   "family": "Trace",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "gyroscope", "rings", "3d", "glint"],

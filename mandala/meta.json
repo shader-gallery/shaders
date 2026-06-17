@@ -1,6 +1,7 @@
 {
   "name": "Mandala",
   "slug": "mandala",
+  "shelf": "rework",
   "family": "Rosette",
   "author": "E. T. Carter",
   "tags": ["glow", "loop", "radial", "petals", "ornament", "symmetry", "mandala"],

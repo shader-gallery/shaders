@@ -1,6 +1,7 @@
 {
   "name": "Comet",
   "slug": "comet",
+  "shelf": "rework",
   "family": "Abyss",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "space", "trail", "orbit", "minimal"],

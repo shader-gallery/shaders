@@ -1,6 +1,7 @@
 {
   "name": "Cairn",
   "slug": "cairn",
+  "shelf": "rework",
   "family": "Plinth",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "stone", "fog", "depth", "monument", "organic"],

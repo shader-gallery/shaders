@@ -1,6 +1,7 @@
 {
   "name": "Oculus",
   "slug": "oculus",
+  "shelf": "rework",
   "family": "Delve",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "dome", "architecture", "panels", "depth"],

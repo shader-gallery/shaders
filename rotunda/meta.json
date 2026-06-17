@@ -1,6 +1,7 @@
 {
   "name": "Rotunda",
   "slug": "rotunda",
+  "shelf": "rework",
   "family": "Plinth",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "columns", "ruin", "fog", "parallax", "raymarch"],

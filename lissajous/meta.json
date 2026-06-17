@@ -1,6 +1,7 @@
 {
   "name": "Lissajous",
   "slug": "lissajous",
+  "shelf": "rework",
   "family": "Trace",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "oscilloscope", "phosphor", "curve", "resonance"],

@@ -1,6 +1,7 @@
 {
   "name": "Transit",
   "slug": "transit",
+  "shelf": "rework",
   "family": "Noir",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "city", "streaks", "night", "traffic"],

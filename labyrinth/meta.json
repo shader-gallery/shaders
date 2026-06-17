@@ -1,6 +1,7 @@
 {
   "name": "Labyrinth",
   "slug": "labyrinth",
+  "shelf": "rework",
   "family": "Rosette",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "maze", "lines", "architecture", "shifting"],

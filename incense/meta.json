@@ -1,6 +1,7 @@
 {
   "name": "Incense",
   "slug": "incense",
+  "shelf": "rework",
   "family": "Smolder",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ember", "fire", "smoke"],

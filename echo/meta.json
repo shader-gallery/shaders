@@ -1,6 +1,7 @@
 {
   "name": "Echo",
   "slug": "echo",
+  "shelf": "rework",
   "family": "Delve",
   "author": "E. T. Carter",
   "tags": [

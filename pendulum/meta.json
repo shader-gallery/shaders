@@ -1,6 +1,7 @@
 {
   "name": "Pendulum",
   "slug": "pendulum",
+  "shelf": "rework",
   "family": "Trace",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "pendulum", "wave", "clockwork", "oscillators"],

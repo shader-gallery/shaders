@@ -1,6 +1,7 @@
 {
   "name": "Sprite",
   "slug": "sprite",
+  "shelf": "rework",
   "family": "Omen",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "lightning", "atmospheric", "episodic", "branching"],

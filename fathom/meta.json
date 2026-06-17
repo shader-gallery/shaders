@@ -1,6 +1,7 @@
 {
   "name": "Fathom",
   "slug": "fathom",
+  "shelf": "rework",
   "family": "Strata",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "ocean", "depth", "stipple", "halftone"],

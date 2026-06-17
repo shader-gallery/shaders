@@ -1,6 +1,7 @@
 {
   "name": "Torii",
   "slug": "torii",
+  "shelf": "rework",
   "family": "Plinth",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "monument", "gates", "corridor", "fog", "parallax", "raymarch"],

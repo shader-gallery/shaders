@@ -1,6 +1,7 @@
 {
   "name": "Puddle",
   "slug": "puddle",
+  "shelf": "rework",
   "family": "Noir",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "neon", "reflection", "water", "city"],

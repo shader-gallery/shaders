@@ -1,6 +1,7 @@
 {
   "name": "Solder",
   "slug": "solder",
+  "shelf": "rework",
   "family": "Mercury",
   "author": "E. T. Carter",
   "tags": [

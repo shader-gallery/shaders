@@ -1,6 +1,7 @@
 {
   "name": "Oubliette",
   "slug": "oubliette",
+  "shelf": "rework",
   "family": "Delve",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "stone", "square", "well", "depth", "descent"],

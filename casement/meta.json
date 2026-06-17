@@ -1,6 +1,7 @@
 {
   "name": "Casement",
   "slug": "casement",
+  "shelf": "rework",
   "family": "Umbra",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "shadow", "window", "projection", "penumbra"],

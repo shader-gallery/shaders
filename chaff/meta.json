@@ -1,6 +1,7 @@
 {
   "name": "Chaff",
   "slug": "chaff",
+  "shelf": "rework",
   "family": "Sough",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "wind", "seeds", "particles", "organic"],

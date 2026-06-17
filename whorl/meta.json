@@ -1,6 +1,7 @@
 {
   "name": "Whorl",
   "slug": "whorl",
+  "shelf": "rework",
   "family": "Rosette",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "particles", "spiral", "phyllotaxis", "radial"],

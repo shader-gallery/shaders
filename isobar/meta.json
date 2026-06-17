@@ -1,6 +1,7 @@
 {
   "name": "Isobar",
   "slug": "isobar",
+  "shelf": "rework",
   "family": "Strata",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "weather", "storm", "spiral", "drift"],
