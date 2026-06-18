@@ -1,0 +1,68 @@
+{
+  "name": "Iris Aperture",
+  "slug": "iris-aperture",
+  "family": "Rosette",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "radial",
+    "aperture",
+    "blades",
+    "mechanical"
+  ],
+  "description": "A mechanical-diaphragm iris filling the frame: hard straight-edged camera blades overlap into a spiralling polygon and open and close on a slow breath. The leading edges form an N-gon aperture at the centre, the dark protagonist; each blade face is a faintly graded metal leaf with a luminous machined edge where it laps the next, colour flowing through the palette by angle as a cool metallic wash.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_blades",
+      "label": "Blades",
+      "min": 5.0,
+      "max": 16.0,
+      "step": 1.0,
+      "default": 9.0,
+      "effect": "Number of diaphragm blades; fewer gives a chunky few-sided aperture, more a finely faceted near-circular iris."
+    },
+    {
+      "uniform": "u_aperture",
+      "label": "Aperture",
+      "min": 50.0,
+      "max": 200.0,
+      "step": 1.0,
+      "default": 95.0,
+      "effect": "Mean radius of the central opening around which the blades breathe open and closed."
+    },
+    {
+      "uniform": "u_breathSpeed",
+      "label": "Breath speed",
+      "min": 0.02,
+      "max": 0.3,
+      "step": 0.01,
+      "default": 0.06,
+      "effect": "Rate at which the diaphragm opens and closes; minimum is a near-minute cycle, maximum a slow visible iris."
+    },
+    {
+      "uniform": "u_overlap",
+      "label": "Overlap",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How far each blade laps over the next; 0 gives a symmetric polygon, 1 a strongly spiralled diaphragm."
+    }
+  ],
+  "palettes": {
+    "midnight": [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember": [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "mercury",
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3.0,
+    "saturation": 1.08,
+    "contrast": 1.06,
+    "dither": 1.0
+  }
+}

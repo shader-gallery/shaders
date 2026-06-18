@@ -1,0 +1,68 @@
+{
+  "name": "Iris Ringed",
+  "slug": "iris-ringed",
+  "family": "Rosette",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "radial",
+    "rings",
+    "lattice",
+    "ripple"
+  ],
+  "description": "A banded iris filling the frame: the radial fibers are crossed by glowing concentric annular rings that ripple slowly outward from a dark pupil, the way a real iris is scored by furrows and a collarette. Fibers give the fine radial grain, the rings a travelling annular lattice that catches a brighter tint where it crosses a fiber; colour blends through the palette by angle, the pupil a dark protagonist with a luminous rim.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fibers",
+      "label": "Fibers",
+      "min": 60.0,
+      "max": 300.0,
+      "step": 1.0,
+      "default": 150.0,
+      "effect": "Number of radial fibers giving the fine grain; higher reads as silken, lower as distinct spokes under the rings."
+    },
+    {
+      "uniform": "u_rings",
+      "label": "Rings",
+      "min": 3.0,
+      "max": 24.0,
+      "step": 1.0,
+      "default": 9.0,
+      "effect": "Number of concentric annular bands across the field; fewer gives bold widely-spaced rings, more a fine ripple lattice."
+    },
+    {
+      "uniform": "u_ripple",
+      "label": "Ripple",
+      "min": -1.5,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Speed and direction the rings travel; positive ripples outward, negative inward, 0 holds them as still bands."
+    },
+    {
+      "uniform": "u_pupil",
+      "label": "Pupil size",
+      "min": 50.0,
+      "max": 220.0,
+      "step": 1.0,
+      "default": 110.0,
+      "effect": "Radius of the dark central pupil the fibers and rings radiate from."
+    }
+  ],
+  "palettes": {
+    "midnight": [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember": [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "tide",
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4.0,
+    "saturation": 1.1,
+    "contrast": 1.04,
+    "dither": 1.0
+  }
+}

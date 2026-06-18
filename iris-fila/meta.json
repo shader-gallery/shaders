@@ -1,0 +1,68 @@
+{
+  "name": "Iris Fila",
+  "slug": "iris-fila",
+  "family": "Rosette",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "radial",
+    "fibers",
+    "halo",
+    "nebula"
+  ],
+  "description": "A filament-halo iris filling the frame: hundreds of hair-thin luminous strands radiate from a soft glowing core, each with a hashed length so the field feathers like a nebula or a dandelion clock rather than reading as solid spokes. No hard pupil here, the centre blooms bright; the strands are brightest mid-field and feather into a faint halo at the edges, shimmering on per-strand phases.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fila",
+      "label": "Strands",
+      "min": 120.0,
+      "max": 900.0,
+      "step": 1.0,
+      "default": 520.0,
+      "effect": "Number of hair-thin strands around the circle; fewer reads as distinct filaments, more as a silken luminous haze."
+    },
+    {
+      "uniform": "u_feather",
+      "label": "Feather",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How much the strand lengths vary; 0 gives an even disc, 1 a ragged feathered halo of long and short filaments."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Rate at which strands shimmer and wander on their own phases; 0 holds the halo still, higher makes it twinkle."
+    },
+    {
+      "uniform": "u_coreGlow",
+      "label": "Core glow",
+      "min": 30.0,
+      "max": 180.0,
+      "step": 1.0,
+      "default": 80.0,
+      "effect": "Radius of the soft luminous core the strands radiate from; larger floods more of the centre with bloom."
+    }
+  ],
+  "palettes": {
+    "midnight": [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember": [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "spectral",
+  "post": {
+    "bloom": 0.6,
+    "bloomRadius": 4.0,
+    "saturation": 1.12,
+    "contrast": 1.03,
+    "dither": 1.0
+  }
+}

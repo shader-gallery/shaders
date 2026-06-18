@@ -1,0 +1,68 @@
+{
+  "name": "Iris Burst",
+  "slug": "iris-burst",
+  "family": "Rosette",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "radial",
+    "rays",
+    "starburst",
+    "twinkle"
+  ],
+  "description": "A starburst iris filling the frame: where the base iris has a dark pupil, burst inverts it into a hot near-white core that throws long thin sharp rays out past the corners. A few dominant spikes dominate among many fine ones like a lens star, each twinkling on its own phase, colour saturating from white at the core to hue along the rays.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_rays",
+      "label": "Rays",
+      "min": 24.0,
+      "max": 240.0,
+      "step": 1.0,
+      "default": 120.0,
+      "effect": "Number of rays around the circle; fewer reads as a bold few-spoke star, more as a fine sunburst halo."
+    },
+    {
+      "uniform": "u_sharpness",
+      "label": "Sharpness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Thinness of each ray; 0 gives broad soft wedges, 1 gives needle-thin crisp spikes."
+    },
+    {
+      "uniform": "u_twinkle",
+      "label": "Twinkle",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Rate at which rays pulse in brightness on their own phases; 0 holds them steady, higher shimmers."
+    },
+    {
+      "uniform": "u_heat",
+      "label": "Core heat",
+      "min": 30.0,
+      "max": 160.0,
+      "step": 1.0,
+      "default": 70.0,
+      "effect": "Radius of the hot near-white core the rays erupt from; larger floods more of the centre with light."
+    }
+  ],
+  "palettes": {
+    "midnight": [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember": [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "sodium",
+  "post": {
+    "bloom": 0.65,
+    "bloomRadius": 5.0,
+    "saturation": 1.1,
+    "contrast": 1.05,
+    "dither": 1.0
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "name": "Iris Bloom",
+  "slug": "iris-bloom",
+  "family": "Rosette",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "radial",
+    "petals",
+    "flower",
+    "breathing"
+  ],
+  "description": "A flower iris filling the frame: overlapping teardrop petal lobes whorl out of a dark central core in three offset, interleaving rings, the way a dahlia packs its bloom. Each petal has a luminous spine and a tapering tip; colour blends cyclically through the palette by angle while the whole bloom opens and closes on a slow breath, the core a dark protagonist with a glowing rim.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_petals",
+      "label": "Petals",
+      "min": 5.0,
+      "max": 28.0,
+      "step": 1.0,
+      "default": 13.0,
+      "effect": "Petals per whorl around the circle; fewer reads as a broad open flower, more as a tight packed rosette."
+    },
+    {
+      "uniform": "u_curl",
+      "label": "Curl",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "How much each petal sweeps tangentially with radius; 0 gives straight radial petals, 1 a soft pinwheel spiral."
+    },
+    {
+      "uniform": "u_breathSpeed",
+      "label": "Breath speed",
+      "min": 0.02,
+      "max": 0.3,
+      "step": 0.01,
+      "default": 0.06,
+      "effect": "Rate at which the bloom opens and closes; minimum is a near-minute breath, maximum a slow visible pulse."
+    },
+    {
+      "uniform": "u_core",
+      "label": "Core size",
+      "min": 40.0,
+      "max": 180.0,
+      "step": 1.0,
+      "default": 75.0,
+      "effect": "Mean radius of the dark central core around which the petals whorl and the breath dilates."
+    }
+  ],
+  "palettes": {
+    "midnight": [[0.231,0.510,0.965],[0.659,0.333,0.969],[0.133,0.827,0.933],[0.957,0.247,0.369]],
+    "witchlight": [[0.545,0.361,0.965],[0.925,0.282,0.600],[0.298,0.733,0.910],[0.984,0.749,0.141]],
+    "ember": [[0.984,0.451,0.133],[0.957,0.247,0.369],[0.965,0.620,0.043],[0.561,0.149,0.305]]
+  },
+  "defaultPalette": "fuchsia",
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4.0,
+    "saturation": 1.12,
+    "contrast": 1.03,
+    "dither": 1.0
+  }
+}
