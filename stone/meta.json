@@ -1,0 +1,57 @@
+{
+  "name": "Stone",
+  "slug": "stone",
+  "family": "Wake",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "agate",
+    "mineral",
+    "banded",
+    "organic"
+  ],
+  "description": "Agate cross-section: the marbling field read as dense, nearly concentric mineral bands — filled slabs of deep palette colour cycling hue band-by-band like layered geology, parted by thin luminous fortification seams. A very slow settling drift keeps the slab perpetually growing and re-layering, banded stone lit from within.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.12,
+      "effect": "Pace of the slow settling drift — the slab flexes lazily at the low end and visibly re-layers at the high end; 0 freezes it as a still slab."
+    },
+    {
+      "uniform": "u_banding",
+      "label": "Banding",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Density of the mineral bands — few broad layers at the low end, fine close-packed fortification striping at the high end."
+    },
+    {
+      "uniform": "u_scale",
+      "label": "Band scale",
+      "min": 150,
+      "max": 900,
+      "step": 1,
+      "default": 380,
+      "effect": "CSS-pixel size of the dominant band clusters, from a tight fine-grained agate to a few huge slow slabs."
+    },
+    {
+      "uniform": "u_warp",
+      "label": "Warp",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 0.8,
+      "effect": "How irregular the bands run — low keeps them calm and near-concentric, high pulls them into folded, wandering mineral contours."
+    }
+  ],
+  "defaultPalette": "verdigris",
+  "post": { "bloom": 0.45 }
+}

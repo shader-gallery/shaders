@@ -1,0 +1,57 @@
+{
+  "name": "Oil",
+  "slug": "oil",
+  "family": "Wake",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "iridescent",
+    "thin-film",
+    "rainbow",
+    "organic"
+  ],
+  "description": "Iridescent oil on dark water: a drifting film whose thickness maps through interference orders into soft spectral sheen, so broad concentric zones of teal, magenta and gold flex slowly across the frame. A restrained rainbow that only ever cycles the theme colours, brightest along the constructive-interference fringes and never the same shape twice.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.18,
+      "effect": "Pace of the drifting film — the sheen flexes slowly at the low end and visibly streams at the high end; 0 holds it as a still slick."
+    },
+    {
+      "uniform": "u_scale",
+      "label": "Sheen scale",
+      "min": 180,
+      "max": 1000,
+      "step": 1,
+      "default": 400,
+      "effect": "CSS-pixel size of the iridescent zones, from a fine busy oil-skin to a few broad sweeping sheets of colour."
+    },
+    {
+      "uniform": "u_iridescence",
+      "label": "Iridescence",
+      "min": 0.4,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.4,
+      "effect": "How many interference orders cross the film — low gives wide soft single-hue sweeps, high stacks dense rainbow fringes."
+    },
+    {
+      "uniform": "u_sheen",
+      "label": "Sheen warp",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Turbulence of the film — low keeps the zones smooth and lazy, high churns them into tight folded marbled swirls."
+    }
+  ],
+  "defaultPalette": "peacock",
+  "post": { "bloom": 0.5 }
+}
