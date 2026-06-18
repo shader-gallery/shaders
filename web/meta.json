@@ -1,6 +1,7 @@
 {
   "name": "Web",
   "slug": "web",
+  "shelf": "rework",
   "family": "Loom",
   "author": "E. T. Carter",
   "tags": [
