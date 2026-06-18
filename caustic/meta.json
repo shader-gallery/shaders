@@ -1,7 +1,7 @@
 {
   "name": "Caustic",
   "slug": "caustic",
-  "family": "Shoal",
+  "family": "Mosaic",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "caustics", "web", "water", "organic"],
   "description": "The pool-bottom light net: two jittered Voronoi cell layers multiply into a sharp filament web with hot knots where lines cross, on near-black ground. The layers shear and each cell's jitter point orbits slowly, so the net fattens, thins and rewires continuously while the four palette colours read as regional tints.",
