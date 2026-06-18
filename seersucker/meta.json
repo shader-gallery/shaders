@@ -1,0 +1,139 @@
+{
+  "name": "Seersucker",
+  "slug": "seersucker",
+  "family": "Loom",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "grid",
+    "interference",
+    "ripple",
+    "glow",
+    "rainbow",
+    "loop"
+  ],
+  "description": "Several travelling wave sources radiate at once and their phases sum into shifting standing-wave bands, like crinkled seersucker cloth. A fine dot grid samples that interference, the dots swelling on the crests and sinking in the troughs.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spacing",
+      "label": "Dot spacing",
+      "min": 10.0,
+      "max": 44.0,
+      "step": 1.0,
+      "default": 16.0,
+      "effect": "Distance between dots in CSS px - a dense fine sampling of the interference at the minimum, an open sparse grid at the maximum."
+    },
+    {
+      "uniform": "u_dotSize",
+      "label": "Dot size",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "Base radius of the dots. Small reads as a fine pucker; large fattens the crest dots into bold beads."
+    },
+    {
+      "uniform": "u_swell",
+      "label": "Swell",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.4,
+      "effect": "How much a crest swells each dot. 0 holds them uniform; high pumps the standing-wave bands into a strong puckered relief."
+    },
+    {
+      "uniform": "u_wavelength",
+      "label": "Wavelength",
+      "min": 40.0,
+      "max": 400.0,
+      "step": 5.0,
+      "default": 150.0,
+      "effect": "Wavelength of the interfering sources; short packs a tight busy pucker, long opens broad rolling bands."
+    },
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Speed the waves travel; 0 freezes a single standing interference pattern."
+    },
+    {
+      "uniform": "u_sources",
+      "label": "Sources",
+      "min": 2.0,
+      "max": 5.0,
+      "step": 1.0,
+      "default": 3.0,
+      "effect": "How many wave sources interfere. Two gives clean parallel bands; more sources knot the interference into a busier woven pucker."
+    },
+    {
+      "uniform": "u_spread",
+      "label": "Source spread",
+      "min": 0.1,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How far the sources sit from centre. Tight clusters give broad slow bands; wide spread tightens the interference into fine cross-hatching."
+    },
+    {
+      "uniform": "u_contrast",
+      "label": "Interference contrast",
+      "min": 0.5,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.5,
+      "effect": "Contrast between crest and trough. Low blurs the pucker into a gentle swell; high snaps it into sharp bright bands on near-black."
+    },
+    {
+      "uniform": "u_fieldGlow",
+      "label": "Field glow",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Strength of the soft continuous colour washing the interference bands behind the dots. 0 leaves bare dots; high paints the standing wave in moving light."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Dot brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.1,
+      "effect": "Brightness of the dots themselves. Low keeps them subtle, high makes the crest pucker pop in vivid colour."
+    },
+    {
+      "uniform": "u_crisp",
+      "label": "Crispness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.58,
+      "effect": "Edge hardness of the dots. Low is soft glowing pucker; high snaps them to crisp high-contrast beads."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Rotation",
+      "min": -90.0,
+      "max": 90.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Spins the dot grid off the upright axis so the sampling rows run diagonally across the interference."
+    }
+  ],
+  "post": {
+    "bloom": 0.44,
+    "bloomRadius": 3.6,
+    "backdrop": 0.0,
+    "backdropScale": 1.2,
+    "saturation": 1.12,
+    "contrast": 1.06,
+    "dither": 1.0,
+    "vignette": 0.27,
+    "grain": 0.0
+  },
+  "defaultPalette": "nocturne"
+}

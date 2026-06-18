@@ -1,0 +1,157 @@
+{
+  "name": "Sampler",
+  "slug": "sampler",
+  "family": "Loom",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "grid",
+    "lattice",
+    "stitch",
+    "glow",
+    "rainbow",
+    "loop"
+  ],
+  "description": "A cross-stitch sampler: an all-over lattice of little X marks bowed by a slow woven distortion, the stitches lengthening and brightening as radial waves pass through them.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spacing",
+      "label": "Stitch spacing",
+      "min": 12.0,
+      "max": 56.0,
+      "step": 1.0,
+      "default": 24.0,
+      "effect": "Distance between stitches in CSS px - a dense tight sampler at the minimum, an open sparse lattice at the maximum."
+    },
+    {
+      "uniform": "u_armLen",
+      "label": "Arm length",
+      "min": 0.3,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.62,
+      "effect": "Resting length of the X arms. Short keeps tidy little crosses; long throws bold stitched X-bars that nearly touch."
+    },
+    {
+      "uniform": "u_armThick",
+      "label": "Arm thickness",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Thickness of the stitch arms. Fine draws hairline crosses; thick fattens them into bold blocky X marks."
+    },
+    {
+      "uniform": "u_stretch",
+      "label": "Stretch",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How much a passing wavefront lengthens each stitch. 0 is a still lattice; high stretches the arms along the wave."
+    },
+    {
+      "uniform": "u_wavelength",
+      "label": "Wavelength",
+      "min": 80.0,
+      "max": 500.0,
+      "step": 5.0,
+      "default": 240.0,
+      "effect": "Spacing of the concentric wave rings; short packs many stretch bands across the frame, long sweeps one broad wave."
+    },
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Speed the wave travels out from the source; 0 freezes the lattice mid-stretch."
+    },
+    {
+      "uniform": "u_ripples",
+      "label": "Ripple count",
+      "min": 0.25,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.1,
+      "effect": "How many concentric wave rings span the field. Low is one broad slow sweep; high packs many tight stretch bands."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Stitch brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.12,
+      "effect": "Brightness of the stitches themselves. Low keeps them subtle, high makes the lattice pop in vivid colour."
+    },
+    {
+      "uniform": "u_backlight",
+      "label": "Backlight",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Strength of the two soft drifting glow blobs behind the lattice. 0 leaves crisp stitches on near-black; high adds a slow colour drift."
+    },
+    {
+      "uniform": "u_crisp",
+      "label": "Crispness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Edge hardness of the stitches. Low is soft glowing X marks; high snaps them to crisp high-contrast crosses."
+    },
+    {
+      "uniform": "u_weave",
+      "label": "Weave",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.28,
+      "effect": "Sine-warps the lattice so the rows bow and ripple like hand-stitched cloth. 0 is a perfect grid; high gives a loose woven sag."
+    },
+    {
+      "uniform": "u_originX",
+      "label": "Origin X",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": -0.15,
+      "effect": "Horizontal position of the point the waves radiate from. 0 is centre; +/- drives the source off toward an edge."
+    },
+    {
+      "uniform": "u_originY",
+      "label": "Origin Y",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.12,
+      "effect": "Vertical position of the wave source. 0 is centre; +/- pushes it up or down."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Rotation",
+      "min": -90.0,
+      "max": 90.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Spins the whole lattice off the upright axis so the rows of stitches run diagonally."
+    }
+  ],
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3.5,
+    "backdrop": 0.0,
+    "backdropScale": 1.2,
+    "saturation": 1.1,
+    "contrast": 1.07,
+    "dither": 1.0,
+    "vignette": 0.26,
+    "grain": 0.0
+  },
+  "defaultPalette": "foundry"
+}

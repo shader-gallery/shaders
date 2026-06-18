@@ -35,6 +35,12 @@
   ],
   "shaders": [
     "lacework",
+    "tatting",
+    "sampler",
+    "eyelet",
+    "herringbone",
+    "seersucker",
+    "tulle",
     "warp",
     "filigree",
     "gossamer",

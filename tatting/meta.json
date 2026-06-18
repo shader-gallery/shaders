@@ -1,0 +1,157 @@
+{
+  "name": "Tatting",
+  "slug": "tatting",
+  "family": "Loom",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "grid",
+    "halftone",
+    "dots",
+    "glow",
+    "rainbow",
+    "loop"
+  ],
+  "description": "A fine halftone field of pure round dots, like knotted tatted lace. Concentric ripples wash outward and each dot swells and brightens on the passing wavefront, shrinking back to a pinprick between crests.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spacing",
+      "label": "Dot spacing",
+      "min": 10.0,
+      "max": 48.0,
+      "step": 1.0,
+      "default": 16.0,
+      "effect": "Distance between dots in CSS px - a dense fine halftone at the minimum, an open sparse grid at the maximum."
+    },
+    {
+      "uniform": "u_dotSize",
+      "label": "Dot size",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.42,
+      "effect": "Resting radius of the dots between wavefronts. Small reads as a pin-prick halftone; large fattens them into bold beads."
+    },
+    {
+      "uniform": "u_swell",
+      "label": "Swell",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.5,
+      "effect": "How much a passing wavefront swells each dot. 0 is a still grid; high pumps the dots between pinprick and bead as the ripple sweeps through."
+    },
+    {
+      "uniform": "u_wavelength",
+      "label": "Wavelength",
+      "min": 80.0,
+      "max": 500.0,
+      "step": 5.0,
+      "default": 210.0,
+      "effect": "Spacing of the concentric swell rings; short packs many bands across the frame, long sweeps one broad wave."
+    },
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Speed the swell rings travel out from the source; 0 freezes the field mid-breath."
+    },
+    {
+      "uniform": "u_ripples",
+      "label": "Ripple count",
+      "min": 0.25,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.3,
+      "effect": "How many concentric swell rings span the field. Low is one broad slow wave; high packs many tight bands rippling outward together."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Dot brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.15,
+      "effect": "Brightness of the dots themselves. Low keeps them subtle, high makes the halftone pop in vivid colour."
+    },
+    {
+      "uniform": "u_backlight",
+      "label": "Backlight",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Strength of the two soft drifting glow blobs behind the dots. 0 leaves crisp dots on near-black; high adds a slow colour drift behind the lace."
+    },
+    {
+      "uniform": "u_crisp",
+      "label": "Crispness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.62,
+      "effect": "Edge hardness of the dots. Low is soft glowing halftone; high snaps them to crisp high-contrast pinpricks."
+    },
+    {
+      "uniform": "u_points",
+      "label": "Ripple points",
+      "min": 1.0,
+      "max": 4.0,
+      "step": 1.0,
+      "default": 2.0,
+      "effect": "How many distinct ripple sources dot the field at once, each radiating its own concentric swell rings that fade past the splash reach."
+    },
+    {
+      "uniform": "u_splash",
+      "label": "Splash reach",
+      "min": 0.1,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.75,
+      "effect": "How far each ripple spreads from its source. Small keeps tight separated rings; large lets the splashes broaden and overlap."
+    },
+    {
+      "uniform": "u_originX",
+      "label": "Origin X",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Horizontal position of the point the ripples radiate from. 0 is centre; +/- drives the source off toward an edge."
+    },
+    {
+      "uniform": "u_originY",
+      "label": "Origin Y",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Vertical position of the ripple source. 0 is centre; +/- pushes it up or down."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Rotation",
+      "min": -90.0,
+      "max": 90.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Spins the whole dot grid off the upright axis so the rows run diagonally."
+    }
+  ],
+  "post": {
+    "bloom": 0.42,
+    "bloomRadius": 3.5,
+    "backdrop": 0.0,
+    "backdropScale": 1.2,
+    "saturation": 1.12,
+    "contrast": 1.06,
+    "dither": 1.0,
+    "vignette": 0.26,
+    "grain": 0.0
+  },
+  "defaultPalette": "glacier"
+}

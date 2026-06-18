@@ -1,0 +1,157 @@
+{
+  "name": "Eyelet",
+  "slug": "eyelet",
+  "family": "Loom",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "grid",
+    "rings",
+    "lace",
+    "glow",
+    "rainbow",
+    "loop"
+  ],
+  "description": "A field of hollow ring marks, like the punched eyelet holes of broderie-anglaise lace. A radial wave pumps each ring's radius so the eyelets breathe open and closed as the wavefront passes.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spacing",
+      "label": "Eyelet spacing",
+      "min": 14.0,
+      "max": 60.0,
+      "step": 1.0,
+      "default": 28.0,
+      "effect": "Distance between eyelets in CSS px - a dense ring mesh at the minimum, an open sparse field at the maximum."
+    },
+    {
+      "uniform": "u_ringSize",
+      "label": "Ring size",
+      "min": 0.3,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Resting radius of the rings. Small reads as tight beads; large opens broad eyelet holes that nearly meet their neighbours."
+    },
+    {
+      "uniform": "u_ringThick",
+      "label": "Ring thickness",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Stroke thickness of the rings. Fine draws hairline circles; thick fattens them into bold annular marks."
+    },
+    {
+      "uniform": "u_breathe",
+      "label": "Breathe",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How much a passing wavefront pumps each ring's radius. 0 is a still field; high makes the eyelets breathe open and closed."
+    },
+    {
+      "uniform": "u_wavelength",
+      "label": "Wavelength",
+      "min": 80.0,
+      "max": 500.0,
+      "step": 5.0,
+      "default": 230.0,
+      "effect": "Spacing of the concentric breathe rings; short packs many bands across the frame, long sweeps one broad wave."
+    },
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Speed the wave travels out from the source; 0 freezes the eyelets mid-breath."
+    },
+    {
+      "uniform": "u_ripples",
+      "label": "Ripple count",
+      "min": 0.25,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.2,
+      "effect": "How many concentric breathe rings span the field. Low is one broad slow wave; high packs many tight bands."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Ring brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.14,
+      "effect": "Brightness of the rings themselves. Low keeps them subtle, high makes the eyelet lace pop in vivid colour."
+    },
+    {
+      "uniform": "u_backlight",
+      "label": "Backlight",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.42,
+      "effect": "Strength of the two soft drifting glow blobs behind the rings. 0 leaves crisp eyelets on near-black; high adds a slow colour drift."
+    },
+    {
+      "uniform": "u_crisp",
+      "label": "Crispness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Edge hardness of the rings. Low is soft glowing circles; high snaps them to crisp high-contrast eyelets."
+    },
+    {
+      "uniform": "u_points",
+      "label": "Ripple points",
+      "min": 1.0,
+      "max": 4.0,
+      "step": 1.0,
+      "default": 2.0,
+      "effect": "How many distinct ripple sources pump the field at once, each radiating its own concentric breathe rings."
+    },
+    {
+      "uniform": "u_splash",
+      "label": "Splash reach",
+      "min": 0.1,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How far each ripple spreads from its source. Small keeps tight separated rings; large lets the splashes overlap."
+    },
+    {
+      "uniform": "u_originX",
+      "label": "Origin X",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Horizontal position of the point the ripples radiate from. 0 is centre; +/- drives the source toward an edge."
+    },
+    {
+      "uniform": "u_originY",
+      "label": "Origin Y",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Vertical position of the ripple source. 0 is centre; +/- pushes it up or down."
+    }
+  ],
+  "post": {
+    "bloom": 0.42,
+    "bloomRadius": 3.6,
+    "backdrop": 0.0,
+    "backdropScale": 1.2,
+    "saturation": 1.12,
+    "contrast": 1.06,
+    "dither": 1.0,
+    "vignette": 0.27,
+    "grain": 0.0
+  },
+  "defaultPalette": "fuchsia"
+}

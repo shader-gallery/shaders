@@ -1,0 +1,157 @@
+{
+  "name": "Herringbone",
+  "slug": "herringbone",
+  "family": "Loom",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "weave",
+    "chevron",
+    "stitch",
+    "glow",
+    "rainbow",
+    "loop"
+  ],
+  "description": "A woven cloth of short oriented dashes that lean one way on one row and the other way on the next, building the classic herringbone chevron. Radial waves run diagonal bands of brightness across the weave.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spacing",
+      "label": "Dash spacing",
+      "min": 12.0,
+      "max": 52.0,
+      "step": 1.0,
+      "default": 20.0,
+      "effect": "Distance between dashes in CSS px - a dense tight weave at the minimum, an open sparse chevron at the maximum."
+    },
+    {
+      "uniform": "u_dashLen",
+      "label": "Dash length",
+      "min": 0.3,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.78,
+      "effect": "Resting length of each stitch. Short keeps a beaded weave; long stretches the dashes until they nearly link into continuous zigzag lines."
+    },
+    {
+      "uniform": "u_dashThick",
+      "label": "Dash thickness",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Thickness of each stitch. Fine draws hairline strokes; thick fattens them into bold woven bars."
+    },
+    {
+      "uniform": "u_lean",
+      "label": "Chevron lean",
+      "min": 0.0,
+      "max": 80.0,
+      "step": 1.0,
+      "default": 45.0,
+      "effect": "Lean angle of the dashes, flipped row to row. 45 is the classic herringbone zigzag; low flattens toward horizontal stitching; high steepens the chevron."
+    },
+    {
+      "uniform": "u_stretch",
+      "label": "Stretch",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How much a passing wavefront lengthens each stitch. 0 is a still weave; high stretches the dashes along the wave."
+    },
+    {
+      "uniform": "u_wavelength",
+      "label": "Wavelength",
+      "min": 80.0,
+      "max": 500.0,
+      "step": 5.0,
+      "default": 250.0,
+      "effect": "Spacing of the concentric wave rings; short packs many bright bands across the weave, long sweeps one broad wave."
+    },
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Speed the wave travels out from the source; 0 freezes the weave mid-sweep."
+    },
+    {
+      "uniform": "u_ripples",
+      "label": "Ripple count",
+      "min": 0.25,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.15,
+      "effect": "How many concentric wave rings span the field. Low is one broad slow band; high packs many tight bands of brightness."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Dash brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.12,
+      "effect": "Brightness of the dashes themselves. Low keeps the weave subtle, high makes the chevron pop in vivid colour."
+    },
+    {
+      "uniform": "u_backlight",
+      "label": "Backlight",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Strength of the two soft drifting glow blobs behind the weave. 0 leaves crisp dashes on near-black; high adds a slow colour drift."
+    },
+    {
+      "uniform": "u_crisp",
+      "label": "Crispness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Edge hardness of the dashes. Low is soft glowing stitches; high snaps them to crisp high-contrast bars."
+    },
+    {
+      "uniform": "u_originX",
+      "label": "Origin X",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.18,
+      "effect": "Horizontal position of the point the waves radiate from. 0 is centre; +/- drives the source toward an edge."
+    },
+    {
+      "uniform": "u_originY",
+      "label": "Origin Y",
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": -0.14,
+      "effect": "Vertical position of the wave source. 0 is centre; +/- pushes it up or down."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Rotation",
+      "min": -90.0,
+      "max": 90.0,
+      "step": 1.0,
+      "default": 0.0,
+      "effect": "Spins the whole weave off the upright axis so the herringbone rows run diagonally."
+    }
+  ],
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3.5,
+    "backdrop": 0.0,
+    "backdropScale": 1.2,
+    "saturation": 1.1,
+    "contrast": 1.07,
+    "dither": 1.0,
+    "vignette": 0.26,
+    "grain": 0.0
+  },
+  "defaultPalette": "viridian"
+}

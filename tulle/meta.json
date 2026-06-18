@@ -1,0 +1,139 @@
+{
+  "name": "Tulle",
+  "slug": "tulle",
+  "family": "Loom",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "net",
+    "perspective",
+    "lace",
+    "glow",
+    "rainbow",
+    "loop"
+  ],
+  "description": "A fine net of lace dots bent by a perspective fall-off and a soft swirl, the marks bunching and shrinking toward a fold the way a sheet of tulle netting hangs and recedes into depth, a radial wave still washing through.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spacing",
+      "label": "Mesh spacing",
+      "min": 10.0,
+      "max": 44.0,
+      "step": 1.0,
+      "default": 13.0,
+      "effect": "Distance between dots in the flat net before draping - a dense fine tulle at the minimum, an open sparse net at the maximum."
+    },
+    {
+      "uniform": "u_dotSize",
+      "label": "Dot size",
+      "min": 0.2,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 0.75,
+      "effect": "Radius of the net dots in the near field. Small reads as a fine mesh; large fattens them into bold beads."
+    },
+    {
+      "uniform": "u_persp",
+      "label": "Perspective",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Strength of the perspective fall-off. 0 is a flat grid; high bunches and shrinks the mesh hard toward the fold, deep into space."
+    },
+    {
+      "uniform": "u_foldY",
+      "label": "Fold height",
+      "min": -0.4,
+      "max": 0.5,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "Vertical position of the fold the net recedes toward. High puts the vanishing fold near the top like hung cloth; low drops it toward the middle."
+    },
+    {
+      "uniform": "u_swirl",
+      "label": "Swirl",
+      "min": -1.5,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Soft twist of the sheet about its centre, easing out toward the edges. 0 hangs straight; +/- curls the net like caught fabric."
+    },
+    {
+      "uniform": "u_wavelength",
+      "label": "Wavelength",
+      "min": 80.0,
+      "max": 500.0,
+      "step": 5.0,
+      "default": 200.0,
+      "effect": "Spacing of the brightness wave rings travelling through the net; short packs many bands, long sweeps one broad wave."
+    },
+    {
+      "uniform": "u_waveSpeed",
+      "label": "Wave speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Speed the wave travels through the draped net; 0 freezes it mid-sweep."
+    },
+    {
+      "uniform": "u_ripples",
+      "label": "Ripple count",
+      "min": 0.25,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 0.9,
+      "effect": "How many concentric brightness rings span the net. Low is one broad slow wave; high packs many tight bands."
+    },
+    {
+      "uniform": "u_swell",
+      "label": "Swell",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How much a passing wavefront swells the dots. 0 holds the mesh even; high pumps the net dots along the wave."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Dot brightness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.45,
+      "effect": "Brightness of the net dots themselves. Low keeps them subtle, high makes the draped mesh pop in vivid colour."
+    },
+    {
+      "uniform": "u_backlight",
+      "label": "Backlight",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Strength of the two soft drifting glow blobs behind the net. 0 leaves crisp dots on near-black; high adds a slow colour drift."
+    },
+    {
+      "uniform": "u_crisp",
+      "label": "Crispness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Edge hardness of the dots. Low is a soft glowing mesh; high snaps the near dots to crisp high-contrast beads."
+    }
+  ],
+  "post": {
+    "bloom": 0.42,
+    "bloomRadius": 3.6,
+    "backdrop": 0.0,
+    "backdropScale": 1.2,
+    "saturation": 1.12,
+    "contrast": 1.06,
+    "dither": 1.0,
+    "vignette": 0.22,
+    "grain": 0.0
+  },
+  "defaultPalette": "ember"
+}
