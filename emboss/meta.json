@@ -1,6 +1,7 @@
 {
   "name": "Emboss",
   "slug": "emboss",
+  "shelf": "rework",
   "family": "Burnish",
   "author": "E. T. Carter",
   "tags": ["glow", "loop", "relief", "quilted", "iridescent", "satin", "texture"],

@@ -1,6 +1,7 @@
 {
   "name": "Plume",
   "slug": "plume",
+  "shelf": "rework",
   "family": "Gyre",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "smoke", "rising", "flow", "organic"],
