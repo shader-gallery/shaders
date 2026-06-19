@@ -8,15 +8,17 @@
   "entry": "shader.frag",
   "params": [
     { "uniform": "u_rowGap", "label": "Row gap", "min": 60.0, "max": 200.0, "step": 1.0,
-      "default": 110.0, "effect": "Vertical distance between channel baselines in CSS pixels — pack a dense rack of signals or spread a few wide-open traces." },
+      "default": 70.0, "effect": "Vertical distance between channel baselines in CSS pixels — pack a dense rack of signals or spread a few wide-open traces." },
     { "uniform": "u_signalSpeed", "label": "Signal speed", "min": 0.02, "max": 2.0, "step": 0.02,
       "default": 0.08, "effect": "Scales both the lateral scroll and the modulation clocks, from barely-moving standing waves to briskly streaming telemetry." },
     { "uniform": "u_modDepth", "label": "Modulation depth", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.6, "effect": "How far envelopes swell and frequencies glide — flat steady carriers at 0, dramatically breathing and bending signals at 1." },
+      "default": 0.14, "effect": "How far envelopes swell and frequencies glide — flat steady carriers at 0, dramatically breathing and bending signals at 1." },
     { "uniform": "u_lines", "label": "Line count", "min": 1.0, "max": 14.0, "step": 1.0,
-      "default": 6.0, "effect": "How many channel traces fill the rack — a lone signal at 1, a dense stacked monitor at 14 (paired with row gap to set the packing)." },
+      "default": 14.0, "effect": "How many channel traces fill the rack — a lone signal at 1, a dense stacked monitor at 14 (paired with row gap to set the packing)." },
     { "uniform": "u_distort", "label": "Distortion", "min": 0.0, "max": 1.0, "step": 0.01,
-      "default": 0.0, "effect": "Inharmonic high-frequency grit roughening the traces — 0 is the pristine ruled waveform, high frays each line into a gritty, unstable signal." }
+      "default": 0.03, "effect": "Inharmonic high-frequency grit roughening the traces — 0 is the pristine ruled waveform, high frays each line into a gritty, unstable signal." },
+    { "uniform": "u_waveSpeed", "label": "Wave motion", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.5, "effect": "Speed the waveform crests flow along each trace, animating the lines independent of the signal scroll — 0 holds them still, high streams them briskly." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6, "vignette": 0.26 }

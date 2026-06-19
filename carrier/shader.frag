@@ -26,6 +26,7 @@ uniform float u_signalSpeed;  // scroll + modulation clock scale     (default 0.
 uniform float u_modDepth;     // envelope/glide intensity 0..1       (default 0.6)
 uniform float u_lines;        // number of channel traces drawn      (default 6)
 uniform float u_distort;      // inharmonic distortion / signal grit  (default 0)
+uniform float u_waveSpeed;    // continuous crest-flow animation rate (default 0.5)
 
 const vec3  BG        = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float LINE_CSS  = 1.15;   // trace half-thickness in css px
@@ -114,7 +115,11 @@ void main() {
     float beat = 0.5 + 0.5 * sin(BASE * beatMult * (t * spd) + ph * 1.3);
 
     // --- the waveform: exact sum of sinusoids, scrolling laterally -----------
-    float u = (xn * f1 - scroll * (0.6 + fi * 0.07)) * TAU;
+    // continuous crest-flow: the wave streams along the trace at its own rate so
+    // the lines animate even when the signal scroll is slow. per-channel factor
+    // keeps the rack from flowing in lockstep.
+    float flow = t * max(u_waveSpeed, 0.0) * (0.5 + fi * 0.06);
+    float u = (xn * f1 - scroll * (0.6 + fi * 0.07) - flow) * TAU;
     float wave =
         0.60 * sin(u)
       + 0.28 * sin(u * (f2 / f1) + ph)              * mix(0.4, 1.0, beat)
