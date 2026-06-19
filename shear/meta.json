@@ -1,0 +1,28 @@
+{
+  "name": "Shear",
+  "slug": "shear",
+  "family": "Current",
+  "shelf": "rework",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "flow", "shear", "billow", "streamlines", "organic"],
+  "description": "Stratified flow in fast and slow lanes. Stacked horizontal bands stream past one another at alternating speeds, and along every boundary the shear rolls the streamlines up into a marching row of cat-eye billows — the Kelvin-Helmholtz instability, drawn from the exact Stuart-vortex streamfunction. Straight outer streamlines are the lanes; the curled cores are the billows, turning as adjacent rows drift opposite ways.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_lanes", "label": "Lanes", "min": 1.0, "max": 12.0, "step": 1.0, "default": 4.0,
+      "effect": "How many shear rows stack up the frame; few gives broad lanes with big rolls, many a finely stratified flow." },
+    { "uniform": "u_cells", "label": "Billows", "min": 1.0, "max": 16.0, "step": 1.0, "default": 5.0,
+      "effect": "How many cat-eye billows march along each row; few are fat lazy rolls, many a tight rapid train of vortices." },
+    { "uniform": "u_roll", "label": "Roll-up", "min": 0.0, "max": 0.95, "step": 0.01, "default": 0.87,
+      "effect": "How far the shear rolls the streamlines up; 0 leaves flat parallel lanes, high curls them into fat open cat-eyes." },
+    { "uniform": "u_shear", "label": "Shear speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.03,
+      "effect": "Drift speed of the lanes (the speed difference driving the shear); 0 freezes the rolls, high streams the lanes briskly past each other." },
+    { "uniform": "u_density", "label": "Streamlines", "min": 3.0, "max": 24.0, "step": 1.0, "default": 5.0,
+      "effect": "How many streamlines draw per lane; few are bold ribbons, many a fine layered sheet." },
+    { "uniform": "u_line", "label": "Line width", "min": 0.5, "max": 4.0, "step": 0.1, "default": 2.9,
+      "effect": "Thickness of each streamline; fine hairlines to soft broad bands." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.97,
+      "effect": "Overall emission of the streamlines; low is a quiet schlieren, high a luminous shear layer." }
+  ],
+  "post": { "bloom": 0.5, "bloomRadius": 3.5, "vignette": 0.3, "saturation": 1.06, "dither": 1.0 },
+  "defaultPalette": "foundry"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Fray",
+  "slug": "fray",
+  "family": "Wake",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "weave", "flow", "texture", "organic"],
+  "description": "Combed, then released. Diagonal fibres run sleek and parallel where a comb has just passed and fray into domain-warped chaos in the length they have not yet reached. A bright comb stroke sweeps along the fibres over and over, re-ordering the weave behind it and leaving it to unravel ahead, so the whole field breathes order into chaos and back. Two parallax depth layers fray at different rates.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_threads", "label": "Thread count", "min": 16.0, "max": 220.0, "step": 1.0, "default": 90.0,
+      "effect": "Density of fibres across the weave; low gives a few broad ribbons, high a fine combed hair." },
+    { "uniform": "u_fray", "label": "Fray", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "How violently the released length unravels; 0 keeps the whole field combed and sleek, high tangles the tips into wild chaos." },
+    { "uniform": "u_comb", "label": "Comb speed", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.22,
+      "effect": "Speed the comb stroke sweeps along the fibres; 0 holds a fixed order-to-chaos gradient, high re-combs the weave in rapid passes." },
+    { "uniform": "u_strokes", "label": "Strokes", "min": 0.4, "max": 5.0, "step": 0.1, "default": 1.5,
+      "effect": "How many comb strokes span the frame at once; low is one long sweep root to tip, high stacks several order-and-fray bands." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall emission of the fibres; low is a quiet weave, high a luminous combed sheet." },
+    { "uniform": "u_hueSpread", "label": "Hue spread", "min": 0.0, "max": 3.0, "step": 0.05, "default": 1.2,
+      "effect": "How far the palette shifts from the combed end to the frayed end; 0 holds one hue, high colours order and chaos distinctly." },
+    { "uniform": "u_depth", "label": "Depth", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.8,
+      "effect": "Parallax separation between the near and far fibre layers and how much the far one dims; low flattens them, high sinks the far weave back." }
+  ],
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "vignette": 0.3, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "amethyst"
+}

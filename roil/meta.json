@@ -1,0 +1,27 @@
+{
+  "name": "Roil",
+  "slug": "roil",
+  "family": "Wake",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "flow", "turbulence", "eddy", "threads", "rainbow", "organic"],
+  "description": "A turbulent current of dense fine fibres advected through a churning field — curl-noise plus a handful of slowly orbiting vortices wind the threads into spiralling eddies that wind up, shear apart and reform. Colour follows the local flow direction so opposing swirls glow in different palette hues, with two parallaxing depth layers churning at different rates. The chaotic cousin of the combed warp-current.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_threads", "label": "Thread count", "min": 16.0, "max": 200.0, "step": 1.0, "default": 80.0,
+      "effect": "Density of fibres in the current; low gives a few broad streaks, high a fine churning weave." },
+    { "uniform": "u_churn", "label": "Churn", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.9,
+      "effect": "Strength of the curl-noise turbulence bending the fibres; 0 leaves a near-straight flow, high boils it into dense chaos." },
+    { "uniform": "u_vortex", "label": "Vortices", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.7,
+      "effect": "Pull of the orbiting point vortices; 0 removes the big whorls, high winds the fibres into tight spiralling eddies." },
+    { "uniform": "u_speed", "label": "Flow speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.5,
+      "effect": "Master speed of the churning current; 0 holds a frozen turbulent still, high keeps the eddies restlessly reforming." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall emission of the fibres; low is a dim undertow, high a luminous churning flood." },
+    { "uniform": "u_hueSpread", "label": "Hue spread", "min": 0.0, "max": 3.0, "step": 0.05, "default": 1.4,
+      "effect": "How far the palette ranges with flow direction; 0 washes the whole current one hue, high cycles many colours as the eddies turn." },
+    { "uniform": "u_depth", "label": "Depth", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.8,
+      "effect": "Parallax separation between the near and far fibre layers and how much the far one dims; low flattens them, high sinks the far churn back into shadow." }
+  ],
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "vignette": 0.3, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "tide"
+}

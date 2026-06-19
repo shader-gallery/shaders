@@ -1,0 +1,32 @@
+{
+  "name": "Laminar",
+  "slug": "laminar",
+  "family": "Current",
+  "shelf": "rework",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "flow", "streamlines", "fluid", "organic"],
+  "description": "Smooth horizontal streamlines of a steady current gliding past an invisible bluff body. The lines part cleanly around the obstacle and rejoin downstream, crowding bright over its shoulders and opening calm in the far field, never crossing. Luminous packets ride the lines downstream so the flow reads as moving, with a near and far sheet parallaxing for depth — the real flow-past-a-cylinder streamfunction.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_density", "label": "Streamlines", "min": 6.0, "max": 60.0, "step": 1.0, "default": 22.0,
+      "effect": "How many streamlines fill the frame; low gives a few wide ribbons of flow, high a fine dense laminar sheet." },
+    { "uniform": "u_radius", "label": "Obstacle size", "min": 0.04, "max": 0.45, "step": 0.01, "default": 0.22,
+      "effect": "Radius of the bluff body the flow parts around; small barely disturbs the stream, large pushes a broad bow of crowded lines." },
+    { "uniform": "u_flow", "label": "Flow speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.5,
+      "effect": "Speed the luminous packets ride downstream along the streamlines; 0 freezes the flow, high streams it briskly left to right." },
+    { "uniform": "u_spin", "label": "Circulation", "min": -2.0, "max": 2.0, "step": 0.01, "default": 0.0,
+      "effect": "Bound vortex around the body; 0 is symmetric flow, away from 0 throws the streamlines asymmetric and wraps them into a Magnus spin on one side." },
+    { "uniform": "u_posY", "label": "Obstacle height", "min": -0.42, "max": 0.42, "step": 0.01, "default": 0.0,
+      "effect": "Raises or lowers the obstacle in the frame, sliding the parted bow up or down for composition." },
+    { "uniform": "u_line", "label": "Line width", "min": 0.5, "max": 4.0, "step": 0.1, "default": 1.6,
+      "effect": "Thickness of each streamline; fine hairlines to soft broad bands of current." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall emission of the streamlines; low is a quiet schlieren, high a luminous flow field." },
+    { "uniform": "u_hueSpread", "label": "Hue spread", "min": 0.0, "max": 3.0, "step": 0.05, "default": 0.9,
+      "effect": "How far the palette ranges across the streamlines; 0 washes the flow one hue, high cycles colours from the top streamlines to the bottom." },
+    { "uniform": "u_depth", "label": "Depth", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.8,
+      "effect": "Parallax separation between the near and far streamline sheets and how much the far one dims; low flattens them, high sinks the far sheet back." }
+  ],
+  "post": { "bloom": 0.5, "bloomRadius": 3.5, "vignette": 0.3, "saturation": 1.06, "dither": 1.0 },
+  "defaultPalette": "glacier"
+}

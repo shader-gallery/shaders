@@ -1,0 +1,27 @@
+{
+  "name": "Braid",
+  "slug": "braid",
+  "family": "Guilloche",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "weave", "braid", "plait", "rainbow", "organic"],
+  "description": "A wall of vertical plaits. In each column thick luminous cords weave over and under in a repeating interlace, the strand nearest the viewer riding bright and fat in front while the others pass behind, the whole braid travelling slowly downward so the crossings march down the frame. Columns tile edge to edge, each cord a palette hue — bold and heavily woven.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_columns", "label": "Columns", "min": 1.0, "max": 14.0, "step": 1.0, "default": 6.0,
+      "effect": "How many braid columns tile across the frame; low gives a few fat ropes, high a dense wall of fine plaits." },
+    { "uniform": "u_twist", "label": "Twist", "min": 0.5, "max": 14.0, "step": 0.5, "default": 5.0,
+      "effect": "Vertical twists per frame height; low is a long lazy plait, high screws the cords into a tight rapid weave." },
+    { "uniform": "u_weave", "label": "Weave", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "How far the strands swing across their column; 0 stacks them into a straight bundle, 1 throws them in a wide overlapping braid." },
+    { "uniform": "u_width", "label": "Cord width", "min": 1.0, "max": 16.0, "step": 0.5, "default": 6.0,
+      "effect": "Half-width of each cord in CSS px, with its halo scaling alongside; fine strands to thick glowing ropes." },
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.1,
+      "effect": "Speed the plait travels downward; 0 freezes the weave, high sends the crossings coursing down the frame." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall emission of the cords; low is a quiet braid, high a luminous neon rope wall." },
+    { "uniform": "u_depth", "label": "Depth", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.8,
+      "effect": "Front-to-back contrast between crossing strands; 0 flattens them into one tangle, high sinks the back cords into shadow so the over-under reads as real depth." }
+  ],
+  "post": { "bloom": 0.6, "bloomRadius": 4.0, "vignette": 0.26, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "prism"
+}
