@@ -1,0 +1,48 @@
+{
+  "name": "Fan",
+  "slug": "fan",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "cloth", "pleat", "radial", "geometric"],
+  "description": "Pleated cloth fanned around a pivot just below the frame: the folds radiate outward, narrow and converging near the pivot and opening into broad wedges toward the top, like a folding hand-fan or a sunburst-pleated skirt. Each wedge is flat-shaded into a lit plane and a shadow plane split by a luminous radial crease, and a broad band of light sweeps angularly across the fan, handing brightness wedge to wedge while the pleats ripple and breathe. A radial sibling of Pleat's straight vertical accordion.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_pleatCount",
+      "label": "Pleat count",
+      "min": 5.0,
+      "max": 28.0,
+      "step": 1.0,
+      "default": 12.0,
+      "effect": "Number of pleats across a 90-degree span; few makes bold architectural wedges, many makes a fine sunburst rib."
+    },
+    {
+      "uniform": "u_rollSpeed",
+      "label": "Roll speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.4,
+      "effect": "How fast the illumination band sweeps angularly across the fan; at 0 the light rests while only the cloth ripples."
+    },
+    {
+      "uniform": "u_sway",
+      "label": "Flutter",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "Amplitude of the radial ripple and lean, from a rigid pressed fan to softly fluttering cloth."
+    }
+  ],
+  "defaultPalette": "daybreak",
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3.5,
+    "saturation": 1.15,
+    "contrast": 1.12,
+    "dither": 1.0,
+    "backdrop": 0.28,
+    "backdropScale": 1.1
+  }
+}
