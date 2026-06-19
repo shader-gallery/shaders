@@ -22,8 +22,10 @@ uniform vec3  u_palette[4];
 
 // tweakable params (see meta.json; the runtime feeds defaults)
 uniform float u_rowGap;       // px between channel baselines, css  (default 110)
-uniform float u_signalSpeed;  // scroll + modulation clock scale     (default 0.8)
+uniform float u_signalSpeed;  // scroll + modulation clock scale     (default 0.08)
 uniform float u_modDepth;     // envelope/glide intensity 0..1       (default 0.6)
+uniform float u_lines;        // number of channel traces drawn      (default 6)
+uniform float u_distort;      // inharmonic distortion / signal grit  (default 0)
 
 const vec3  BG        = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float LINE_CSS  = 1.15;   // trace half-thickness in css px
@@ -73,17 +75,22 @@ void main() {
   float xn = fc.x / res.x;                 // 0..1 across the frame
   float scroll = t * spd;                  // steady reading-pace travel
 
-  // We draw a fixed stack of 6 channels (constant loop bound). They are centred
-  // vertically and packed at rowGap; channels that fall off-frame simply don't
-  // contribute. Channel 0 is the topmost drawn.
-  const int N = 6;
-  float fN = float(N);
+  // We loop a fixed MAX of channels (constant loop bound, GLSL ES 1.00) but only
+  // draw the first u_lines of them, fading the last one in smoothly as the count
+  // rises so the slider never pops. The drawn stack is centred on u_lines.
+  const int N = 14;
+  float activeN = clamp(u_lines, 1.0, float(N));
+  float fN = activeN;
+  float distort = clamp(u_distort, 0.0, 1.0);
   float midY = res.y * 0.5;
-  // total stack height, centre it
-  float stackTop = midY + (fN - 1.0) * 0.5 * rowGap;
+  // total stack height of the ACTIVE channels, centre it
+  float stackTop = midY + (activeN - 1.0) * 0.5 * rowGap;
 
   for (int i = 0; i < N; i++) {
     float fi = float(i);
+    // how much this channel counts: 1 below the cutoff, fading the partial top one,
+    // 0 beyond u_lines (keeps the count slider continuous).
+    float keep = clamp(activeN - fi, 0.0, 1.0);
     float baseY = stackTop - fi * rowGap;   // this channel's baseline
 
     // --- per-channel modulation, all on exact sub-harmonics of BASE ----------
@@ -112,6 +119,12 @@ void main() {
         0.60 * sin(u)
       + 0.28 * sin(u * (f2 / f1) + ph)              * mix(0.4, 1.0, beat)
       + 0.16 * sin(u * (f3 / f1) - scroll * 0.3 + ph);
+    // distortion: inharmonic high-frequency content roughens the otherwise-clean
+    // signal into a gritty, unstable trace (0 = the pristine ruled waveform).
+    wave += distort * (
+        0.30 * sin(u * 5.3  + ph * 2.0)
+      + 0.22 * sin(u * 8.7  - scroll * 0.5 + ph)
+      + 0.16 * sin(u * 13.1 + scroll * 1.3));
     // envelope shapes amplitude; amplitude in px is a fraction of the row gap so
     // traces stay within their lane and don't collide.
     float amp = rowGap * 0.34 * env;
@@ -133,8 +146,8 @@ void main() {
     // gentle brightness breathing tied to the envelope so swelling channels glow
     float glow = 0.6 + 0.4 * (env - 1.0 + 1.0) * 0.5 + 0.3 * beat;
 
-    col += ccol * core * 1.15;                       // bright phosphor core
-    col += mix(ccol, ncol, 0.5) * halo * 0.42 * glow; // halo toward neighbour hue
+    col += ccol * core * 1.15 * keep;                       // bright phosphor core
+    col += mix(ccol, ncol, 0.5) * halo * 0.42 * glow * keep; // halo toward neighbour hue
   }
 
   // faint horizontal rule lines (baselines) for the monitoring-rack feel — very
