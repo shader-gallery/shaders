@@ -1,0 +1,91 @@
+{
+  "name": "Plait",
+  "slug": "plait",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "weave",
+    "braid",
+    "threads",
+    "lines",
+    "organic"
+  ],
+  "description": "A woven braid of glowing cords runs the width of the frame. Each strand weaves up and down on a phase-shifted sine, so neighbours cross over and under one another like a plaited rope; at every crossing the rising strand rides in front and the one behind dips into shadow, giving a real over-under depth. The whole braid drifts slowly sideways while the palette runs hue to hue across the bundle.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_strands",
+      "label": "Strands",
+      "min": 3.0,
+      "max": 20.0,
+      "step": 1.0,
+      "default": 20.0,
+      "effect": "How many cords make up the braid; few reads as a loose plait, many as a tight woven band filling the frame."
+    },
+    {
+      "uniform": "u_weave",
+      "label": "Weave",
+      "min": 1.0,
+      "max": 14.0,
+      "step": 0.5,
+      "default": 3.5,
+      "effect": "How many over-under crossings span the width; low gives long lazy waves, high a tightly interlaced weave."
+    },
+    {
+      "uniform": "u_amp",
+      "label": "Weave depth",
+      "min": 0.3,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1.6,
+      "effect": "How far each cord swings relative to its neighbour spacing; low barely overlaps, high throws the strands fully across one another."
+    },
+    {
+      "uniform": "u_travel",
+      "label": "Travel",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.17,
+      "effect": "Speed the braid drifts sideways; 0 holds a still plait, higher sends the weave coursing across the frame."
+    },
+    {
+      "uniform": "u_line",
+      "label": "Cord weight",
+      "min": 0.8,
+      "max": 5.0,
+      "step": 0.05,
+      "default": 1.25,
+      "effect": "Half-width of each cord in CSS px; thin reads as fine thread, thick as fat glowing rope."
+    },
+    {
+      "uniform": "u_hue",
+      "label": "Hue spread",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.25,
+      "effect": "How far the palette ranges across the bundle; low ties it in one hue, high cycles colours strand to strand."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0.0,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Strength of the soft halo around each cord; low keeps crisp braided wire, high blooms it into soft neon rope."
+    }
+  ],
+  "post": {
+    "bloom": 0.55,
+    "bloomRadius": 4.0,
+    "vignette": 0.26,
+    "saturation": 1.1,
+    "dither": 1.0
+  },
+  "defaultPalette": "rust"
+}

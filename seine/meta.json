@@ -1,0 +1,27 @@
+{
+  "name": "Seine",
+  "slug": "seine",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "net", "mesh", "threads", "organic", "depth"],
+  "description": "A drift-net billowing in a slow current: a square mesh of cords spans the whole frame, each knot tied to its grid neighbours, while a rolling flow field pushes the net into sagging swells - it bellies toward you and falls away, the near folds brightening as the far ones sink into shadow. The topology is fixed, a true net rather than chance proximity, so it always reads as one continuous web drifting underwater.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_cell", "label": "Mesh spacing", "min": 30.0, "max": 120.0, "step": 1.0,
+      "default": 64.0, "effect": "Spacing of the net knots in CSS px; small weaves a fine tight mesh, large opens it into a coarse net." },
+    { "uniform": "u_billow", "label": "Billow", "min": 0.0, "max": 0.9, "step": 0.01,
+      "default": 0.55, "effect": "How far the cords swell off their rest grid; 0 holds a flat taut net, high throws it into deep sagging folds." },
+    { "uniform": "u_flow", "label": "Current", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.4, "effect": "Speed of the current rolling through the net; 0 freezes the drift, higher sends the swells travelling steadily across it." },
+    { "uniform": "u_sag", "label": "Depth swing", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.7, "effect": "How much brighter the near folds are than the far ones; 0 lights the net evenly flat, high sinks the far swells into shadow for a strong depth read." },
+    { "uniform": "u_line", "label": "Cord weight", "min": 0.4, "max": 3.5, "step": 0.05,
+      "default": 1.2, "effect": "Half-width of each cord in CSS px; thin reads as fine net twine, thick as soft glowing rope." },
+    { "uniform": "u_hue", "label": "Hue spread", "min": 0.0, "max": 3.0, "step": 0.05,
+      "default": 1.0, "effect": "How far the palette ranges across the net; low washes it one hue, high cycles colours across the mesh." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.6, "step": 0.01,
+      "default": 0.7, "effect": "Strength of the soft halo around each cord; low keeps crisp twine, high blooms the net into soft luminous mesh." }
+  ],
+  "post": { "bloom": 0.5, "bloomRadius": 4.0, "vignette": 0.28, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "nocturne"
+}

@@ -1,0 +1,94 @@
+{
+  "name": "Harmonia",
+  "slug": "harmonia",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "string-art",
+    "lines",
+    "geometric",
+    "cardioid",
+    "envelope"
+  ],
+  "description": "Modular times-table string art: points spaced evenly round a circle, each strung with a straight chord to the point at its multiple. The crowd of chords traces the envelope curves hidden in the times tables - the cardioid, the nephroid, the higher roses - and as the multiplier slowly breathes the whole figure morphs from one curve into the next. Every strand is dead straight; the glowing curves are only the shapes their tangents draw.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_points",
+      "label": "Points",
+      "min": 24.0,
+      "max": 150.0,
+      "step": 1.0,
+      "default": 90.0,
+      "effect": "How many points sit round the circle; few gives a coarse star of chords, many a finely sampled envelope that reads as smooth glowing curves."
+    },
+    {
+      "uniform": "u_multiplier",
+      "label": "Multiplier",
+      "min": 2.0,
+      "max": 12.0,
+      "step": 0.01,
+      "default": 2.0,
+      "effect": "The base times-table factor: 2 draws the cardioid, 3 the nephroid, higher values open into multi-lobed roses."
+    },
+    {
+      "uniform": "u_morph",
+      "label": "Morph",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How far the multiplier breathes around its base, slowly morphing the envelope between neighbouring figures; 0 holds one fixed curve (still slowly spinning)."
+    },
+    {
+      "uniform": "u_line",
+      "label": "Chord weight",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 0.9,
+      "effect": "Half-width of each chord in CSS px; thin keeps the envelope crisp and wiry, thick blooms the strands into soft neon."
+    },
+    {
+      "uniform": "u_tint",
+      "label": "Chord tint",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Colour of the chords: 0 strings them plain white, 1 runs full palette hues round the figure so the envelope reads in colour."
+    },
+    {
+      "uniform": "u_radius",
+      "label": "Radius",
+      "min": 0.2,
+      "max": 0.82,
+      "step": 0.01,
+      "default": 0.74,
+      "effect": "Size of the point circle as a fraction of the frame; small floats a compact figure, large pushes the chords near the edges."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0.0,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Strength of the soft halo around each chord; low keeps fine coloured lines, high lets the dense overlap glow as luminous body."
+    }
+  ],
+  "post": {
+    "bloom": 0.7,
+    "bloomRadius": 5.0,
+    "vignette": 0.28,
+    "saturation": 1.12,
+    "contrast": 1.03,
+    "dither": 1.0,
+    "backdrop": 0.12,
+    "backdropScale": 0.9
+  },
+  "defaultPalette": "witchlight"
+}

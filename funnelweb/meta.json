@@ -1,0 +1,91 @@
+{
+  "name": "Funnelweb",
+  "slug": "funnelweb",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "web",
+    "vortex",
+    "spiral",
+    "depth",
+    "spider"
+  ],
+  "description": "A funnel-weaver web wound into a vortex: two counter-winding families of logarithmic-spiral threads cross into a swirling web that coils down toward an off-centre throat, faint radial spokes tying the arms together. The threads crowd as they near the throat and the whole figure drifts slowly inward, so the web seems to spin away down the funnel while the depths sink to black.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_spokes",
+      "label": "Spokes",
+      "min": 6.0,
+      "max": 36.0,
+      "step": 1.0,
+      "default": 14.0,
+      "effect": "How many radial spokes run down the funnel; few gives a stark tunnel, many a finely ribbed throat."
+    },
+    {
+      "uniform": "u_pitch",
+      "label": "Ring spacing",
+      "min": 0.4,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Depth spacing of the capture rings; small packs many rings down the tunnel, large leaves a few wide hoops."
+    },
+    {
+      "uniform": "u_swirl",
+      "label": "Swirl",
+      "min": 0.0,
+      "max": 6.0,
+      "step": 0.01,
+      "default": 3.2,
+      "effect": "How tightly the spiral arms wind into the throat; 0 unwinds toward straight radials, high coils the web into a deep vortex."
+    },
+    {
+      "uniform": "u_recede",
+      "label": "Recede",
+      "min": 0.0,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.2,
+      "effect": "Speed the rings drift inward; 0 holds the web still, higher sends it retreating steadily down the funnel."
+    },
+    {
+      "uniform": "u_line",
+      "label": "Thread weight",
+      "min": 0.4,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.1,
+      "effect": "Half-width of every strand in CSS px; thin reads as fine silk, thick as soft glowing cord."
+    },
+    {
+      "uniform": "u_depth",
+      "label": "Throat depth",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "How dark the throat sinks; 0 lights the web evenly flat, high drops the deep end into shadow for a strong tunnel read."
+    },
+    {
+      "uniform": "u_hue",
+      "label": "Hue spread",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 2.0,
+      "effect": "How far the palette ranges down the funnel; low washes it one hue, high cycles colour band to band into the depth."
+    }
+  ],
+  "post": {
+    "bloom": 0.55,
+    "bloomRadius": 4.0,
+    "vignette": 0.32,
+    "saturation": 1.1,
+    "dither": 1.0
+  },
+  "defaultPalette": "peacock"
+}

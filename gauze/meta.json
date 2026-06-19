@@ -1,0 +1,93 @@
+{
+  "name": "Gauze",
+  "slug": "gauze",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "network",
+    "nodes",
+    "bokeh",
+    "depth",
+    "threads"
+  ],
+  "description": "A node network seen through a shallow depth of field. Glow nodes are scattered through depth and linked by hairline threads, but only those near the focal plane resolve to sharp points - the nearer and farther ones swell into soft out-of-focus bokeh discs, big and faint with their light spread thin. The focal plane racks slowly back and forth so the whole web breathes in and out of focus, strands sharpening as others bloom into haze.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_cell",
+      "label": "Node spacing",
+      "min": 40.0,
+      "max": 160.0,
+      "step": 1.0,
+      "default": 70.0,
+      "effect": "Spacing of the node grid in CSS px; small packs a dense field of nodes and bokeh, large leaves a sparse open constellation."
+    },
+    {
+      "uniform": "u_focus",
+      "label": "Focal depth",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.05,
+      "effect": "Centre of the focal plane in depth; the rack sweeps around it, so this sets which depth band sits sharpest on average."
+    },
+    {
+      "uniform": "u_dof",
+      "label": "Defocus",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.12,
+      "effect": "How far off-focus nodes swell into bokeh; 0 renders every node sharp, high blooms the out-of-focus ones into big soft discs."
+    },
+    {
+      "uniform": "u_rack",
+      "label": "Rack speed",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.18,
+      "effect": "Speed the focal plane racks through depth; 0 holds a fixed focus, higher sweeps focus back and forth so the field breathes."
+    },
+    {
+      "uniform": "u_reach",
+      "label": "Thread reach",
+      "min": 0.4,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.17,
+      "effect": "Proximity threshold for the linking threads; low leaves lone nodes, high keeps the web densely strung."
+    },
+    {
+      "uniform": "u_nodeSize",
+      "label": "Node size",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.45,
+      "effect": "Radius of an in-focus node; small leaves pinprick stars, large blooms even the sharp nodes into orbs."
+    },
+    {
+      "uniform": "u_hue",
+      "label": "Hue spread",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 2.0,
+      "effect": "How far the palette ranges across the field; low washes it one hue, high cycles colours node to node and by depth."
+    }
+  ],
+  "post": {
+    "grain": 0.02,
+    "vignette": 0.56,
+    "exposure": 1.5,
+    "contrast": 1.04,
+    "bloom": 0.9,
+    "bloomRadius": 5.5,
+    "backdrop": 0.1
+  },
+  "defaultPalette": "fuchsia"
+}

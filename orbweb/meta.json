@@ -1,0 +1,30 @@
+{
+  "name": "Orbweb",
+  "slug": "orbweb",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "web", "spider", "radial", "threads", "organic"],
+  "description": "A frontal orb-weaver web strung across the dark: radial spokes fan from an off-centre hub out to the frame edges, and between them the capture thread winds outward in straight sag-chords that spiral slowly rather than closing into plain rings. Dew beads catch the light and slide along the strands while a soft breeze sways the whole web. The wedges between threads are left open - it reads as wire, never filled cells.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spokes", "label": "Spokes", "min": 5.0, "max": 40.0, "step": 1.0,
+      "default": 18.0, "effect": "How many radial spokes fan out from the hub; few gives a stark star, many a finely divided web." },
+    { "uniform": "u_rings", "label": "Capture pitch", "min": 14.0, "max": 80.0, "step": 1.0,
+      "default": 34.0, "effect": "Radial spacing of the capture thread in CSS px; small packs many tight rings, large leaves a few wide loops." },
+    { "uniform": "u_spiral", "label": "Spiral", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.55, "effect": "How far the capture thread winds as it goes out; 0 closes it into concentric chords, high spins it into an open spiral." },
+    { "uniform": "u_sway", "label": "Breeze", "min": 0.0, "max": 1.5, "step": 0.01,
+      "default": 0.5, "effect": "Amplitude and speed of the breeze that sways and slowly rotates the web; 0 holds it dead still." },
+    { "uniform": "u_line", "label": "Thread weight", "min": 0.4, "max": 3.0, "step": 0.05,
+      "default": 1.0, "effect": "Half-width of every strand in CSS px; thin reads as fine silk, thick as soft glowing cord." },
+    { "uniform": "u_glint", "label": "Dew glint", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.4, "effect": "Travel speed of the dew beads sliding the threads; 0 rests them as fixed droplets, high sends light coursing along the silk." },
+    { "uniform": "u_hue", "label": "Hue spread", "min": 0.0, "max": 3.0, "step": 0.05,
+      "default": 1.0, "effect": "How far the palette ranges across the web; low washes it one colour, high cycles hues spoke to spoke and ring to ring." },
+    { "uniform": "u_mouseInfluence", "label": "Mouse influence", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "How strongly the pointer tugs the hub toward the cursor; 0 ignores the mouse entirely." }
+  ],
+  "post": { "bloom": 0.5, "bloomRadius": 4.0, "vignette": 0.3, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "glacier",
+  "shelf": "rework"
+}
