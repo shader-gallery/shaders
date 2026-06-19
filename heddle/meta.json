@@ -1,0 +1,27 @@
+{
+  "name": "Heddle",
+  "slug": "heddle",
+  "family": "Current",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "weave", "loom", "pleat", "rainbow", "organic"],
+  "description": "A warp under the loom's hand. Fine vertical threads are gathered into bright pleats and drawn apart into dark sheds — a smocking gather crowds the threads where it pinches and opens them where it releases, the gather lines wavering down the height and travelling slowly sideways so the pleats breathe open and shut. Threads crowd luminous at the folds and thin into shadow between. A warp like warp's, gathered into pleats instead of rippled.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spacing", "label": "Thread spacing", "min": 5.0, "max": 28.0, "step": 0.5, "default": 17.0,
+      "effect": "Distance between threads in CSS px; a fine dense warp at the minimum, coarse open threads at the maximum." },
+    { "uniform": "u_thick", "label": "Thread width", "min": 0.4, "max": 4.0, "step": 0.1, "default": 2.4,
+      "effect": "Half-width of each thread in CSS px; fine hairline warp to thick glowing cord." },
+    { "uniform": "u_gather", "label": "Gather", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.7,
+      "effect": "How hard the pleats pinch the threads together; 0 leaves an even flat warp, high crowds them into tight bright folds with dark sheds between." },
+    { "uniform": "u_pleats", "label": "Pleats", "min": 1.0, "max": 14.0, "step": 1.0, "default": 5.0,
+      "effect": "How many pleats span the frame; few gives broad folds, many a finely smocked warp." },
+    { "uniform": "u_waver", "label": "Waver", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.47,
+      "effect": "How much the gather lines waver down the height; 0 holds straight vertical pleats, high lets them undulate like hand-gathered cloth." },
+    { "uniform": "u_speed", "label": "Breathe speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.11,
+      "effect": "Speed the pleats travel sideways and breathe open and shut; 0 freezes the gather, high works it briskly." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.03,
+      "effect": "Overall thread emission; low is a quiet warp, high a luminous gathered sheet." }
+  ],
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "vignette": 0.26, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "tide"
+}

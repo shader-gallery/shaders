@@ -1,0 +1,27 @@
+{
+  "name": "Lyre",
+  "slug": "lyre",
+  "family": "Current",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "strings", "signal", "harmonic", "rainbow", "organic"],
+  "description": "A rack of plucked strings, fixed top and bottom, vibrating in standing-wave harmonics — one hums in its fundamental, its neighbour in the second mode with a still node at its waist, the next in the third. Each string is plucked, swells and rings down, then is plucked again, the antinodes glowing brightest where the string swings widest and the nodes holding dark and still. A warp of vertical threads given the voice of carrier's signal.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spacing", "label": "String spacing", "min": 14.0, "max": 70.0, "step": 1.0, "default": 16.0,
+      "effect": "Distance between strings in CSS px; a dense harp at the minimum, a few open strings at the maximum." },
+    { "uniform": "u_thick", "label": "String width", "min": 0.5, "max": 5.0, "step": 0.1, "default": 2.0,
+      "effect": "Half-width of each string in CSS px with its halo; fine wire to thick glowing cord." },
+    { "uniform": "u_amp", "label": "Vibration", "min": 0.0, "max": 24.0, "step": 0.5, "default": 0.5,
+      "effect": "How far the antinodes swing; 0 holds the strings taut and straight, high throws them into wide ringing arcs." },
+    { "uniform": "u_modes", "label": "Harmonics", "min": 1.0, "max": 8.0, "step": 1.0, "default": 5.0,
+      "effect": "Highest harmonic present across the rack; 1 makes every string hum its fundamental, high mixes in modes with many still nodes." },
+    { "uniform": "u_pluck", "label": "Pluck rate", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.1,
+      "effect": "How often each string is re-plucked and how fast it rings down; 0 holds a single sustained ring, high plucks rapidly." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.1,
+      "effect": "Overall string emission; low is a quiet instrument, high a luminous ringing rack." },
+    { "uniform": "u_node", "label": "Antinode bloom", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.35,
+      "effect": "Extra brightness at the swinging antinodes; 0 lights the strings evenly, high makes the bellies blaze while the nodes stay dark." }
+  ],
+  "post": { "bloom": 0.6, "bloomRadius": 4.0, "vignette": 0.28, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "witchlight"
+}

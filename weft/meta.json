@@ -1,0 +1,27 @@
+{
+  "name": "Weft",
+  "slug": "weft",
+  "family": "Weave",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "weave", "loom", "cloth", "rainbow", "organic"],
+  "description": "A woven cloth seen close. Bright vertical warp threads and horizontal weft threads interlace in a plain tabby weave — at every crossing one rides over and the other dips under, in the checkerboard the loom makes. A soft sheen sweeps diagonally so the raised threads glint as light crosses the cloth, threads tinted by position, the whole weave breathing with a slow ripple. A direct sibling of warp, where the weft is now real interlaced thread.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spacing", "label": "Thread spacing", "min": 10.0, "max": 50.0, "step": 1.0, "default": 22.0,
+      "effect": "Distance between threads in CSS px; dense fine cloth at the minimum, open coarse weave at the maximum." },
+    { "uniform": "u_thick", "label": "Thread width", "min": 0.5, "max": 8.0, "step": 0.1, "default": 1.8,
+      "effect": "Half-width of each thread in CSS px with its halo scaling alongside; fine yarn to thick glowing cord." },
+    { "uniform": "u_ripple", "label": "Ripple", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.4,
+      "effect": "Amplitude of the slow cloth ripple; 0 holds a taut flat weave, high lets the fabric billow and breathe." },
+    { "uniform": "u_sheen", "label": "Sheen", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Strength of the diagonal light sweep catching the raised threads; 0 is a matte weave, high a bright satin glint." },
+    { "uniform": "u_sheenSpeed", "label": "Sheen speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.4,
+      "effect": "Speed the sheen band travels across the cloth; 0 holds it still, high sweeps the light briskly across." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall thread emission; low is a quiet cloth, high a luminous woven sheet." },
+    { "uniform": "u_relief", "label": "Relief", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.8,
+      "effect": "How deeply the under-thread dips at each crossing; 0 flattens the weave into a plain grid, high makes the over-under interlace read as real raised cloth." }
+  ],
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "vignette": 0.26, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "clay"
+}

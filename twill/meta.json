@@ -1,0 +1,28 @@
+{
+  "name": "Twill",
+  "slug": "twill",
+  "family": "Current",
+  "shelf": "rework",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "weave", "loom", "diagonal", "organic"],
+  "description": "A twill weave, the diagonal cloth of denim and gabardine. Warp threads float over two wefts then duck under one, the float shifting a thread each row so the raised segments stack into bright diagonal wales running across the cloth. A combed sheen travels along the diagonal so the ribs catch the light in sequence, threads tinted by their diagonal band. A woven-flow sibling of warp-current — combed into ruled twill rather than free domain-warped fibre.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spacing", "label": "Thread spacing", "min": 8.0, "max": 40.0, "step": 1.0, "default": 16.0,
+      "effect": "Distance between threads in CSS px; a fine tight twill at the minimum, a coarse open weave at the maximum." },
+    { "uniform": "u_thick", "label": "Thread width", "min": 0.5, "max": 6.0, "step": 0.1, "default": 2.2,
+      "effect": "Half-width of each thread in CSS px with its halo; fine yarn to thick glowing cord." },
+    { "uniform": "u_steep", "label": "Wale steepness", "min": 0.0, "max": 3.0, "step": 0.05, "default": 1.0,
+      "effect": "How far the float shifts each row; 0 gives vertical floats (no diagonal), high steepens the wales into a sharp diagonal twill." },
+    { "uniform": "u_sheen", "label": "Sheen", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Strength of the diagonal light sweep along the wales; 0 is a matte twill, high a bright denim glint." },
+    { "uniform": "u_sheenSpeed", "label": "Sheen speed", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.45,
+      "effect": "Speed the sheen runs along the diagonal ribs; 0 holds it still, high sweeps it briskly." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall thread emission; low is a quiet cloth, high a luminous woven sheet." },
+    { "uniform": "u_relief", "label": "Relief", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.85,
+      "effect": "How strongly the raised floats outshine the threads passing under; 0 flattens to a plain grid, high makes the diagonal wales stand out as raised ribs." }
+  ],
+  "post": { "bloom": 0.55, "bloomRadius": 4.0, "vignette": 0.26, "saturation": 1.06, "dither": 1.0 },
+  "defaultPalette": "nocturne"
+}

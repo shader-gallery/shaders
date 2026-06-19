@@ -3,6 +3,7 @@
     "Loom",
     "Current",
     "Guilloche",
+    "Weave",
     "Strand",
     "Veil",
     "Bloom",
@@ -214,6 +215,11 @@
     "roil",
     "shear",
     "fray",
+    "weft",
+    "twill",
+    "lyre",
+    "relay",
+    "heddle",
     "slick",
     "bask",
     "welter",
@@ -271,6 +277,8 @@
     "stellate",
     "prism",
     "hatch-contour",
-    "hatch-weave"
+    "hatch-weave",
+    "fan",
+    "quintet"
   ]
 }

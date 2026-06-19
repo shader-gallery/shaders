@@ -1,0 +1,27 @@
+{
+  "name": "Relay",
+  "slug": "relay",
+  "family": "Current",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "signal", "fibre", "pulse", "rainbow", "organic"],
+  "description": "A loom of fibre-optic strands carrying light. Thin dim fibres run the height of the frame and bright pulses race along them like data down glass, each a sharp head trailing a glowing comet tail. Every strand runs at its own speed and direction so the traffic is asynchronous — some pulses climbing, some falling — the strands lit in palette hues. Where carrier carried a waveform in the shape of the line, relay carries light travelling along a straight thread.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_spacing", "label": "Strand spacing", "min": 10.0, "max": 60.0, "step": 1.0, "default": 15.0,
+      "effect": "Distance between strands in CSS px; a dense ribbon cable at the minimum, a few wide channels at the maximum." },
+    { "uniform": "u_thick", "label": "Strand width", "min": 0.4, "max": 5.0, "step": 0.1, "default": 0.6,
+      "effect": "Half-width of each strand and its pulse in CSS px; fine glass fibre to thick glowing conduit." },
+    { "uniform": "u_speed", "label": "Pulse speed", "min": 0.0, "max": 2.0, "step": 0.01, "default": 0.07,
+      "effect": "How fast the pulses race along the strands; 0 holds them still, high streams the traffic briskly." },
+    { "uniform": "u_rate", "label": "Traffic", "min": 0.3, "max": 8.0, "step": 0.1, "default": 1.7,
+      "effect": "How many pulses ride each strand at once; low sends the occasional packet, high floods the fibres with a stream of light." },
+    { "uniform": "u_trail", "label": "Tail length", "min": 0.02, "max": 1.0, "step": 0.01, "default": 0.15,
+      "effect": "Length of each comet tail; short is a crisp travelling dot, long smears it into a glowing streak." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 2.0, "step": 0.01, "default": 1.0,
+      "effect": "Overall emission; low is a quiet cable, high a luminous data flood." },
+    { "uniform": "u_fibre", "label": "Resting fibre", "min": 0.0, "max": 1.0, "step": 0.01, "default": 0.12,
+      "effect": "Brightness of the resting strand between pulses; 0 hides the fibres so only pulses show, high keeps every strand visibly lit." }
+  ],
+  "post": { "bloom": 0.5, "bloomRadius": 4.0, "vignette": 0.3, "saturation": 1.08, "dither": 1.0 },
+  "defaultPalette": "sodium"
+}
