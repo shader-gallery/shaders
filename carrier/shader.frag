@@ -3,8 +3,9 @@
 // of sinusoids. Channels scroll laterally at a steady reading pace while slow
 // exact modulations evolve: an amplitude envelope swells on one, a frequency
 // glide compresses another, a beat pattern walks a third — patient radio traffic
-// after midnight. Each channel takes one palette colour; its halo blends toward
-// the neighbour's hue. Ruled, periodic, precise — no noise anywhere.
+// after midnight. The modulation breathes on its own clock (u_modSpeed) so the
+// traces swell and bend in place. Each channel takes one palette colour; its
+// halo blends toward the neighbour hue.
 //
 // Uniforms provided by the runtime:
 //   u_time        seconds, monotonically increasing
@@ -24,17 +25,13 @@ uniform vec3  u_palette[4];
 uniform float u_rowGap;       // px between channel baselines, css  (default 110)
 uniform float u_signalSpeed;  // scroll + modulation clock scale     (default 0.08)
 uniform float u_modDepth;     // envelope/glide intensity 0..1       (default 0.6)
-uniform float u_lines;        // number of channel traces drawn      (default 6)
-uniform float u_distort;      // inharmonic distortion / signal grit  (default 0)
-uniform float u_waveSpeed;    // continuous crest-flow animation rate (default 0.5)
+uniform float u_lines;        // number of channel traces drawn      (default 14)
+uniform float u_distort;      // inharmonic distortion / signal grit  (default 0.03)
+uniform float u_modSpeed;     // how fast the modulation breathes     (default 0.35)
 
 const vec3  BG        = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float LINE_CSS  = 1.15;   // trace half-thickness in css px
 const float TAU       = 6.2831853;
-// common super-period: scroll & all modulation clocks share a ~60s loop. The
-// modulation rates below are small integer multiples of BASE so the whole stack
-// returns seamlessly. (period = TAU / (BASE * mult); BASE picked for ~60s base.)
-const float BASE      = 0.10471976; // TAU/60 → 60s fundamental period
 
 // blend a palette colour from a continuous index on a 0..4 wheel (cyclic
 // triangular weights — no dynamic array indexing, illegal in GLSL ES 1.00 frag)
@@ -94,32 +91,31 @@ void main() {
     float keep = clamp(activeN - fi, 0.0, 1.0);
     float baseY = stackTop - fi * rowGap;   // this channel's baseline
 
-    // --- per-channel modulation, all on exact sub-harmonics of BASE ----------
-    // each channel gets a distinct character via its index; phases are offset so
-    // the stack never modulates in lockstep.
+    // --- per-channel modulation, on its OWN breathing clock ------------------
+    // the modulation (envelope / glide / beat) animates on u_modSpeed, decoupled
+    // from the slow lateral scroll, so the waves visibly breathe in place rather
+    // than only streaming sideways. each channel gets a distinct character via its
+    // index; phases are offset so the stack never modulates in lockstep.
     float ph = fi * 1.7;                     // static per-channel phase offset
+    float mt = t * max(u_modSpeed, 0.0);     // modulation breathing phase
 
-    // amplitude envelope: swells and recedes (period = 60s / env_mult)
-    float envMult = 1.0 + mod(fi, 3.0);      // 1,2,3,1,2,3 → exact sub-periods
-    float env = 1.0 + depth * 0.85 * sin(BASE * envMult * (t * spd) + ph);
+    // amplitude envelope: swells and recedes
+    float envMult = 1.0 + mod(fi, 3.0);      // 1,2,3,1,2,3 → varied rates
+    float env = 1.0 + depth * 0.85 * sin(mt * envMult + ph);
 
     // frequency glide: base spatial frequency compresses and relaxes
     float glideMult = 1.0 + mod(fi + 1.0, 2.0); // alternate 1,2
-    float glide = 1.0 + depth * 0.45 * sin(BASE * glideMult * (t * spd) + ph * 0.6);
+    float glide = 1.0 + depth * 0.45 * sin(mt * glideMult * 0.8 + ph * 0.6);
     float f1 = (3.0 + fi * 0.6) * glide;     // primary frequency (varies per row)
     float f2 = f1 * 2.0;                      // exact harmonic
     float f3 = f1 * 0.5;                      // exact sub-harmonic
 
     // beat pattern: a slow second tone walks along the wave (amplitude beating)
     float beatMult = 1.0 + mod(fi + 2.0, 3.0);
-    float beat = 0.5 + 0.5 * sin(BASE * beatMult * (t * spd) + ph * 1.3);
+    float beat = 0.5 + 0.5 * sin(mt * beatMult * 1.2 + ph * 1.3);
 
     // --- the waveform: exact sum of sinusoids, scrolling laterally -----------
-    // continuous crest-flow: the wave streams along the trace at its own rate so
-    // the lines animate even when the signal scroll is slow. per-channel factor
-    // keeps the rack from flowing in lockstep.
-    float flow = t * max(u_waveSpeed, 0.0) * (0.5 + fi * 0.06);
-    float u = (xn * f1 - scroll * (0.6 + fi * 0.07) - flow) * TAU;
+    float u = (xn * f1 - scroll * (0.6 + fi * 0.07)) * TAU;
     float wave =
         0.60 * sin(u)
       + 0.28 * sin(u * (f2 / f1) + ph)              * mix(0.4, 1.0, beat)

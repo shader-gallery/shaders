@@ -17,8 +17,8 @@
       "default": 14.0, "effect": "How many channel traces fill the rack — a lone signal at 1, a dense stacked monitor at 14 (paired with row gap to set the packing)." },
     { "uniform": "u_distort", "label": "Distortion", "min": 0.0, "max": 1.0, "step": 0.01,
       "default": 0.03, "effect": "Inharmonic high-frequency grit roughening the traces — 0 is the pristine ruled waveform, high frays each line into a gritty, unstable signal." },
-    { "uniform": "u_waveSpeed", "label": "Wave motion", "min": 0.0, "max": 2.0, "step": 0.01,
-      "default": 0.5, "effect": "Speed the waveform crests flow along each trace, animating the lines independent of the signal scroll — 0 holds them still, high streams them briskly." }
+    { "uniform": "u_modSpeed", "label": "Modulation speed", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.35, "effect": "How fast the modulation breathes — the rate the envelopes swell, frequencies glide and beats walk, animating the wave shapes in place. 0 freezes the modulation, high makes the traces breathe and bend briskly." }
   ],
   "defaultPalette": "midnight",
   "post": { "bloom": 0.6, "vignette": 0.26 }
