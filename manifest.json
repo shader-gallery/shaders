@@ -29,7 +29,7 @@
     "Umbra",
     "Aura",
     "Molten",
-    "Moir\u00e9",
+    "Moiré",
     "Facet",
     "Glitch",
     "Kaleido",
@@ -285,6 +285,12 @@
     "hatch-contour",
     "hatch-weave",
     "fan",
-    "quintet"
+    "quintet",
+    "helix",
+    "portiere",
+    "origami",
+    "iris-corona",
+    "tartan",
+    "tousle"
   ]
 }

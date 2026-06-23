@@ -1,0 +1,31 @@
+{
+  "name": "Tousle",
+  "slug": "tousle",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "threads", "weave", "organic", "rainbow"],
+  "description": "A full-frame field of fine threads combed roughly level but interweaving: each thread wanders by close to a whole row-spacing so neighbours cross and tousle into a dense luminous hank that fills the frame edge to edge. Light runs along the strands and the whole combed field drifts on a slow diagonal. Open crossing strands, never closed cells.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_threads", "label": "Threads", "min": 10.0, "max": 80.0, "step": 1.0,
+      "default": 34.0, "effect": "How many rows of thread fill the frame — a few bold combed strands at the low end, a dense fine hank at the high end." },
+    { "uniform": "u_amp", "label": "Interweave", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.9, "effect": "How far each thread wanders from its row, in row spacings — neat parallel combing near 0, threads crossing and tousling over one another above 1." },
+    { "uniform": "u_line", "label": "Thread weight", "min": 0.4, "max": 6.0, "step": 0.1,
+      "default": 1.6, "effect": "Thickness of each thread in CSS pixels, from hair-thin to a heavy luminous cord — soften separately with Blur." },
+    { "uniform": "u_flow", "label": "Flow", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.5, "effect": "Speed of the drift and the light running along the threads — a frozen hank at 0, briskly streaming at full." },
+    { "uniform": "u_curl", "label": "Curl", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "Amount of fine high-frequency curl in each thread — smooth lazy waves at 0, a kinked frizzy hank at 1." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.55, "effect": "Strength of the halo bleeding off each thread — crisp threads at 0, a hazy bloom at 1." },
+    { "uniform": "u_hue", "label": "Hue spread", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 1.0, "effect": "How far colour travels across the frame — a single tinted hank near 0, a full spectral field at the high end." },
+    { "uniform": "u_blur", "label": "Blur", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.3, "effect": "Softness of the glow halo, independent of thread weight — a crisp drawn thread at 0, a soft luminous bloom at 1." },
+    { "uniform": "u_lean", "label": "Lean", "min": -40.0, "max": 40.0, "step": 1.0,
+      "default": -12.0, "effect": "Diagonal lean of the whole combed field, from level threads to a raked diagonal sweep." }
+  ],
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.5, "vignette": 0.28 }
+}

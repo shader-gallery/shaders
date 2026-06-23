@@ -1,0 +1,31 @@
+{
+  "name": "Origami",
+  "slug": "origami",
+  "family": "Facet",
+  "author": "E. T. Carter",
+  "tags": ["origami", "folds", "bevel", "triangles", "geometric", "crisp", "loop"],
+  "description": "A sheet of folded paper rendered as a regular diagonal crease grid split into beveled triangular facets, each a flat shaded plane. A single raking light sweeps across so mountain and valley folds catch and surrender the light in turn, crisp highlights riding every crease. The pattern is a strict triangular fold grid, not a random tiling, so the whole sheet reads as one cleanly creased plane turning under the light — and an optional ripple can let it fold organically.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Fold size", "min": 40.0, "max": 240.0, "step": 1.0,
+      "default": 58.0, "effect": "Size of each fold cell in CSS pixels — a finely creased tessellation at the low end, a few big bold facets at the high end." },
+    { "uniform": "u_depth", "label": "Relief", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.79, "effect": "Shading contrast between facets facing toward and away from the light — a flat paper at 0, a deeply folded relief at 1." },
+    { "uniform": "u_bevel", "label": "Bevel", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.05, "effect": "Width and brightness of the lit crease lines — barely-there hairlines at 0, thick glowing fold edges at 1." },
+    { "uniform": "u_sweep", "label": "Light sweep", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 2.0, "effect": "How fast the raking light travels around the sheet — a fixed lighting at 0, a steadily turning glint at full." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.64, "effect": "Overall luminance lift on the facets and creases — a dim charcoal fold at 0, a bright luminous sheet at 1." },
+    { "uniform": "u_hue", "label": "Hue spread", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.72, "effect": "How far colour travels across the sheet diagonally — a single-tinted paper near 0, a full spectral fold at the high end." },
+    { "uniform": "u_rotate", "label": "Rotation", "min": -90.0, "max": 90.0, "step": 1.0,
+      "default": 30.0, "effect": "Spins the whole folded sheet, from an upright grid to a diagonal lattice of creases." },
+    { "uniform": "u_vary", "label": "Tone variation", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.6, "effect": "How widely the flat facet tones spread apart — an even sheet at 0, neighbouring planes reading at strongly different angles at 1." },
+    { "uniform": "u_warp", "label": "Ripple", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "Bends the crease grid into a slowly rippling fold — a ruler-straight tessellation at 0, an organically buckled sheet at 1." }
+  ],
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4, "vignette": 0.28 }
+}

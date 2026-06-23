@@ -1,0 +1,33 @@
+{
+  "name": "Tartan",
+  "slug": "tartan",
+  "family": "Weave",
+  "author": "E. T. Carter",
+  "tags": ["dark", "weave", "tartan", "plaid", "glow", "rainbow", "loop"],
+  "description": "A dark tartan sett woven from light: translucent warp bands running vertical and weft bands running horizontal, crossing in an over-under weave so the overlaps brighten and whichever thread rides on top alternates square by square. The stripe recipe repeats across the frame and a slow shimmer breathes through it, colour following the band groups. Crossing bands of light, never filled cells.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_scale", "label": "Sett size", "min": 50.0, "max": 280.0, "step": 1.0,
+      "default": 50.0, "effect": "Size of one repeat of the stripe recipe in CSS pixels — a busy fine plaid at the low end, a few big bold blocks at the high end." },
+    { "uniform": "u_thread", "label": "Thread", "min": 4.0, "max": 24.0, "step": 1.0,
+      "default": 24.0, "effect": "Size of the woven thread cells that set the over-under checker — a fine tight weave at the low end, a coarse chunky basket at the high end." },
+    { "uniform": "u_weave", "label": "Weave depth", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.93, "effect": "How strongly the under-thread dims beneath the over-thread — a flat printed plaid at 0, a deep physical over-under weave at 1." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.53, "effect": "Band glow strength and the brightness of the crossings — a muted cloth at 0, a luminous backlit tartan at 1." },
+    { "uniform": "u_shimmer", "label": "Shimmer", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.8, "effect": "Amount of travelling brightness wave across the cloth — a static sett at 0, a rippling sheen at 1." },
+    { "uniform": "u_speed", "label": "Speed", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.91, "effect": "Speed of the shimmer travelling diagonally through the weave — frozen at 0, briskly flowing at full." },
+    { "uniform": "u_hue", "label": "Hue spread", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.39, "effect": "How far colour travels across the sett — a single tartan colourway near 0, a full spectral plaid at the high end." },
+    { "uniform": "u_rotate", "label": "Rotation", "min": -45.0, "max": 45.0, "step": 1.0,
+      "default": -45.0, "effect": "Spins the whole cloth off-square, from a level sett to a bias-cut diagonal plaid." },
+    { "uniform": "u_blur", "label": "Blur", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.15, "effect": "Softness of the band edges — crisp woven threads at 0, a soft out-of-focus tartan at 1." },
+    { "uniform": "u_bg", "label": "Background", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.5, "effect": "Brightness of the lit field behind the cloth — pure black at 0, a softly glowing backdrop at 1." }
+  ],
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.3, "vignette": 0.3 }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Portiere",
+  "slug": "portiere",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": ["dark", "glow", "loop", "cloth", "curtain", "drape", "organic"],
+  "description": "Two sheer curtain panels meeting down the middle, each gathered into vertical folds that sway and fan toward the outer edges. The folds are translucent ridges of glow drawn over near-black, breathing gently on a slow loop and hanging with a scalloped hem. A hung doorway curtain caught in a doorway draft.",
+  "entry": "shader.frag",
+  "params": [
+    { "uniform": "u_parting", "label": "Parting", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.0, "effect": "How far the two panels stand apart — meeting flush down the middle at 0, drawn wide open at 1." },
+    { "uniform": "u_folds", "label": "Gathers", "min": 3.0, "max": 24.0, "step": 1.0,
+      "default": 24.0, "effect": "Number of vertical folds gathered into each panel — a few broad sweeps at the low end, a finely pleated sheer at the high end." },
+    { "uniform": "u_sway", "label": "Sway", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 1.0, "effect": "How much the folds wave and wander in the draft — a still hung cloth at 0, a curtain stirred by an open window at 1." },
+    { "uniform": "u_drape", "label": "Drape", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.25, "effect": "Vertical hang and scallop of the cloth — a flat even panel at 0, a heavily gathered curtain with a soft falling hem at 1." },
+    { "uniform": "u_glow", "label": "Glow", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.67, "effect": "Translucency of the cloth and the brightness of the light behind it — a dim heavy drape at 0, a luminous gauze at 1." },
+    { "uniform": "u_speed", "label": "Speed", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 0.26, "effect": "Rate of the sway and the slow breathing — frozen at 0, restless at full." },
+    { "uniform": "u_hue", "label": "Hue spread", "min": 0.0, "max": 2.0, "step": 0.01,
+      "default": 1.44, "effect": "How far the colour wheel travels across the folds — a single tinted cloth near 0, a full spectral sheer at the high end." },
+    { "uniform": "u_sharp", "label": "Crispness", "min": 0.0, "max": 1.0, "step": 0.01,
+      "default": 0.45, "effect": "How sharply each fold crest reads — soft blurred gathers at 0, razor-defined pleats at 1." }
+  ],
+  "defaultPalette": "midnight",
+  "post": { "bloom": 0.4, "vignette": 0.3 }
+}
