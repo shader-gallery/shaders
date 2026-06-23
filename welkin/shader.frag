@@ -89,7 +89,10 @@ float hg(float mu, float g) {
 // ---------- cloud density at a world point ----------
 // detailOn=0 skips the fine erosion octave (used by the cheaper light march).
 float cloudDensity(vec3 p, float wind, float detailOn) {
-  float h = clamp((p.y - BASE) / max(u_cloudHeight, 0.001), 0.0, 1.0);
+  // h: 0 at the flat base, 1 at the nominal top. Crowns may tower past 1, so do
+  // NOT clamp the upper end — that hard cap is what reads as a flat-ceiling crop.
+  float h = (p.y - BASE) / max(u_cloudHeight, 0.001);
+  if (h < 0.0 || h > 1.6) return 0.0;
 
   vec3 q = p * 0.62;
   q.xz += vec2(wind, wind * 0.4);
@@ -99,15 +102,19 @@ float cloudDensity(vec3 p, float wind, float detailOn) {
   float cov  = clamp(u_coverage, 0.0, 1.0);
   float d    = smoothstep(1.0 - cov, 1.0 - cov + 0.22, base);
 
-  // cumulus vertical profile: thin at the flat base, full mid-body, rounded top
-  float prof = smoothstep(0.0, 0.14, h) * smoothstep(1.0, 0.55, h);
+  // undulating per-column crown: a two-octave field sets each column's ceiling
+  // anywhere from ~0.35 up to ~1.35, so cumulus tower well above the nominal top
+  // and break the horizon as billows instead of reading as a flat-ceiling crop.
+  float topVar = 0.6 * vnoise3(q * 1.1 + 19.0) + 0.4 * vnoise3(q * 2.7 + 4.0);
+  float topH   = 0.35 + 1.0 * topVar;
+  float prof = smoothstep(0.0, 0.14, h) * (1.0 - smoothstep(topH - 0.26, topH, h));
   d *= prof;
 
   // erode the boundary with higher-frequency detail (more at the base = wispy
   // bottoms, denser rounded crowns)
   if (detailOn > 0.5) {
     float det = fbm3(q * 4.1 + 9.0);
-    d -= det * u_detail * 0.7 * (1.0 - h * 0.55);
+    d -= det * u_detail * 0.7 * (1.0 - clamp(h, 0.0, 1.0) * 0.55);
   }
   return clamp(d, 0.0, 1.0);
 }
@@ -173,13 +180,17 @@ void main() {
     if (tg > 0.0) {
       float fog  = 1.0 - exp(-tg * 0.045);
       vec3  surf = mix(zenithCol * 0.6, skyCol * 0.55, 0.4) * (0.18 + u_groundShade * 1.5);
-      bg = mix(surf, mix(horizonCol, skyCol, 0.4), fog);
+      // fade the surface into the SAME horizon-sky colour computed above, so the
+      // ground meets the sky seamlessly with no hard brightness step at rd.y = 0.
+      bg = mix(surf, sky, fog);
     }
   }
 
   // ---- volumetric cloud raymarch ----
   vec3  col = bg;
-  float top = BASE + max(u_cloudHeight, 0.001);
+  // march bound sits ABOVE the nominal top so towering crowns (h up to ~1.15)
+  // are sampled instead of being clipped flat at the nominal ceiling.
+  float top = BASE + max(u_cloudHeight, 0.001) * 1.45;
 
   // intersect the ray with the cloud slab from wherever the camera sits (below,
   // inside, or above the deck); t0/t1 are the entry/exit distances.
