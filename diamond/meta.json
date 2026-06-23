@@ -1,0 +1,154 @@
+{
+  "name": "Diamond",
+  "slug": "diamond",
+  "family": "Manifold",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "raymarch",
+    "3d",
+    "minimal-surface",
+    "crystalline",
+    "depth",
+    "parallax"
+  ],
+  "description": "A raymarched flight through a Schwarz Diamond, a triply-periodic minimal surface with sharper, more crystalline chambers than the gyroid. The camera drifts through the lattice while thin walls catch a raking light with crisp silhouette edges, hue turning with depth and fading into fog. A sibling of the gyroid on the same 3D engine, with a colder, more faceted character.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Cell frequency",
+      "min": 0.8,
+      "max": 5,
+      "step": 0.05,
+      "default": 2.9,
+      "effect": "How tightly the diamond tiles space — a few big chambers at the low end, a dense crystalline lattice at the high end."
+    },
+    {
+      "uniform": "u_thick",
+      "label": "Thickness",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Thickness of the surface walls — delicate membranes at 0, fat beams nearly closing the passages at 1."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Flight speed",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.02,
+      "effect": "How fast the camera flies through the lattice — hovering at 0, rushing the tunnel at full."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.82,
+      "effect": "Glow and rim light bleeding off the walls — a matte solid at 0, a luminous crystal at 1."
+    },
+    {
+      "uniform": "u_warp",
+      "label": "Warp",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.2,
+      "effect": "How much the lattice bends out of perfect periodicity — a crisp crystal at 0, a melted cavern at 1."
+    },
+    {
+      "uniform": "u_hue",
+      "label": "Hue turn",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1.28,
+      "effect": "How fast colour turns with depth and angle — a single tint near 0, a full spectral journey at the high end."
+    },
+    {
+      "uniform": "u_fog",
+      "label": "Fog",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Depth fog swallowing the far lattice — a deep clear view at 0, a close fog-bound chamber at 1."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Roll",
+      "min": -180,
+      "max": 180,
+      "step": 1,
+      "default": 20,
+      "effect": "Rolls the view around the flight axis, reorienting the lattice."
+    },
+    {
+      "uniform": "u_surface",
+      "label": "Shape",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Morphs the shape from the crystalline Schwarz Diamond (0) to the swirling gyroid (1), through hybrids between."
+    },
+    {
+      "uniform": "u_edge",
+      "label": "Edge line",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Strength and width of the crisp contour where a wall turns from view — soft lobes at 0, hard-outlined facets at 1."
+    },
+    {
+      "uniform": "u_contour",
+      "label": "Contour lines",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Topographic lines wrapping the surfaces — clean walls at 0, a ribbed relief at 1."
+    },
+    {
+      "uniform": "u_twist",
+      "label": "Twist",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.11,
+      "effect": "Spirals the whole lattice around the flight axis — straight chambers at 0, a corkscrewing vortex of cells at 1."
+    },
+    {
+      "uniform": "u_bias",
+      "label": "Pocket",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.96,
+      "effect": "Shifts the surface from thin minimal-surface walls (0) toward fat closed rounded pockets and tunnels (1) — the single biggest lever on the overall shape character."
+    },
+    {
+      "uniform": "u_contourFreq",
+      "label": "Contour density",
+      "min": 0.5,
+      "max": 18,
+      "step": 0.5,
+      "default": 3,
+      "effect": "How many contour lines wrap the surfaces — a few broad bands at the low end, a finely ribbed topographic relief packed with lines at the high end. Pair with Contour lines to set their strength."
+    }
+  ],
+  "defaultPalette": "spectral",
+  "post": {
+    "bloom": 0.5,
+    "vignette": 0.28,
+    "grain": 0.02,
+    "grainSize": 1.2
+  }
+}

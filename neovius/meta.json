@@ -1,0 +1,163 @@
+{
+  "name": "Neovius",
+  "slug": "neovius",
+  "family": "Manifold",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "raymarch",
+    "3d",
+    "minimal-surface",
+    "organic",
+    "depth",
+    "parallax"
+  ],
+  "description": "A raymarched flight through a Neovius surface, a triply-periodic minimal surface of fat rounded pockets joined by narrow necks, softer and more bulbous than the gyroid or diamond. The camera drifts through while walls catch a soft light with topographic contour ribbing wrapping each pocket, hue turning with depth into fog. A sibling on the same 3D engine, with a warm organic character.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Cell frequency",
+      "min": 0.8,
+      "max": 5,
+      "step": 0.05,
+      "default": 0.8,
+      "effect": "How tightly the pockets tile space — a few big chambers at the low end, a dense cluster of cells at the high end."
+    },
+    {
+      "uniform": "u_thick",
+      "label": "Thickness",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Thickness of the pocket walls — delicate membranes at 0, fat beams nearly closing the necks at 1."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Flight speed",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.07,
+      "effect": "How fast the camera drifts through the pockets — hovering at 0, rushing through at full."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Glow and rim light bleeding off the walls — a matte solid at 0, a luminous membrane at 1."
+    },
+    {
+      "uniform": "u_warp",
+      "label": "Warp",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much the lattice bends out of periodicity — crisp pockets at 0, a melted organic cavern at 1."
+    },
+    {
+      "uniform": "u_hue",
+      "label": "Hue turn",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1.95,
+      "effect": "How fast colour turns with depth and angle — a single tint near 0, a full spectral journey at the high end."
+    },
+    {
+      "uniform": "u_fog",
+      "label": "Fog",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Depth fog swallowing the far pockets — a deep clear view at 0, a close fog-bound chamber at 1."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Roll",
+      "min": -180,
+      "max": 180,
+      "step": 1,
+      "default": 0,
+      "effect": "Rolls the view around the flight axis, reorienting the pockets."
+    },
+    {
+      "uniform": "u_surface",
+      "label": "Shape",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Morphs the shape from the bulbous Neovius pockets (0) to the cubic Schwarz-P chambers (1), through hybrids between."
+    },
+    {
+      "uniform": "u_edge",
+      "label": "Edge line",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength and width of the crisp contour where a wall turns from view — soft pockets at 0, hard-outlined cells at 1."
+    },
+    {
+      "uniform": "u_contour",
+      "label": "Contour lines",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Concentric topographic lines wrapping each pocket — clean walls at 0, a ribbed contour-map relief at 1."
+    },
+    {
+      "uniform": "u_twist",
+      "label": "Twist",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Spirals the whole lattice around the flight axis — straight chambers at 0, a corkscrewing vortex of cells at 1."
+    },
+    {
+      "uniform": "u_bias",
+      "label": "Pocket",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Shifts from thin minimal-surface walls (0) toward fat closed rounded pockets and tunnels (1) — the biggest lever on overall shape."
+    },
+    {
+      "uniform": "u_aniso",
+      "label": "Cell stretch",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Stretches the cells along the flight axis — squashed flat cells at the low end, even pockets at 0.5, tall elongated tunnels at the high end."
+    },
+    {
+      "uniform": "u_dia",
+      "label": "Crystallize",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Blends the soft Neovius pockets toward the sharp crystalline Schwarz Diamond — round and bulbous at 0, faceted and angular at 1."
+    }
+  ],
+  "defaultPalette": "ember",
+  "post": {
+    "bloom": 0.55,
+    "vignette": 0.28,
+    "grain": 0.035,
+    "grainSize": 1.3
+  }
+}

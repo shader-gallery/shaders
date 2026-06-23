@@ -1,0 +1,145 @@
+{
+  "name": "Gyroid",
+  "slug": "gyroid",
+  "family": "Manifold",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "raymarch",
+    "3d",
+    "gyroid",
+    "minimal-surface",
+    "depth",
+    "parallax"
+  ],
+  "description": "A raymarched flight through a gyroid, a triply-periodic minimal surface that tiles all of space into one smooth interwoven labyrinth. The camera drifts forward through the lattice while the thickened surface glows volumetrically, shaded by its own normals, hue turning with depth and fading into fog. A true 3D engine rather than strokes on black, it fills the frame because it is a solid the eye flies through.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Cell frequency",
+      "min": 0.8,
+      "max": 5,
+      "step": 0.05,
+      "default": 0.8,
+      "effect": "How tightly the gyroid tiles space — a few big cathedral chambers at the low end, a dense intricate honeycomb labyrinth at the high end."
+    },
+    {
+      "uniform": "u_thick",
+      "label": "Thickness",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Thickness of the surface walls — delicate thin membranes at 0, fat rounded beams that nearly close the passages at 1."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Flight speed",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.19,
+      "effect": "How fast the camera flies forward through the lattice — hovering in place at 0, rushing down the tunnel at full."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.48,
+      "effect": "Volumetric glow bleeding off the surfaces and rim light — a matte solid at 0, a luminous glowing manifold at 1."
+    },
+    {
+      "uniform": "u_warp",
+      "label": "Warp",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much the lattice is bent out of perfect periodicity — a crisp mathematical gyroid at 0, an organically melted cavern at 1."
+    },
+    {
+      "uniform": "u_hue",
+      "label": "Hue turn",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1.16,
+      "effect": "How fast colour turns with depth and surface angle — a single tinted solid near 0, a full spectral journey down the tunnel at the high end."
+    },
+    {
+      "uniform": "u_fog",
+      "label": "Fog",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.06,
+      "effect": "Depth fog swallowing the far lattice — a deep clear view at 0, a close intimate fog-bound chamber at 1."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Roll",
+      "min": -180,
+      "max": 180,
+      "step": 1,
+      "default": 85,
+      "effect": "Rolls the view around the flight axis, reorienting the whole labyrinth."
+    },
+    {
+      "uniform": "u_surface",
+      "label": "Shape",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Morphs the lattice shape from the swirling gyroid (0) to a Schwarz-P lattice of rounded cubic chambers (1), passing through hybrid forms between."
+    },
+    {
+      "uniform": "u_edge",
+      "label": "Edge line",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.42,
+      "effect": "Strength and width of the crisp bright contour drawn where each wall turns away from view — soft shaded lobes at 0, hard-outlined shapes at 1."
+    },
+    {
+      "uniform": "u_contour",
+      "label": "Contour lines",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Adds topographic lines wrapping the surfaces by height — clean walls at 0, a ribbed line-drawn relief at 1."
+    },
+    {
+      "uniform": "u_twist",
+      "label": "Twist",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Spirals the whole lattice around the flight axis — straight chambers at 0, a corkscrewing vortex of cells at 1."
+    },
+    {
+      "uniform": "u_bias",
+      "label": "Pocket",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0,
+      "effect": "Shifts from thin minimal-surface walls (0) toward fat closed rounded pockets and tunnels (1) — the biggest lever on overall shape."
+    }
+  ],
+  "defaultPalette": "prism",
+  "post": {
+    "bloom": 0.6,
+    "vignette": 0.26,
+    "grain": 0.03,
+    "grainSize": 1.3
+  }
+}
