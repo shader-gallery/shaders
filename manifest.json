@@ -8,6 +8,7 @@
     "Veil",
     "Bloom",
     "Wake",
+    "Aether",
     "Abyss",
     "Mosaic",
     "Hex",
@@ -33,7 +34,8 @@
     "Facet",
     "Glitch",
     "Kaleido",
-    "Polytope"
+    "Polytope",
+    "Manifold"
   ],
   "shaders": [
     "lacework",
@@ -290,6 +292,7 @@
     "portiere",
     "origami",
     "tartan",
-    "tousle"
+    "tousle",
+    "gyroid"
   ]
 }
