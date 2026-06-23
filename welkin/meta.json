@@ -1,0 +1,128 @@
+{
+  "name": "Welkin",
+  "slug": "welkin",
+  "family": "Wake",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "sky",
+    "scattering",
+    "clouds",
+    "atmosphere",
+    "organic"
+  ],
+  "description": "Raymarched volumetric cumulus over a generic ground plane: the view ray is marched through a real cloud layer sampling a 3D density field with a cumulus height-profile, self-shadowed by a secondary march toward the sun, so the clouds have rounded billowing tops, flat bases, dark cores and silver-lit backlit edges. A free camera flies from the ground up through the deck and high above it, and the controls shape the weather from a clear day to towering thunderheads.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_sunHeight",
+      "label": "Sun height",
+      "min": -0.05,
+      "max": 0.6,
+      "step": 0.01,
+      "default": 0.32,
+      "effect": "Elevation of the sun. Low rakes the clouds with warm side-light and strong silver linings; high lifts it overhead for flatter, brighter midday light."
+    },
+    {
+      "uniform": "u_coverage",
+      "label": "Cloud cover",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "How much of the sky the cloud field fills, from a near-clear blue with isolated puffs to a packed, sky-spanning cloudscape."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Density",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Optical thickness of the cloud matter, from thin translucent vapour the light pours through to solid, deeply-shadowed cauliflower volumes."
+    },
+    {
+      "uniform": "u_detail",
+      "label": "Detail",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Strength of the high-frequency erosion on the cloud boundary, from smooth rounded masses to torn, wispy, billowing cauliflower edges."
+    },
+    {
+      "uniform": "u_windSpeed",
+      "label": "Wind speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.35,
+      "effect": "Drift speed of the cloud field, from a still held breath to a brisk weather front streaming across the sky."
+    },
+    {
+      "uniform": "u_camPitch",
+      "label": "Camera pitch",
+      "min": -1.2,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.16,
+      "effect": "Tilt of the camera: aim down onto the tops of the deck from above, level it at the horizon with the cloud bank low and sky overhead, or crane straight up into the ceiling of the clouds."
+    },
+    {
+      "uniform": "u_camYaw",
+      "label": "Camera yaw",
+      "min": -3.14,
+      "max": 3.14,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Pans the camera around the vertical, swinging to a different stretch of the sky and a fresh arrangement of clouds."
+    },
+    {
+      "uniform": "u_camHeight",
+      "label": "Altitude",
+      "min": 0.0,
+      "max": 14.0,
+      "step": 0.05,
+      "default": 0.0,
+      "effect": "Raises the camera from the ground far below the deck, up through its flat base and the cloud bodies themselves, and on high above the whole layer for an aerial view down onto the cloud tops. Pair a high altitude with a downward pitch to look over the full cloudscape."
+    },
+    {
+      "uniform": "u_cloudHeight",
+      "label": "Cloud height",
+      "min": 1.0,
+      "max": 7.0,
+      "step": 0.05,
+      "default": 2.0,
+      "effect": "Vertical thickness of the cloud layer, from a thin flat sheet to deep, towering cumulus columns that rise high above their flat bases."
+    },
+    {
+      "uniform": "u_groundLevel",
+      "label": "Ground level",
+      "min": -4.0,
+      "max": 1.1,
+      "step": 0.05,
+      "default": 0.0,
+      "effect": "Height of the generic ground surface beneath the clouds. Drop it for a deep drop to a distant floor, or raise it just under the cloud base for a shallow valley."
+    },
+    {
+      "uniform": "u_groundShade",
+      "label": "Ground brightness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Lightness of the ground surface, from a dark void below the deck up to a pale lit floor that reads as land or sea far underneath the clouds."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.0,
+    "bloom": 0.0,
+    "dither": 0.0,
+    "vignette": 0.22,
+    "saturation": 1.08,
+    "contrast": 1.06
+  }
+}
