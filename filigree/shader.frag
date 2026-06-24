@@ -40,7 +40,7 @@ const vec3  BG          = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 const float ROUND_CSS   = 4.0;    // corner rounding radius of each diamond
 const float WAVELEN_CSS = 380.0;  // wavelength of the rolling brightness wave
 
-float hash21(vec2 p) { p = fract(p * vec2(0.1031, 0.1173)); p += dot(p, p.yx + 33.33); return fract((p.x + p.y) * p.x); }
+float hash21(vec2 p) { p = fract(p * vec2(0.2317, 0.2659)); p += dot(p, p.yx + 23.19); return fract((p.x + p.y) * p.x); }
 
 // rounded-diamond signed distance: an L1 (diamond) of radius rad, rounded by r
 float sdRoundDiamond(vec2 p, float rad, float r) {

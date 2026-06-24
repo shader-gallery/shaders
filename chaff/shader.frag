@@ -39,8 +39,8 @@ const float FRONT_LEN  = 0.34;   // gust-front width as a fraction of screen wid
 
 // 1D hash -> [0,1)
 float hash11(float p) {
-  p = fract(p * 0.1031);
-  p *= p + 33.33;
+  p = fract(p * 0.2317);
+  p *= p + 23.19;
   p *= p + p;
   return fract(p);
 }

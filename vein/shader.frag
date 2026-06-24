@@ -41,8 +41,8 @@ float hash12(vec2 p) {
 }
 
 vec2 hash22(vec2 p) {
-  vec3 q = fract(p.xyx * vec3(0.1031, 0.1030, 0.0973));
-  q += dot(q, q.yzx + 33.33);
+  vec3 q = fract(p.xyx * vec3(0.2317, 0.2483, 0.1991));
+  q += dot(q, q.yzx + 23.19);
   return fract((q.xx + q.yz) * q.zy);
 }
 

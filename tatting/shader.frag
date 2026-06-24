@@ -31,7 +31,7 @@ uniform float u_rotate;      // grid rotation (degrees)
 
 const float BG = 0.039;
 
-float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }
+float hash11(float p) { p = fract(p * 0.2317); p *= p + 23.19; p *= p + p; return fract(p); }
 
 vec2 emitOffset(int i) {
   if (i == 0) return vec2(0.0, 0.0);

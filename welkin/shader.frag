@@ -45,8 +45,8 @@ const int   LSTEPS = 6;     // light march samples
 
 // ---------- 3D value noise + fbm for the density volume ----------
 float hash13(vec3 p) {
-  p = fract(p * 0.1031);
-  p += dot(p, p.yzx + 33.33);
+  p = fract(p * 0.2317);
+  p += dot(p, p.yzx + 23.19);
   return fract((p.x + p.y) * p.z);
 }
 

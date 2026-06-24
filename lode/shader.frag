@@ -36,14 +36,14 @@ const float WRAP     = 6.0;   // log-depth octaves before self-similar wrap
 
 // ---- hashes (no textures) ----
 float hash11(float p) {
-  p = fract(p * 0.1031);
-  p *= p + 33.33;
+  p = fract(p * 0.2317);
+  p *= p + 23.19;
   p *= p + p;
   return fract(p);
 }
 float hash21(vec2 p) {
-  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
-  p3 += dot(p3, p3.yzx + 33.33);
+  vec3 p3 = fract(vec3(p.xyx) * 0.2317);
+  p3 += dot(p3, p3.yzx + 23.19);
   return fract((p3.x + p3.y) * p3.z);
 }
 

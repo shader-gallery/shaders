@@ -34,8 +34,8 @@ const float CREST_CSS = 2.2;   // rim-light half-thickness in css px
 
 // hash / value noise (cheap, no textures)
 float hash11(float p) {
-  p = fract(p * 0.1031);
-  p *= p + 33.33;
+  p = fract(p * 0.2317);
+  p *= p + 23.19;
   p *= p + p;
   return fract(p);
 }

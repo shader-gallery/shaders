@@ -47,7 +47,7 @@ const float THICK_CSS = 1.6;     // cross thickness at full morph
 
 float sdCircle(vec2 p, float r) { return length(p) - r; }
 
-float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }
+float hash11(float p) { p = fract(p * 0.2317); p *= p + 23.19; p *= p + p; return fract(p); }
 
 // spread positions for the extra ripple emitters (fractions of half-extent),
 // shifted as a group by the Origin params. Emitter 0 sits at the origin itself.

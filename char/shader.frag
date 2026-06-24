@@ -32,7 +32,7 @@ float hash21(vec2 p) {
   return fract(p.x * p.y);
 }
 float hash13(vec3 p) {
-  p = fract(p * 0.1031);
+  p = fract(p * 0.2317);
   p += dot(p, p.zyx + 31.32);
   return fract((p.x + p.y) * p.z);
 }

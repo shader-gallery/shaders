@@ -43,8 +43,8 @@ const float LN2    = 0.69314718056;
 const float CYCLE  = 12.0; // colour cycle spans this many rings (keeps hue periodic)
 
 float hash11(float p) {
-  p = fract(p * 0.1031);
-  p *= p + 33.33;
+  p = fract(p * 0.2317);
+  p *= p + 23.19;
   p *= p + p;
   return fract(p);
 }

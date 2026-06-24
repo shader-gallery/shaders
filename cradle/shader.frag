@@ -32,7 +32,7 @@ uniform float u_reach;
 uniform float u_mouseTilt;
 uniform float u_glow;
 
-float hash11(float p) { p = fract(p * 0.1031); p *= p + 33.33; p *= p + p; return fract(p); }
+float hash11(float p) { p = fract(p * 0.2317); p *= p + 23.19; p *= p + p; return fract(p); }
 
 float wheelW(float s, float c) { float d = abs(s - c); return max(0.0, 1.0 - min(d, 4.0 - d)); }
 vec3 wheelCol(float k, vec3 c0, vec3 c1, vec3 c2, vec3 c3) {

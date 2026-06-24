@@ -42,8 +42,8 @@ float wheelW(float s, float c) {
 }
 
 float hash11(float p) {
-  p = fract(p * 0.1031);
-  p *= p + 33.33;
+  p = fract(p * 0.2317);
+  p *= p + 23.19;
   p *= p + p;
   return fract(p);
 }
