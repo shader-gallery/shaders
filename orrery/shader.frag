@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // orrery (Trace) — six concentric, barely-etched orbit rings centred on the
 // dark field, each carrying one small glowing body with a short arc of
 // phosphor smear trailing behind it along its ring. Bodies revolve at

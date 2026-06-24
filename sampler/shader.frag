@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // sampler (Loom) — a cross-stitch sampler: a lattice of little X marks (saltires),
 // not the upright plus of lacework. A slow weave distortion bows the rows like
 // hand-stitched cloth, and radial waves lengthen and brighten the stitches along

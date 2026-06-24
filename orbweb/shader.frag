@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // orbweb (Strand) - a frontal orb-weaver spider web. Radial spokes fan out from
 // an off-centre hub all the way to the frame edges; between them the capture
 // thread winds out as straight sag-chords (the angular look that tells a real web

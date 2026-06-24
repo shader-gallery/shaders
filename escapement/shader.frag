@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // escapement (Trace) — concentric toothed rings, the wheel train of a pocket
 // watch seen face-on. Thin etched circles scallop into gear teeth via an angular
 // wave; each ring advances in discrete ticks rather than smooth rotation. At a

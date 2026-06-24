@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // Contour --- a topographic map of terrain that does not exist (family: Strata)
 //
 // A slow FBM heightfield seen in plan view, rendered purely as thin glowing

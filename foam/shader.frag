@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // foam (Wake) — rafts of sea foam on black water, seen from directly above.
 // Each raft is a loose cluster of glowing bubble rings: thin circular outlines,
 // each with one bright specular point on its rim, packed dense at the cluster

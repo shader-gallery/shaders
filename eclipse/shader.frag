@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // eclipse (Abyss) — a minutes-long lunar eclipse. A large, softly mottled moon
 // disc (low-frequency FBM maria + limb-darkened edge) hangs in a near-black sky
 // scattered with very faint stars. A soft umbral shadow, penumbra tinted warm,

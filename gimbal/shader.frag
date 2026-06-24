@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // gimbal (Trace) — three nested gyroscope rings tumbling in implied 3D at the
 // centre of the frame. Each ring is a circle rotating about its own axis, drawn
 // as the projected ellipse it casts: a thin luminous phosphor band whose near

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // keel (Brink) — a burning-ship-style Julia set rendered as a single glowing
 // coastline: before each squaring the iterate is folded through abs(), so the
 // smooth quadratic curl breaks into creases — keel-lines, hull flanks and

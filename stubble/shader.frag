@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // stubble (Smolder) — a harvested field at night seen from straight above.
 // Parallel windrows of stubble cross the frame on a shallow diagonal: an
 // anisotropic comb of short dash striations stretched along the row direction,

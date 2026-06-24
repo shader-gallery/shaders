@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // weft (Current) — a woven cloth seen close. Bright vertical warp threads and
 // horizontal weft threads interlace in a plain tabby weave: at every crossing one
 // rides over and the other dips under, in the checkerboard the loom makes. A soft

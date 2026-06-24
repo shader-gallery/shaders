@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // awn (Sough) — three ranks of wheat stalks receding in shallow perspective on a
 // near-black field. Each stalk is a slender curved stroke rooted at its rank's
 // baseline, topped by an awned seed-head (a tight fan of hairline bristles). At

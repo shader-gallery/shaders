@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // snare (Brink) — an orbit-trap Julia set. The same 40-step z -> z*z + c
 // iteration, but instead of escape bands the shader records the minimum distance
 // each orbit ever comes to a thin cross (two perpendicular segments through the

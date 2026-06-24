@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // braid (Current) — a wall of vertical plaits. Within each column several thick
 // luminous cords weave over and under in a repeating sinusoidal interlace: each
 // strand swings side to side a quarter-phase apart from its neighbours, and the

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // chaff (Sough) — a low rank of ripe seed-heads leans in from the bottom edge as
 // dim drooping silhouettes that never rise past the lower quarter. Invisible gust
 // fronts sweep across the rank as traveling waves of bow-and-spring-back; the

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // bubble (Bloom) — sparse thin glassy ring outlines rise through open darkness,
 // growing slightly as they climb, each carrying a single brighter highlight arc
 // that suggests curved glass. At a hash-determined height a bubble pops: a quick

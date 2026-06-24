@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // twill (Current) — a twill weave, the diagonal cloth of denim and gabardine.
 // Warp threads float over two wefts then duck under one, and the float shifts by a
 // thread each row, so the raised warp segments stack into bright diagonal wales

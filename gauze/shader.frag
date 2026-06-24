@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // gauze (Strand) - a node network seen through a shallow depth of field. Glow
 // nodes are scattered through depth and linked by hairline threads; only the
 // nodes near the focal plane resolve to sharp points, while those nearer or

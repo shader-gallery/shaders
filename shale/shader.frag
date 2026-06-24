@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // Shale — fractured stone plates over ember light (family: Mosaic)
 //
 // A voronoi partition where every plate is shaded as one flat facet: a

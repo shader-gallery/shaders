@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // medusa (Bloom) — drifting sea-nettle jellyfish. Each is a translucent domed
 // bell marked with radial stripes and a dark scalloped margin, a frilly ruffled
 // column of oral arms, and a long curtain of fine tentacles streaming below and

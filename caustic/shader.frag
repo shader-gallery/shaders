@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // caustic (Shoal) — the pool-bottom light net: two jittered Voronoi cell layers
 // each glow along their borders (F2-F1 ridges), multiplied into a sharp filament
 // web with hot knots where lines cross, on near-black ground. The two layers

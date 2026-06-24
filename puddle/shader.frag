@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // puddle (Noir) — dark wet asphalt fills the frame; puddle patches are carved out
 // by a low-frequency noise mask. Inside each puddle, wobbling vertical smears of
 // unseen neon — columns of palette colour stretched downward by a domain-warped

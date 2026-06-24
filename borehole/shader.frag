@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // borehole (Delve) — a geological borehole seen from directly overhead,
 // plunging to a true-black focal point at screen center. The wall lives in
 // log-polar space: log(radius) is sliced into fine sedimentary bands whose

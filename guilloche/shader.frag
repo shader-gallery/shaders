@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // guilloche (Burnish) — engine-turning in its linear mode: a banknote border
 // band fills edge-to-edge with fine taut strands, each a sine of slightly
 // different harmonic and phase about a shared horizontal band axis, interleaved

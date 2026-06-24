@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // welkin (Wake) — raymarched volumetric clouds under an analytic sky.
 //
 // A real volume, not a noise plane: the view ray is marched through a cloud slab
@@ -9,9 +11,10 @@
 // Behind it sits an analytic Rayleigh/Mie sky with a soft sun. Everything advects
 // continuously on the wind, so there is no loop seam.
 //
-// Inspired by github.com/kotivas/skygl (precomputed scattering + raymarched
-// volumetric clouds), reduced to a single real-time pass and recoloured through
-// the gallery palette.
+// Built from the standard published technique for analytic-sky + raymarched
+// volumetric clouds (Beer-Lambert self-shadowing, Henyey-Greenstein phase, a
+// powder term, a cumulus density profile), reimplemented from scratch here as a
+// single real-time pass and recoloured through the gallery palette.
 //
 // Uniforms provided by the runtime:
 //   u_time u_resolution u_mouse u_pixelRatio u_palette[4]

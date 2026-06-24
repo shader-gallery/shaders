@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // nebula (Abyss) — a Trifid-style emission/reflection nebula. Billowing
 // domain-warped gas fills the frame: a warm pink/red emission region glows in
 // the lower body, cooling to a blue reflection haze toward the top, the two

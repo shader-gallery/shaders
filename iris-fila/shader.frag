@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // fila (Rosette) — a filament-halo iris filling the frame: the base iris and its
 // few hundred fibers are pushed to a dense hair-thin halo of luminous strands, each
 // with a hashed length so the field feathers like a nebula or a dandelion clock

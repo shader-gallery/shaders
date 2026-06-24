@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // peat (Smolder) — a cross-section of dark ground: faint horizontal soil
 // strata as low-contrast banded FBM, with a buried seam running roughly level
 // at mid-height. The seam smoulders from within: along one travelling stretch

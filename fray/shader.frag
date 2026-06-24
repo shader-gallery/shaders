@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // fray (Current) — combed, then released. Diagonal fibres run sleek and parallel
 // where a comb has just passed, and fray into wild domain-warped chaos in the
 // length they have not yet reached. A bright comb stroke sweeps along the fibres

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // transit (Noir) — a rain-slick crossroads seen from a high corner window. Two
 // roads cross low in the frame as faint wet seams in the dark, governed by an
 // unseen traffic signal whose tiny corner lamp shifts hue each phase. On the

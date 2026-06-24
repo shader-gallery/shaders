@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // roil (Current) — a turbulent current, all eddies and whorls. Dense fine fibres
 // are advected through a churning flow field: curl-noise plus a handful of slowly
 // orbiting point vortices drag the threads into spiralling eddies that wind up,

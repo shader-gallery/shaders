@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // lissajous (Trace) — a single bright phosphor dot traces a Lissajous figure on a
 // near-black oscilloscope screen, its tail a chain of samples taken backward along
 // the parametric curve, each dimmer and slightly wider than the last. The frequency

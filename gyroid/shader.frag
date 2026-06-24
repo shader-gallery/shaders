@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // gyroid (Manifold) - a raymarched flight through a gyroid, a triply-periodic
 // minimal surface that tiles all of space into one smooth interwoven labyrinth.
 // The camera drifts forward through the lattice; the thickened surface glows

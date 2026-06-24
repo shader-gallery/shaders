@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // mandorla (Kaleido) — an ornate guilloché rosette, the lacework end of the
 // family. Where the others fill cells, this one is drawn in light: dozens of fine
 // wavy concentric rose-curves of different petal counts interweave into an

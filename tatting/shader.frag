@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // tatting (Loom) — a fine halftone field of pure round dots, like knotted tatted
 // lace. Concentric ripples wash outward from one or more sources; each dot SWELLS
 // and brightens on a passing wavefront and shrinks back to a pinprick between them.

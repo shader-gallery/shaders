@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // torii (Plinth) - a processional avenue of gates running dead away from the eye.
 // One gate SDF (two round pillars, a long gently curved lintel, a lower tie-beam)
 // is repeated down the view axis by domain repetition, each instance hash-leaned

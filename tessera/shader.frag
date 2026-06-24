@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // tessera (Mosaic) — an irregular wall of dark glass tiles: a jittered voronoi
 // partition with hairline bright grout seams and faint glassy fills hashed from
 // the palette. The tiling itself is alive: hash-timed per-tile envelopes

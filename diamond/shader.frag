@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // diamond (Manifold) - a raymarched flight through a Schwarz Diamond surface, a
 // triply-periodic minimal surface with sharper, more crystalline chambers than
 // the gyroid. The camera drifts through; the thin walls are normal-shaded with

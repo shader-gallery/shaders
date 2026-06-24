@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // timbre (Knell) — a vast tam-tam nearly filling the frame: a hammered bronze
 // disc a half-step above the void. Its brightness is the analytic sum of five
 // FIXED inharmonic partials — products of radial cosines at irrational

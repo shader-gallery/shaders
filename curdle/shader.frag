@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // curdle (Gyre) — a pale drop falls into dark tea: a bright blob blooms at a
 // hashed position, its crisp boundary progressively stretched and folded by
 // accumulating curl-noise warp as it ages, winding into high-contrast filament

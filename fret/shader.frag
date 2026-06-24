@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // fret (Burnish) - a living labyrinth. A Truchet weave of quarter-turn paths
 // connects edge to edge into one continuous meander that fills the whole frame
 // (no empty centre, no border band). The paths glow in palette hues, and bright

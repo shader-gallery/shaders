@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // scry (Omen) — a standing obsidian mirror: a tall, arch-topped slab traced by a
 // hairline of palette-tinted edge light, set slightly off-centre on a near-black
 // ground. The glass reads pure black until the eye adjusts; inside, slow

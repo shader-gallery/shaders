@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // aperture (Rosette) — a mechanical-diaphragm iris filling the frame: the soft
 // fibers of the base iris are replaced by hard straight-edged camera blades that
 // overlap into a spiralling polygon and open and close on a slow breath. The

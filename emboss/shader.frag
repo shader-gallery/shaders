@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // emboss (Burnish) - tufted iridescent relief. A deep quilted surface of padded
 // diamond cushions pulled in at button points and creased along the seams, lit as
 // a soft satin so each pucker carries a specular bloom. The fabric is iridescent:

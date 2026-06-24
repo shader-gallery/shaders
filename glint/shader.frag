@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // glint (Shoal) — moonlight on dark open water. A horizon line sits in the upper
 // third; below it a vertical glitter path descends toward the viewer — tiny
 // horizontally-stretched specular highlights on a perspective grid whose rows

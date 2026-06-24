@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // lyre (Current) — a rack of plucked strings. Bright vertical strings are fixed
 // top and bottom and vibrate in standing-wave harmonics: one hums in its
 // fundamental, its neighbour in the second mode with a still node at its waist,

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // schist (Strata) — a slab of foliated metamorphic rock seen face-on: dense
 // wavy mineral bands (the foliation) sweep diagonally across the frame, each
 // layer a different restrained palette tint, separated by thin dark cleavage

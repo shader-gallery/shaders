@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // gloaming (Abyss) — a whole-frame time-of-day colour journey. A warm-to-indigo
 // horizon glow occupies the lower frame, softened by a whisper of FBM haze,
 // beneath a sky that runs from deep blue to near-black overhead. As the horizon

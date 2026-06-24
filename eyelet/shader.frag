@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // eyelet (Loom) — a field of hollow ring marks, like the punched eyelet holes of
 // broderie-anglaise lace. Each cell holds an open circle (a stroke, not a filled
 // dot and not a closed cell), and a radial wave pumps the ring radius so the

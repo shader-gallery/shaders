@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // shaft (Shoal) — one to three fans of slanted volumetric light beams enter from
 // chosen points around the frame and cross it diagonally — crepuscular rays that
 // come in bunches. In each fan's rotated/polar frame, beam intensity is 1D

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // spoke (Filament) - a starburst of glowing tubes radiating from the centre,
 // charge shooting outward along each ray while the hue steps spoke to spoke.
 // A semi-lit ground fills the wedges between. Comments short/ASCII (the

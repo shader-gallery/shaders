@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // toll (Knell) — a great bronze drumhead seen dead-on. One circular disc nearly
 // fills the frame over a near-black field, its rim a hairline of edge light. The
 // vibration is an analytic sum of three concentric radial partials (radially

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // skein (Filament) - rows of horizontal glowing tubes that undulate across the
 // frame like a hank of ribbon cable, each row on its own sine and its own hue.
 // Charge streams along the cables over a semi-lit ground. Comments short/ASCII

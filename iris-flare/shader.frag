@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // flare (Rosette) — an off-centre solar-flare iris filling the frame: the radial
 // pattern is anchored on a focal point pushed off-centre (rule-of-thirds), so
 // the frame reads composed rather than as a lone centred disc. Wispy streamers

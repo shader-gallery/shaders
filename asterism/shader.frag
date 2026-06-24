@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // asterism (Abyss) — a still star chart over true black. A sparse fixed scatter
 // of faint hash stars holds a barely-perceptible shimmer; over it, constellations
 // materialise: six-to-nine slightly brighter chart stars joined by thin glowing

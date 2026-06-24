@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // sigil (Omen) — branded runes on black iron. At any moment two or three
 // angular, hash-generated sigils — stave-like figures of straight strokes,
 // crossbars and forked terminals — sit at scattered positions and scales across

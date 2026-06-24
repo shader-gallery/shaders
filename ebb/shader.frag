@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // ebb (Wake) — a falling tide leaves a scatter of glowing pools stranded across
 // dark wet sand. Hash-placed blobs with noise-roughened irregular outlines, each
 // a soft mirror-bright fill rimmed by a thin meniscus line. A low horizontal

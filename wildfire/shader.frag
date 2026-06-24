@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // wildfire (Smolder) — REFRAMED COSMIC: an emission nebula rather than a fire.
 // The magenta/cyan ragged spreading perimeters that always read as nebular gas
 // are now exactly that — slow expanding ionization shells lit warm-to-cool across

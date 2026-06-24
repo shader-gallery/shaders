@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // anthelion (Kaleido) — named for the mirrored counter-sun halo, the luminous
 // higher-key end of the family. A blazing multi-hue core throws a corona of
 // mirror-folded rays of UNEVEN length (long spikes between short ones, like a

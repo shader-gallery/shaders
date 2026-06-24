@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // pendant (Umbra) — a hanging mobile turns in lamplight and the wall sees only
 // its shadow: five or six silhouettes (discs, a crescent built by two-circle
 // subtraction, a slim bar capsule) suspended at staggered heights from implied

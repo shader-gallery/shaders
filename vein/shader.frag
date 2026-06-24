@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // vein (Mosaic) — only the boundary network of a voronoi partition: thin
 // capillary seams on a near-black field, cell interiors left empty. The web
 // is never complete — it continuously rewires itself. Individual edges fade

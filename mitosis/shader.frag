@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 precision highp float;
 
 // Mitosis — one dark-liquid cell divides into two, then four, then re-fuses,

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // harlequin (Kaleido) — a cut-crystal mandala of hard, flat facets. Where the
 // other Kaleido pieces blur, this one keeps knife-sharp mirror seams: the folded
 // field is quantised into angular/radial facets, each flat-shaded a single jewel

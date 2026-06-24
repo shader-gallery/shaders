@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // seersucker (Loom) — the ripples register, where interference is the hero. Several
 // travelling wave sources radiate at once and their phases SUM (not max), so the
 // field puckers into shifting standing-wave bands like crinkled seersucker cloth.

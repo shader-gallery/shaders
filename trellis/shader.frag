@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // trellis (Filament) - an orthogonal circuit grid of glowing conduits with a
 // bright pad lit at every junction, like a printed board carrying charge along
 // its traces. The current runs the nearer axis of each crossing so the whole

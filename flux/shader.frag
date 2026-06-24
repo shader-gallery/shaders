@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // flux (Strata) — the analytic 2D magnetic dipole. Two opposite poles hang in
 // dark space as small soft cores, and the dipole stream function (the difference
 // of the two atan angles) is contoured into fine luminous field-line arcs sweeping

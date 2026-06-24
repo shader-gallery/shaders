@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // karst (Strata) — a Li River nocturne. One rank of steep karst-tower
 // silhouettes stands across the middle of the frame, their crests rim-lit with a
 // thin glow, the tower bodies solid dark masses occluding a faintly lit sky, and

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // shore — Brink family — shader.gallery foundry
 // One quadratic Julia coastline (z -> z*z + c, 40 steps, bailout |z| > 4)
 // glows between two near-black domains. The seed c creeps along a slightly

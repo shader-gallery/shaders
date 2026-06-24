@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // fan (Veil) — a radial sibling of Pleat. Where Pleat folds the frame into
 // straight vertical accordion panels, Fan pleats the cloth around a pivot just
 // below the frame, so the folds RADIATE: narrow and converging near the pivot,

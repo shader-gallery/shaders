@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // hatch-weave (Burnish) - Hatch Weave variation: woven tartan plaid.
 // Full description in meta.json. (Keep comments ASCII-only here; see meta.)
 //

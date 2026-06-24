@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // halo (Shoal) — total solar eclipse. A dark occulting moon hangs high in the
 // frame; around its limb a bright corona blazes, its edge frayed by ridged FBM
 // into the filamental streamers and prominences of a real eclipse. A thin warm

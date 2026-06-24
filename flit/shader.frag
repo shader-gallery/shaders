@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // flit (Umbra) — shadow theatre on an insomniac wall. An unseen moth circles an
 // unseen lamp; the wall records only its shadow — one small winged silhouette
 // (two eased triangle/ellipse wing SDFs about a slim body capsule) whose

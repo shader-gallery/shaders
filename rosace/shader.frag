@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // rosace (Burnish) — a rose-engine guilloché, the lathe-turned ornament cut into
 // watch dials and banknote medallions. Two families of concentric rosette curves
 // (radius modulated by cos(petals*angle), each ring's phase advancing with radius

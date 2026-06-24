@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // spatter (Noir) — thrown paint on a dark wall. A dense, clumping field of
 // irregular splats lands across the frame: each is a ragged-edged blob flanked by
 // a spray of small satellite droplets and trailing a thin drip that runs downward,

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // damask (Burnish) - a brocade wallpaper of mirror-symmetric foliate medallions
 // on a half-drop repeat. Each cell folds a noise field through an N-fold dihedral
 // kaleidoscope into an ornate, perfectly symmetric motif; the ground carries the

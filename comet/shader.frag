@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // comet (Abyss) — a single comet bound to a long elliptical orbit that fits
 // inside the frame. The empty focus is dark and far off-centre; the nucleus is a
 // small bright point with a tight coma; its ion tail always streams anti-sunward

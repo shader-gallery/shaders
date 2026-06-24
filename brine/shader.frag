@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // brine (Shoal) — a brinicle forest: a ceiling of supercold descending brine
 // fingers hangs from the top edge, a field of translucent crystalline columns of
 // varying width and length receding into depth. Each catches tiny facet glints,

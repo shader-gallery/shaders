@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // iris (Rosette) — a giant eye iris filling the frame: hundreds of fine radial
 // fibers run from a dark central pupil out past the corners, each wiggling
 // slightly off a true radius via a per-fiber hash phase. Fiber colour blends

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // radar (Trace) — a bearing/time radar WATERFALL, not a dial. The frame is the
 // scope's recorded history: the newest return is written along the top edge and
 // the whole record feeds slowly downward like paper through a chart recorder.

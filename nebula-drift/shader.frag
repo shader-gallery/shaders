@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // nebula-drift (Abyss) — a Nebula variation: instead of standing pillars, a deep
 // volumetric emission field seen edge-on. Layered domain-warped gas glows in
 // drifting palette hues, threaded by serpentine DARK DUST LANES (Bok globules)

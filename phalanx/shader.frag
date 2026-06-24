@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 precision highp float;
 uniform float u_time;
 uniform vec2  u_resolution;

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // hatch-contour (Burnish) - Hatch Contour, a variation on Hatch. Where Hatch
 // rules dead-straight diagonals, the whole crosshatch lattice is domain-warped
 // here along the drifting ghost field, so every burin stroke bends and flows

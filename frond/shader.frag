@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // frond (Smolder) — REFRAMED as a POTHOS VINE (Epipremnum aureum): trailing vines
 // hang and climb down the frame, each a prominent tapering stem (thicker at the
 // crown, thinning toward the growing tip) studded with MANY tiny heart-shaped

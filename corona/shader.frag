@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // corona (Omen) — an absolute-black disc, darker than the background, a true
 // void, betrayed only by what rims it: dozens of radial hairline filaments
 // hugging the circumference like corona discharge at an eclipse's edge. Each

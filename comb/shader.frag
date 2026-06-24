@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // comb (Mosaic) — a strict honeycomb of flat hexagonal cells, each filled with
 // warm light sampled from a slow-drifting FBM field: bright clusters of lit
 // comb shade off into dim neighbours, ramped through the four palette colours

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // lacework (Loom) — a dark field of dots that morph into crosses as radial waves
 // pass through them, a crisp halftone lace. Four optional drifting glow blobs can
 // backlight the field; the dots themselves carry the crisp colour. The grid can be

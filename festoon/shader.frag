@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // festoon (Veil) — a single string of small triangular bunting pennants strung
 // across the frame on a shallow diagonal: anchored high on the left edge and
 // running low off the right. Dozens of crisp little flat-shaded SDF triangles,

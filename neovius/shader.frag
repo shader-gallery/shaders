@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // neovius (Manifold) - a raymarched flight through a Neovius surface, a triply-
 // periodic minimal surface of fat rounded pockets joined by narrow necks - softer
 // and more bulbous than gyroid or diamond. The camera drifts through; walls are

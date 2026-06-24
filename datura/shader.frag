@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // datura (Rosette) — Angel trumpet datura at night. Two or three pendant
 // trumpet blooms hang from an unseen branch along the top edge, drawn as softly
 // glowing corolla outlines over faint translucent membranes, each long bell

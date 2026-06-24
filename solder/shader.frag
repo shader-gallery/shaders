@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 precision highp float;
 
 // Solder — four molten beads ride a gently bowed weld seam. Summed kernels are

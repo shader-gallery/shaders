@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // swash (Wake) — dozens of thin diagonal streaks of light lie in parallel lanes
 // across the frame, like a beach etched at a shallow angle. Each streak is a
 // soft-edged capsule of glow, palette-graded from a bright head to a dim tail,

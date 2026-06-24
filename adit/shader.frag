@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // adit (Delve) - looking into a timbered mine gallery from just inside its mouth,
 // the bore running away on a raking diagonal. The black vanishing depth is pinned
 // in the lower-right third of the frame (never centred), so the composition reads

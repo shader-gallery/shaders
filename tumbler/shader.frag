@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // tumbler (Kaleido) — the feel of turning the tube: angular glass shards in the
 // object cell that each tumble on their own axis while the mirror-fold reflects
 // them. As the shards rotate and slide the reflected figure keeps re-locking

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // ringed (Rosette) — a banded iris filling the frame: the radial fibers of the
 // base iris are crossed by a set of glowing concentric annular rings, the way a
 // real iris is scored by furrows and a collarette. The fibers give the fine

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // lull (Wake) — a faint static seascape: dim horizontal FBM bands of dark water
 // layered toward a barely-visible horizon, salted with a few sparse glints,
 // rendered just above the threshold of visibility. Nothing within the scene

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // reed (Filament) - a palisade of vertical glowing tubes, like an upright LED
 // strip or an equalizer at rest. Each reed holds its own palette hue and a
 // bright pulse of charge rises continuously up its length over a semi-lit

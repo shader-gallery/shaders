@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // drape (Veil) — heavy silk hung in vertical folds. A smooth periodic
 // heightfield of large folds plus low-octave FBM wrinkles, lit with
 // analytically derived normals so every crest carries a soft specular ridge of

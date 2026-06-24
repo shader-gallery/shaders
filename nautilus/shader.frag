@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // nautilus (Delve) — the cross-section of a chambered shell, camera looking
 // straight into the whorl. The log-radius axis is tiled into a few grand
 // chambers: each chamber is a full annulus flooded with a pearly interior

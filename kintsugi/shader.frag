@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // kintsugi (Burnish) - gold-repaired pottery. A solid, lit ceramic glaze surface
 // is laced with a natural, irregular CRACKLE network - wandering cracks that
 // branch and meet at random angles the way real crazed glaze does (no radial

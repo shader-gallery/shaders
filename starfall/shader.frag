@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // starfall (Abyss) — a deep, drifting starfield. Three parallax layers of
 // hash-placed points (no regular grid) of varying size and brightness rain down
 // on a diagonal, each twinkling on its own phase; the brighter stars take a

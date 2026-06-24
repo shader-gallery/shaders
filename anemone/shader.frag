@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // anemone (Bloom) — a FIELD of sea-anemone organisms filling the frame rather
 // than one bloom floating in black. Each is a ring of soft tentacle lobes built
 // from polar petal SDFs, rim-lit with a warm core, breathing open and closed on a

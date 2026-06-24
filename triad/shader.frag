@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2026 E. T. Carter
 // triad (Knell) — three standing plane-wave trains cross the frame at 120° and
 // sum into a honeycomb of glowing antinode cells, a Faraday-wave hexagon lattice
 // on a vibrating bronze pan. Nodal lines stay perfectly dark and fixed; antinode
