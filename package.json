@@ -1,0 +1,31 @@
+{
+  "name": "shader-gallery",
+  "version": "0.1.0",
+  "description": "Vendor a shader.gallery shader into your project: `npx shader-gallery add <slug>`. Thin front-door to @shader-gallery/cli (the catalog itself is served from the CDN, not bundled here).",
+  "license": "MIT",
+  "author": "E. T. Carter",
+  "type": "module",
+  "bin": {
+    "shader-gallery": "./bin/shader-gallery.js"
+  },
+  "files": [
+    "bin/"
+  ],
+  "dependencies": {
+    "@shader-gallery/cli": "^0.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://shader.gallery",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shader-gallery/shaders.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shader-gallery/shaders/issues"
+  }
+}
