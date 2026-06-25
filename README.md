@@ -26,5 +26,5 @@ uniforms declared in its `meta.json` `params`.
 
 The shader source and metadata in this repository are licensed **MIT** — see
 [LICENSE](./LICENSE). Use them anywhere, including commercially; keep the
-copyright notice (**E. T. Carter / shader.gallery**). Same license as the
+copyright notice (**E. T. Carter / [shader.gallery](https://shader.gallery)**, support@shader.gallery). Same license as the
 runtime and wrappers, so the whole project is MIT throughout.

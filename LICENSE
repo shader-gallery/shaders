@@ -2,18 +2,12 @@ MIT License
 
 Copyright (c) 2026 E. T. Carter
 
-The shader.gallery collection — the GLSL shader source, per-shader metadata,
-and the gallery manifest — is released under the MIT License. The runtime and
-framework wrappers (@shader-gallery/runtime and the React/Vue/Svelte packages)
-are MIT as well, so the whole project carries one license: use it anywhere,
-including commercially, and keep the copyright notice.
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated files (the "Software"), to deal in the Software
-without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the
-Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following condition:
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
