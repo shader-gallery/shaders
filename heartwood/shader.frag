@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // heartwood (Smolder) — the sawn end of a log fills the frame: faint dark-on-dark
 // growth rings around an off-centre pith, crossed by hairline radial check-cracks.
 // Fire eats inward from the bark as a circle of shrinking radius, perturbed

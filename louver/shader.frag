@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 precision highp float;
 
 // louver — Umbra family. Shadow of venetian blinds on a lamp-washed wall.

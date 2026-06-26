@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // warp (Loom) - a loom warp: thin bright vertical threads on a near-black
 // field that ripple side-to-side as a slow sinusoidal displacement travels
 // down them, with soft glow nodes blooming where a horizontal weft wave

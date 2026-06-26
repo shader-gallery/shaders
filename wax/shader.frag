@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // wax (Mercury) — a lava lamp without the lamp. A heavy basal pool clings to the
 // bottom edge of the frame as one liquid mass, and two or three dark molten wax
 // bodies rise through the column above it: each pinches off the pool with a bright

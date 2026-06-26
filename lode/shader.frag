@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // lode (Delve) — a mine shaft sunk through ore-bearing rock, seen straight down
 // the bore. Near-black stone walls (low FBM in angle / log-depth space, banded
 // into concentric receding rings of rock) salted with tiny hash-scattered

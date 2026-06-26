@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // geode (Rosette) — a druzy crystal bed filling the frame: small angular
 // Voronoi facets with hard, hash-jittered straight edges tile the screen like
 // the lining of a split-open geode. The bed rests in cold dim palette tones with

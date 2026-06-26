@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // web (Loom) -- a dew-strung orb web seen close and at an angle, the way a macro
 // lens catches it at dawn. The web is built as faceted capture passes (straight
 // chords between irregular radial spokes) winding out from a single off-centre

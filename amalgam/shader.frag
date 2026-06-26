@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 precision highp float;
 
 // Amalgam — two quicksilver pools meet, fuse, wobble, and pinch apart.

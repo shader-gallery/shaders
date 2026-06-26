@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // teleido (Kaleido) — the archetypal kaleidoscope: a single wedge of soft
 // jewel-light blobs mirror-folded N times around the centre and slowly rotated,
 // so the pattern endlessly reshuffles as the unseen object cell drifts through

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // quintet (Veil) — a five-voice sibling of Triad. Where Triad crosses three
 // standing plane-wave trains at 120 degrees into a hexagonal honeycomb, Quintet
 // crosses FIVE trains at 72 degrees. Five-fold symmetry cannot tile the plane,

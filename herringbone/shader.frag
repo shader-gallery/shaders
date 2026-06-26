@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // herringbone (Loom) — a woven cloth of short oriented dashes that lean +45 on one
 // row and -45 on the next, building the classic herringbone chevron zigzag. Radial
 // waves run diagonal bands of brightness across the weave and lengthen the stitches

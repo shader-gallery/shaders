@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // culm (Sough) — a grove of thick, round bamboo canes crossing the frame in
 // three depth-layered rows that recede and haze back. Each cane is cylinder-
 // shaded (lit flank, specular stripe, dark turning edges) and divided by crisp

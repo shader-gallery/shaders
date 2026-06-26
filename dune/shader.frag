@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // dune --- a sand sea from directly above at night (family: Strata)
 //
 // Long sinuous crest lines from anisotropic ridged noise, each crest shaded

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // kelp (Sough) — a kelp forest in section, deep underwater. Wide ribbon blades
 // rise from an uneven seafloor in three depth-layered ranks (near blades large,
 // bright and sharp; far ranks smaller, dimmer and hazed blue), each a rounded

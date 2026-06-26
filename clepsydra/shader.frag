@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // clepsydra (Trace) — a water clock rendered in light. From a spout near the top
 // a single glowing drop detaches on an exact beat and falls with gravity easing
 // into a wide etched vessel at the bottom. The pool of soft luminous fill carries

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // Contour --- a topographic map of terrain that does not exist (family: Strata)
 //
 // A slow FBM heightfield seen in plan view, rendered purely as thin glowing

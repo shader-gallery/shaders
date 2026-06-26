@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // bloom (Rosette) — a flower iris filling the frame: instead of straight fibers,
 // overlapping teardrop petal lobes whorl out of a dark central core in three
 // offset rings, the way a dahlia or ranunculus packs its bloom. Each petal is a

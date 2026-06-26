@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // relay (Current) — a loom of fibre-optic strands carrying light. Thin dim fibres
 // run the height of the frame, and bright pulses race along them like data down
 // glass, each a sharp head trailing a glowing comet tail. Every strand runs at its

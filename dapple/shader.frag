@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // dapple (Shoal) — sunlight through a drifting mat of surface foliage. The
 // near-black seabed carries a sparse constellation of discrete, soft-edged
 // elliptical sun-flecks: countable patches of light with crisp penumbrae and

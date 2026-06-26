@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // maelstrom (Gyre) — one vast log-spiral vortex sits centred just off the
 // lower-right corner. Its dye arms — sin bands in (angle*arms + twist*log r)
 // space — sit barely a step above a near-black ground across most of the frame.

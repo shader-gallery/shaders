@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // marble — suminagashi paper-marbling. Two inks drawn from opposite ends of
 // the palette interleave as thin luminous filaments on a near-black ground,
 // each leaning toward one of the middle palette hues by large-scale phase so

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // isobar (Strata) — a satellite night-pass over a stormy sea. Two or three
 // spiral storm systems hang on the near-black chart, each a pinwheel of soft
 // luminous rain bands: log-spiral streaks winding into a small dark calm eye.

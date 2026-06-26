@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // tartan (Loom) - a glowing dark tartan sett: translucent warp bands running
 // vertical and weft bands running horizontal, crossing in an over-under weave so
 // the overlaps brighten and the thread direction on top alternates square by

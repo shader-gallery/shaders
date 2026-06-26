@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // mandala (Rosette) - a dense, multi-layered concentric ornament. Many nested
 // rings of glowing scalloped petals (alternating N and 2N symmetry per ring) are
 // laced together by radial spokes and studded with jewel dots, building a real

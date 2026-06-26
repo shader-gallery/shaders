@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // shear (Current) — stratified flow in fast and slow lanes. Stacked horizontal
 // bands stream past one another at alternating speeds, and along every boundary
 // where a fast lane meets a slow one the shear rolls the streamlines up into a

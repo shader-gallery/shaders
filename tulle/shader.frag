@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // tulle (Loom) — the camera/distortion register. A fine net of lace dots is bent by
 // a perspective fall-off and a soft swirl, so the marks bunch and shrink toward a
 // fold the way a sheet of tulle netting hangs and recedes into depth. A radial wave

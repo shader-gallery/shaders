@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // bough (Umbra) — shadow theatre on an insomniac wall. The silhouette of a
 // potted bough stands inside an unseen lamp's throw: ~14 elliptical leaf SDFs
 // hung on two curved stem polylines occupy the left half, drawn purely as

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // rivulet (Noir) — a near-black pane in front of a softly blurred field of city
 // colour. A large-scale FBM wash, blended from the four palette hues, drifts
 // dim and out of focus behind the glass. A handful of meandering water trails

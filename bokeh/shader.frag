@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // bokeh (Noir) — a city seen through a fast lens at night: three depth layers of
 // out-of-focus light discs on a near-black field. Each disc is a soft-edged
 // heptagonal aperture (polygon SDF) tinted one palette hue by hash, ringed by the

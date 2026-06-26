@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // dichroic (Kaleido) — dichroic glass: the mirror-fold sampled at a slightly
 // different angle per colour channel, so every reflected edge splits into an
 // oil-slick iridescence — cyan on one side, magenta on the other. Concentric

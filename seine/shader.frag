@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // seine (Strand) - a drift-net billowing in a slow current. A square mesh of
 // cords spans the whole frame, each knot tied to its grid neighbours, and a
 // rolling flow field pushes the whole net into sagging swells - it bellies toward

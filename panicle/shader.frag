@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // panicle (Sough) — two or three pampas plumes at close range: tall curved stems,
 // each carrying one large feathery head, a teardrop mass of fine FBM-streaked
 // fibers rather than a hard silhouette. At rest the plumes are deep charcoal,

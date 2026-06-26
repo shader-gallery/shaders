@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // pendulum (Trace) — a row of pendulums hangs from an implied rail across the
 // upper screen. Each is a hair-thin faint filament ending in a small glowing
 // bob, trailing a dim arc of phosphor smear that hints at its recent swing.

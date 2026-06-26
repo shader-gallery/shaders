@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // gasket (Filament) - concentric glowing rings crossed by radial spokes, like a
 // circular LED grid or a luminous manhole cover. Charge pulses outward through
 // the rings while the hue turns with radius and angle, all over a semi-lit

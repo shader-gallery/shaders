@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // stain — a stained-glass window of large irregular voronoi panes.
 // Each pane holds one palette colour pulled down to barely above black;
 // bright leading separates them. Nothing crosses the window: panes take

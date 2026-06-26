@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // ziggurat (Plinth) — one colossal stepped pyramid stands alone on a dark plain,
 // a terraced mass quantized from a tapered box SDF into a fixed number of square
 // tiers. The camera rides a slow level orbit at a fixed respectful radius, so

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // lens (Shoal) — caustics and refracted light. Three large invisible lens blobs
 // roam a deliberately faint background — a barely-there diagonal gradient
 // threaded with dim FBM wisps near the house dark base. Each blob displaces the

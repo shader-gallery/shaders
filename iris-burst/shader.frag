@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // burst (Rosette) — a starburst iris filling the frame: where the base iris has
 // a dark pupil, burst inverts it into a HOT white core that throws long thin
 // sharp rays out past the corners. Rays vary in length and brightness off a

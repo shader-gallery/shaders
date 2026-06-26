@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // silt (Gyre) — a riverbed current laid along the frame floor. The bottom
 // band is a stretched FBM field (about 10:1 horizontal) forming fine sediment
 // streaks in the palette cooler colours, dense at the bottom edge and

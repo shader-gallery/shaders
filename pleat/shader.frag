@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // pleat (Veil) — crisp accordion-pleated fabric: a triangle-wave heightfield
 // folds the frame into alternating flat panels divided by hard crease lines.
 // Each panel is flat-shaded by its facet normal, so adjacent pleats read as

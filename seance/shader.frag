@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // seance (Omen) — a full-frame veil of near-black cloth, rendered as a fine
 // vertical-biased FBM weave that drifts imperceptibly and never rests. From
 // behind it, vague rounded forms press forward: domain-warped swellings that

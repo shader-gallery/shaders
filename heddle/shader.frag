@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // heddle (Current) — a warp under the loom hand. Fine vertical threads are
 // gathered into bright pleats and drawn apart into dark sheds: a smocking gather
 // crowds the threads where it pinches and opens them where it releases, and the

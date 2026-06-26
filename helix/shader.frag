@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // helix (Filament) - a rack of glowing LED tubes wound as double helices that
 // run left to right across the frame. Each band stacks a few sinusoidal strands
 // phase-offset so they weave over and under; the strand riding in front glows

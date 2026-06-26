@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // sheen (Veil) — two layers of sheer woven gauze lie over a dark field, one
 // rotated a hair and sliding against the other so their fine thread grids beat
 // into broad luminous moiré fringes: wide, soft, curving rivers of brightness

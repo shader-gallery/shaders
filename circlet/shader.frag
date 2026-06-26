@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // circlet (Mercury) — five beads of mercury ride a single invisible circular
 // groove. Each is a 2D metaball kernel constrained to the circle; summed and
 // smooth-min iso-surfaced so closeness along the arc makes neighbours neck and

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // funnelweb (Strand) - a funnel-weaver web wound into a vortex. Two counter-
 // winding families of logarithmic-spiral threads cross into a swirling web that
 // coils down toward an off-centre throat, faint radial spokes tying the arms

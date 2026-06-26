@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // tallow (Omen) — a shelf of small candle flames along the lower third: a loose
 // row of teardrop SDF flames at hash-varied heights and offsets, each with a hot
 // pale core, a palette-tinted mantle, and a soft breathing halo that pools light

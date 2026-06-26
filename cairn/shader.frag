@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // cairn (Plinth) - a moor of balanced stone cairns receding into luminous haze.
 // Each cell of a jittered ground grid holds a cairn: a vertical stack of five
 // flattened rounded stones of decreasing girth, each teetering a little off the

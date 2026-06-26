@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // floe (Mosaic) — pack ice seen straight down: large pale moonlit blue-grey
 // plates, held just a few shades above the void, separated by channels of
 // black water. The leads carry a faint bioluminescent glow in the palette's

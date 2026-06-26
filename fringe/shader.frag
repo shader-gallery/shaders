@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // fringe (Knell) — two unseen exciters pinch a dark glass sheet at two points.
 // The standing field is the sum of two radial cosines, cos(k*d1) + cos(k*d2),
 // sharing one temporal envelope: where crests reinforce, bright lozenge fringes

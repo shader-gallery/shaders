@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // tousle (Strand) - a full-frame field of fine threads combed roughly level but
 // interweaving: each thread wanders by close to a full row-spacing so neighbours
 // cross and tousle into a dense luminous hank that fills the frame edge to edge.

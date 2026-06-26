@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // patina (Burnish) — an aged bronze plate in time-lapse. Thresholded FBM carves
 // mottled verdigris stains (tinted from the palette's cool colours) over darker
 // metal, every stain rimmed by a thin line of raw bright bronze where oxide meets

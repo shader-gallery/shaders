@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // labyrinth (Rosette) — a full-frame orthogonal maze of faintly glowing etched
 // wall segments on a near-black base. The plan is the frame, edge to edge: a
 // hash-seeded grid of horizontal/vertical wall pieces that slide along their

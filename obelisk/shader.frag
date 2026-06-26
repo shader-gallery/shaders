@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // obelisk (Plinth) - a single needle rising alone out of a rolling sea of fog
 // under an empty near-black sky. One elongated, slightly tapering square shaft
 // crowned by a beveled pyramidion, raymarched as a true 3D solid (fixed-step

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // syzygy (Mercury) — three quicksilver pools in a strict 3:2:1 radius grading
 // hang far apart across a wide, slowly shearing triangle. Built as a summed 2D
 // metaball field iso-surfaced through smooth-min so bodies bulge toward each

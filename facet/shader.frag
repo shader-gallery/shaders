@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // facet (Rosette) — a kaleidoscope jewel. The angle around screen centre is
 // mirror-folded into N wedges and a slowly drifting two-to-three-octave FBM glow
 // field is sampled in the folded space, so soft luminous lobes repeat with

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // wisp (Bloom) — a dense swarm of pale teardrop flames drifting over dark marsh
 // water. Rendered as a jittered grid of cells (3x3 neighbourhood per pixel) so the
 // count scales to a frame-filling field of will-o'-the-wisps. Each flame is a

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // argyle (Filament) - two families of diagonal glowing tubes crossing into a
 // diamond weave, one family riding brighter over the other so the lattice reads
 // as woven cord. Charge travels each diagonal; hue shifts diamond to diamond

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // stone — agate / malachite mineral cross-section. The same FBM field that
 // drives marble is read as dense iso-bands, but here the bands stay nearly
 // concentric and SETTLED: thin luminous mineral seams separate filled bands of

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // oubliette (Delve) — a masonry shaft of square cross-section seen straight down
 // through a dungeon grate, falling to a perfect black square at centre. The
 // square rings come from the Chebyshev norm max(|x|,|y|): its logarithm is sliced

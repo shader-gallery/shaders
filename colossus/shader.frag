@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // colossus (Plinth) — two colossal seated figures flank a narrow defile,
 // abstracted to stacked primitives (plinth block, folded-leg wedge, torso slab,
 // rounded head), mirrored across the path and repeated deeper into haze. A true

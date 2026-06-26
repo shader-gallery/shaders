@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // char (Smolder) — REFRAMED onto a 3D OBJECT: the creeping burn-front now eats
 // across a slowly turning sphere instead of a flat sheet. The ember terminator
 // sweeps over the surface in object space, so the char it leaves — graded

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // echo (Delve) — a stone well heard rather than seen, but now the sound returns
 // from every wall at once. Thin circular wavefronts still procession inward at
 // log-spaced stations, but each ring is broken into a shimmering bead-row of

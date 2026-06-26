@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // fuse (Smolder) — REFRAMED as a CIRCUIT NETWORK: instead of two lonely cords on
 // black, the traveling fuse-spark now runs as charge pulses along a frame-filling
 // lattice of faint copper traces with solder pads. Each row and column carries a

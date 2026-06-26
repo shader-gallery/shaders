@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // threshold (Umbra) — an unlit room read entirely in negative. Almost the whole
 // frame is the family's deepest dark; the only light is one thin blazing strip
 // along the bottom edge: the gap under a door. The strip's core melts c3 into

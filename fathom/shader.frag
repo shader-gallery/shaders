@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // Fathom --- a bathymetric survey rendered as soundings, not lines (family: Strata)
 //
 // A regular survey grid of small glowing depth dots covers the frame. Each

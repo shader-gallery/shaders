@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // lantern (Bloom) — a bloom of bioluminescent jellyfish seen from above: vivid
 // sunlit blue water packed wall-to-wall with luminous translucent bells at every
 // depth. Each bell is a soft glowing body with a bright membrane rim, a faint

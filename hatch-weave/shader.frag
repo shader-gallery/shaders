@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // hatch-weave (Burnish) - Hatch Weave variation: woven tartan plaid.
 // Full description in meta.json. (Keep comments ASCII-only here; see meta.)
 //

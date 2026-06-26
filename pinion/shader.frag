@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // pinion (Brink) — a Phoenix Julia set: the two-term recurrence
 //   z_next = z*z + p + q * z_prev
 // iterated ~40 steps carrying both the current and previous iterate (two vec2s,

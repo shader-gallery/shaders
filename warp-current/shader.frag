@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // warp-current (Loom) — a Warp variation: instead of straight tensioned threads,
 // a whole warp of fine fibres COMBED into a flowing current. Hundreds of thin
 // bright threads run across the frame, each bent by a shared domain-warped flow

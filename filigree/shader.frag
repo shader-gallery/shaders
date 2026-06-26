@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // filigree (Loom) — a fine ornamental lattice: a grid of thin glowing
 // rounded-diamond outlines that pulse brighter in slow waves rolling across the
 // field. Lace-like and delicate; cell interiors carry a controllable radial

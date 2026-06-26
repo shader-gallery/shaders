@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // hive (Filament) - a honeycomb of glowing hexagonal tubes, edge to edge, with
 // charge chasing around each cell rim and the hue drifting cell to cell. The
 // outlines glow over a semi-lit ground so the whole comb reads as one lit

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // billow (Veil) — a continuous sheet of cloth seen from above, billowing over
 // moving air. Two slow travelling wave-trains cross the frame at a shallow
 // diagonal, summed with soft low-octave FBM and shaded via analytically derived

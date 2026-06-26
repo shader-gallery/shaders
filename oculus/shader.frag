@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // oculus (Delve) — lying on the floor of a dark rotunda, looking straight up
 // into a coffered dome that climbs toward a small night-black oculus at screen
 // centre. The dome is a log-polar panel grid: a fixed number of angular columns

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // brume (Veil) — moonlit mist streaming through a dark colonnade. A single rank
 // of broad, soft-edged near-black vertical columns stands across the frame; behind
 // them a luminous FBM fog advects sideways, glowing brightest where it squeezes

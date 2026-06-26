@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // menhir (Plinth) - a plain of scattered standing stones receding into luminous
 // haze. Tapered, slightly leaning prism SDFs, one per cell of a jittered ground
 // grid: a per-cell hash sets each stone's height, lean, girth, and leaves some

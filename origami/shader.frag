@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // origami (Facet) - a sheet of folded paper: a regular diagonal crease grid
 // split into beveled triangular facets, each a flat shaded plane lit by a single
 // raking light that sweeps across so mountain and valley folds catch and lose the

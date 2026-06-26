@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // lea (Sough) — a meadow seen from directly above: a jittered grid of short
 // grass-tuft strokes, each a tiny capsule whose direction and length encode the
 // lean of the tuft beneath it. At rest the strokes contract to near-points,

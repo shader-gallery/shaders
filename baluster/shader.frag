@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // baluster (Umbra) — a stair banister shadow thrown up a wall. A fan of dark
 // bars radiates from a vanishing anchor just below the bottom-left corner, each
 // bar an angular capsule in polar coordinates about that off-screen point,

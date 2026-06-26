@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // welkin (Wake) — raymarched volumetric clouds under an analytic sky.
 //
 // A real volume, not a noise plane: the view ray is marched through a cloud slab

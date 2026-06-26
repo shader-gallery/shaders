@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // gossamer (Veil) — aurora curtains: soft vertical ribbons of layered value/FBM
 // noise drifting slowly sideways over a dark sky, with a gentle vertical falloff
 // like northern lights. Translucent, slow, ethereal; colours blend smoothly

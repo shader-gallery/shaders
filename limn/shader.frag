@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // limn (Brink) — the coastline of a Julia set drawn as a single line of light and
 // nothing else. We iterate z -> z*z + c for 40 steps while tracking the
 // derivative dz -> 2*z*dz, then form the exterior distance estimate

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // dolmen (Plinth) - a single trilithon: two thick upright slabs bearing one
 // massive tilted capstone (three box SDFs), standing on a low barrow mound,
 // with a sparse hash scatter of smaller recumbent stones at varied depths

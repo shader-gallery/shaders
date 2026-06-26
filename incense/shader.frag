@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // incense (Smolder) — two or three hair-thin incense sticks stand at staggered
 // heights in a near-black room. Each live stick wears a tiny incandescent ember
 // cap at its tip — a few-px white-hot core ringed by a halo grading warm-to-cool

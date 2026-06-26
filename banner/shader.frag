@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // banner (Veil) — a single long swallow-tailed pennant hangs alone in an empty
 // near-black field. A tapering 2D SDF silhouette, pinned at the hoist on the
 // left, whose edges and surface are displaced by a travelling wind-wave that

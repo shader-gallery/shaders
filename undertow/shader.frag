@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // undertow (Wake) — concentric ripples & interference: three drifting sources emit
 // expanding rings whose phases sum into a standing wave field, rendered as glowing
 // contour bands over a deep dark base, palette-tinted by phase and position. The

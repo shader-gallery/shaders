@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // plexus (Loom) — a loose constellation of glow-dot nodes hung across the dark,
 // one per cell of an invisible jittered grid, each slowly circling its own anchor.
 // Hairline threads fade in between nodes whenever a pair drifts within reach —

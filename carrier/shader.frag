@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // carrier (Trace) — a monitoring rack of horizontal waveform traces, each a thin
 // bright phosphor line with a soft glow halo, displaced vertically by exact sums
 // of sinusoids. Channels scroll laterally at a steady reading pace while slow

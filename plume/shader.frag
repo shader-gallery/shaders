@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // plume (Gyre) — a single thin column of dye rises from bottom-center: an
 // FBM-textured ridge around a curved centerline, glowing warmest at its dense
 // base and cooling as it climbs, widens, and dissipates into the near-black

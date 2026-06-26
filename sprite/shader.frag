@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // sprite (Omen) — upper-atmosphere red sprites over a night horizon. Clusters of
 // thin wavering tendrils flash down from the top edge and branch as they fall —
 // but every flash leaves a diffuse glowing HEAD that lingers and slowly fades, so

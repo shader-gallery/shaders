@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // volute (Filament) - a glowing tube wound into a spiral that fills the frame,
 // charge spinning outward along the coil while the hue turns with each turn.
 // One or several arms over a semi-lit ground. Comments short/ASCII (the

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // froth (Mosaic) — a wall packed edge-to-edge with soap-foam cells: rounded
 // voronoi with a smooth-min softened edge distance so every cell reads as a
 // cushioned bubble. Interiors sit near-black; the walls are thin and prismatic,

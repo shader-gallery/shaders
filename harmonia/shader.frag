@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // harmonia (Strand) - modular times-table string art. N points are spaced evenly
 // round a circle and each point i is strung with a straight chord to point
 // (i * multiplier) mod N. The dense overlap of those chords traces the classic

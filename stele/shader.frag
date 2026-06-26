@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // stele (Plinth) - a memorial field of rectangular slabs on a strict grid,
 // seen from a high eye tilted steeply down. True raymarched solids: a 2D DDA
 // walks the grid cell by cell and intersects each cells hashed box exactly,

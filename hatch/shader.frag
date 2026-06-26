@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // hatch (Burnish) — a full-bleed crosshatch engraving. Two fine sets of parallel
 // lines at opposing diagonals (plus a sparse third set that only appears in the
 // deepest tones) read as the tonal shading of a plume of smoke that is never

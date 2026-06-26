@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // rush (Sough) — a single rank of cattail rushes along a waterline in the lower
 // third: straight slender stems, each carrying one dark sausage-shaped head near
 // its tip, silhouetted a hair above black against a faintly graded night sky.

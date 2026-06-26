@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // niello (Burnish) — a niello panel read in negative. The ground is true to the
 // craft: thousands of tiny punch marks stippled edge-to-edge into the black
 // alloy, every punch a candidate micro-glint catching light for an instant in

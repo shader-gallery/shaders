@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // vitrail (Kaleido) — a stained-glass rose window. The mirror-fold lays out
 // concentric rings of leaded panes around a bright central rosette, and unlike a
 // flat colour-wheel EVERY pane carries its own jewel hue, so the window reads as

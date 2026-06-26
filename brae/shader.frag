@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // brae (Sough) — a near-black hillside climbs diagonally across the frame
 // under a thin moonglow band that hugs the slope. The crest is a dense fringe
 // of grass-blade silhouettes; episodic gust fronts run the edge as a traveling

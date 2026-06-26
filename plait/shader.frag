@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // plait (Strand) - a woven braid of glowing cords. A bundle of strands runs the
 // width of the frame, each weaving up and down on a phase-shifted sine so the
 // neighbours cross over and under one another like a plaited rope. At every

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // whorl (Rosette) — a phyllotaxis bloom: two hundred glowing motes placed by
 // the golden-angle spiral (dot k at angle k·137.5°, radius ∝ sqrt of its age),
 // the seed-head order of a sunflower drawn in light on the near-black base.

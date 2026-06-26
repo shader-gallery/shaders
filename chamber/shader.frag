@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // chamber (Kaleido) — the three-mirror tube. The triangular mirror chamber of a
 // real kaleidoscope tiles the whole plane with reflected copies of one triangle,
 // so this fills the frame edge-to-edge with a repeating jewelled wallpaper

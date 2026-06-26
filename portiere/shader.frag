@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // portiere (Veil) - two sheer curtain panels parted down the middle, each
 // gathered into vertical folds that sway and fan toward the outer edges while a
 // soft seam of light spills through the gap where they meet. The folds are

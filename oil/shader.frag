@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // oil — iridescent oil-on-water thin film. The same drifting FBM that marbles
 // ink here reads as the THICKNESS of a thin oil film on dark water; thickness is
 // mapped through interference orders into soft spectral sheen, so broad

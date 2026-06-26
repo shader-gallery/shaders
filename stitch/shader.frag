@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // stitch (Loom) — tiny glowing cross-stitches planted one cell at a time by a
 // bright needle glint that works back and forth (boustrophedon) across a working
 // band, low in the frame. The whole frame is woven AIDA CLOTH (warp + weft thread

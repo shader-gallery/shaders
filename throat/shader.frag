@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // throat (Delve) — an ice-cave throat swallowing the view. Concentric shelves of
 // translucent ice whose boundaries are not circles but organic angular contours,
 // each ring radius displaced by frozen angular FBM so the walls undulate like

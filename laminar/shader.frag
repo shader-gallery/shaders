@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // laminar (Current) — smooth horizontal streamlines of a steady flow gliding
 // past an invisible bluff body. The lines part cleanly around the obstacle and
 // rejoin downstream, crowding bright where the flow squeezes and accelerates over

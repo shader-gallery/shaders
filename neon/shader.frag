@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // neon (Noir) — one elegant abstract neon tube hangs centered on a near-black
 // wall: a single flowing stroke of two linked arcs, no letters, with a
 // white-hot core, a wide coloured halo, and a dim soft splash of that colour

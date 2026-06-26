@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// SPDX-FileCopyrightText: 2026 E. T. Carter
+// SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
 // rotunda (Plinth) — the inside of a ruined circular temple. A ring of solid
 // cylinder-SDF columns surrounds the viewer; a per-column hash snaps some to
 // stumps. The eye sits between the ring and a low central altar block and orbits
