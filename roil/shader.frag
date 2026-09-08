@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
-// roil (Current) — a turbulent current, all eddies and whorls. Dense fine fibres
+// roil (Current) - a turbulent current, all eddies and whorls. Dense fine fibres
 // are advected through a churning flow field: curl-noise plus a handful of slowly
 // orbiting point vortices drag the threads into spiralling eddies that wind up,
 // shear apart and reform. Colour follows the local flow direction so opposing
 // swirls glow in different palette hues. Two parallaxing depth layers churn at
-// different rates. Restless and rotational — the chaotic cousin of the combed
-// warp-current.
+// different rates. Restless and rotational - the chaotic cousin of the combed
+// warp-current. The pointer can stir the current locally: a small vortex and
+// drag folded into the advection near the cursor, easing back with distance.
 //
 // Uniforms provided by the runtime:
 //   u_time        seconds, monotonically increasing
@@ -30,6 +31,8 @@ uniform float u_speed;    // master flow speed                          (default
 uniform float u_glow;     // fibre emission                             (default 1.0)
 uniform float u_hueSpread;// how far hue swings with flow direction     (default 1.4)
 uniform float u_depth;    // near/far parallax + far dimming            (default 0.8)
+uniform float u_mouseInfluence; // pointer stir strength, 0 = off          (default 0.0)
+uniform float u_mouseRadius;    // reach of the pointer stir, frame units  (default 0.2)
 
 const vec3  BG  = vec3(0.035, 0.035, 0.043); // near-black base ~#09090B
 
@@ -52,8 +55,8 @@ float fbm(vec2 p) {
   for (int i = 0; i < 5; i++) { s += amp * vnoise(p * f); f *= 2.03; amp *= 0.5; }
   return s;
 }
-// curl of an fbm potential -> a divergence-free (rotational) velocity field
-vec2 curl(vec2 p) {
+// rotational derivative of an fbm potential -> a divergence-free velocity field
+vec2 curlNoise(vec2 p) {
   float e = 0.08;
   float n1 = fbm(p + vec2(0.0, e));
   float n2 = fbm(p - vec2(0.0, e));
@@ -68,12 +71,21 @@ float wheelW(float s, float c) {
 
 // advect the coordinate through the turbulent field, then read a fibre value.
 // writes the final local flow angle into `ang` (for hue).
-float fibre(vec2 p, float t, float freq, float churn, float vort, float depth, out float ang) {
+float fibre(vec2 p, float t, float freq, float churn, float vort, float depth,
+            vec2 mpos, float mAmt, float mRad, out float ang) {
   vec2 q = p;
   vec2 vel = vec2(0.0);
   // a few advection steps wind the fibres into eddies (const loop bound)
   for (int i = 0; i < 4; i++) {
-    vec2 v = curl(q * 1.3 + vec2(t * 0.12, depth * 5.0 + t * 0.05)) * churn;
+    vec2 v = curlNoise(q * 1.3 + vec2(t * 0.12, depth * 5.0 + t * 0.05)) * churn;
+    // pointer stir: a local vortex plus a drag toward the cursor. The falloff
+    // is a smooth bump that hits exactly zero at twice the radius, so the far
+    // field is untouched by construction (the advection is chaotic and would
+    // amplify even a gaussian tail). mAmt is exactly 0 at rest.
+    vec2 rm = q - mpos;
+    float mt = clamp(1.0 - dot(rm, rm) / (4.0 * mRad * mRad), 0.0, 1.0);
+    float mk = mt * mt * (3.0 - 2.0 * mt) * mAmt;
+    v += (vec2(-rm.y, rm.x) * 3.0 - rm * 1.2) * mk;
     // three orbiting point vortices add big coherent whorls
     for (int k = 0; k < 3; k++) {
       float fk = float(k);
@@ -117,10 +129,15 @@ void main() {
   float glow   = max(u_glow, 0.0);
   float depthA = clamp(u_depth, 0.0, 1.0);
 
+  // pointer in frame coords, gated so (0,0) at rest means no stir at all
+  vec2  mpos = (u_mouse / res - 0.5) * vec2(aspect, 1.0);
+  float mAmt = max(u_mouseInfluence, 0.0) * step(0.5, dot(u_mouse, u_mouse));
+  float mRad = max(u_mouseRadius, 0.05);
+
   float angN, angF;
-  float near = fibre(p, t, freq, churn, vort, 0.0, angN);
+  float near = fibre(p, t, freq, churn, vort, 0.0, mpos, mAmt, mRad, angN);
   vec2  farP = p * (1.0 + 0.07 * depthA) + vec2(0.03 * depthA, 0.0);
-  float far  = fibre(farP, t * 0.7, freq * 0.8, churn, vort, 1.0, angF);
+  float far  = fibre(farP, t * 0.7, freq * 0.8, churn, vort, 1.0, mpos, mAmt, mRad, angF);
 
   // hue from the local flow direction -> opposing swirls glow different colours
   float hue = angN * max(u_hueSpread, 0.0) * 0.5 + t * 0.04 + 0.5;
