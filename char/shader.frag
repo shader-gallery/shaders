@@ -8,7 +8,7 @@
 // virgin dark, lit by a key light + cool fresnel so the form reads in 3D; behind
 // it the charred hemisphere glows. Two staggered burns crossfade while the
 // surface is featureless so the consumption never visibly resets. The magenta/
-// blue rim is kept as char's signature; everything themes from u_palette.
+// blue rim is kept as the char signature; everything themes from u_palette.
 precision highp float;
 
 uniform float u_time;        // seconds, monotonically increasing
@@ -175,7 +175,7 @@ void main() {
       mat3 rot = rotMat(t * spin * 0.3);
       vec3 lp = rot * p;                 // object-space sample (turns with object)
 
-      // two crossfaded burns sweeping along the object's sweep axis
+      // two crossfaded burns sweeping along the object sweep axis
       float ph0 = fract(t * rate + 0.53);
       float ph1 = fract(ph0 + 0.5);
       float w0 = vis(ph0), w1 = vis(ph1);
