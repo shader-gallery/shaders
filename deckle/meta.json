@@ -1,0 +1,74 @@
+{
+  "name": "Deckle",
+  "slug": "deckle",
+  "shelf": "rework",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "paper",
+    "risograph",
+    "print",
+    "texture",
+    "matte",
+    "fibre",
+    "halftone",
+    "loop"
+  ],
+  "description": "A risograph print on uncoated stock — visible fibre grain, pulp mottle and tooth in the sheet, with three flat translucent ink passes pulled over it: two fibre-edged solids and one coarse halftone tone, each misregistered by a few pixels so crossings multiply into dense mixed colour and paper shows at the seams. Matte, tactile, no glow.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Shape scale",
+      "min": 0.3,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Size of the printed shapes; low is a few huge sweeps of ink, high packs in many smaller forms."
+    },
+    {
+      "uniform": "u_offset",
+      "label": "Misregistration",
+      "min": 0.0,
+      "max": 20.0,
+      "step": 0.5,
+      "default": 6.0,
+      "effect": "CSS-pixel drift between the ink passes; 0 is a perfect registration, high is a badly slipped print."
+    },
+    {
+      "uniform": "u_tooth",
+      "label": "Tooth",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the paper fibre, speckle and ink dropouts; 0 is a smooth coated sheet."
+    },
+    {
+      "uniform": "u_ink",
+      "label": "Ink density",
+      "min": 0.3,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.92,
+      "effect": "Opacity of the ink passes; low is a pale under-inked pull, 1 is full saturation."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Creep",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.12,
+      "effect": "How fast the shapes creep and the registration breathes; 0 holds the print still."
+    }
+  ],
+  "defaultPalette": "neon",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.12,
+    "contrast": 1.03,
+    "saturation": 1.05,
+    "bloom": 0
+  }
+}

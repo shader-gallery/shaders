@@ -1,0 +1,75 @@
+{
+  "name": "Ballpit",
+  "slug": "ballpit",
+  "shelf": "rework",
+  "family": "Shoal",
+  "author": "E. T. Carter",
+  "tags": [
+    "spheres",
+    "3d",
+    "depth",
+    "bokeh",
+    "material",
+    "packed",
+    "drift",
+    "loop"
+  ],
+  "description": "A frame packed edge to edge with shaded spheres at four depths: far ones small, crisp and fogged, near ones large and soft-focused. Every sphere carries a real material, wrapped diffuse, a tight specular, a lit rim, self-shading toward the limb and a contact occlusion ring on whatever sits behind it, and the whole pit drifts and wobbles slowly as if settling.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Drift and wobble speed of the pit; 0 holds every sphere still."
+    },
+    {
+      "uniform": "u_packing",
+      "label": "Packing",
+      "min": 0.5,
+      "max": 1.4,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Sphere size against its slot; low leaves gaps between spheres, high jams them into heavy overlap."
+    },
+    {
+      "uniform": "u_focus",
+      "label": "Soft focus",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Depth-of-field softness on the near layers; 0 keeps every sphere crisp."
+    },
+    {
+      "uniform": "u_gloss",
+      "label": "Gloss",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Specular highlight and rim strength on every sphere."
+    },
+    {
+      "uniform": "u_shadow",
+      "label": "Occlusion",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Contact occlusion between overlapping spheres; high sinks the pit into deep shadow between balls."
+    }
+  ],
+  "defaultPalette": "witchlight",
+  "post": {
+    "grain": 0.035,
+    "vignette": 0.24,
+    "saturation": 1.1,
+    "contrast": 1.05,
+    "bloom": 0.1,
+    "bloomRadius": 2.0
+  }
+}

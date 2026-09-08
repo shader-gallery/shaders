@@ -1,0 +1,75 @@
+{
+  "name": "Fluted",
+  "slug": "fluted",
+  "shelf": "rework",
+  "family": "Facet",
+  "author": "E. T. Carter",
+  "tags": [
+    "glass",
+    "refraction",
+    "ribbed",
+    "fluted",
+    "dispersion",
+    "specular",
+    "gradient",
+    "glow",
+    "loop"
+  ],
+  "description": "A wall of vertical ribbed glass over a glowing colour field. Each rib is a cylindrical lens that bends and laterally shifts what sits behind it, chopping the drifting glows and light pillars into repeating vertical smears, with bright specular lines down every rib, lit seams where the ribs meet and a chromatic fringe splitting at the edges. Full-frame refractive glass, no panes, no tiles.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_ribs",
+      "label": "Ribs",
+      "min": 6,
+      "max": 60,
+      "step": 1,
+      "default": 26,
+      "effect": "How many ribs span the frame; low is a few fat reeds, high is fine tight fluting."
+    },
+    {
+      "uniform": "u_refraction",
+      "label": "Refraction",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "How far each rib bends and shifts the backdrop; 0 is flat glass, high slices it into hard repeating smears."
+    },
+    {
+      "uniform": "u_dispersion",
+      "label": "Dispersion",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Chromatic split at the rib edges; 0 is achromatic glass, high fringes every edge with colour."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the glows and pillars drift behind the glass; 0 holds the backdrop still."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer drags the backdrop behind the glass; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight",
+  "post": {
+    "grain": 0.05,
+    "aberration": 0.002,
+    "vignette": 0.26,
+    "saturation": 1.1,
+    "contrast": 1.05
+  }
+}

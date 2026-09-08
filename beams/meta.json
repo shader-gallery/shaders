@@ -1,0 +1,94 @@
+{
+  "name": "Beams",
+  "slug": "beams",
+  "shelf": "rework",
+  "family": "Aura",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "beams",
+    "light",
+    "bands",
+    "diagonal",
+    "gradient",
+    "slow"
+  ],
+  "description": "Wide angled light bands: two families of broad soft-edged light sheets cross the frame on the diagonal and brighten where they overlap, each a flat plateau of light with a feathered shoulder, a brighter grazing edge and a slow ripple along its length. Every band carries its own palette stop so the crossings blend hues, and the whole lattice sweeps slowly, bands drifting apart and bunching.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_angle",
+      "label": "Angle",
+      "min": -90,
+      "max": 90,
+      "step": 1,
+      "default": -32,
+      "effect": "Angle of the main band family in degrees from horizontal; negative rakes down to the right, 0 lays the bands flat, 90 stands them vertical."
+    },
+    {
+      "uniform": "u_cross",
+      "label": "Crossing",
+      "min": 0,
+      "max": 120,
+      "step": 1,
+      "default": 55,
+      "effect": "Angle of the second family relative to the first; 0 stacks both families parallel, 90 crosses them at right angles."
+    },
+    {
+      "uniform": "u_bands",
+      "label": "Bands",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 5,
+      "effect": "Number of bands in the main family (the crossing family carries one fewer, wider and softer); low is a couple of wide sweeps, high a dense lattice."
+    },
+    {
+      "uniform": "u_width",
+      "label": "Width",
+      "min": 0.04,
+      "max": 0.4,
+      "step": 0.005,
+      "default": 0.11,
+      "effect": "Width of each band as a fraction of frame height; narrow gives crisp light strips, wide floods the frame in overlapping sheets."
+    },
+    {
+      "uniform": "u_softness",
+      "label": "Softness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Feathering of the band shoulders; 0 cuts clean-edged strips, 1 melts them into misty gradients."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Sweep speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Pace of the slow sweep as bands drift apart and bunch; 0 holds the lattice still."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Brightness of the bands; low keeps them as faint sheets, high blows the crossings toward white."
+    }
+  ],
+  "defaultPalette": "midnight",
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 5.0,
+    "grain": 0.05,
+    "vignette": 0.18,
+    "saturation": 1.1,
+    "dither": 1.0
+  }
+}

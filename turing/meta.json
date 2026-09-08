@@ -1,0 +1,72 @@
+{
+  "name": "Turing",
+  "slug": "turing",
+  "shelf": "rework",
+  "family": "Strata",
+  "author": "E. T. Carter",
+  "tags": [
+    "reaction-diffusion",
+    "turing",
+    "labyrinth",
+    "organic",
+    "relief",
+    "dark",
+    "loop"
+  ],
+  "description": "A reaction-diffusion surface — the dense maze of worm-like ridges and isolated spots a Gray-Scott activator-inhibitor system settles into. Ridges fork, merge and end in rounded caps, shaded as a low relief over a dark cavity floor, while a slow bias sweeps regions between labyrinth and spot regimes as the chemistry morphs.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Ridge scale",
+      "min": 10.0,
+      "max": 60.0,
+      "step": 1.0,
+      "default": 22.0,
+      "effect": "CSS-pixel wavelength of the ridges; low is a fine dense maze, high is a few fat worms."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Morph",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "How fast the chemistry morphs; 0 freezes the pattern."
+    },
+    {
+      "uniform": "u_spots",
+      "label": "Spots",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Regime bias: 0 is a connected labyrinth of ridges, 1 breaks it into isolated spots."
+    },
+    {
+      "uniform": "u_warp",
+      "label": "Wander",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How far the ridges wander from straight; 0 is calm fingerprint-like bands, high is a writhing maze."
+    },
+    {
+      "uniform": "u_relief",
+      "label": "Relief",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Depth of the ridge shading; 0 is a flat stencil, high is a deeply embossed tube relief."
+    }
+  ],
+  "defaultPalette": "midnight",
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.22,
+    "contrast": 1.06,
+    "saturation": 1.08
+  }
+}

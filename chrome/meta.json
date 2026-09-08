@@ -1,0 +1,75 @@
+{
+  "name": "Chrome",
+  "slug": "chrome",
+  "shelf": "rework",
+  "family": "Mercury",
+  "author": "E. T. Carter",
+  "tags": [
+    "metal",
+    "chrome",
+    "liquid",
+    "ferrofluid",
+    "mirror",
+    "reflection",
+    "specular",
+    "surface",
+    "loop"
+  ],
+  "description": "A full-frame sheet of liquid chrome rolling in slow swells. A domain-warped height field shaded as a true mirror: a studio with a hard horizon, a near-black floor and a stack of sharp strip lights is reflected in every crest and fold, so the surface reads as polished metal with dark valleys and hot specular ridges rather than a soft grey wash. Palette tints the lights and the body of the metal.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0.0,
+      "max": 1.2,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the metal rolls and folds; 0 freezes the surface."
+    },
+    {
+      "uniform": "u_relief",
+      "label": "Relief",
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.1,
+      "effect": "Height of the swells; low is a near-flat sheet showing the horizon, high tilts the reflections hard into the strip lights."
+    },
+    {
+      "uniform": "u_ripple",
+      "label": "Ripple",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Domain-warp folding of the surface; low is broad rolling swells, high is tight ferrofluid ridges."
+    },
+    {
+      "uniform": "u_gloss",
+      "label": "Gloss",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Sharpness of the reflected light bands and speculars; low is a satin brushed finish, high is a hard mirror."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer pushes a bulge into the metal; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.04,
+    "aberration": 0.002,
+    "vignette": 0.3,
+    "contrast": 1.08,
+    "saturation": 1.05
+  }
+}
