@@ -1,0 +1,73 @@
+{
+  "name": "Condensation",
+  "slug": "condensation",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": [
+    "frost",
+    "glass",
+    "ice",
+    "bokeh",
+    "winter",
+    "night",
+    "dendrite",
+    "atmosphere",
+    "loop"
+  ],
+  "description": "Frost creeping across a cold pane at night. Feathery dendrite fingers advance inward from every edge of the glass, veined and grainy, glinting where facets turn to the light, while the blurred street lights behind the pane scatter into a milky glow under the ice. The front creeps in and thaws back on a long cycle, and now and then a breath fogs a soft patch of the clear glass and clears again.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_reach",
+      "label": "Reach",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.75,
+      "effect": "How far in from the edges the frost gets at its fullest; 0 is a bare rim, 1 nearly closes the pane."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Speed of the advance-and-thaw cycle, the breath and the twinkling; 0 holds the frost still."
+    },
+    {
+      "uniform": "u_feather",
+      "label": "Feathering",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Length and raggedness of the dendrite fingers on the front; 0 is a smooth misted band, high is long spiky ferns."
+    },
+    {
+      "uniform": "u_sparkle",
+      "label": "Sparkle",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the crystalline ribs and the twinkling facet glints in the ice."
+    },
+    {
+      "uniform": "u_breath",
+      "label": "Breath",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Strength of the fog patch that blooms on the clear glass every few seconds; 0 removes it."
+    }
+  ],
+  "defaultPalette": "dusk",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

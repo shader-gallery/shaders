@@ -1,0 +1,72 @@
+{
+  "name": "Wireframe",
+  "slug": "wireframe",
+  "family": "Strata",
+  "author": "E. T. Carter",
+  "tags": [
+    "wireframe",
+    "terrain",
+    "grid",
+    "synthwave",
+    "horizon",
+    "raymarch",
+    "glow",
+    "loop"
+  ],
+  "description": "A glowing wireframe mesh draped over a real mountain height field, seen from a low camera gliding along a valley toward a lit horizon under a dark sky. The grid follows every fold of the terrain, pinching on steep faces and vanishing behind the ridges it climbs, while a scan pulse rolls away down the lines and a few stars turn overhead. Synthwave register, held back: no banded sun, just lines and haze.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Glide",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Speed of the camera glide down the valley and of the scan pulse; 0 holds the terrain still."
+    },
+    {
+      "uniform": "u_relief",
+      "label": "Relief",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Height of the mountains either side of the valley; 0 flattens the mesh to a rolling plain."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Grid density",
+      "min": 0.25,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Grid lines per world unit; low is a coarse open mesh, high is a fine dense weave."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the halo around every line and of the valley haze; 0 is crisp bare lines."
+    },
+    {
+      "uniform": "u_valley",
+      "label": "Valley width",
+      "min": 0.0,
+      "max": 16.0,
+      "step": 0.1,
+      "default": 4.0,
+      "effect": "Width of the flat floor the camera glides along; 0 puts mountains right under the camera."
+    }
+  ],
+  "defaultPalette": "amethyst",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

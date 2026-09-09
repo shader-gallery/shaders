@@ -1,0 +1,73 @@
+{
+  "name": "Gabor",
+  "slug": "gabor",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": [
+    "gabor",
+    "anisotropic",
+    "noise",
+    "streaks",
+    "satin",
+    "sheen",
+    "combed",
+    "dark",
+    "loop"
+  ],
+  "description": "Directional Gabor noise as a dark satin surface: a sparse convolution of oriented Gaussian-windowed cosine kernels sums into long parallel streaks that break and re-phase where the kernels overlap. The field is shaded as a low relief under a raking key light with an anisotropic sheen sweeping across the fibre direction, while the dominant orientation turns slowly and a gentle swirl combs it across the frame.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Kernel density",
+      "min": 2.0,
+      "max": 16.0,
+      "step": 0.1,
+      "default": 8.0,
+      "effect": "Kernel cells across the frame height; low is a few broad streak clusters, high is a dense fine weave."
+    },
+    {
+      "uniform": "u_frequency",
+      "label": "Stripe frequency",
+      "min": 1.0,
+      "max": 7.0,
+      "step": 0.1,
+      "default": 4.0,
+      "effect": "Cosine cycles per kernel; low is wide soft bands, high is tight hairline streaks."
+    },
+    {
+      "uniform": "u_spread",
+      "label": "Angular spread",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.12,
+      "effect": "Random tilt of each kernel about the dominant orientation; 0 is perfectly combed, 1 is an isotropic ripple."
+    },
+    {
+      "uniform": "u_rotate",
+      "label": "Turn speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the dominant orientation rotates; 0 holds the comb direction still while the phases keep creeping."
+    },
+    {
+      "uniform": "u_relief",
+      "label": "Relief",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the raking light and the anisotropic sheen; 0 is a flat matte print of the field."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

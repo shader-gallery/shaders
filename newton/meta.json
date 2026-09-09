@@ -1,0 +1,81 @@
+{
+  "name": "Newton",
+  "slug": "newton",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "thin-film",
+    "interference",
+    "newton-rings",
+    "iridescent",
+    "glass",
+    "fringes",
+    "optics",
+    "loop"
+  ],
+  "description": "Thin-film interference between two sheets of glass: a warped plate touching a flat one at several points, so Newton rings tighten outward from every contact, bend where the basins meet, and wash into a pale sheen at high order. Four wavelengths each carry a palette pole and beat into shifting spectral fringes, dust motes wear their own tiny ring systems, and the plate breathes so the rings sweep slowly in and out.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_curvature",
+      "label": "Curvature",
+      "min": 0.3,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How strongly the plate is warped; low gives a few broad rings, high packs in many fine ones."
+    },
+    {
+      "uniform": "u_coherence",
+      "label": "Coherence",
+      "min": 3.0,
+      "max": 40.0,
+      "step": 0.5,
+      "default": 16.0,
+      "effect": "Fringe order at which the colours wash out; low is a few coloured rings in a pale field, high keeps fringes crisp far out."
+    },
+    {
+      "uniform": "u_flow",
+      "label": "Breathing",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the plate breathes and the film ripples; 0 holds the rings still."
+    },
+    {
+      "uniform": "u_ripple",
+      "label": "Ripple",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Soap-film wobble in the gap; 0 is perfect glass rings, high is a restless liquid film."
+    },
+    {
+      "uniform": "u_gain",
+      "label": "Brightness",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the fringes against the dark glass."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How hard the pointer presses the plates together, adding rings; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "prism",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.08,
+    "contrast": 1.04
+  }
+}

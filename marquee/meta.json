@@ -1,0 +1,76 @@
+{
+  "name": "Marquee",
+  "slug": "marquee",
+  "shelf": "logo",
+  "family": "Noir",
+  "author": "E. T. Carter",
+  "tags": [
+    "marquee",
+    "bulbs",
+    "chase",
+    "theatre",
+    "emblem",
+    "negative-space",
+    "dark",
+    "glow",
+    "loop"
+  ],
+  "description": "A theatre marquee frame on a painted plaster wall: two beaded metal bezels with a channel of incandescent bulbs between them, every third bulb lit and the lit set chasing round the frame, each filament flaring white and cooling through orange. Every lit bulb throws its own pool of light onto the channel, the bezels and the wall, so the chase runs round the wall too, while the matte board inside stays clean and dark as negative space for a mark.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_chase",
+      "label": "Chase rate",
+      "min": 0.0,
+      "max": 12.0,
+      "step": 0.1,
+      "default": 3.0,
+      "effect": "Bulbs per second the lit set steps round the frame; 0 holds the pattern still."
+    },
+    {
+      "uniform": "u_bulbPitch",
+      "label": "Bulb pitch",
+      "min": 14.0,
+      "max": 48.0,
+      "step": 1.0,
+      "default": 26.0,
+      "effect": "CSS-pixel spacing between sockets; low is a dense string of small bulbs, high a few big ones."
+    },
+    {
+      "uniform": "u_panel",
+      "label": "Frame width",
+      "min": 0.3,
+      "max": 0.95,
+      "step": 0.01,
+      "default": 0.74,
+      "effect": "Width of the marquee as a fraction of the frame; the dark board inside grows with it."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Thrown light",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How much light the bulbs throw onto the channel, bezels and wall; 0 leaves only the glass lit."
+    },
+    {
+      "uniform": "u_wear",
+      "label": "Wear",
+      "min": 0.0,
+      "max": 0.3,
+      "step": 0.01,
+      "default": 0.06,
+      "effect": "Share of sockets that are burnt out, plus about as many that stutter; 0 is a freshly relamped sign."
+    }
+  ],
+  "defaultPalette": "sodium",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03,
+    "bloom": 0.16,
+    "bloomRadius": 3.0
+  }
+}

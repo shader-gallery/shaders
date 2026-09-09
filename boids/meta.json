@@ -1,0 +1,73 @@
+{
+  "name": "Boids",
+  "slug": "boids",
+  "family": "Shoal",
+  "author": "E. T. Carter",
+  "tags": [
+    "boids",
+    "flock",
+    "murmuration",
+    "swarm",
+    "birds",
+    "trails",
+    "dusk",
+    "particles",
+    "loop"
+  ],
+  "description": "A murmuration streaming across the whole frame at dusk: hundreds of small swept-wing marks banking together, piling into dense clumps and thinning to open gaps as turning waves roll through the flock. Each bird flaps on its own clock and drags a fading motion trail, with three parallax depths from small fogged distant birds to large bright near ones.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Flight speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Speed of the whole swarm and of everything inside it; 0 freezes the flock mid-turn."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Flock density",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How much of the sky the flock fills; low is a few scattered clumps, high is a near-solid murmuration."
+    },
+    {
+      "uniform": "u_trail",
+      "label": "Trail length",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Length of the motion streak behind each bird; 0 is crisp single marks."
+    },
+    {
+      "uniform": "u_size",
+      "label": "Bird size",
+      "min": 0.4,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Size of every bird against its slot; small is a dust of distant specks, large is a close pass."
+    },
+    {
+      "uniform": "u_turn",
+      "label": "Turning waves",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the coherent banking waves that roll through the flock; 0 is a steady stream."
+    }
+  ],
+  "defaultPalette": "dusk",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

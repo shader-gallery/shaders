@@ -1,0 +1,72 @@
+{
+  "name": "Dunes",
+  "slug": "dunes",
+  "family": "Strata",
+  "author": "E. T. Carter",
+  "tags": [
+    "sand",
+    "desert",
+    "terrain",
+    "raymarch",
+    "horizon",
+    "ripples",
+    "raking-light",
+    "loop"
+  ],
+  "description": "A sand sea from a low crest at sunrise: transverse dunes with long windward slopes, sharp brinks and steep slip faces recede to a hazy horizon, the sun a few degrees up and off to one side raking across them. Fine wind ripples cross every lit face and catch the light on their crests while the slip faces fall into long soft shadow, and a thin veil of blowing sand streams across the skyline as the camera drifts along the crests.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Speed of the camera drift along the crests and of the ripple migration; 0 holds the field still."
+    },
+    {
+      "uniform": "u_spacing",
+      "label": "Dune spacing",
+      "min": 3.0,
+      "max": 16.0,
+      "step": 0.1,
+      "default": 5.5,
+      "effect": "Wavelength of the dune system; low packs in many small close ridges, high spreads a few vast ones."
+    },
+    {
+      "uniform": "u_relief",
+      "label": "Relief",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.8,
+      "effect": "Height of the dunes; low is a gentle rolling field, high throws tall ridges with deep shadowed slip faces."
+    },
+    {
+      "uniform": "u_ripple",
+      "label": "Ripples",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the fine wind ripples on the windward faces; 0 leaves the sand smooth."
+    },
+    {
+      "uniform": "u_sunAngle",
+      "label": "Sun height",
+      "min": 1.0,
+      "max": 30.0,
+      "step": 0.5,
+      "default": 6.0,
+      "effect": "Elevation of the sun above the horizon in degrees; low rakes long shadows and glitter, high flattens the field toward noon."
+    }
+  ],
+  "defaultPalette": "sodium",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

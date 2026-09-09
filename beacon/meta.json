@@ -1,0 +1,73 @@
+{
+  "name": "Beacon",
+  "slug": "beacon",
+  "shelf": "logo",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": [
+    "fog",
+    "lighthouse",
+    "beam",
+    "volumetric",
+    "dark",
+    "glow",
+    "negative-space",
+    "loop"
+  ],
+  "description": "A lighthouse beam turns slowly through a bank of night fog from a lantern just off the left edge. Dim cool haze fills the frame edge to edge; where the beam passes, dense clumps throw long soft shadow shafts down its length and the light reads as volume. Between sweeps the fog settles into a clean even field with room for a wordmark.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_sweepSpeed",
+      "label": "Sweep speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.5,
+      "effect": "How fast the lantern turns; 0 holds the beam still while the fog keeps drifting through it."
+    },
+    {
+      "uniform": "u_beamWidth",
+      "label": "Beam width",
+      "min": 1.0,
+      "max": 20.0,
+      "step": 0.5,
+      "default": 5.0,
+      "effect": "Angular half-width of the beam in degrees, from a hard searchlight blade to a broad soft fan."
+    },
+    {
+      "uniform": "u_fogDensity",
+      "label": "Fog density",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.8,
+      "effect": "Thickness of the fog bank: thin air shows a faint clean beam, thick fog shows heavy clumps and deep shadow shafts."
+    },
+    {
+      "uniform": "u_sourceHeight",
+      "label": "Lantern height",
+      "min": 0.1,
+      "max": 0.95,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Where the off-frame lantern sits on the left edge, as a fraction of frame height; moves the whole sweep up or down."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer adds a faint second lantern in the fog; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.18,
+    "saturation": 1.02,
+    "contrast": 1.03
+  }
+}

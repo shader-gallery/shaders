@@ -1,0 +1,73 @@
+{
+  "name": "Chalk",
+  "slug": "chalk",
+  "family": "Trace",
+  "author": "E. T. Carter",
+  "tags": [
+    "chalkboard",
+    "slate",
+    "chalk",
+    "hand-drawn",
+    "geometry",
+    "dust",
+    "eraser",
+    "texture",
+    "loop"
+  ],
+  "description": "A slate chalkboard mid-lesson: hand-drawn circles, triangles, hatch bundles and spirals chalked up stroke by stroke in white and palette-tinted pastel, with a dusty broken edge where the chalk catches the tooth of the slate. Each area is drawn, held, then wiped by an eraser pass that leaves a streaky dust ghost of the old marks, fading as the next set goes up. Dark stone ground with mottle, pits and a soft window light.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Pace",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Speed of the draw, hold and wipe cycle; 0 freezes the board mid-lesson."
+    },
+    {
+      "uniform": "u_scale",
+      "label": "Mark size",
+      "min": 0.5,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Size of the drawn figures against the frame; low is small tidy diagrams, high is a few big sweeping ones."
+    },
+    {
+      "uniform": "u_stroke",
+      "label": "Stroke width",
+      "min": 0.4,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Width of the chalk line; low is a sharp new stick, high is the flat side of a worn one."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the eraser ghosts, wash streaks and settled dust; 0 is a freshly washed board."
+    },
+    {
+      "uniform": "u_colour",
+      "label": "Coloured chalk",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How much of the drawing uses palette-tinted pastel sticks; 0 is all white chalk."
+    }
+  ],
+  "defaultPalette": "sherbet",
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.22,
+    "saturation": 1.02,
+    "contrast": 1.04
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": "Spotlight",
+  "slug": "spotlight",
+  "shelf": "logo",
+  "family": "Aether",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "stage",
+    "haze",
+    "volumetric",
+    "dust",
+    "curtain",
+    "cinematic",
+    "loop"
+  ],
+  "description": "A single stage spotlight in a haze-filled black box. The lamp hangs above the top edge right of centre and its cone drops through rolling haze to land as a soft-edged elliptical pool on a dark glossy plank floor, the pool left flat and even as negative space for a wordmark. Behind it a velvet drape hangs in broad folds that catch the haze and reflect faintly in the boards. Dust motes twinkle and drift only inside the beam, the boards catch a warm spill, and the lamp sways just enough that the pool breathes at its edge.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_poolWidth",
+      "label": "Pool width",
+      "min": 140.0,
+      "max": 700.0,
+      "step": 1.0,
+      "default": 340.0,
+      "effect": "Width of the floor pool in CSS pixels, widening the cone with it; small is a tight follow spot, large floods most of the stage."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Density of the haze the beam lights; 0 leaves only the pool on the floor, 2 is a thick smoky cone."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the motes drifting through the beam; 0 clears the air entirely."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Haze drift",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "How fast the haze rolls through the room and across the beam; 0 freezes the smoke."
+    },
+    {
+      "uniform": "u_sway",
+      "label": "Lamp sway",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Amplitude of the slow lamp sway that moves the cone and pool together; 0 locks the spot."
+    }
+  ],
+  "defaultPalette": "dusk",
+  "post": {
+    "grain": 0.05,
+    "vignette": 0.14,
+    "saturation": 1.05,
+    "contrast": 1.04
+  }
+}

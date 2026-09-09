@@ -1,0 +1,82 @@
+{
+  "name": "Hologram",
+  "slug": "hologram",
+  "family": "Glitch",
+  "author": "E. T. Carter",
+  "tags": [
+    "hologram",
+    "scanlines",
+    "chroma",
+    "projection",
+    "hud",
+    "parallax",
+    "flicker",
+    "glow",
+    "loop"
+  ],
+  "description": "A scanline holographic projection thrown into a dark hazy room: a far measurement grid with blinking data blocks, a lattice of dialled rings with spinning arc gauges, and near scrolling readout bars, sliding against one another with slow parallax. Every edge splits into a pale core flanked by cyan and magenta ghosts, scanlines and a climbing roll bar comb through it, the brightness flickers and now and then a horizontal tear slips a slice sideways.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Rate of the camera drift, gauge rotation, bar scrolling and interference bands; 0 freezes the projection."
+    },
+    {
+      "uniform": "u_split",
+      "label": "Chroma split",
+      "min": 0.0,
+      "max": 12.0,
+      "step": 0.5,
+      "default": 3.0,
+      "effect": "Horizontal offset of the cyan and magenta ghosts in CSS pixels; 0 is a clean single image."
+    },
+    {
+      "uniform": "u_scan",
+      "label": "Scanlines",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Depth of the horizontal scanlines combing the projection; 0 removes them."
+    },
+    {
+      "uniform": "u_flicker",
+      "label": "Flicker",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Brightness flicker, dropouts and the frequency of horizontal tears; 0 is a steady projector."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How much the projector lights the room: floor glow, drifting dust and motes in the beam."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer shifts the projection parallax; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "midnight",
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.25,
+    "saturation": 1.08,
+    "contrast": 1.04
+  }
+}

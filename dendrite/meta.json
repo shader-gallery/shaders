@@ -1,0 +1,72 @@
+{
+  "name": "Dendrite",
+  "slug": "dendrite",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": [
+    "crystal",
+    "frost",
+    "branching",
+    "growth",
+    "fractal",
+    "ice",
+    "dark",
+    "loop"
+  ],
+  "description": "Ice crystal growing across a cold dark pane. Seeds throw out stars of straight trunks, each trunk sprouts side branches at a fixed angle, each branch sprouts finer branchlets, and every one starts growing only when its parent tip has passed, so the fern envelope builds itself over time. The advancing tips glow, the settled crystal cools to frost white, and each star melts back and re-forms elsewhere.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_arms",
+      "label": "Arms",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 6,
+      "effect": "Trunks radiating from each seed; 6 is hexagonal frost, 3 or 4 is a sparser star."
+    },
+    {
+      "uniform": "u_angle",
+      "label": "Branch angle",
+      "min": 25,
+      "max": 85,
+      "step": 1,
+      "default": 60,
+      "effect": "Angle the side branches leave their trunk at; 60 runs them parallel to the neighbouring arm, low is a swept fern, high is a comb."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Branch density",
+      "min": 0.4,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How closely the side branches are spaced along every trunk and branch."
+    },
+    {
+      "uniform": "u_growth",
+      "label": "Growth speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Rate of crystal growth and of the melt / re-form cycle; 0 freezes the pane."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Tip glow",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the growing tips and the fine ice haze around dense growth."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

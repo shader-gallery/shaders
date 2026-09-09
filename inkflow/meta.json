@@ -1,0 +1,83 @@
+{
+  "name": "Inkflow",
+  "slug": "inkflow",
+  "family": "Current",
+  "author": "E. T. Carter",
+  "tags": [
+    "ink",
+    "water",
+    "diffusion",
+    "plume",
+    "tendrils",
+    "fluid",
+    "glow",
+    "loop"
+  ],
+  "description": "Drops of luminous ink released into still dark water, seen side on. Each drop sinks as a column that mushrooms at its head, billows along its flanks and sheds thin tendrils behind it, then thins to haze as a fresh drop falls. The pigment separates as it spreads, so the dense core, the mid body and the thinnest fringe each carry a different palette colour along every billowing edge.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Cadence",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the drops sink, spread and dissolve; 0 holds the plumes still."
+    },
+    {
+      "uniform": "u_turbulence",
+      "label": "Turbulence",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How hard the water folds the ink; 0 is smooth laminar columns, high is heavily billowed."
+    },
+    {
+      "uniform": "u_spread",
+      "label": "Diffusion",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How wide the ink diffuses as it sinks; low is thin threads, high is broad soft clouds."
+    },
+    {
+      "uniform": "u_tendrils",
+      "label": "Tendrils",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Strength of the fine filaments trailing around each column; 0 leaves only the smooth body."
+    },
+    {
+      "uniform": "u_separation",
+      "label": "Separation",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How far the pigment separates into distinct colours between core, body and fringe; 0 is one flat ink."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer pushes the ink aside; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "midnight",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03,
+    "bloom": 0.12,
+    "bloomRadius": 2.0
+  }
+}

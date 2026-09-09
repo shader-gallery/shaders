@@ -1,0 +1,75 @@
+{
+  "name": "Lightleak",
+  "slug": "lightleak",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": [
+    "film",
+    "light-leak",
+    "anamorphic",
+    "flare",
+    "bloom",
+    "cinematic",
+    "glow",
+    "analog",
+    "loop"
+  ],
+  "description": "Film fogged by light leaking into the camera: broad soft blooms bleed in from the frame edges, near white against the edge, cooling through the warm pole into the cool pole as they feather into a dark emulsion base. Long thin anamorphic streaks stretch across the frame from soft bright sources, breaking and flickering along their length, and a halation glow sits under everything. The leaks breathe and slide along their edges; slow and cinematic.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_leak",
+      "label": "Leak",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the light bleeding in from the edges; 0 leaves only the streaks on dark film."
+    },
+    {
+      "uniform": "u_streak",
+      "label": "Streaks",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "Brightness of the anamorphic horizontal flares and their sources; 0 removes them."
+    },
+    {
+      "uniform": "u_warmth",
+      "label": "Burn",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How far the hottest part of each leak burns toward white; low keeps it saturated colour."
+    },
+    {
+      "uniform": "u_spread",
+      "label": "Spread",
+      "min": 0.3,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How deep the leaks reach into the frame; high floods most of it with light."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Pace of the sweep, breathing and flicker; 0 holds one frame of film."
+    }
+  ],
+  "defaultPalette": "daybreak",
+  "post": {
+    "grain": 0.06,
+    "vignette": 0.18,
+    "saturation": 1.08,
+    "contrast": 1.03,
+    "bloom": 0.15,
+    "bloomRadius": 3.0
+  }
+}

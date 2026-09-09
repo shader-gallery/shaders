@@ -1,0 +1,83 @@
+{
+  "name": "Plaque",
+  "slug": "plaque",
+  "shelf": "logo",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "metal",
+    "brass",
+    "engraved",
+    "brushed",
+    "emblem",
+    "negative-space",
+    "anisotropic",
+    "sweep",
+    "loop"
+  ],
+  "description": "An engraved brass plaque fills the frame, brushed metal with a chamfered rim, a hairline border rule and a slotted screw in each corner. In the left third a ring emblem is cut into the plate as real V-grooves, one wall lit and the other in shadow with a dark oxidised fill in the bottom of every cut, and to its right a long flat-bottomed recess sits empty and even as a satin band for a wordmark. A point key light sweeps slowly left and right, dragging a tall anisotropic sheen across the brushing and flipping the lit walls of the engraving as it passes.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_sweepSpeed",
+      "label": "Sweep speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.35,
+      "effect": "How fast the key light travels across the plate; 0 parks it and the sheen holds still."
+    },
+    {
+      "uniform": "u_brushGrain",
+      "label": "Brush grain",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.6,
+      "effect": "Depth of the brushing scratches; 0 is a mirror-smooth plate, high is coarse belt-sanded metal that shreds the sheen."
+    },
+    {
+      "uniform": "u_engraveDepth",
+      "label": "Engrave depth",
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How deep the emblem, border and band are cut; shallow reads as a light etch, deep throws hard wall shadows."
+    },
+    {
+      "uniform": "u_emblemSize",
+      "label": "Emblem size",
+      "min": 0.1,
+      "max": 0.4,
+      "step": 0.005,
+      "default": 0.24,
+      "effect": "Radius of the ring emblem as a fraction of frame height; the wordmark band shortens to make room as it grows."
+    },
+    {
+      "uniform": "u_polish",
+      "label": "Polish",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Tightness of the anisotropic sheen; low is a broad satin glow, high a narrow hard streak of light."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer pulls the key light across the plate; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "sodium",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.18,
+    "saturation": 1.03,
+    "contrast": 1.04
+  }
+}

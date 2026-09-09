@@ -1,0 +1,73 @@
+{
+  "name": "Mycelium",
+  "slug": "mycelium",
+  "family": "Strand",
+  "author": "E. T. Carter",
+  "tags": [
+    "mycelium",
+    "hyphae",
+    "organic",
+    "network",
+    "growth",
+    "bioluminescent",
+    "dark",
+    "glow",
+    "loop"
+  ],
+  "description": "A hyphal network spreading through dark substrate, seen from above under a black light. Pale branching threads fork at acute angles with dark ground between them, each strand growing from its root behind a bright swollen tip, standing a while, then dying back as a new one sprouts. Pulses of bioluminescence stream along the threads over a soft combed haze of finer hyphae.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Runner density",
+      "min": 0.4,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How many leading hyphae fan out from the origin; low is a few sparse cords, high is a dense fine fan."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Growth speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How fast each wave of growth sweeps across the frame and how fast the pulses stream; 0 freezes the colony."
+    },
+    {
+      "uniform": "u_twigs",
+      "label": "Twigs",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Density of the short lateral twigs sprouting off the runners; 0 leaves only the long hyphae."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Bioluminescence",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the halo, tip glow and travelling pulses; 0 is matte pale threads on soil."
+    },
+    {
+      "uniform": "u_wander",
+      "label": "Wander",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How far the hyphae curve off straight; 0 is a stiff radial fan, high is meandering threads."
+    }
+  ],
+  "defaultPalette": "abyssal",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

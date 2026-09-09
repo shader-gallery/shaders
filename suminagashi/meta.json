@@ -1,0 +1,72 @@
+{
+  "name": "Suminagashi",
+  "slug": "suminagashi",
+  "family": "Trace",
+  "author": "E. T. Carter",
+  "tags": [
+    "suminagashi",
+    "marbling",
+    "ink",
+    "paper",
+    "rings",
+    "feathered",
+    "delicate",
+    "matte"
+  ],
+  "description": "Japanese floating-ink marbling on warm fibred paper: nests of thin concentric ink rings grow around three drop points, flatten one another where they meet, and are drawn out by a stylus into long feathered tongues with a fine comb ripple laid across them. Two inks only, a warm sumi black and one colour, thinning where the water pulled them.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_rings",
+      "label": "Rings",
+      "min": 5,
+      "max": 21,
+      "step": 1,
+      "default": 21,
+      "effect": "Drops per nest; low is a few bold rings with paper between, high packs each nest with fine hairlines."
+    },
+    {
+      "uniform": "u_size",
+      "label": "Ring spacing",
+      "min": 0.02,
+      "max": 0.08,
+      "step": 0.001,
+      "default": 0.052,
+      "effect": "Spacing between rings; low is a dense nest of hairlines, high spreads a few wide rings across the sheet."
+    },
+    {
+      "uniform": "u_draw",
+      "label": "Stylus draw",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How far the stylus pulls the rings into drawn-out tongues; 0 leaves the nests round."
+    },
+    {
+      "uniform": "u_fan",
+      "label": "Fanning",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Amplitude of the fanned waves that feather every line; 0 is calm concentric rings."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Water",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Speed of the water: the breath ripple, the drifting fan and stylus lines and the wandering drop points; 0 stills the surface."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.14,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

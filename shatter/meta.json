@@ -1,0 +1,72 @@
+{
+  "name": "Shatter",
+  "slug": "shatter",
+  "family": "Facet",
+  "author": "E. T. Carter",
+  "tags": [
+    "glass",
+    "cracks",
+    "fracture",
+    "shards",
+    "glint",
+    "dark",
+    "impact",
+    "loop"
+  ],
+  "description": "A dark pane of glass struck three times. Radial cracks fan out from each impact, wandering, kinking and thinning toward their tips, forking off short side splits, never cutting the pane into cells. The fractured edges catch a slow sweeping light as bright hairlines with frosted haze and prism fringes, and the shards on either side of every crack reflect the room at a slightly different tilt.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_cracks",
+      "label": "Cracks per impact",
+      "min": 5,
+      "max": 16,
+      "step": 1,
+      "default": 11,
+      "effect": "How many radial cracks fan out of each impact; low is a few long splits, high is a dense star."
+    },
+    {
+      "uniform": "u_spread",
+      "label": "Reach",
+      "min": 0.3,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How far the cracks run from their impact; high sends them off the edges of the frame."
+    },
+    {
+      "uniform": "u_glint",
+      "label": "Edge glint",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the fractured-edge hairlines, prism fringes and travelling sparkles."
+    },
+    {
+      "uniform": "u_tilt",
+      "label": "Shard tilt",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How much each shard leans, shifting and brightening its reflection of the room; 0 is a flat pane."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Rate of crack growth, the light sweep and the heal / re-strike cycle; 0 freezes the pane."
+    }
+  ],
+  "defaultPalette": "glacier",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

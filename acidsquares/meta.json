@@ -1,0 +1,73 @@
+{
+  "name": "Acidsquares",
+  "slug": "acidsquares",
+  "family": "Manifold",
+  "author": "E. T. Carter",
+  "tags": [
+    "checkerboard",
+    "warp",
+    "ripple",
+    "melt",
+    "chromatic",
+    "acid",
+    "grid",
+    "dark",
+    "loop"
+  ],
+  "description": "A checkerboard printed on a surface that will not hold still: travelling ripples spread from drifting centres, a slow melt runs the squares downward like softened vinyl, and a long swell leans the whole board. Compressed folds sink into shadow, stretched runs lift, a restrained gloss slides across the ripple crests, and every edge carries a thin chromatic fringe that widens where the warp bites hardest. Light squares glow in a palette hue keyed to the ripple height and pulse on a slow beat over near-black tinted glass.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Squares",
+      "min": 3.0,
+      "max": 16.0,
+      "step": 0.5,
+      "default": 7.0,
+      "effect": "Squares down the frame height; low is a few huge tiles, high is a fine dense board."
+    },
+    {
+      "uniform": "u_ripple",
+      "label": "Ripple",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "Amplitude of the travelling ripples; 0 is a calm board, high throws the squares into deep rings."
+    },
+    {
+      "uniform": "u_melt",
+      "label": "Melt",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Depth of the downward melt and the lean of the board; 0 keeps the rows straight."
+    },
+    {
+      "uniform": "u_fringe",
+      "label": "Fringing",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Chromatic split at the square edges; 0 is a clean print, high smears colour along every edge."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Speed of the ripples, the melt flow and the beat pulse; 0 freezes the board."
+    }
+  ],
+  "defaultPalette": "fuchsia",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

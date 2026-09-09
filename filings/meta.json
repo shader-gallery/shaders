@@ -1,0 +1,81 @@
+{
+  "name": "Filings",
+  "slug": "filings",
+  "family": "Shoal",
+  "author": "E. T. Carter",
+  "tags": [
+    "magnet",
+    "iron-filings",
+    "field-lines",
+    "needles",
+    "steel",
+    "physics",
+    "particles",
+    "loop"
+  ],
+  "description": "Iron filings on a dark card, standing along the field of three magnet poles that wander slowly underneath. Short steel needles link nose to tail into chains that run pole to pole, thin out in the open and pile into dense crowds around the poles, each rod glinting when it lies across the light. The poles glow through the card in two palette colours and tint the steel nearby.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Wander",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.25,
+      "effect": "How fast the poles drift under the card; 0 freezes the field and the filings hold still."
+    },
+    {
+      "uniform": "u_needle",
+      "label": "Needle size",
+      "min": 5.0,
+      "max": 24.0,
+      "step": 0.5,
+      "default": 11.0,
+      "effect": "Length of each filing in CSS pixels; small is a fine dust of rods, large is coarse shavings."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Density",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How many filings are on the card; low leaves sparse chains, high buries the card near the poles."
+    },
+    {
+      "uniform": "u_ground",
+      "label": "Card",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.16,
+      "effect": "Card tone: 0 is dark slate with glinting steel, 1 is white stock with black filings like the classroom demo."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Pole glow",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Strength of the coloured glow leaking through the card at each pole and staining the steel."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer stirs the filings around it; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "midnight",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.04
+  }
+}

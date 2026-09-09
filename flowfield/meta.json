@@ -1,0 +1,81 @@
+{
+  "name": "Flowfield",
+  "slug": "flowfield",
+  "family": "Current",
+  "author": "E. T. Carter",
+  "tags": [
+    "flowfield",
+    "curl-noise",
+    "streamlines",
+    "particles",
+    "trails",
+    "vortex",
+    "dark",
+    "loop"
+  ],
+  "description": "Curl-noise streamlines: thousands of thin trails combed along a divergence-free flow, chaining into long sweeps that wrap around wandering vortices and stretch out along the shear lanes between them. Brightness and hue follow speed, dim and cool in the still cores, burning bright where the current runs fast, with the dashes streaming downstream over a dim speed haze.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Vortex scale",
+      "min": 0.4,
+      "max": 4.0,
+      "step": 0.01,
+      "default": 1.2,
+      "effect": "How many swirls fit across the frame; low is two or three huge eddies, high is a churning field of small ones."
+    },
+    {
+      "uniform": "u_current",
+      "label": "Base current",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Steady flow through the field; 0 is closed swirling cells, high combs the trails into long near-parallel sweeps."
+    },
+    {
+      "uniform": "u_length",
+      "label": "Trail length",
+      "min": 6.0,
+      "max": 80.0,
+      "step": 1.0,
+      "default": 30.0,
+      "effect": "CSS-pixel length of each trail either side of its seed; short is a speckled grain, long is combed silk."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Density",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "How many specks seed trails; low is a few isolated lines over dark, high is a dense brushed field."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Rate at which the dashes stream and the vortices wander; 0 freezes the field."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Strength of the vortex the pointer spins into the flow; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "abyssal",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "name": "Scratches",
+  "slug": "scratches",
+  "family": "Noir",
+  "author": "E. T. Carter",
+  "tags": [
+    "film",
+    "damage",
+    "scratches",
+    "dust",
+    "grain",
+    "flicker",
+    "projector",
+    "vintage",
+    "loop"
+  ],
+  "description": "A worn release print running through a projector over a soft out-of-focus picture in faded print colours. Hairline vertical scratches in three layers, a wandering tramline, holders and one-frame flashes, break up along their length; dust and dirt specks, a stray hair, midtone grain and lamp flicker all step at 24 frames a second while the whole gate weaves. A chemical stain creeps in from one side.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scratches",
+      "label": "Scratches",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Density and brightness of the vertical hairline scratches; 0 leaves only the tramline."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Amount of dust, dirt specks and stray hairs landing in the gate; 0 is a clean print."
+    },
+    {
+      "uniform": "u_grain",
+      "label": "Grain",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Film grain strength, strongest in the midtones; 0 is a smooth digital scan."
+    },
+    {
+      "uniform": "u_flicker",
+      "label": "Flicker and weave",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Lamp flicker and gate weave amplitude; 0 locks the picture rock steady."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Picture drift",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the soft light shapes behind the damage wander; 0 holds a still frame."
+    }
+  ],
+  "defaultPalette": "dusk",
+  "post": {
+    "grain": 0.02,
+    "vignette": 0.15,
+    "saturation": 1.0,
+    "contrast": 1.04
+  }
+}

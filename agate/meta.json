@@ -1,0 +1,72 @@
+{
+  "name": "Agate",
+  "slug": "agate",
+  "family": "Strata",
+  "author": "E. T. Carter",
+  "tags": [
+    "agate",
+    "stone",
+    "banded",
+    "mineral",
+    "translucent",
+    "druzy",
+    "material",
+    "loop"
+  ],
+  "description": "A polished agate slice on a lightbox, running off every edge. Irregular concentric mineral bands follow one wandering fortification outline, milky chalcedony glowing where the backlight sits behind it, thin dark deposition lines and the odd saturated dyed band between runs of hairline layers, and a druzy quartz heart glinting crystal by crystal.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_bands",
+      "label": "Band density",
+      "min": 3.0,
+      "max": 20.0,
+      "step": 0.5,
+      "default": 12.0,
+      "effect": "How many layers per unit of depth; low is a few broad zones, high is a dense fortification of fine bands."
+    },
+    {
+      "uniform": "u_wander",
+      "label": "Outline wander",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Irregularity of the cavity outline the bands follow; 0 is smooth concentric rings, high is a ragged crenellated fortification."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Backlight",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Translucent glow of the thin bands where the drifting light sits behind the slice; 0 is an opaque stone."
+    },
+    {
+      "uniform": "u_druzy",
+      "label": "Druzy heart",
+      "min": 0.05,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Radius of the crystalline quartz zone at the centre; small is a pinpoint, large is a wide sparkling bed."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Speed of the backlight drift, the surface sheen sweep and the glacial rotation of the slice; 0 holds it still except the glints."
+    }
+  ],
+  "defaultPalette": "mercury",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

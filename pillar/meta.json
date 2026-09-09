@@ -1,0 +1,75 @@
+{
+  "name": "Pillar",
+  "slug": "pillar",
+  "family": "Aether",
+  "author": "E. T. Carter",
+  "tags": [
+    "light",
+    "beam",
+    "volumetric",
+    "haze",
+    "dust",
+    "fog",
+    "spotlight",
+    "cinematic",
+    "loop"
+  ],
+  "description": "A column of light drops from above through a smoky room, standing left of centre: a hard white core, a soft coloured shoulder and a long falloff into fog that fills the whole frame, with a second, fainter column deep in the haze at the right. Smoke drifts up through the cones and thickens the glow, fine striations sway inside them, dust motes light up as they fall through the beams, and each column lands on a dark floor in a soft pool with a gloss reflection.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_width",
+      "label": "Beam width",
+      "min": 0.05,
+      "max": 0.6,
+      "step": 0.01,
+      "default": 0.16,
+      "effect": "Width of the core; low is a thin searchlight, high is a broad soft shaft."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Fog density in the room; low is clear air with a faint beam, high is thick smoke that glows and swallows the far end of the column."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Amount and brightness of the motes drifting through the cone; 0 is clean air."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Speed of the smoke, the falling dust and the column sway; 0 freezes the room."
+    },
+    {
+      "uniform": "u_sway",
+      "label": "Sway",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "How far the column leans and wanders across the frame; 0 pins it dead vertical at centre."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03,
+    "bloom": 0.12,
+    "bloomRadius": 2.0
+  }
+}

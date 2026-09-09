@@ -1,0 +1,72 @@
+{
+  "name": "Confetti",
+  "slug": "confetti",
+  "family": "Shoal",
+  "author": "E. T. Carter",
+  "tags": [
+    "confetti",
+    "paper",
+    "3d",
+    "depth",
+    "falling",
+    "flutter",
+    "bokeh",
+    "particles"
+  ],
+  "description": "A slow fall of paper confetti at four depths, every piece a real rectangle tumbling in 3D: it flips, banks into its side-to-side swing, thins to a hairline as it turns edge-on and opens again showing the other face. Faces toward the light are bright, faces away are shadowed, pieces between the viewer and the light glow with paper translucency, and each drops a soft shadow on whatever lies behind it. Far pieces are small and fogged into a lit haze, near ones large and soft-focused.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fall",
+      "label": "Fall speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How fast the confetti falls and drifts sideways; 0 hangs it in the air, still tumbling."
+    },
+    {
+      "uniform": "u_flutter",
+      "label": "Flutter",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Tumble rate and swing width of every piece; 0 freezes each piece at a fixed tilt, high is a frantic spin."
+    },
+    {
+      "uniform": "u_size",
+      "label": "Piece size",
+      "min": 0.5,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Size of each rectangle against its slot; low is a fine sparse snow of paper, high is big overlapping sheets."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Density",
+      "min": 0.2,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.75,
+      "effect": "Fraction of slots holding a piece; low is a thin scatter, 1 fills every slot."
+    },
+    {
+      "uniform": "u_focus",
+      "label": "Soft focus",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Depth-of-field softness on the near layers; 0 keeps the closest pieces crisp."
+    }
+  ],
+  "defaultPalette": "prism",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

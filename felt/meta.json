@@ -1,0 +1,81 @@
+{
+  "name": "Felt",
+  "slug": "felt",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "felt",
+    "wool",
+    "textile",
+    "fibre",
+    "matte",
+    "nap",
+    "texture",
+    "loop"
+  ],
+  "description": "A sheet of dyed wool felt under a raking lamp: a mat of short kinked fibres with a soft directional nap that goes dark where the pile lies toward the light and pale where it lies away. A slow hand-stroke crosses the sheet and lays the pile over in its wake, while low folds give the cloth a matte relief and the dye sits in soft wet-felted patches of the palette.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_pile",
+      "label": "Pile",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Visibility of the fibre pile and its self-shadow; 0 is a smooth pressed board, high is a hairy fleece."
+    },
+    {
+      "uniform": "u_nap",
+      "label": "Nap contrast",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Tonal shift between pile lying toward and away from the lamp; the strength of the brushed band."
+    },
+    {
+      "uniform": "u_stroke",
+      "label": "Stroke speed",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.25,
+      "effect": "How fast the hand-stroke crosses the sheet and the folds creep; 0 holds the nap still."
+    },
+    {
+      "uniform": "u_folds",
+      "label": "Folds",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Relief of the soft folds in the sheet under the raking light; 0 lays it perfectly flat."
+    },
+    {
+      "uniform": "u_scale",
+      "label": "Fibre length",
+      "min": 0.4,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Length of the fibres in CSS pixels; low is a fine dense mat, high is coarse long-staple wool."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer combs the nap around it; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "dusk",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.18,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

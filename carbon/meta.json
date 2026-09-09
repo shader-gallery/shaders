@@ -1,0 +1,81 @@
+{
+  "name": "Carbon",
+  "slug": "carbon",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "carbon-fibre",
+    "twill",
+    "weave",
+    "material",
+    "anisotropic",
+    "sheen",
+    "dark",
+    "loop"
+  ],
+  "description": "A sheet of carbon fibre in a 2x2 twill weave under a clear coat. Every float is a bundle of parallel fibres with an anisotropic glint, so warp and weft tows brighten under opposite light positions and the checker of highlights flips family by family as a light sweeps across the cloth. Tows bow up and dive under one another with shaded ends and resin seams, fine fibre stripes cross each float, and a broad soft clear-coat reflection rides on top.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Tow width",
+      "min": 8,
+      "max": 60,
+      "step": 1,
+      "default": 20,
+      "effect": "Width of each tow in CSS px; low is a fine tight weave, high is a coarse close-up of a few tows."
+    },
+    {
+      "uniform": "u_sweep",
+      "label": "Sweep speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the light travels across the sheet and the highlight checker flips; 0 holds it still."
+    },
+    {
+      "uniform": "u_gloss",
+      "label": "Clear coat",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Strength of the resin clear-coat reflection; 0 is a dry matte lay-up, high is a wet-look lacquer."
+    },
+    {
+      "uniform": "u_fibre",
+      "label": "Fibre grain",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Visibility of the individual fibre stripes and loose flashing strands; 0 is smooth satin tows."
+    },
+    {
+      "uniform": "u_tint",
+      "label": "Palette tint",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How much palette colour enters the sheen of the two tow families; 0 is plain grey carbon, 1 is a full two-tone carbon-kevlar."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer pulls the sweeping light across the weave; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "glacier",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.22,
+    "saturation": 1.05,
+    "contrast": 1.04
+  }
+}

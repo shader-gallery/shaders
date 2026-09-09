@@ -1,0 +1,85 @@
+{
+  "name": "Rainglass",
+  "slug": "rainglass",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": [
+    "rain",
+    "glass",
+    "droplets",
+    "bokeh",
+    "night",
+    "refraction",
+    "window",
+    "wet",
+    "loop"
+  ],
+  "description": "Rain on a window at night. Behind the fogged pane a dark street of defocused lights glows in soft bokeh discs; on the glass, runners fall in wiggling stalls and darts, leaving beaded trails and wiped streaks where the lights come back into focus, while small beads swell on the pane and vanish as a runner passes. Every drop is a lens showing the lit field sharp and inverted, with a dark rim and one tight highlight.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_rain",
+      "label": "Rain",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How much water is on the glass; low is a few stray drops, high is a pane streaming with runners."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Fall speed of the runners and the swell of the beads; 0 freezes the rain."
+    },
+    {
+      "uniform": "u_smear",
+      "label": "Smear",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How far each drop draws its tail out behind it as it runs; 0 keeps every drop round, high turns a darting drop into a long streak."
+    },
+    {
+      "uniform": "u_fog",
+      "label": "Fog",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Condensation on the pane; 0 is clear glass with the lights in focus, 1 is a heavily fogged window that only the wiped streaks see through."
+    },
+    {
+      "uniform": "u_refract",
+      "label": "Lens",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How strongly each drop bends the field behind it; 0 makes the drops flat, high turns each into a strong inverted lens."
+    },
+    {
+      "uniform": "u_lights",
+      "label": "Lights",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Density of the lights behind the glass; low is a sparse dark street, high is a dense city."
+    }
+  ],
+  "defaultPalette": "peacock",
+  "post": {
+    "grain": 0.055,
+    "grainSize": 1.6,
+    "bloom": 0.18,
+    "bloomRadius": 3.5,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

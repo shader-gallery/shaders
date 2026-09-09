@@ -1,0 +1,73 @@
+{
+  "name": "Damascus",
+  "slug": "damascus",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "damascus",
+    "steel",
+    "metal",
+    "pattern-welded",
+    "etched",
+    "satin",
+    "material",
+    "dark",
+    "loop"
+  ],
+  "description": "A slab of pattern-welded steel, etched and satin finished. Dozens of forged layers cut the ground surface as tight contour bands that bunch into ladder rungs, ring around raindrop dimples and flow like grain between them; the dark carbon layers sit a hair below the bright nickel ones, and a tall satin highlight sweeps the slab while the grind slowly deepens and the contours crawl.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_layers",
+      "label": "Layers",
+      "min": 12,
+      "max": 96,
+      "step": 1,
+      "default": 36,
+      "effect": "How many steel layers the billet holds; low is a few broad bands, high is a fine dense contour map."
+    },
+    {
+      "uniform": "u_ladder",
+      "label": "Ladder",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Depth of the pressed cross-grooves; 0 is plain random grain, high bunches the bands into hard ladder rungs."
+    },
+    {
+      "uniform": "u_raindrop",
+      "label": "Raindrop",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Depth of the drilled dimples; 0 removes the concentric rings, high makes them deep bullseyes."
+    },
+    {
+      "uniform": "u_sheen",
+      "label": "Sheen",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the sweeping satin highlight; 0 is a flat matte etch."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Speed of the light sweep and the contour crawl; 0 freezes the slab."
+    }
+  ],
+  "defaultPalette": "mercury",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.12,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

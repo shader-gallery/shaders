@@ -1,0 +1,73 @@
+{
+  "name": "Circuit",
+  "slug": "circuit",
+  "family": "Trace",
+  "author": "E. T. Carter",
+  "tags": [
+    "pcb",
+    "circuit",
+    "traces",
+    "copper",
+    "solder-mask",
+    "technical",
+    "pulse",
+    "dark",
+    "loop"
+  ],
+  "description": "A printed circuit board under raking light: parallel copper bundles jog at 45 degrees across a solder-mask ground with the fibreglass weave showing through, ending in rows of tinned through-hole pads with drill holes, vias and silkscreened footprints. The bottom layer ghosts through the laminate while pulses of light race along the traces with comet tails.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_pitch",
+      "label": "Pitch",
+      "min": 4.0,
+      "max": 16.0,
+      "step": 0.5,
+      "default": 8.0,
+      "effect": "Trace pitch in CSS pixels; low is a dense fine-pitch board, high is a chunky hobby board."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Pulse speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the light pulses travel along the traces; 0 freezes them in place."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Routing density",
+      "min": 0.2,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Fraction of lanes that carry a trace bundle; the rest hold SMD footprints or bare mask."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Pulse glow",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Brightness of the travelling pulses and their halo on the mask; 0 is an unpowered board."
+    },
+    {
+      "uniform": "u_weave",
+      "label": "Weave",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Visibility of the fibreglass weave and mask mottle in the ground; 0 is a flat matte mask."
+    }
+  ],
+  "defaultPalette": "verdigris",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.18,
+    "saturation": 1.05,
+    "contrast": 1.04
+  }
+}

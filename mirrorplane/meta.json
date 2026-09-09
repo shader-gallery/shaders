@@ -1,0 +1,81 @@
+{
+  "name": "Mirrorplane",
+  "slug": "mirrorplane",
+  "family": "Mercury",
+  "author": "E. T. Carter",
+  "tags": [
+    "horizon",
+    "reflection",
+    "floor",
+    "perspective",
+    "ripple",
+    "sky",
+    "wet",
+    "loop"
+  ],
+  "description": "An infinite polished floor under a lit horizon: a deep sky falls to a hot band at the line with a low sun just above it, and the whole sky is reflected in a wet plane that recedes in true perspective. Travelling ripples bend and break the reflection, which stretches into long vertical smears near the camera and sharpens toward the horizon, while a distance haze lifts the far floor into the glow.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_ripple",
+      "label": "Ripple",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Height of the ripples on the floor; 0 is a dead-flat mirror, high is choppy water."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Horizon glow",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Brightness of the horizon band and the low sun, in the sky and in its reflection."
+    },
+    {
+      "uniform": "u_gloss",
+      "label": "Polish",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "How mirror-like the floor is; low shows more of the dark stone slab under the reflection."
+    },
+    {
+      "uniform": "u_stretch",
+      "label": "Stretch",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Length of the vertical smear in the reflection near the camera; 0 is a crisp mirror."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Travel speed of the ripples, the drifting streaks and the breathing horizon; 0 holds it still."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer shifts the horizon and view; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "Blinds",
+  "slug": "blinds",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": [
+    "blinds",
+    "slats",
+    "window",
+    "backlight",
+    "fabric",
+    "gradient",
+    "shadow",
+    "loop"
+  ],
+  "description": "Vertical fabric blinds hanging in front of a lit window. Each slat is a curved surface rotated on its hanging axis, shaded with wrapped diffuse, a satin band and window light bleeding through the cloth, its lit edge rimmed bright and its far edge sinking into a dark seam, while the slat in front lays a soft contact shadow on the one behind. Through the gaps a luminous colour field drifts and wraps its light onto the slat edges. A wave of tilt travels along the run so the blinds open and close in a slow ripple as a draft sways them.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_count",
+      "label": "Slats",
+      "min": 4.0,
+      "max": 32.0,
+      "step": 1.0,
+      "default": 11.0,
+      "effect": "Slats across the frame width; low is a few broad panels, high is a fine run of narrow slats."
+    },
+    {
+      "uniform": "u_tilt",
+      "label": "Tilt",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Base opening of the blinds; 0 hangs the slats face-on and nearly shut, 1 turns them edge-on so the window floods through."
+    },
+    {
+      "uniform": "u_curve",
+      "label": "Curve",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Curvature of each slat; 0 is a flat strip, high is a deep channel with a strong shading gradient."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Window light",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How much window light comes through the cloth and wraps around the slat edges."
+    },
+    {
+      "uniform": "u_sway",
+      "label": "Sway",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Speed of the tilt wave, the draft sway and the drift of the light behind; 0 holds the blinds still."
+    }
+  ],
+  "defaultPalette": "dusk",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

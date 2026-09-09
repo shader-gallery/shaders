@@ -1,0 +1,73 @@
+{
+  "name": "Erosion",
+  "slug": "erosion",
+  "family": "Strata",
+  "author": "E. T. Carter",
+  "tags": [
+    "terrain",
+    "erosion",
+    "ridged",
+    "multifractal",
+    "hillshade",
+    "relief",
+    "aerial",
+    "dark",
+    "loop"
+  ],
+  "description": "Eroded terrain from straight above under a low circling sun: ridged multifractal divides with rounded valleys between, dissected by a fine network of V-cut gullies and short rill striations running down every flank, while slope damping keeps the steep faces clean and settles detail onto the floors like sediment. Raking hillshade flips lit and shadowed faces over a long cycle, with warm sunlit slopes, cool sky fill in shadow and a thin haze pooling in the valleys.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Landform scale",
+      "min": 0.8,
+      "max": 6.0,
+      "step": 0.05,
+      "default": 4.0,
+      "effect": "Landform cells across the frame height; low is one great massif, high is a dense badland of small ridges."
+    },
+    {
+      "uniform": "u_erosion",
+      "label": "Dissection",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.65,
+      "effect": "How far erosion has gone: depth of the rill striations and how strongly the steep flanks are smoothed; 0 is raw uneroded ground."
+    },
+    {
+      "uniform": "u_sharpness",
+      "label": "Ridge sharpness",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Multifractal gain; low is rounded hills with little detail, high piles jagged detail onto every crest."
+    },
+    {
+      "uniform": "u_sun",
+      "label": "Sun elevation",
+      "min": 0.05,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Height of the sun; low is a raking sidelight with long shadow faces, 1 is near overhead and flat."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the sun circles and the terrain slides under the camera; 0 holds a still frame."
+    }
+  ],
+  "defaultPalette": "rust",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

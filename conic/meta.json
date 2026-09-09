@@ -1,0 +1,73 @@
+{
+  "name": "Conic",
+  "slug": "conic",
+  "family": "Aura",
+  "author": "E. T. Carter",
+  "tags": [
+    "conic",
+    "gradient",
+    "angular",
+    "sectors",
+    "sweep",
+    "light",
+    "haze",
+    "rotation",
+    "loop"
+  ],
+  "description": "Three angular sweeps of coloured light thrown from separate centres, two just outside the frame and one drifting inside it. Each sweep is cut into gobo sectors that ramp from one palette pole to another and dim toward a hard stop, and the wheels turn at different rates so their crossings carve the frame into shifting fields of mixed colour, with bright seams where blade edges catch the haze.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_sectors",
+      "label": "Sectors",
+      "min": 3,
+      "max": 16,
+      "step": 1,
+      "default": 7,
+      "effect": "Number of sectors on the primary wheel; the other two wheels scale with it. Low is a few broad wedges, high is a fine pinwheel."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Rotation",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.12,
+      "effect": "How fast the three wheels turn; 0 freezes the sweep."
+    },
+    {
+      "uniform": "u_hardness",
+      "label": "Edge hardness",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "Crispness of the sector stops and their bright seams; 0 melts the wheels into smooth angular gradients."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Dust and haze texture drifting through the light; 0 is a clean vector fill."
+    },
+    {
+      "uniform": "u_reach",
+      "label": "Reach",
+      "min": 0.15,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How far each sweep carries before it falls off; low pools the light near its centre, high floods the whole frame."
+    }
+  ],
+  "defaultPalette": "peacock",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

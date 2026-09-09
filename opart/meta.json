@@ -1,0 +1,81 @@
+{
+  "name": "Opart",
+  "slug": "opart",
+  "family": "Manifold",
+  "author": "E. T. Carter",
+  "tags": [
+    "op-art",
+    "stripes",
+    "illusion",
+    "black-and-white",
+    "relief",
+    "print",
+    "lens",
+    "loop"
+  ],
+  "description": "An op-art band illusion: hard black bands on near-white paper pushed through six invisible lenses, domes and dents that magnify the bands at their centre and crush them at the rim so straight lines bow into solid forms pressing through the print. Ink weight thickens on the shadow side of each dome, giving the false relief a false light, and the whole field breathes and drifts slowly.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_density",
+      "label": "Band density",
+      "min": 8.0,
+      "max": 80.0,
+      "step": 1.0,
+      "default": 44.0,
+      "effect": "Band pairs across the frame; low is a few fat bars, high is a fine vibrating grille."
+    },
+    {
+      "uniform": "u_bulge",
+      "label": "Relief",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the lenses; 0 is flat straight bands, high folds them into deep bulges and pinches."
+    },
+    {
+      "uniform": "u_breath",
+      "label": "Breathing",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the domes breathe and drift and the long wave travels; 0 freezes the print."
+    },
+    {
+      "uniform": "u_tilt",
+      "label": "Tilt",
+      "min": -45.0,
+      "max": 45.0,
+      "step": 1.0,
+      "default": 8.0,
+      "effect": "Angle of the band field in degrees; 0 is vertical bands."
+    },
+    {
+      "uniform": "u_tint",
+      "label": "Tint",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "How much palette colour seeps into the paper and the ink; 0 is pure black on white."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Depth of the extra lens the pointer holds over the bands; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "mercury",
+  "post": {
+    "grain": 0.02,
+    "vignette": 0.14,
+    "saturation": 1.0,
+    "contrast": 1.02
+  }
+}

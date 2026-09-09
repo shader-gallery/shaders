@@ -1,0 +1,83 @@
+{
+  "name": "Griddistort",
+  "slug": "griddistort",
+  "family": "Manifold",
+  "author": "E. T. Carter",
+  "tags": [
+    "grid",
+    "distortion",
+    "wave",
+    "displacement",
+    "chromatic",
+    "lines",
+    "dark",
+    "loop"
+  ],
+  "description": "A fine drafting grid on a dark painted wall, seen through rippling glass. A diagonal wavefront and an expanding ring travel across it, crowding the lines together where the sheet is squeezed so they thicken and brighten, and pulling them thin where it stretches, with a caustic band of light riding the compression and a slight warm-cool chromatic split wherever the glass bends.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_pitch",
+      "label": "Grid pitch",
+      "min": 6.0,
+      "max": 40.0,
+      "step": 1.0,
+      "default": 11.0,
+      "effect": "CSS-pixel spacing of the minor grid lines; low is a dense fine mesh, high is a few large squares."
+    },
+    {
+      "uniform": "u_amplitude",
+      "label": "Wave depth",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How far the waves displace the grid; 0 is a flat undisturbed sheet, high folds the lines over themselves."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Travel speed of the wavefront, the ring and the breathing; 0 freezes the sheet."
+    },
+    {
+      "uniform": "u_thicken",
+      "label": "Ink pile-up",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How much compressed lines fatten and brighten, and stretched lines thin and fade; 0 keeps every line the same weight."
+    },
+    {
+      "uniform": "u_fringe",
+      "label": "Chromatic split",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Width of the warm and cool colour fringes along the displaced lines; 0 is a clean single-colour grid."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "Depth of the dimple the pointer presses into the grid; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "midnight",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.18,
+    "saturation": 1.05,
+    "contrast": 1.04,
+    "bloom": 0.08,
+    "bloomRadius": 2.5
+  }
+}

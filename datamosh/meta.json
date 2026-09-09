@@ -1,0 +1,72 @@
+{
+  "name": "Datamosh",
+  "slug": "datamosh",
+  "family": "Glitch",
+  "author": "E. T. Carter",
+  "tags": [
+    "datamosh",
+    "glitch",
+    "macroblock",
+    "compression",
+    "video",
+    "smear",
+    "digital",
+    "dark"
+  ],
+  "description": "A video stream with its keyframes cut out: dusk footage of a lit horizon, cloud and drifting lights is decoded onto a macroblock grid where patches of blocks break, some holding stale colour flattened to a single block, others dragging the old picture along quantised motion vectors into streaks that lengthen until the region refreshes and breaks again. Posterised luma, coarse chroma, DCT ringing and macroblock seams finish the starved-encoder look.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_block",
+      "label": "Block size",
+      "min": 6.0,
+      "max": 40.0,
+      "step": 1.0,
+      "default": 14.0,
+      "effect": "Macroblock size in CSS pixels; low is fine, almost photographic damage, high is chunky low-resolution blocks."
+    },
+    {
+      "uniform": "u_damage",
+      "label": "Damage",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.55,
+      "effect": "Fraction of the picture that is broken; 0 plays the clean footage, 1 mangles every block."
+    },
+    {
+      "uniform": "u_smear",
+      "label": "Smear",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How far sliding blocks drag the stale picture along their motion vectors; 0 only holds and flattens."
+    },
+    {
+      "uniform": "u_bitrate",
+      "label": "Bitrate",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Encoder quality; low posterises luma and chroma into a few steps with ringing and heavy seams, 1 is nearly clean."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Playback",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Playback rate of the footage and its damage clock; 0 freezes the frame."
+    }
+  ],
+  "defaultPalette": "dusk",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

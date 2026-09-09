@@ -1,0 +1,72 @@
+{
+  "name": "Woodgrain",
+  "slug": "woodgrain",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "wood",
+    "oak",
+    "quartersawn",
+    "grain",
+    "timber",
+    "material",
+    "texture",
+    "warm"
+  ],
+  "description": "A quartersawn oak board filling the frame. Tight parallel growth rings open into cathedral arches where the cut grazes a ring, each ring a pale porous earlywood darkening into a hard winter line; slanted ray flecks lie glassy across the grain and flash one after another as a lamp circles above the board, while the plank creeps slowly along its length.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_rings",
+      "label": "Ring density",
+      "min": 5,
+      "max": 30,
+      "step": 0.5,
+      "default": 14,
+      "effect": "Growth rings per unit; low is a few broad slow-grown bands, high is tight dense grain."
+    },
+    {
+      "uniform": "u_figure",
+      "label": "Cathedral",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.9,
+      "effect": "How far the pith wanders under the board; 0 is dead-straight quartersawn lines, high opens wide cathedral arches."
+    },
+    {
+      "uniform": "u_fleck",
+      "label": "Ray fleck",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Density and brightness of the medullary ray flecks; 0 removes them."
+    },
+    {
+      "uniform": "u_sheen",
+      "label": "Finish",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Gloss of the finish: strength of the grain sheen and the fleck flashes; 0 is raw sanded timber."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Speed of the circling lamp and the creep along the plank; 0 holds the board still."
+    }
+  ],
+  "defaultPalette": "sodium",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.08,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

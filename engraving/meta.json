@@ -1,0 +1,72 @@
+{
+  "name": "Engraving",
+  "slug": "engraving",
+  "family": "Trace",
+  "author": "E. T. Carter",
+  "tags": [
+    "engraving",
+    "copperplate",
+    "crosshatch",
+    "ink",
+    "paper",
+    "print",
+    "drapery",
+    "intaglio"
+  ],
+  "description": "A copperplate line engraving of undulating drapery, ink on laid paper. Parallel burin lines wrap over every fold like cross-contours, swelling from hairlines that taper into bare paper on the lit crests to fat cuts in the shadow; a second family crosses them in the half-shadow and a third in the deepest hollows, with a dot in every lozenge of the half-tones. The drapery breathes slowly and the raking light precesses, so the hatch migrates across the folds.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_pitch",
+      "label": "Line pitch",
+      "min": 4.0,
+      "max": 20.0,
+      "step": 0.5,
+      "default": 9.0,
+      "effect": "CSS-pixel spacing of the engraved lines; low is a fine dense plate, high is a coarse open ruling."
+    },
+    {
+      "uniform": "u_wrap",
+      "label": "Wrap",
+      "min": 0.0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "How far the lines bend around the folds; 0 is a flat straight ruling shaded only by weight, high is strongly contoured."
+    },
+    {
+      "uniform": "u_relief",
+      "label": "Relief",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Depth of the drapery and its tonal range; low is a shallow pale plate, high drives deep cross-hatched shadows."
+    },
+    {
+      "uniform": "u_ink",
+      "label": "Ink",
+      "min": 0.3,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.95,
+      "effect": "Ink density of the impression; low is a pale worn-plate pull, 1 is a fresh dense print."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Breathe",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.25,
+      "effect": "How fast the drapery breathes and the light precesses; 0 holds the plate still."
+    }
+  ],
+  "defaultPalette": "nocturne",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.14,
+    "saturation": 1.02,
+    "contrast": 1.03
+  }
+}

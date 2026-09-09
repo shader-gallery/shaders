@@ -1,0 +1,81 @@
+{
+  "name": "Plumage",
+  "slug": "plumage",
+  "family": "Filament",
+  "author": "E. T. Carter",
+  "tags": [
+    "feathers",
+    "iridescent",
+    "barbs",
+    "organic",
+    "material",
+    "sheen",
+    "overlap",
+    "loop"
+  ],
+  "description": "The back of a bird seen close: shingled rows of contour feathers, each a tapered vane with a pale rachis and fine angled barbs, overlapping so every feather shadows the one beneath and splits open where barbs have come unhooked. The colour is structural, an iridescent ramp through the palette that slides with the arch of each vane, and a sweeping light with a slow ruffle wave keeps the anisotropic sheen travelling across the plumage.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_rows",
+      "label": "Feather rows",
+      "min": 3,
+      "max": 14,
+      "step": 0.5,
+      "default": 6,
+      "effect": "Rows of feathers across the frame height; low is a few huge plumes, high is fine dense coverts."
+    },
+    {
+      "uniform": "u_barb",
+      "label": "Barb spacing",
+      "min": 1.5,
+      "max": 8.0,
+      "step": 0.1,
+      "default": 3.2,
+      "effect": "CSS-pixel spacing of the barbs along each vane; fine barbs read as a smooth sheen, coarse ones as combed lines."
+    },
+    {
+      "uniform": "u_sheen",
+      "label": "Iridescence",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Strength of the structural colour shift and the anisotropic gloss along the barbs; 0 is matte dyed feathers."
+    },
+    {
+      "uniform": "u_ruffle",
+      "label": "Ruffle",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Depth of the wave that lifts feathers as it travels across the body; 0 lays the plumage flat."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Speed of the sweeping light and the ruffle wave; 0 holds the sheen still."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer ruffles the feathers around it; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "peacock",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "name": "Lightshow",
+  "slug": "lightshow",
+  "family": "Bloom",
+  "author": "E. T. Carter",
+  "tags": [
+    "liquid",
+    "oil",
+    "projection",
+    "psychedelic",
+    "blobs",
+    "translucent",
+    "sixties",
+    "glow"
+  ],
+  "description": "A 1960s liquid light show: coloured oil and dyed water pressed between glass plates on an overhead projector and thrown onto the wall. Translucent lenses of oil drift, swell, touch and fuse into amoebas, overlaps deepen into mixed colour, and every outline carries a bright meniscus rim with a soft halo of thrown light, while the plate turns slowly on the wheel and the lamp breathes.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Wheel speed",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Speed of the blob orbits and the plate rotation; 0 holds the projection still."
+    },
+    {
+      "uniform": "u_size",
+      "label": "Blob size",
+      "min": 0.3,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Radius of the oil lenses; low is a scatter of small beads, high floods the plate with big overlapping pools."
+    },
+    {
+      "uniform": "u_merge",
+      "label": "Fusing",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How readily blobs of the same dye neck together; 0 keeps them as separate discs, 1 melts them into amoebas."
+    },
+    {
+      "uniform": "u_dye",
+      "label": "Dye density",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Concentration of the coloured dye; low is pale watery gels, high is deep saturated oil that goes dark where it stacks."
+    },
+    {
+      "uniform": "u_lamp",
+      "label": "Lamp",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Projector brightness and hotspot strength; 0 switches the lamp off."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer slides the oil plate; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

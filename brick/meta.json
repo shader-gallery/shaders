@@ -1,0 +1,72 @@
+{
+  "name": "Brick",
+  "slug": "brick",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "brick",
+    "wall",
+    "masonry",
+    "running-bond",
+    "relief",
+    "material",
+    "texture",
+    "raking-light"
+  ],
+  "description": "A running-bond brick wall lit by a low sun. Every brick carries its own fired tone, size and mottle, arrises are chipped and corners crumbled, and the gritty mortar bed sits recessed so the sweeping light throws lit edges on one side of each joint and drops a shadow into the other. The camera drifts slowly along the courses as the sun angle turns.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scale",
+      "label": "Course height",
+      "min": 10,
+      "max": 80,
+      "step": 1,
+      "default": 30,
+      "effect": "Height of one brick course in CSS pixels; low is a distant wall of many small bricks, high is a few huge ones seen close."
+    },
+    {
+      "uniform": "u_depth",
+      "label": "Relief",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.01,
+      "default": 1.2,
+      "effect": "How far the mortar is recessed and how strongly the raking light models it; 0 is a flat print, high is deep raked joints."
+    },
+    {
+      "uniform": "u_wear",
+      "label": "Wear",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Chipping of the arrises and bites out of the corners; 0 is crisp new brick, high is a crumbling wall."
+    },
+    {
+      "uniform": "u_variation",
+      "label": "Tonal spread",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1.0,
+      "effect": "Spread of fired tone between bricks, from a uniform batch to dark headers, pale stretchers and flashed bricks."
+    },
+    {
+      "uniform": "u_sun",
+      "label": "Sun sweep",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.1,
+      "effect": "Speed of the sun angle turning and the camera drift; 0 holds the wall still under one light."
+    }
+  ],
+  "defaultPalette": "rust",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.2,
+    "saturation": 1.05,
+    "contrast": 1.03
+  }
+}

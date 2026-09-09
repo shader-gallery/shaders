@@ -1,0 +1,83 @@
+{
+  "name": "Foil",
+  "slug": "foil",
+  "shelf": "logo",
+  "family": "Burnish",
+  "author": "E. T. Carter",
+  "tags": [
+    "foil",
+    "emblem",
+    "metal",
+    "card",
+    "deboss",
+    "brushed",
+    "raking-light",
+    "negative-space",
+    "loop"
+  ],
+  "description": "A foil-stamped emblem pressed into dark card. A heavy ring, hairline inner ring, interlaced octagram and centre boss sit in the left third as brushed metal foil in a real debossed recess, lit rim on one side and wall shadow on the other, while a lamp off the upper right corner rakes across the fibre and laid lines of the stock and a slow looping light sweep crosses the sheet and makes the foil flash. The right two thirds stay even and quiet for a wordmark.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_lightSweep",
+      "label": "Light sweep",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 0.5,
+      "effect": "How fast the lamp swings and the light sweep crosses the sheet; 0 freezes it and the foil holds one flash."
+    },
+    {
+      "uniform": "u_depth",
+      "label": "Deboss depth",
+      "min": 0.0,
+      "max": 12.0,
+      "step": 0.5,
+      "default": 5.0,
+      "effect": "Depth of the stamp in CSS pixels: 0 is flat printed foil, high is a deep die impression with strong rim and wall shadow."
+    },
+    {
+      "uniform": "u_markSize",
+      "label": "Mark size",
+      "min": 0.12,
+      "max": 0.45,
+      "step": 0.01,
+      "default": 0.27,
+      "effect": "Radius of the emblem as a fraction of frame height, from a small seal to a mark that dominates the left half."
+    },
+    {
+      "uniform": "u_shine",
+      "label": "Foil shine",
+      "min": 0.0,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Strength of the specular streak on the foil; low is brushed satin foil, high is mirror-bright."
+    },
+    {
+      "uniform": "u_grain",
+      "label": "Card grain",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Visibility of the fibre texture, tooth and laid lines in the card stock; 0 is smooth coated board."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How strongly the pointer adds a second highlight on the foil; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "foundry",
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.12,
+    "saturation": 1.04,
+    "contrast": 1.04
+  }
+}
