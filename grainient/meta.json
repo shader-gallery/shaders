@@ -1,7 +1,6 @@
 {
   "name": "Grainient",
   "slug": "grainient",
-  "shelf": "rework",
   "family": "Aura",
   "author": "E. T. Carter",
   "tags": [
@@ -23,7 +22,7 @@
       "min": 0.0,
       "max": 1.0,
       "step": 0.01,
-      "default": 0.18,
+      "default": 0.27,
       "effect": "How fast the colour points wander and the seams bleed; 0 holds the field nearly still."
     },
     {
@@ -32,7 +31,7 @@
       "min": 0.3,
       "max": 2.0,
       "step": 0.01,
-      "default": 1.0,
+      "default": 1.95,
       "effect": "Reach of each colour point; low gives tight pure pools with wide blends, high lets each hue flood further before it meets the next."
     },
     {
@@ -41,7 +40,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 0.7,
+      "default": 1.39,
       "effect": "Organic warp of the blend boundaries; 0 gives clean round pools, high tears the seams into ragged bleeds."
     },
     {
@@ -50,7 +49,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 0.5,
+      "default": 1.52,
       "effect": "How fast the points trade palette hues with each other; 0 pins each pool to one colour."
     },
     {
@@ -59,7 +58,7 @@
       "min": 0.5,
       "max": 2.0,
       "step": 0.01,
-      "default": 1.45,
+      "default": 1.26,
       "effect": "Saturation push on the mixed field; 1 is the raw blend, higher pulls the seams back out to full palette colour."
     },
     {
@@ -68,7 +67,7 @@
       "min": 0.0,
       "max": 0.5,
       "step": 0.01,
-      "default": 0.18,
+      "default": 0.0,
       "effect": "Strength of the baked film grain; 0 is a clean gradient, high is a coarse boiling texture."
     },
     {
@@ -77,7 +76,7 @@
       "min": 1.0,
       "max": 6.0,
       "step": 0.5,
-      "default": 1.5,
+      "default": 1.0,
       "effect": "Grain cell size in device pixels; 1 is fine film, larger is a chunkier print-like speckle."
     },
     {
@@ -93,6 +92,7 @@
   "defaultPalette": "neon",
   "post": {
     "grain": 0.04,
+    "grainSpeed": 1.0,
     "vignette": 0.18,
     "saturation": 1.1,
     "contrast": 1.02

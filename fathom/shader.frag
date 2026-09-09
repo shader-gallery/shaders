@@ -3,7 +3,7 @@
 // Fathom --- a bathymetric survey rendered as soundings, not lines (family: Strata)
 //
 // A regular survey grid of small glowing depth dots covers the frame. Each
-// dot's size and brightness falls with the water depth beneath it, so the
+// dot size and brightness falls with the water depth beneath it, so the
 // chart reads as a calm stipple field being swallowed by one dominant abyssal
 // void and a couple of lesser dark deeps. Dot hue slides through the palette
 // with depth --- shallow dots clear and bright, the last sparks at the trench
@@ -109,7 +109,7 @@ void main() {
   depth += deep(uv, pA * vec2(asp, 1.0), 0.42, 1.00);   // dominant void
   depth += deep(uv, pB * vec2(asp, 1.0), 0.26, 0.55);   // lesser deep
   depth += deep(uv, pC * vec2(asp, 1.0), 0.22, 0.45);   // lesser deep
-  // a gentle large-scale undulation so the shallows aren't perfectly flat
+  // a gentle large-scale undulation so the shallows are not perfectly flat
   depth += 0.10 * vnoise(uv * 2.1 + vec2(0.0, adv * 0.5));
   depth = clamp(depth, 0.0, 1.0);
 
@@ -118,9 +118,9 @@ void main() {
   float spacing = max(u_dotSpacing, 4.0) * refScale * pr; // css px -> device px, frame-relative
   vec2  cellId  = floor(fc / spacing);
   vec2  cellCtr = (cellId + 0.5) * spacing;
-  vec2  local   = fc - cellCtr;                         // px from this dot's centre
+  vec2  local   = fc - cellCtr;                         // px from this dot centre
 
-  // sample the depth field at THIS dot's centre (so the dot reads one depth,
+  // sample the depth field at THIS dot centre (so the dot reads one depth,
   // not a smear), and a tiny per-dot jitter of phase for organic shimmer.
   vec2  dotUV   = (cellCtr - 0.5 * res) / mn;
   float dDepth  = 0.0;

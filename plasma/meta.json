@@ -1,7 +1,6 @@
 {
   "name": "Plasma",
   "slug": "plasma",
-  "shelf": "rework",
   "family": "Molten",
   "author": "E. T. Carter",
   "tags": [
@@ -24,7 +23,7 @@
       "min": 0.0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.55,
+      "default": 0.11,
       "effect": "How fast the interference rolls and the bands flow; 0 freezes the plasma."
     },
     {
@@ -33,7 +32,7 @@
       "min": 0.3,
       "max": 3.0,
       "step": 0.01,
-      "default": 1.4,
+      "default": 0.75,
       "effect": "Frequency of the bands across the frame; low is a few huge sweeps, high packs in many narrow ripples."
     },
     {
@@ -42,7 +41,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 0.9,
+      "default": 0.0,
       "effect": "Depth of the domain fold; 0 leaves clean regular interference, high bends it into liquid folds."
     },
     {
@@ -51,7 +50,7 @@
       "min": 0.5,
       "max": 4.0,
       "step": 0.05,
-      "default": 1.6,
+      "default": 0.8,
       "effect": "How many times the palette wheel repeats per interference swing; low is broad two-tone sweeps, high is tight rainbow banding."
     },
     {
@@ -60,7 +59,7 @@
       "min": 0.0,
       "max": 2.0,
       "step": 0.01,
-      "default": 1.2,
+      "default": 0.29,
       "effect": "Brightness of the white-hot cores where the waves stack; 0 keeps pure palette colour throughout."
     },
     {
@@ -69,7 +68,7 @@
       "min": 0.0,
       "max": 1.5,
       "step": 0.01,
-      "default": 0.6,
+      "default": 1.5,
       "effect": "Strength of the fine electric threads running through the bands; 0 is smooth plasma only."
     },
     {
@@ -87,7 +86,7 @@
     "bloom": 0.35,
     "bloomRadius": 4.0,
     "vignette": 0.2,
-    "saturation": 1.15,
+    "saturation": 1.16,
     "contrast": 1.04,
     "grain": 0.04
   }
