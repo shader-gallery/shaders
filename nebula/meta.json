@@ -1,18 +1,59 @@
 {
   "name": "Nebula",
   "slug": "nebula",
-  "shelf": "rework",
   "family": "Abyss",
   "author": "E. T. Carter",
-  "tags": ["dark", "glow", "loop", "space", "clouds", "stars", "organic"],
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "space",
+    "clouds",
+    "stars",
+    "organic"
+  ],
   "description": "A Trifid-style emission/reflection nebula — billowing domain-warped gas fills the frame, a warm pink emission region glowing in the lower body and cooling to a blue reflection haze toward the top, woven along a noisy seam. Branching dark dust lanes carve trifurcating channels through the clouds while a dense field of varied stars twinkles behind and through them, with a couple of bright young stars embedded in the gas. Everything billows on slow unbounded drift.",
   "entry": "shader.frag",
   "params": [
-    { "uniform": "u_drift", "label": "Drift", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.3, "effect": "Speed at which the gas clouds billow and churn; 0 freezes the scene, high values keep the nebula visibly flowing." },
-    { "uniform": "u_dust", "label": "Dust lanes", "min": 0.0, "max": 1.5, "step": 0.01, "default": 0.7, "effect": "Prominence of the dark branching dust lanes cutting through the gas — 0 leaves the clouds open and luminous, high values carve deep trifurcating channels." },
-    { "uniform": "u_starDensity", "label": "Star density", "min": 0.0, "max": 2.0, "step": 0.05, "default": 1.0, "effect": "How thickly stars fill the field behind and through the gas, from a sparse scatter to a crowded sky." },
-    { "uniform": "u_gasScale", "label": "Gas scale", "min": 0.4, "max": 2.5, "step": 0.05, "default": 1.0, "effect": "Spatial scale of the gas and dust structure — low gives broad sweeping clouds, high a finer, more turbulent filigree." }
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "Speed at which the gas clouds billow and churn; 0 freezes the scene, high values keep the nebula visibly flowing."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust lanes",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Prominence of the dark branching dust lanes cutting through the gas — 0 leaves the clouds open and luminous, high values carve deep trifurcating channels."
+    },
+    {
+      "uniform": "u_starDensity",
+      "label": "Star density",
+      "min": 0,
+      "max": 2,
+      "step": 0.05,
+      "default": 1,
+      "effect": "How thickly stars fill the field behind and through the gas, from a sparse scatter to a crowded sky."
+    },
+    {
+      "uniform": "u_gasScale",
+      "label": "Gas scale",
+      "min": 0.4,
+      "max": 2.5,
+      "step": 0.05,
+      "default": 1,
+      "effect": "Spatial scale of the gas and dust structure — low gives broad sweeping clouds, high a finer, more turbulent filigree."
+    }
   ],
   "defaultPalette": "midnight",
-  "post": { "bloom": 0.7 }
+  "post": {
+    "bloom": 0.7
+  }
 }
