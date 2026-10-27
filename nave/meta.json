@@ -1,0 +1,65 @@
+{
+  "name": "Nave",
+  "slug": "nave",
+  "shelf": "rework",
+  "family": "Strata",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "architecture",
+    "light-shafts",
+    "dust",
+    "perspective",
+    "cathedral"
+  ],
+  "description": "Looking up a stone cathedral nave whose ribbed pointed vault recedes bay after bay toward a deep orange glow at the far end, while broad dusty sun shafts slant down from the clerestory at the upper right across blue-black piers onto a flagstone patch barred by the window leading. The sun slowly climbs and sinks so the shafts sweep, clouds dim them in turn, and motes turn in the light as the view creeps down the nave.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_sun",
+      "label": "Sunlight",
+      "min": 0.3,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 1.1,
+      "effect": "Strength of the sun through the windows, from an overcast gloom to blazing shafts."
+    },
+    {
+      "uniform": "u_cloud",
+      "label": "Cloud drift",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How fast clouds pass the windows, dimming one shaft after another."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How much dust hangs in the air, from faint shafts to thick beams full of motes."
+    },
+    {
+      "uniform": "u_glide",
+      "label": "Walk",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "Speed of the slow walk down the nave."
+    }
+  ],
+  "post": {
+    "bloom": 0.45,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.2,
+    "contrast": 1.08
+  },
+  "defaultPalette": "clay"
+}
