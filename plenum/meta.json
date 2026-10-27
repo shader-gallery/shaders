@@ -1,0 +1,54 @@
+{
+  "name": "Plenum",
+  "slug": "plenum",
+  "shelf": "rework",
+  "family": "Strata",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "architecture",
+    "perspective",
+    "lights",
+    "haze",
+    "interior"
+  ],
+  "description": "A low view down a server aisle: rack rows recede to a hazy vanishing point on the lower left third, their faces dotted with thousands of blinking status lights and drive bays, mirrored in a perforated raised floor under ladder cable trays. Slow bands of warm scanning light sweep away down the aisle through the haze while the room sits in blue-black shade.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scan",
+      "label": "Scan light",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the light bands sweeping down the aisle."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How thick the haze is, from a clear aisle to racks fading into glow."
+    },
+    {
+      "uniform": "u_blink",
+      "label": "Blink rate",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How fast the status lights blink, from steady to busy."
+    }
+  ],
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3,
+    "dither": 1
+  },
+  "defaultPalette": "clay"
+}
