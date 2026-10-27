@@ -1,0 +1,55 @@
+{
+  "name": "Rackrow",
+  "slug": "rackrow",
+  "shelf": "rework",
+  "family": "Smolder",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "perspective",
+    "architecture",
+    "lights",
+    "haze",
+    "interior"
+  ],
+  "description": "A long server aisle seen from just off its centre line: rows of racks recede to a lit doorway, every server blinking its own cluster of amber status lights, cable trays and louvred light strips overhead, the glossy tiled floor mirroring it all under a warm haze. A slow plane of scanning light sweeps back and forth along the aisle, catching every bezel it passes.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scan",
+      "label": "Scan speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the plane of light sweeps back and forth along the aisle."
+    },
+    {
+      "uniform": "u_lights",
+      "label": "Lights",
+      "min": 0.2,
+      "max": 1.4,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Share of status and port lights that are lit, from a quiet hall to a busy one."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Thickness of the warm haze that swallows the far end of the aisle."
+    }
+  ],
+  "post": {
+    "bloom": 0.55,
+    "bloomRadius": 3.5,
+    "dither": 1,
+    "grain": 0.04
+  },
+  "defaultPalette": "foundry"
+}
