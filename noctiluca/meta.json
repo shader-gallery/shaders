@@ -1,0 +1,56 @@
+{
+  "name": "Noctiluca",
+  "slug": "noctiluca",
+  "shelf": "rework",
+  "family": "Smolder",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "sea",
+    "surf",
+    "beach",
+    "bioluminescence",
+    "night",
+    "perspective"
+  ],
+  "description": "A night beach seen from rippled dry sand: low swells roll in under a blue-black starry sky, a dark headland with a few shore lights on the left, and each crest flares amber to white as it breaks and peels along the shore. The broken water rushes up the smooth wet slope as lit lace foam, smears its glow across the wet sand and fades as it drains back.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_surf",
+      "label": "Surf pace",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How fast the wave sets roll in and break; at zero the surf holds still while the foam still flickers."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the bioluminescence in the crests, foam and wet sand."
+    },
+    {
+      "uniform": "u_reach",
+      "label": "Runup",
+      "min": 0.2,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How far the broken water rushes up the beach before it drains back."
+    }
+  ],
+  "post": {
+    "bloom": 0.6,
+    "bloomRadius": 3.5,
+    "dither": 1,
+    "grain": 0.04
+  },
+  "defaultPalette": "foundry"
+}
