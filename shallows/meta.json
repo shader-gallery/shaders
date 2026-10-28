@@ -1,0 +1,66 @@
+{
+  "name": "Shallows",
+  "slug": "shallows",
+  "shelf": "rework",
+  "family": "Veil",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "water",
+    "caustics",
+    "sand",
+    "underwater",
+    "haze",
+    "scene"
+  ],
+  "description": "A clear sandy shallow seen from just above the bed: bright caustic filaments fold, pinch and slide across wave-rippled sand and over the crowns of worn boulders, under the rolling banded underside of the surface. Light shafts lean in from the upper right, faint silt motes drift, and veils of haze settle between the near stones, the mid boulders and a reef ledge fading on the right.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_swell",
+      "label": "Swell",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How fast the surface swell rolls, sliding the caustics over the sand and the facets overhead."
+    },
+    {
+      "uniform": "u_caustics",
+      "label": "Caustics",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the caustic filaments on the sand and stones."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the suspended haze, from gin-clear to a murky wall that swallows the reef."
+    },
+    {
+      "uniform": "u_motes",
+      "label": "Silt motes",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density and brightness of the silt motes drifting at three depths."
+    }
+  ],
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.25,
+    "bloom": 0.45,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "amethyst"
+}
