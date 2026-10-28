@@ -1,0 +1,65 @@
+{
+  "name": "Conduit",
+  "slug": "conduit",
+  "shelf": "rework",
+  "family": "Wake",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "lava",
+    "tunnel",
+    "cave",
+    "molten",
+    "perspective",
+    "sparks"
+  ],
+  "description": "Walking down a winding lava tube: a floor of ember-dark crust plates, crazed with fine cracks and split by white-hot mint seams, drifts underfoot, while the lumpy basalt arches overhead catch a cool rim of melt light on every edge, low benches line the walls and the far bend dissolves into glowing fume with sparks lifting through it.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the crust drifts and the walk moves down the tube."
+    },
+    {
+      "uniform": "u_heat",
+      "label": "Heat",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the molten seams and the light they throw onto the walls."
+    },
+    {
+      "uniform": "u_sparks",
+      "label": "Sparks",
+      "min": 0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many sparks lift off the flow and how bright they are."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Fume",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the lit fume that fills the tube and hides the far bend."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.1
+  },
+  "defaultPalette": "mint"
+}
