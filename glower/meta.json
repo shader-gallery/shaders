@@ -1,0 +1,58 @@
+{
+  "name": "Glower",
+  "slug": "glower",
+  "shelf": "rework",
+  "family": "Lour",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "storm",
+    "cloud",
+    "night",
+    "rain",
+    "landscape",
+    "volumetric"
+  ],
+  "description": "Storm cells at night merge into a great cumulonimbus whose anvil spreads over the upper frame, with slow violet and white glows swelling and wandering inside the billows, never flashing. A town strung along the plain burns the cloud bases sodium orange, thin rain hangs under the right-hand cell, and a flooded field below a dark ridge mirrors the glow.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Inner glow",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How strongly the glows inside the clouds light the billows around them."
+    },
+    {
+      "uniform": "u_churn",
+      "label": "Churn",
+      "min": 0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How fast the towers boil and the glows wander and swell."
+    },
+    {
+      "uniform": "u_town",
+      "label": "Town light",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Warm sodium light of the town on the plain and on the cloud bases."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.3,
+    "aberration": 0,
+    "bloom": 0.4,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "umbra"
+}

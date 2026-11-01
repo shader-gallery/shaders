@@ -36,7 +36,8 @@
     "Kaleido",
     "Polytope",
     "Manifold",
-    "Vista"
+    "Vista",
+    "Lour"
   ],
   "shaders": [
     "acidsquares",
@@ -160,6 +161,7 @@
     "glint",
     "gloam",
     "gloaming",
+    "glower",
     "glyphic",
     "gossamer",
     "grainient",
