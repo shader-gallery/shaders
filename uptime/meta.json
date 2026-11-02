@@ -1,0 +1,63 @@
+{
+  "name": "Uptime",
+  "slug": "uptime",
+  "shelf": "rework",
+  "family": "Concourse",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "architecture",
+    "perspective",
+    "haze",
+    "lights",
+    "interior"
+  ],
+  "description": "A low eye in the cold aisle of a data hall: steel racks recede on both sides into blue haze, packed with servers, drive bays and blanking panels and pricked with thousands of cyan, white and a few amber status lights, mirrored in the polished floor tiles under hanging cable trays and a line of ceiling strips. A broad band of cold light slowly sweeps away down the aisle, washing the rack fronts and floor as it passes, while the eye drifts forward and the lights blink.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scan",
+      "label": "Scan light",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the band of cold light scanning down the aisle."
+    },
+    {
+      "uniform": "u_scanSpeed",
+      "label": "Scan speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How fast the scan band travels away down the aisle."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the cold haze that swallows the far end of the hall."
+    },
+    {
+      "uniform": "u_activity",
+      "label": "Activity",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many status lights are lit and how fast they blink."
+    }
+  ],
+  "post": {
+    "bloom": 0.55,
+    "bloomRadius": 3.5,
+    "dither": 1
+  },
+  "defaultPalette": "glacier"
+}
