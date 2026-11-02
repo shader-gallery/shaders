@@ -1,0 +1,64 @@
+{
+  "name": "Seif",
+  "slug": "seif",
+  "shelf": "rework",
+  "family": "Seif",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "dunes",
+    "desert",
+    "moon",
+    "landscape",
+    "sand"
+  ],
+  "description": "A sand sea seen from low over the crests: sinuous dune ridges wind diagonally back to a hazy horizon under a crescent moon in the upper left, their finely rippled windward slopes lit pale teal and their slip faces falling into near-black, faintly ember shade. The view glides slowly across the field while faint sand haze lifts off the far crests and stars twinkle.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_wind",
+      "label": "Wind",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much sand streams off the crests and how fast it blows."
+    },
+    {
+      "uniform": "u_moon",
+      "label": "Moon",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the moon and the light it throws on the sand."
+    },
+    {
+      "uniform": "u_relief",
+      "label": "Relief",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Height of the dune ridges, from low swells to towering draa."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How quickly the far dunes dissolve into the night air."
+    }
+  ],
+  "post": {
+    "grain": 0.03,
+    "bloom": 0.4,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "tide"
+}
