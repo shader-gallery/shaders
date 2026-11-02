@@ -1,0 +1,64 @@
+{
+  "name": "Squallglow",
+  "slug": "squallglow",
+  "shelf": "rework",
+  "family": "Lour",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "storm",
+    "clouds",
+    "volumetric",
+    "night",
+    "rain",
+    "landscape"
+  ],
+  "description": "A night storm over a flooded plain: a towering cell left of centre spreads its anvil in a sheet across the sky toward a second cell on the right, and slow cold glows wander inside them, swelling to near-white and fading without ever flashing. Haze and a faint rain shaft hang under the cloud bases, a distant town warms the right horizon with ember light, and pools in the dark fields mirror the glows.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the glows wandering inside the storm cells, from dark silhouettes to clouds lit through."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How fast the glows wander and swell and the cloud tops churn."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the lit haze lying between the near and far storm cells."
+    },
+    {
+      "uniform": "u_rain",
+      "label": "Rain",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the rain shafts hanging under the cloud bases."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "glacier"
+}
