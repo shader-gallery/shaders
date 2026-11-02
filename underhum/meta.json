@@ -1,0 +1,67 @@
+{
+  "name": "Underhum",
+  "slug": "underhum",
+  "shelf": "rework",
+  "family": "Concourse",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "server",
+    "aisle",
+    "haze",
+    "motes",
+    "perspective",
+    "racks",
+    "depth"
+  ],
+  "description": "A low view down a cold server aisle: racks of tiny blue and white status lights recede toward a far end that glows ember-warm, mirrored in a perforated floor that leaks warm light from below. Layered haze banks and drifting dust motes sit between the depth planes while broad bands of cool light slide slowly away down the aisle.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_scan",
+      "label": "Scan light",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the cool scan bands that travel away down the aisle across racks, floor, motes and haze."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the layered haze, which softens and tints the distance and warms the far end."
+    },
+    {
+      "uniform": "u_blink",
+      "label": "Blink rate",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How quickly the thousands of status lights flicker."
+    },
+    {
+      "uniform": "u_motes",
+      "label": "Dust motes",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many motes drift through the haze between the depth planes."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 3,
+    "dither": 1,
+    "backdrop": 0.2,
+    "backdropScale": 1.2
+  },
+  "defaultPalette": "nocturne"
+}
