@@ -1,0 +1,63 @@
+{
+  "name": "Anvil",
+  "slug": "anvil",
+  "shelf": "rework",
+  "family": "Lour",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "storm",
+    "cloud",
+    "water",
+    "night",
+    "landscape"
+  ],
+  "description": "A night storm line over a flooded plain: a broad blue-green tower left, a gold-lit cell and a pale blue cell deeper right, all merging into a coral-lit canopy, with a rose glow on the far horizon. Lights climb and swell inside the billowing cells in staggered turns, scud and rain drift under the bases, and the chopped flood mirrors the glows past a reed clump on a black bank in the near corner.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Interior glow",
+      "min": 0.2,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the lights travelling inside the storm cells."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 3,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Pace of the boiling billows, racing scud and wandering lights."
+    },
+    {
+      "uniform": "u_rain",
+      "label": "Rain curtains",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Density of the rain hanging under the cell bases."
+    },
+    {
+      "uniform": "u_chop",
+      "label": "Wind chop",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "From a glassy mirror to broken streaks of reflected glow on the flood."
+    }
+  ],
+  "post": {
+    "bloom": 0.45,
+    "bloomRadius": 5,
+    "dither": 1
+  },
+  "defaultPalette": "prism"
+}
