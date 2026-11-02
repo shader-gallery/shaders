@@ -1,0 +1,55 @@
+{
+  "name": "Erg",
+  "slug": "erg",
+  "shelf": "rework",
+  "family": "Seif",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "desert",
+    "dunes",
+    "moon",
+    "landscape",
+    "wind"
+  ],
+  "description": "Moonlit dunes: a sea of sinuous, rippled dune ridges runs to a flat horizon under a low mottled moon in a wine sky, crests edged in rose light and steep lee faces sunk in blue-black shadow, with fine sand combed off every crest in moving streamers. The view drifts slowly over the ridges toward the moon.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_wind",
+      "label": "Wind",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much sand streams off the crests and how fast the grains skim past."
+    },
+    {
+      "uniform": "u_drive",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Speed of the slow drift over the dunes."
+    },
+    {
+      "uniform": "u_moon",
+      "label": "Moonlight",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the moon and the light on the windward slopes."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "bloom": 0.3,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "wine"
+}
