@@ -37,7 +37,8 @@
     "Polytope",
     "Manifold",
     "Vista",
-    "Lour"
+    "Lour",
+    "Seif"
   ],
   "shaders": [
     "acidsquares",
@@ -307,6 +308,7 @@
     "silt",
     "skein",
     "slick",
+    "slipface",
     "snare",
     "solder",
     "spatter",

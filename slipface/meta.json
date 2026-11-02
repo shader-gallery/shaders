@@ -1,0 +1,64 @@
+{
+  "name": "Slipface",
+  "slug": "slipface",
+  "shelf": "rework",
+  "family": "Seif",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "landscape",
+    "dunes",
+    "moon",
+    "sand",
+    "night"
+  ],
+  "description": "Moonlit dunes under a low amber moon: windward slopes glow molten gold with fine interfering ripple marks, sharp brinks break into blue-black slip faces with long moon shadows, and fine lit threads of sand pour off the crests as the view drifts slowly across the sand sea.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_wind",
+      "label": "Wind",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much sand streams off the crests and how fast it blows."
+    },
+    {
+      "uniform": "u_moon",
+      "label": "Moon height",
+      "min": 0.03,
+      "max": 0.2,
+      "step": 0.01,
+      "default": 0.08,
+      "effect": "Raises the moon, shortening the shadows and lighting more of the slopes."
+    },
+    {
+      "uniform": "u_ripple",
+      "label": "Ripples",
+      "min": 0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Depth of the interfering ripple marks on the windward slopes."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Night haze that softens the distant dunes into the horizon."
+    }
+  ],
+  "post": {
+    "bloom": 0.45,
+    "bloomRadius": 3.5,
+    "dither": 1,
+    "aberration": 0.0008
+  },
+  "defaultPalette": "foundry"
+}
