@@ -216,6 +216,19 @@ void main() {
     col = shade(hit.y, p, normalAt(p), rd);
   }
 
+#ifdef VOLUME
+  // ---- a piece of smoke: laid over whatever is behind it, up to the stand
+  // or the floor if the ray meets them first
+  vec2 vs = boxSpan(ro, rd);
+  if (vs.x < vs.y) {
+    float tEnd = vs.y;
+    if (hit.x > 0.0) tEnd = min(tEnd, hit.x);
+    tEnd = min(tEnd, tf);
+    vec4 v = volume(ro, rd, vs.x, tEnd);
+    col = col * (1.0 - v.a) + v.rgb;
+  }
+#endif
+
   // ---- out: a gentle shoulder, then display space -----------------------------
   col = col / (1.0 + col * 0.25);
   col = pow(clamp(col, 0.0, 1.0), vec3(1.0 / 2.2));

@@ -1,0 +1,53 @@
+{
+  "name": "Ferrofluid",
+  "slug": "ferrofluid",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "ferrofluid",
+    "liquid",
+    "magnet",
+    "spikes",
+    "mirror",
+    "dark"
+  ],
+  "description": "A pool of magnetic fluid in a shallow dark dish on a dark studio floor, drawn up into a crown of sharp spikes by a magnet circling unseen beneath it. Where the magnet passes the spikes stand tall and lean toward it, behind it they settle to bumps, so the crown walks round the pool. Near-black and glossy, a dark mirror of the studio, with the theme catching only along the spike edges.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "Magnetic fluid in a dark dish, drawn up into spikes by a magnet circling unseen beneath it, so the crown walks round the pool and never holds a shape."
+  },
+  "params": [
+    {
+      "uniform": "u_pull",
+      "label": "Pull",
+      "min": 0.0,
+      "max": 1.6,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How strongly the magnet raises the spikes; 0 lets the fluid lie flat with only a ripple of bumps."
+    },
+    {
+      "uniform": "u_orbit",
+      "label": "Orbit",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the magnet circles under the dish; 0 holds the crown in one place."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "midnight"
+}

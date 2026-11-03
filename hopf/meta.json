@@ -1,0 +1,53 @@
+{
+  "name": "Hopf",
+  "slug": "hopf",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "hopf",
+    "fibration",
+    "rings",
+    "topology",
+    "turntable",
+    "dark"
+  ],
+  "description": "The Hopf fibration on a post on a dark studio floor: every point of a sphere becomes a ring, and every ring links every other. Three nested tori of fourteen rings each, every ring threaded through all the rest, breathe and slide round one another, each ring coloured by where it sits on the sphere so the theme runs round them in bands. The post is a ring too, the one through the far pole, projected to a straight line.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "The Hopf fibration: every point of a sphere becomes a ring, each linked through every other, nested as three tori that slide round one another."
+  },
+  "params": [
+    {
+      "uniform": "u_turn",
+      "label": "Turn",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Turntable speed: 1 is one turn a minute, 0 holds it still while its own motion goes on."
+    },
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the three tori slide round one another; 0 holds every ring in place."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}

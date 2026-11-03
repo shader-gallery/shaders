@@ -140,8 +140,8 @@ float strip(float az, float centre, float hw) {
   return smoothstep(hw, hw * 0.5, d);
 }
 vec3 env(vec3 r) {
-  vec3 c = mix(vec3(0.04, 0.04, 0.045), sweep(r), smoothstep(-0.25, 0.0, r.y));
-  c += vec3(0.16, 0.16, 0.17) * smoothstep(-0.05, 0.1, r.y) * smoothstep(0.6, 0.15, r.y);
+  vec3 c = mix(vec3(0.07, 0.07, 0.075), sweep(r), smoothstep(-0.25, 0.0, r.y));
+  c += vec3(0.5, 0.5, 0.52) * smoothstep(-0.08, 0.12, r.y) * smoothstep(0.65, 0.2, r.y);
   float az = atan(r.x, r.z);
   float band = smoothstep(0.0, 0.1, r.y) * smoothstep(0.75, 0.5, r.y);
   c += lin(c0) * 3.0 * strip(az, 2.1, 0.45) * band;
@@ -245,6 +245,19 @@ void main() {
     vec3 p = ro + rd * hit.x;
     col = shade(hit.y, p, normalAt(p), rd);
   }
+
+#ifdef VOLUME
+  // ---- a piece of smoke: laid over whatever is behind it, up to the stand
+  // or the floor if the ray meets them first
+  vec2 vs = boxSpan(ro, rd);
+  if (vs.x < vs.y) {
+    float tEnd = vs.y;
+    if (hit.x > 0.0) tEnd = min(tEnd, hit.x);
+    tEnd = min(tEnd, tf);
+    vec4 v = volume(ro, rd, vs.x, tEnd);
+    col = col * (1.0 - v.a) + v.rgb;
+  }
+#endif
 
   // ---- out: a gentle shoulder, then display space -----------------------------
   col = col / (1.0 + col * 0.25);

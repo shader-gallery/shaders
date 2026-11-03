@@ -1,0 +1,54 @@
+{
+  "name": "Apollonian",
+  "slug": "apollonian",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "fractal",
+    "apollonian",
+    "spheres",
+    "inversion",
+    "turntable",
+    "glow",
+    "dark"
+  ],
+  "description": "A ball of Apollonian packing on a slim tripod on a dark studio floor: spheres in the gaps between spheres, down past what the eye can see, cut to a sphere. Shallow spheres are pale and lit, deep ones dark and coloured, and a light from inside breathes out through the gaps; slowly the fold drifts and the whole packing re-tiles into larger spheres and back.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "Spheres packed into the gaps between spheres, down past what the eye can see, cut to a ball. A light breathes out from inside, and slowly the packing re-tiles."
+  },
+  "params": [
+    {
+      "uniform": "u_turn",
+      "label": "Turn",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Turntable speed: 1 is one turn a minute, 0 holds it still while its own motion goes on."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How far the fold drifts, re-tiling the packing into larger and finer spheres; 0 holds one packing."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}

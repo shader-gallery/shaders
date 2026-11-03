@@ -1,0 +1,53 @@
+{
+  "name": "Smoke Ring",
+  "slug": "smokering",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "volumetric",
+    "smoke",
+    "vortex",
+    "ring",
+    "glow",
+    "dark"
+  ],
+  "description": "A ring of glowing smoke held over the vent it was blown from, on a slim post on a dark studio floor. A vortex ring turns in on itself, every slice through it spinning about its core, so the wisps roll endlessly round while the ring hangs in place, riding gently up and down. No surface at all, only density marched through the box, glowing in the theme colours.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "A ring of glowing smoke over the vent it was blown from, rolling endlessly in on itself while it hangs in place. No surface at all, only smoke."
+  },
+  "params": [
+    {
+      "uniform": "u_roll",
+      "label": "Roll",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the ring rolls in on itself; 0 freezes the wisps."
+    },
+    {
+      "uniform": "u_density",
+      "label": "Density",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How thick the smoke is, from a faint wisp to a dense glowing ring."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}
