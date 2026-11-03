@@ -1,0 +1,53 @@
+{
+  "name": "Armillary",
+  "slug": "armillary",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "gimbal",
+    "rings",
+    "mechanism",
+    "turntable",
+    "glow",
+    "dark"
+  ],
+  "description": "Four dark steel rings nested in a gimbal round a small burning core, on a post on a dark studio floor. Each ring pivots inside the one outside it at its own slow pace, so they fall into line and out again and never repeat, each with a line of light round its inside in a theme colour. One spot from the upper left throws the shadow of the rings across the floor.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "Four rings nested in a gimbal round a burning core, each pivoting inside the last at its own pace, so they fall into line and out again and never repeat."
+  },
+  "params": [
+    {
+      "uniform": "u_turn",
+      "label": "Turn",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Turntable speed: 1 is one turn a minute, 0 holds it still while its own motion goes on."
+    },
+    {
+      "uniform": "u_gimbal",
+      "label": "Gimbal",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the rings turn inside each other; 0 locks the gimbal while the turntable goes on."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}

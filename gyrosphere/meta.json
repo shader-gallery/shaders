@@ -1,0 +1,52 @@
+{
+  "name": "Gyrosphere",
+  "slug": "gyrosphere",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "gyroid",
+    "lattice",
+    "turntable",
+    "glow",
+    "dark"
+  ],
+  "description": "A sphere cut from a gyroid lattice rests in a steel cup on a dark studio floor, turning once a minute. Its walls breathe open and closed and the theme colours flow up through the channels, darker toward the middle so you see into it as well as onto it. One spot from the upper left pools under it and throws the shadow of the lattice across the floor.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "A sphere cut from a gyroid, the endless lattice of curved channels. Its walls thicken and thin, so it breathes, and the witchlight colours rise through it."
+  },
+  "params": [
+    {
+      "uniform": "u_turn",
+      "label": "Turn",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Turntable speed: 1 is one turn a minute, 0 holds it still while its own motion goes on."
+    },
+    {
+      "uniform": "u_breath",
+      "label": "Breath",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How far the lattice walls thicken and thin; 0 holds the channels at one width."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}

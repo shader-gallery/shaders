@@ -39,7 +39,8 @@
     "Vista",
     "Lour",
     "Seif",
-    "Concourse"
+    "Concourse",
+    "Vitrine"
   ],
   "shaders": [
     "acidsquares",
@@ -51,6 +52,7 @@
     "anvil",
     "argyle",
     "armature",
+    "armillary",
     "ascii",
     "asterism",
     "awn",
@@ -173,6 +175,7 @@
     "grille",
     "guilloche",
     "gyroid",
+    "gyrosphere",
     "halftone",
     "halo",
     "harlequin",
@@ -276,6 +279,7 @@
     "prism",
     "puddle",
     "quench",
+    "quicksilver",
     "quintet",
     "rackrow",
     "radar",

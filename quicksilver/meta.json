@@ -1,0 +1,43 @@
+{
+  "name": "Quicksilver",
+  "slug": "quicksilver",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "liquid",
+    "metal",
+    "mirror",
+    "metaballs",
+    "dark"
+  ],
+  "description": "A pool of liquid metal in a shallow dark dish on a dark studio floor, out of which lobes rise, merge and part on slow orbits of their own, never settling. A true mirror of the studio round it: the dark floor, the sweep behind, the spot overhead and two soft strip lights in the theme colours, so the theme reaches it only in reflection.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "A pool of liquid metal in a dark dish. Lobes rise from it, merge, part and fall back, never settling, and it mirrors the room round it."
+  },
+  "params": [
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the lobes rise, merge and fall back; 0 freezes the liquid mid-motion."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "midnight"
+}
