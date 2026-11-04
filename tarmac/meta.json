@@ -1,0 +1,65 @@
+{
+  "name": "Tarmac",
+  "slug": "tarmac",
+  "shelf": "rework",
+  "family": "Byway",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "road",
+    "lamps",
+    "heat-haze",
+    "horizon",
+    "perspective",
+    "dawn",
+    "refraction"
+  ],
+  "description": "A straight wet road runs to a pre-dawn horizon on the right third, lined with alternating ringed lamp masts whose haze cones, light pools and glint streaks slide toward you, under banded cloud lit from below and three hazed hill ridges with village lights. A rising heat refraction wobbles the distant lamps and ridges while a mirage of the dawn floats on the tarmac and a few cars drift past.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_heat",
+      "label": "Heat shimmer",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the rising refraction that wobbles lamps, ridges and the mirage near the horizon; zero is a perfectly still scene."
+    },
+    {
+      "uniform": "u_drive",
+      "label": "Drive speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the road, lane markings and lamp masts stream toward the viewer."
+    },
+    {
+      "uniform": "u_lamps",
+      "label": "Lamp glow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the lamps, their dusty light cones, the pools on the asphalt and the glints in the wet tracks."
+    },
+    {
+      "uniform": "u_dawn",
+      "label": "Dawn glow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the pre-dawn light on the horizon, the lit cloud undersides, the hill haze and the road mirage."
+    }
+  ],
+  "post": {
+    "bloom": 0.45,
+    "bloomRadius": 3,
+    "dither": 1
+  },
+  "defaultPalette": "daybreak"
+}
