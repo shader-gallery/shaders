@@ -40,7 +40,8 @@
     "Lour",
     "Seif",
     "Concourse",
-    "Vitrine"
+    "Vitrine",
+    "Smithy"
   ],
   "shaders": [
     "acidsquares",
@@ -279,6 +280,7 @@
     "plumage",
     "plume",
     "portiere",
+    "pour",
     "prism",
     "puddle",
     "quench",

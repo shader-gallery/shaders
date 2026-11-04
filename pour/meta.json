@@ -1,0 +1,66 @@
+{
+  "name": "Pour",
+  "slug": "pour",
+  "shelf": "rework",
+  "family": "Smithy",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "foundry",
+    "molten",
+    "interior",
+    "sparks",
+    "architecture",
+    "moonlight"
+  ],
+  "description": "Looking down the bay of a night foundry shed: a brick cupola at the far end, its charging door aglow, taps molten metal into a winding runner in the sand floor that branches into iron-banded flasks and a comb-like pig bed, while a crane hook hangs over the bay and cold moonlight lays blue window squares across the sand. The crust drifts down the glowing channels, flask pools slowly crust over and brighten again, smoke turns in the heat light, and orange sparks rise out of the pour.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_heat",
+      "label": "Heat",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How hot the pour runs: metal brightness and how far its glow climbs the walls."
+    },
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the crust drifts down the runners toward the viewer."
+    },
+    {
+      "uniform": "u_sparks",
+      "label": "Sparks",
+      "min": 0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many sparks rise out of the pour."
+    },
+    {
+      "uniform": "u_smoke",
+      "label": "Smoke",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Smoke hanging in the shed, glowing where the heat lights it and blue in the moon shafts."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.15,
+    "contrast": 1.05
+  },
+  "defaultPalette": "clay"
+}
