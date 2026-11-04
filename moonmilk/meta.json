@@ -1,0 +1,57 @@
+{
+  "name": "Moonmilk",
+  "slug": "moonmilk",
+  "shelf": "rework",
+  "family": "Hollow",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "cave",
+    "water",
+    "reflection",
+    "dripstone",
+    "mist",
+    "scene"
+  ],
+  "description": "A still pool deep in a limestone cave: lumpy, milky dripstones hang from a violet-shadowed vault, their thin tips glowing teal, and a cluster of stalagmites stands round a spring on the right that lights them from below. The black water mirrors them all; drip rings spread across it, low mist creeps over it and gold and teal motes rise and fade.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Pool glow",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How strongly the water glows and lights the dripstones from below."
+    },
+    {
+      "uniform": "u_merge",
+      "label": "Merge",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.45,
+      "effect": "How far the dripstones weld into each other and the roof, from sharp separate spikes to melted flowstone."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Speed of the mist, the rising motes, the drip rings and the breathing of the glow."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.25,
+    "bloom": 0.45,
+    "bloomRadius": 3,
+    "dither": 1
+  },
+  "defaultPalette": "peacock"
+}
