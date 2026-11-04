@@ -198,7 +198,8 @@ vec4 volume(vec3 ro, vec3 rd, float t0, float t1) {
     float up = p.y - LENS;
     if (up > 0.0) {
       float cr = 0.025 + up * 0.42;
-      float cone = smoothstep(cr, cr * 0.2, length(p.xz)) * exp(-up * 5.0);
+      // gone by the top of the hypercube, well inside the box
+      float cone = smoothstep(cr, cr * 0.2, length(p.xz)) * exp(-up * 5.0) * smoothstep(C.y + REACH, C.y - 0.1, p.y);
       acc.z += cone * (0.7 + 0.3 * scan) * dt * 3.0;
     }
     t += dt;
