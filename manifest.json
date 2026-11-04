@@ -42,7 +42,8 @@
     "Concourse",
     "Vitrine",
     "Smithy",
-    "Lagoon"
+    "Lagoon",
+    "Byway"
   ],
   "shaders": [
     "acidsquares",
@@ -317,6 +318,7 @@
     "shatter",
     "shear",
     "sheen",
+    "shimmer",
     "shoaling",
     "shore",
     "sigil",

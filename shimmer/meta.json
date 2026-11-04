@@ -1,0 +1,66 @@
+{
+  "name": "Shimmer",
+  "slug": "shimmer",
+  "shelf": "rework",
+  "family": "Byway",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "road",
+    "perspective",
+    "lamps",
+    "heat",
+    "mirage",
+    "night",
+    "desert"
+  ],
+  "description": "A straight desert highway at night runs to a vanishing point left of centre under a faint galaxy, its grainy asphalt pooled mint by two files of street lamps that slide past crisp and close and shrink to soft points where rising heat bends the far poles, reflector posts and ranch lights and lays a mirage of them on the road; a sagging telephone line crosses the dark plain on the right.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_heat",
+      "label": "Heat shimmer",
+      "min": 0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How hard rising heat bends the air over the horizon and how bright the road mirage reads."
+    },
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the lamps and road paint slide past."
+    },
+    {
+      "uniform": "u_lamps",
+      "label": "Lamps",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the lamp heads and the pools they throw on the road."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Distance haze and the town glow sitting on the horizon."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.15
+  },
+  "defaultPalette": "mint"
+}
