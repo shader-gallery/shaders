@@ -1,0 +1,63 @@
+{
+  "name": "Platelayer",
+  "slug": "platelayer",
+  "shelf": "rework",
+  "family": "Hollow",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "tunnel",
+    "subway",
+    "rails",
+    "perspective",
+    "lamps"
+  ],
+  "description": "A deep-level tube tunnel from the cab of a slow train: dim headlights rake solid concrete sleepers bedded in matte ballast, with two running rails and a centre conductor rail standing proud on baseplates, their polished heads catching the light, while chipped rib arches, sagging cable runs, caged bulkheads and hooded signal heads slide past toward a bend right of centre.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the train runs, sliding sleepers, ribs and signals past."
+    },
+    {
+      "uniform": "u_bend",
+      "label": "Bend",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.85,
+      "effect": "How hard the tunnel curves away to the right, from a straight bore to a tight bend."
+    },
+    {
+      "uniform": "u_lamps",
+      "label": "Lamps",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the signal heads and caged bulkheads and the light they pool on walls and track."
+    },
+    {
+      "uniform": "u_headlight",
+      "label": "Headlights",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the train headlights raking the sleepers and rails ahead."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "abyssal"
+}
