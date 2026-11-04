@@ -1,0 +1,67 @@
+{
+  "name": "Simmer",
+  "slug": "simmer",
+  "shelf": "rework",
+  "family": "Byway",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "road",
+    "desert",
+    "night",
+    "heat",
+    "mirage",
+    "perspective",
+    "landscape"
+  ],
+  "description": "Standing in the lane of a straight desert highway at night: lamp posts lay peach light on the grainy asphalt and lime road paint, timber telephone poles carry sagging wires off to a glowing town on the horizon, and necked hoodoos and a tiered butte stand against a pink and peach sky. Heat rising off the far road makes the distant lamps, poles, headlights and tail lights waver, puts a pale mirage sheen on the far tarmac, and cars slowly come and go.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_shimmer",
+      "label": "Heat shimmer",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How strongly rising heat bends and wobbles the far road, lights and ridges."
+    },
+    {
+      "uniform": "u_mirage",
+      "label": "Mirage",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much the hot far road mirrors the sky, ridges and lights upside down."
+    },
+    {
+      "uniform": "u_traffic",
+      "label": "Traffic speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How fast the headlights and tail lights travel along the road."
+    },
+    {
+      "uniform": "u_lamps",
+      "label": "Lamps",
+      "min": 0.3,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the roadside lamps, their light cones and the pools they lay on the road."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1,
+    "grain": 0.04,
+    "saturation": 1.1
+  },
+  "defaultPalette": "sherbet"
+}
