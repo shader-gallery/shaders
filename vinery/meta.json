@@ -1,0 +1,64 @@
+{
+  "name": "Vinery",
+  "slug": "vinery",
+  "shelf": "rework",
+  "family": "Drizzle",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "greenhouse",
+    "glass",
+    "condensation",
+    "night",
+    "foliage"
+  ],
+  "description": "A tomato house at night through its fogged, steel-framed wall: rows of tall vines with drooping lobed leaves recede down a dark aisle in cold blue air, their tops lit gold by a band of sodium lamps under the raftered glass roof while the lower leaves fall into blue shade with pale cold rims. Beads on the glass hold small inverted glints, and drops slip down in fits and starts, leaving clear wavering trails.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fog",
+      "label": "Condensation",
+      "min": 0.1,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.42,
+      "effect": "How thickly the glass is fogged, from a clear pane onto the crop to a glowing milky veil."
+    },
+    {
+      "uniform": "u_beads",
+      "label": "Bead size",
+      "min": 0.5,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Size of the condensation beads and running drops on the glass."
+    },
+    {
+      "uniform": "u_run",
+      "label": "Run speed",
+      "min": 0,
+      "max": 0.4,
+      "step": 0.01,
+      "default": 0.14,
+      "effect": "How quickly drops slip down the panes, from still glass to steady runs."
+    },
+    {
+      "uniform": "u_panes",
+      "label": "Pane size",
+      "min": 1.6,
+      "max": 5,
+      "step": 0.05,
+      "default": 2.4,
+      "effect": "Number of steel-framed panes across the frame height."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 3,
+    "dither": 1,
+    "saturation": 1.1
+  },
+  "defaultPalette": "sodium"
+}
