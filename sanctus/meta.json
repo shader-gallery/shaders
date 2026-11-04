@@ -1,0 +1,55 @@
+{
+  "name": "Sanctus",
+  "slug": "sanctus",
+  "shelf": "rework",
+  "family": "Sanctum",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "architecture",
+    "interior",
+    "light-shafts",
+    "stained-glass",
+    "dust",
+    "gothic"
+  ],
+  "description": "Looking down a long gothic nave of pointed arcades, triforium and clerestory toward a glowing triple lancet at the east end: a broad stained-glass sunbeam in rose and wine cuts diagonally across the blue-black stone, laying soft coloured window patches on the far piers. Dust wisps drift through the beam and the sun swings slowly, sliding the patches along the arcade.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_shafts",
+      "label": "Shafts",
+      "min": 0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1.2,
+      "effect": "Brightness of the sunbeams hanging in the air of the nave."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much dust swirls in the beams and how many motes catch the light."
+    },
+    {
+      "uniform": "u_sunHeight",
+      "label": "Sun height",
+      "min": 0.6,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How steeply the sun falls through the windows, moving the patches across piers and floor."
+    }
+  ],
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "wine"
+}
