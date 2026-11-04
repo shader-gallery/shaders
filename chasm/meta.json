@@ -1,0 +1,63 @@
+{
+  "name": "Chasm",
+  "slug": "chasm",
+  "shelf": "rework",
+  "family": "Narrows",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "ice",
+    "glacier",
+    "crevasse",
+    "landscape",
+    "depth"
+  ],
+  "description": "Twilight on a glacier, standing at the lip of a crevasse that winds off toward a far snow ridge: white ice walls banded with clear violet and dusty strata, scalloped by melt, sink to ember-black while snow bridges with hanging icicles span the slot. Wind-carved drifts in deep violet shade catch a low warm sun on their crests as the view creeps slowly along the crack.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_walk",
+      "label": "Drift speed",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.3,
+      "effect": "How fast the view creeps along the crevasse."
+    },
+    {
+      "uniform": "u_bands",
+      "label": "Ice strata",
+      "min": 1.5,
+      "max": 6,
+      "step": 0.05,
+      "default": 3.2,
+      "effect": "How many ice bands are stacked down the walls."
+    },
+    {
+      "uniform": "u_sun",
+      "label": "Sun",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the low warm sun on the drifts, walls and haze."
+    },
+    {
+      "uniform": "u_depth",
+      "label": "Absorption",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How quickly the ice swallows light going down the crack, from a glowing slot to a short white lip over black."
+    }
+  ],
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "orchid"
+}
