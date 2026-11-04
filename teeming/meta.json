@@ -1,0 +1,67 @@
+{
+  "name": "Teeming",
+  "slug": "teeming",
+  "shelf": "rework",
+  "family": "Smithy",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "foundry",
+    "molten",
+    "sparks",
+    "scene",
+    "spiral",
+    "interior"
+  ],
+  "description": "A dark foundry casting floor: a tilted steel ladle on a crane rope pours a white-hot stream into a rippling sprue basin, and runners carry the metal out along the golden-angle spiral arms of a field of recessed sand cups that glow and crust over in a slow outward wave. Sparks fan up through the haze, an arched furnace mouth burns in the far brick wall, closed flasks with hot risers wait in the foreground, and cold blue night shows in the tall steel windows high above as the view sways slowly.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How fast metal streams down the runners and the fill wave rolls out through the moulds."
+    },
+    {
+      "uniform": "u_heat",
+      "label": "Heat",
+      "min": 0.3,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the molten metal and the bounce light it throws on the sand and walls."
+    },
+    {
+      "uniform": "u_sparks",
+      "label": "Sparks",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many sparks fan up from the pour."
+    },
+    {
+      "uniform": "u_smoke",
+      "label": "Smoke",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the hot haze glowing over the casting floor."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.3,
+    "aberration": 0,
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "foundry"
+}
