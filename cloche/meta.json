@@ -1,0 +1,65 @@
+{
+  "name": "Cloche",
+  "slug": "cloche",
+  "shelf": "rework",
+  "family": "Drizzle",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "greenhouse",
+    "glass",
+    "condensation",
+    "scene",
+    "plants",
+    "night"
+  ],
+  "description": "A greenhouse at night seen from the wet path: a long fogged glass wall in a steel frame runs off to the right above a brick knee wall, rows of rose-white grow light bars shine through the fog with dark vine leaves silhouetted against them, and pots on the benches show dimly in the lower panes. Beads of condensation stud the glass and drops slip down in jerks leaving clear trails, warm mist drifts in the lamp light, a low cloud deck glows wine above the far end of the roof, and puddles on the path mirror the panes.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fog",
+      "label": "Condensation",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How heavily the panes are fogged, from clear glass to a milky glow."
+    },
+    {
+      "uniform": "u_lamps",
+      "label": "Grow lights",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the grow lights and the glow they spill."
+    },
+    {
+      "uniform": "u_drip",
+      "label": "Drips",
+      "min": 0,
+      "max": 3,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How fast drops run down the glass, from still beads to quick runs."
+    },
+    {
+      "uniform": "u_mist",
+      "label": "Mist",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Humid mist billowing inside and the glow of the cloud deck above."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1,
+    "grain": 0.04
+  },
+  "defaultPalette": "wine"
+}
