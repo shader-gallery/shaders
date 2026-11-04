@@ -44,7 +44,8 @@
     "Smithy",
     "Lagoon",
     "Byway",
-    "Sanctum"
+    "Sanctum",
+    "Narrows"
   ],
   "shaders": [
     "acidsquares",
@@ -333,6 +334,7 @@
     "skein",
     "slick",
     "slipface",
+    "slotlight",
     "smokering",
     "snare",
     "solder",

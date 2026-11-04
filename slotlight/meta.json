@@ -1,0 +1,65 @@
+{
+  "name": "Slotlight",
+  "slug": "slotlight",
+  "shelf": "rework",
+  "family": "Narrows",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "canyon",
+    "sandstone",
+    "strata",
+    "shafts",
+    "scene",
+    "raymarch"
+  ],
+  "description": "A low view up a narrow, twisting sandstone slot canyon: fluted walls swept by flowing strata glow pale coral under a thin white slit of sky and sink through wine into near-black shade, with rippled sand on the floor below. Faint blades of dusty sunlight fan down from the slit and swing slowly as the view creeps forward between the walls.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Drift",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.35,
+      "effect": "How fast the view creeps up the canyon and the shafts swing."
+    },
+    {
+      "uniform": "u_strata",
+      "label": "Strata",
+      "min": 0.4,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the sandstone beds and ledges on the walls."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Dust",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How much dust lights up inside the sun shafts."
+    },
+    {
+      "uniform": "u_bounce",
+      "label": "Bounce",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How far the bounced sunlight reaches down the walls before cold shade takes over."
+    }
+  ],
+  "post": {
+    "grain": 0.035,
+    "vignette": 0.22,
+    "bloom": 0.35,
+    "dither": 1
+  },
+  "defaultPalette": "coral"
+}
