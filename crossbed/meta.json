@@ -1,0 +1,65 @@
+{
+  "name": "Crossbed",
+  "slug": "crossbed",
+  "shelf": "rework",
+  "family": "Narrows",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "canyon",
+    "sandstone",
+    "strata",
+    "haze",
+    "landscape"
+  ],
+  "description": "Looking up a slot canyon: overlapping, cross-bedded sandstone walls with grained strata and dark partings close toward a blazing white slit of sky, their lips glowing pink up high, violet in the middle and blue to mint near the floor. A pale shaft of light sways slowly through the lower gap, with drifting haze and faint dust between the receding walls.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How much luminous air sits between the wall layers, from crisp depth to deep glow."
+    },
+    {
+      "uniform": "u_beam",
+      "label": "Light shaft",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.75,
+      "effect": "Brightness of the shaft falling from the slit and the motes caught in it."
+    },
+    {
+      "uniform": "u_strata",
+      "label": "Bedding",
+      "min": 0.4,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the flowing sandstone strata lines on every wall."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "Speed of the dust motes and the haze sheets drifting through the canyon."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.3,
+    "dither": 1,
+    "bloom": 0.35,
+    "saturation": 1.1
+  },
+  "defaultPalette": "opal"
+}
