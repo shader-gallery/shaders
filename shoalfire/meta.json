@@ -1,0 +1,54 @@
+{
+  "name": "Shoalfire",
+  "slug": "shoalfire",
+  "shelf": "rework",
+  "family": "Lagoon",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "water",
+    "caustics",
+    "sand",
+    "shafts",
+    "scene"
+  ],
+  "description": "Looking down through shallow clear water onto rippled sand: crimson caustic filaments with pale hot cores fold, pinch and slide across the ripple crests and catch the flank of a weathered boulder, while silt drifts through faint shafts and the floor recedes into deep wine haze. The swell keeps the light lines stretching, merging and pinching off continuously.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_swell",
+      "label": "Swell",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How fast the surface swell slides the caustic filaments across the sand."
+    },
+    {
+      "uniform": "u_focus",
+      "label": "Focus",
+      "min": 0.4,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How sharply the waves pinch the light into bright filaments, from soft dapple to tight folded threads."
+    },
+    {
+      "uniform": "u_shafts",
+      "label": "Shafts",
+      "min": 0,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the slanting light shafts and the glow of the silt in them."
+    }
+  ],
+  "post": {
+    "bloom": 0.35,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "wine"
+}
