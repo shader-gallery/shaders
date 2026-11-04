@@ -2,7 +2,7 @@
   "name": "Laminar",
   "slug": "laminar",
   "family": "Current",
-  "shelf": "rework",
+  "shelf": "archive",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "flow", "streamlines", "fluid", "organic"],
   "description": "Smooth horizontal streamlines of a steady current gliding past an invisible bluff body. The lines part cleanly around the obstacle and rejoin downstream, crowding bright over its shoulders and opening calm in the far field, never crossing. Luminous packets ride the lines downstream so the flow reads as moving, with a near and far sheet parallaxing for depth — the real flow-past-a-cylinder streamfunction.",

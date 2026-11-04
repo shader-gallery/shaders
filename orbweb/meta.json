@@ -26,5 +26,5 @@
   ],
   "post": { "bloom": 0.5, "bloomRadius": 4.0, "vignette": 0.3, "saturation": 1.08, "dither": 1.0 },
   "defaultPalette": "glacier",
-  "shelf": "rework"
+  "shelf": "archive"
 }

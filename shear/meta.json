@@ -2,7 +2,7 @@
   "name": "Shear",
   "slug": "shear",
   "family": "Current",
-  "shelf": "rework",
+  "shelf": "archive",
   "author": "E. T. Carter",
   "tags": ["dark", "glow", "loop", "flow", "shear", "billow", "streamlines", "organic"],
   "description": "Stratified flow in fast and slow lanes. Stacked horizontal bands stream past one another at alternating speeds, and along every boundary the shear rolls the streamlines up into a marching row of cat-eye billows — the Kelvin-Helmholtz instability, drawn from the exact Stuart-vortex streamfunction. Straight outer streamlines are the lanes; the curled cores are the billows, turning as adjacent rows drift opposite ways.",
