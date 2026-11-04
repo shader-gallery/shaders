@@ -1,0 +1,55 @@
+{
+  "name": "Transept",
+  "slug": "transept",
+  "shelf": "rework",
+  "family": "Sanctum",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "architecture",
+    "light-shafts",
+    "dust",
+    "stained-glass",
+    "perspective"
+  ],
+  "description": "A gothic nave recedes toward a glowing triple lancet; low sun pours through the stained clerestory on the left and cuts cyan, magenta and lime shafts across the dark, laying window-shaped pools on the polished flagstones and far arcade. Dust drifts through the beams, motes glint as they cross them, and passing cloud slowly swells and thins the light.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_shaft",
+      "label": "Sunlight",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the sun through the glass: from a dim blue nave to blazing coloured shafts and floor pools."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Dust",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much dust hangs in the air: faint ghost beams at zero, thick solid shafts and many motes at the top."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "Speed of the drifting dust, the floating motes and the passing cloud."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 3,
+    "dither": 1,
+    "grain": 0.035
+  },
+  "defaultPalette": "neon"
+}
