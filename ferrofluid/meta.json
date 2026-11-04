@@ -12,13 +12,14 @@
     "liquid",
     "magnet",
     "spikes",
+    "spire",
     "mirror",
     "dark"
   ],
-  "description": "A pool of magnetic fluid in a shallow dark dish on a dark studio floor, drawn up into a crown of sharp spikes by a magnet circling unseen beneath it. Where the magnet passes the spikes stand tall and lean toward it, behind it they settle to bumps, so the crown walks round the pool. Near-black and glossy, a dark mirror of the studio, with the theme catching only along the spike edges.",
+  "description": "Magnetic fluid in a dark dish round a steel form. As the field builds the fluid climbs the form in a slow pulse, coating it in rows of sharp spikes, holds near the top, then slides back into the spiked pool, and the bare steel turns into the next form: a spiral spire, an onion bulb, a thick coil, a twisted three-lobed column. Near-black and glossy, with the theme catching only along the spike edges.",
   "entry": "shader.frag",
   "sculpture": {
-    "label": "Magnetic fluid in a dark dish, drawn up into spikes by a magnet circling unseen beneath it, so the crown walks round the pool and never holds a shape."
+    "label": "Magnetic fluid climbing a steel form in slow pulses, spiked all over, then sliding off as the steel turns into the next shape."
   },
   "params": [
     {
@@ -28,16 +29,16 @@
       "max": 1.6,
       "step": 0.05,
       "default": 1.0,
-      "effect": "How strongly the magnet raises the spikes; 0 lets the fluid lie flat with only a ripple of bumps."
+      "effect": "How strongly the field raises the spikes; 0 lets the fluid lie smooth on the spire and in the pool."
     },
     {
-      "uniform": "u_orbit",
-      "label": "Orbit",
+      "uniform": "u_pulse",
+      "label": "Pulse",
       "min": 0.0,
-      "max": 4.0,
+      "max": 3.0,
       "step": 0.05,
       "default": 1.0,
-      "effect": "How fast the magnet circles under the dish; 0 holds the crown in one place."
+      "effect": "How fast the fluid climbs, falls back and the steel changes form; 0 holds the first form with the fluid at its foot."
     },
     {
       "uniform": "u_mouseInfluence",

@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
-// ferrofluid (Vitrine) - a pool of magnetic fluid in a shallow dark dish on a
-// dark studio floor, drawn up into a crown of sharp spikes by a magnet that
-// circles unseen under the dish. Where the magnet passes the spikes stand
-// tall and lean toward it; behind it they settle back to little bumps, so the
-// crown walks round the pool and never holds a shape. The fluid is near-black
-// and glossy, a dark mirror of the studio, and the theme colours catch only
-// along the edges of the spikes, brightest on the tallest.
+// ferrofluid (Vitrine) - magnetic fluid in a shallow dark dish round a steel
+// form on a dark studio floor. As the field builds, the fluid climbs the form
+// in a slow pulse, coating it in rows of sharp spikes that stand out from its
+// surface wherever it faces; it holds near the top, then lets go and slides
+// back into the spiked pool, and with the fluid down the bare steel turns
+// into the next form: a spire wound with spiral ridges, an onion bulb on a
+// neck, a thick coil round a rod, a twisted three-lobed column, and round
+// again. Near-black and glossy, a dark mirror of the studio, the theme
+// catching only along the spike edges; above the fluid the steel is bare.
 //
 // The FORM block is the sculpture itself, the same code the museum stands on a
 // plinth (src/scripts/museum/sculpture.js cuts it out of this file): map(p) and
@@ -31,8 +33,8 @@ uniform vec3  u_palette[4];
 uniform float u_mouseInfluence; // pointer orbits the camera, 0 ignores it  (default 0.0)
 
 // ---- FORM begin ---------------------------------------------------------------
-uniform float u_pull;           // how strongly the magnet raises spikes    (default 1.0)
-uniform float u_orbit;          // how fast the magnet circles underneath   (default 1.0)
+uniform float u_pull;           // how strongly the field raises spikes     (default 1.0)
+uniform float u_pulse;          // how fast the fluid climbs and falls back (default 1.0)
 
 #define TAU 6.28318530718
 mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
@@ -43,75 +45,145 @@ vec3 c0, c1, c2, c3;
 vec3 env(vec3 r);
 
 // the box it is drawn in: half width, height, half depth (m)
-const vec3 BOUNDS = vec3(0.34, 0.5, 0.34);
+const vec3 BOUNDS = vec3(0.34, 0.97, 0.34);
 
-const float DISH = 0.06;    // the dish height; the fluid sits in it
-const float POOL = 0.27;    // the radius of the fluid
-const float DOME = 0.06;    // how high the fluid mounds in the middle
-const float RING = 0.052;   // the spacing of the rings of spikes
+const float DISH = 0.06;    // the dish height; the pool sits in it
+const float POOL = 0.27;    // the radius of the pool
+const float TOP = 0.84;     // how far the forms reach above the dish
+const float BASE = 0.12;    // the radius of the spike rings in the pool
+const float PERIOD = 20.0;  // seconds a form stands: climbed, held, let go
 
 float smin(float a, float b, float k) { float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0); return mix(b, a, h) - k * h * (1.0 - h); }
 
-// the magnet, under the dish, on a slow circle
-vec3 magnet() {
-  float a = u_time * u_orbit * 0.25;
-  return vec3(0.09 * cos(a), -0.06, 0.09 * sin(a * 1.3 + 0.7));
-}
-// the height of the mound of fluid at radius r
-float mound(float r) { float x = clamp(r / POOL, 0.0, 1.0); return DISH - 0.012 + DOME * (1.0 - x * x); }
+// where the cycle is: whole numbers count the forms, the fraction is the
+// pulse through the current one
+float cycle() { return u_time * u_pulse / PERIOD; }
 
-// One spike: a cone standing on the mound at c, its height from how close
-// the magnet is, leaning toward it. Field lines crowd near the magnet, so the
-// spikes there stand tallest and the far ones settle to little bumps.
-float spike(vec3 p, vec2 at, vec3 m) {
-  vec3 c = vec3(at.x, mound(length(at)) - 0.01, at.y);
-  vec2 off = m.xz - at;
-  float pull = u_pull / (1.0 + 70.0 * dot(off, off));
-  float H = 0.01 + 0.19 * pull;
-  float B = 0.016 + 0.006 * pull;
-  vec3 dir = normalize(vec3(off.x * 0.9, 1.0, off.y * 0.9));
-  vec3 q = p - c;
-  float h = dot(q, dir);
-  float rad = length(q - dir * h);
-  float side = (rad - B * (1.0 - clamp(h / H, 0.0, 1.0))) * H / sqrt(H * H + B * B);
-  return max(side, max(-h, h - H));
+// how high the fluid has climbed: drawn up the form in a slow pulse as the
+// field builds, held, then let go to slide back into the pool before the
+// steel turns into the next form
+float level() {
+  float ph = fract(cycle());
+  float up = smoothstep(0.02, 0.45, ph) * (1.0 - smoothstep(0.62, 0.84, ph));
+  return DISH + 0.06 + up * (TOP - 0.1);
+}
+
+// The steel forms the fluid climbs, one at a time: 0 a spire wound with
+// three spiral ridges, 1 an onion bulb on a short neck, 2 a thick coil round
+// a slim rod, 3 a column of three lobes that turn as it rises. formD is the
+// distance to form k, formR its girth at height y, which spaces the spikes.
+float formD(float k, vec3 p) {
+  float y = p.y - DISH;
+  float h = clamp(y / TOP, 0.0, 1.0);
+  float a = atan(p.z, p.x);
+  float r = length(p.xz);
+  float d;
+  if (k < 0.5) {
+    float ridge = 0.02 * (1.0 - h) * (0.5 + 0.5 * sin(3.0 * a - p.y * 26.0));
+    d = (r - 0.12 * (1.0 - h) - 0.003 - ridge) * 0.7;
+  } else if (k < 1.5) {
+    float b = sin(3.14159 * clamp((h - 0.12) / 0.88, 0.0, 1.0));
+    d = (r - 0.022 - 0.15 * pow(b, 1.6) * (1.0 - 0.6 * h)) * 0.6;
+  } else if (k < 2.5) {
+    float yy = p.y - a / TAU * 0.16;
+    yy = mod(yy + 0.08, 0.16) - 0.08;
+    d = min((length(vec2(r - 0.1, yy)) - 0.032) * 0.7, r - 0.012);
+  } else {
+    d = (r - (0.075 + 0.035 * cos(3.0 * (a - p.y * 7.0))) * (1.0 - 0.55 * h) - 0.01) * 0.6;
+  }
+  return max(d, max(-(y + 0.02), y - TOP));
+}
+float formR(float k, float y) {
+  float h = clamp((y - DISH) / TOP, 0.0, 1.0);
+  if (k < 0.5) return 0.12 * (1.0 - h) + 0.003;
+  if (k < 1.5) return 0.022 + 0.15 * pow(sin(3.14159 * clamp((h - 0.12) / 0.88, 0.0, 1.0)), 1.6) * (1.0 - 0.6 * h);
+  if (k < 2.5) return 0.132;
+  return 0.075 * (1.0 - 0.55 * h) + 0.01;
+}
+
+// the form now, and the next it is turning into while the fluid is down
+float formNow() { return mod(floor(cycle()), 4.0); }
+float morph() { return smoothstep(0.86, 1.0, fract(cycle())); }
+float steelD(vec3 p) {
+  float k = formNow(), m = morph();
+  float d = formD(k, p);
+  if (m > 0.0) d = mix(d, formD(mod(k + 1.0, 4.0), p), m);
+  return d;
+}
+float girth(float y) {
+  float k = formNow();
+  return mix(formR(k, y), formR(mod(k + 1.0, 4.0), y), morph());
+}
+
+// The fluid on the form: a coat, thick at the foot and thin at the front
+// where it is still climbing, standing up in spikes. The spikes sit in rows
+// up the form, each row turned half a spike against the last, as many round
+// as its girth has room for, and stand out from the surface wherever it
+// faces, tallest where the field is strongest, low near the front,
+// rippling as the field breathes.
+float coat(vec3 p, float lvl) {
+  float y = p.y;
+  float front = smoothstep(lvl + 0.01, lvl - 0.07, y);
+  if (front <= 0.0) return 0.0;
+  float r = max(length(p.xz), 0.02);
+  float base = 0.008 + 0.03 * smoothstep(DISH + 0.22, DISH, y);
+  float row = (y - DISH) / 0.034;
+  float ri = floor(row + 0.5);
+  float n = max(5.0, floor(TAU * (girth(DISH + ri * 0.034) + 0.02) / 0.034));
+  float across = atan(p.z, p.x) / TAU * n + 0.5 * mod(ri, 2.0) + 0.04 * ri;
+  vec2 cell = vec2((fract(across + 0.5) - 0.5) * TAU * r / n, (row - ri) * 0.034);
+  float field = u_pull * (0.65 + 0.35 * sin(u_time * 1.1 - y * 9.0)) * smoothstep(lvl, lvl - 0.18, y);
+  float spike = 0.045 * field * max(0.0, 1.0 - length(cell) / 0.0145);
+  return (base + spike) * front;
+}
+
+// the pool round the foot, spiked in rings, the inner rings tallest
+float pool(vec3 p) {
+  float r = length(p.xz);
+  float mound = DISH - 0.012 + 0.05 * (1.0 - clamp(r / POOL, 0.0, 1.0));
+  float d = max(p.y - mound, r - POOL);
+  float a = atan(p.z, p.x) / TAU;
+  float ring = (r - BASE) / 0.045;
+  float ri = clamp(floor(ring + 0.5), 0.0, 3.0);
+  float n = 12.0 + 6.0 * ri;
+  float across = a * n + 0.5 * mod(ri, 2.0);
+  float rr = BASE + ri * 0.045;
+  vec2 cell = vec2((fract(across + 0.5) - 0.5) * TAU * rr / n, r - rr);
+  float field = u_pull * (0.7 + 0.3 * sin(u_time * 1.1 + ri * 1.7)) * (1.0 - ri * 0.2);
+  float H = 0.012 + 0.085 * field;
+  float h = p.y - mound;
+  float spike = max(length(cell) - 0.015 * (1.0 - clamp(h / H, 0.0, 1.0)), max(-h, h - H));
+  return smin(d, spike, 0.01);
 }
 
 vec2 map(vec3 p) {
-  vec3 m = magnet();
-  // the fluid: a flattened mound in the dish
-  float r = length(p.xz);
-  float d = max(p.y - mound(r), r - POOL);
-  // the spikes, ring by ring round the middle; each ring finds the one
-  // spike nearest this point, turned a little against the ring inside it
-  float sp = spike(p, vec2(0.0), m);
-  for (int k = 1; k < 5; k++) {
-    float n = 6.0 * float(k);
-    float rk = RING * float(k);
-    float a = atan(p.z, p.x) + 0.3 * float(k);
-    float a0 = floor(a / TAU * n + 0.5) * TAU / n - 0.3 * float(k);
-    sp = min(sp, spike(p, rk * vec2(cos(a0), sin(a0)), m));
-  }
-  d = smin(d, sp, 0.012);
+  float lvl = level();
+  float steel = steelD(p);
+  // the fluid hugs the form up to where it has climbed, and merges with
+  // the pool at the foot; the field runs it faster than true distance
+  float c = coat(p, lvl);
+  float fluid = smin((steel - c) * 0.45, pool(p) * 0.6, 0.03);
   // the dish: a low dark disc with a shallow bowl in its top
-  vec2 w = vec2(r - 0.32, abs(p.y - DISH * 0.5) - DISH * 0.5);
+  vec2 w = vec2(length(p.xz) - 0.32, abs(p.y - DISH * 0.5) - DISH * 0.5);
   float dish = min(max(w.x, w.y), 0.0) + length(max(w, 0.0)) - 0.006;
   dish = max(dish, -(length(p - vec3(0.0, 1.025, 0.0)) - 1.0));
-  return d < dish ? vec2(d * 0.8, 1.0) : vec2(dish, 2.0);
+  vec2 r = fluid < dish ? vec2(fluid, 1.0) : vec2(dish, 2.0);
+  // bare steel above the fluid
+  return steel < r.x - 0.0004 ? vec2(steel, 3.0) : r;
 }
 
 vec3 shade(float id, vec3 p, vec3 n, vec3 rd) {
   vec3 r = reflect(rd, n);
   vec3 L = normalize(vec3(0.35, 0.9, 0.55));
+  float spec = pow(max(dot(n, normalize(L - rd)), 0.0), 120.0);
+  if (id > 2.5) return env(r) * vec3(0.55, 0.56, 0.6) + spec * 1.2;
   if (id > 1.5) return lin(vec3(0.05, 0.05, 0.055)) * (0.4 + 0.9 * max(dot(n, L), 0.0)) + env(r) * 0.06;
   // ferrofluid: near-black and glossy, a dark mirror; the theme catches only
-  // along the edges of the spikes, brighter the taller they stand
+  // along the edges of the spikes
   float fr = 1.0 - max(dot(n, -rd), 0.0);
   float fr2 = fr * fr;
   float fres = 0.04 + 0.5 * fr2 * fr2 * fr;
-  float spec = pow(max(dot(n, normalize(L - rd)), 0.0), 120.0);
-  float lift = smoothstep(mound(length(p.xz)), mound(length(p.xz)) + 0.08, p.y);
-  vec3 edge = mix(lin(c0), lin(c2), lift) * fr2 * fr2 * (0.05 + 2.4 * lift);
+  vec3 edge = mix(lin(c0), lin(c2), smoothstep(0.1, 0.8, p.y)) * fr2 * fr2 * fr2 * 0.7;
   return env(r) * fres + spec * 1.4 + edge;
 }
 // ---- FORM end -----------------------------------------------------------------
