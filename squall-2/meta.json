@@ -1,0 +1,66 @@
+{
+  "name": "Squall",
+  "slug": "squall-2",
+  "shelf": "rework",
+  "family": "Lour",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "storm",
+    "clouds",
+    "volumetric",
+    "reflection",
+    "rain",
+    "landscape"
+  ],
+  "description": "Towering thunderheads with a wind-sheared anvil stand over a flooded salt flat at night, lit from inside by slow violet and blue glows that swell in one cell as another fades, never flashing. Rain under the bases glows where the light reaches it, an ember town band smoulders along the horizon, and the dark water mirrors the storm in rippled streaks around low crust shoals.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Inner glow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How brightly the slow glows light the clouds from inside."
+    },
+    {
+      "uniform": "u_cover",
+      "label": "Storm height",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How tall and spread the storm cells tower over the flat."
+    },
+    {
+      "uniform": "u_rain",
+      "label": "Rain",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the lit rain curtains hanging under the cloud bases."
+    },
+    {
+      "uniform": "u_wind",
+      "label": "Wind",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Strength of the gusts that ripple and streak the mirror."
+    }
+  ],
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.22,
+    "bloom": 0.4,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "amethyst"
+}
