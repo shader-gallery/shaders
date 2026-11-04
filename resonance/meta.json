@@ -1,0 +1,62 @@
+{
+  "name": "Resonance",
+  "slug": "resonance",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "steel",
+    "harmonics",
+    "symmetry",
+    "morph",
+    "mirror",
+    "dark"
+  ],
+  "description": "A dark steel sphere on a slim rod, pulled into one standing form after another: twelve round knobs on the corners of an icosahedron, a star of eight sharp corners, a ribbed dome drawn up to a tip, the knobs wound into spirals, twelve deep dimples, twelve spikes. Each holds still like machined metal, then eases into the next, with light in the theme pooling faintly in the deepest hollows.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "A steel sphere pulled into one symmetric form after another, knobs, a star, a ribbed dome, spirals, dimples, spikes, each held and then eased into the next."
+  },
+  "params": [
+    {
+      "uniform": "u_depth",
+      "label": "Depth",
+      "min": 0.0,
+      "max": 1.5,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How far each form stands out from the sphere; 0 leaves a plain steel ball."
+    },
+    {
+      "uniform": "u_pace",
+      "label": "Pace",
+      "min": 0.2,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast it moves from form to form: 1 holds each for about six seconds and takes four to ease into the next."
+    },
+    {
+      "uniform": "u_turn",
+      "label": "Turn",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Turntable speed: 1 is one turn a minute; 0 holds it."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}
