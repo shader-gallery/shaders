@@ -1,0 +1,64 @@
+{
+  "name": "Truss",
+  "slug": "truss",
+  "shelf": "rework",
+  "family": "Drizzle",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "greenhouse",
+    "glass",
+    "condensation",
+    "architecture",
+    "scene"
+  ],
+  "description": "A night greenhouse seen softly through its fogged steel-framed wall: dark tomato vines climb strings toward lattice girders and Venlo roof ridges under alternating rose LED bars and amber sodium lamps, bay after bay into blue night. Beads on the glass swell, sag and slide, each holding a tiny inverted view of the lamps, while drops run down clear tracks and the hall glides slowly closer.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fog",
+      "label": "Condensation",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.75,
+      "effect": "How thick the fog film is and how soft the hall behind it looks."
+    },
+    {
+      "uniform": "u_lamps",
+      "label": "Grow lamps",
+      "min": 0.3,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the rose and amber lamps and their glow in the haze."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.4,
+      "effect": "Speed of the glide down the aisle and of the beads swelling and sliding."
+    },
+    {
+      "uniform": "u_runs",
+      "label": "Running drops",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "How many drops break loose and run down the glass."
+    }
+  ],
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.1
+  },
+  "defaultPalette": "dusk"
+}
