@@ -1,0 +1,65 @@
+{
+  "name": "Bergschrund",
+  "slug": "bergschrund",
+  "shelf": "rework",
+  "family": "Narrows",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "ice",
+    "glacier",
+    "crevasse",
+    "depth",
+    "raymarch"
+  ],
+  "description": "Looking along and down a narrow glacier crevasse: banded, scalloped ice walls catch sky light at the frosted lips and sink through lilac and periwinkle to a black slot, between dark violet snowfields glinting with ice. Melt threads bead down the walls and snow motes sift into the crack as the view drifts slowly along it.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the view drifts along the crevasse, so the walls slide past."
+    },
+    {
+      "uniform": "u_melt",
+      "label": "Melt",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Amount and speed of the melt rills and the wet glaze on the walls."
+    },
+    {
+      "uniform": "u_bands",
+      "label": "Bands",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Contrast of the annual layers and dark dust seams in the ice."
+    },
+    {
+      "uniform": "u_motes",
+      "label": "Motes",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Amount of snow motes falling into the crack."
+    }
+  ],
+  "post": {
+    "grain": 0.03,
+    "bloom": 0.35,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.1
+  },
+  "defaultPalette": "amethyst"
+}
