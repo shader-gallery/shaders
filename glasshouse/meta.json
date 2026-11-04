@@ -1,0 +1,57 @@
+{
+  "name": "Glasshouse",
+  "slug": "glasshouse",
+  "shelf": "rework",
+  "family": "Drizzle",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "greenhouse",
+    "glass",
+    "condensation",
+    "scene",
+    "night"
+  ],
+  "description": "A steel framed greenhouse wall seen at a slant at night, receding to the right: behind fogged panes, some milky and some run clear, rows of magenta and violet grow lights and small warm sodium lamps glow over a dark hedge of backlit plants. Condensation beads lens the room and drops slide down the glass, leaving clear trails, above a block knee wall and a wet path that mirrors the glow.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fog",
+      "label": "Fog",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How thick the condensation is: clear glass showing the room sharp, up to milky panes where the lights are soft halos."
+    },
+    {
+      "uniform": "u_drip",
+      "label": "Drips",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many drops run down the panes, leaving clear trails."
+    },
+    {
+      "uniform": "u_lights",
+      "label": "Grow lights",
+      "min": 0.4,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the grow lights and sodium lamps inside."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.3,
+    "saturation": 1.15,
+    "bloom": 0.4,
+    "bloomRadius": 3,
+    "dither": 1
+  },
+  "defaultPalette": "witchlight"
+}
