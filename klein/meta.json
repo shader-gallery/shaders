@@ -1,0 +1,71 @@
+{
+  "name": "Klein Bottle",
+  "slug": "klein",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "volumetric",
+    "glass",
+    "topology",
+    "klein bottle",
+    "figure eight",
+    "dark"
+  ],
+  "description": "A Klein bottle in clear glass in its figure eight form: an upright glass ring whose figure eight cross section turns three half turns as it goes round, so it comes back turned over, one surface with one side. It churns slowly through itself, a smaller ring turns inside its hole like a gyroscope, and ribbons of light in the theme run along the glass, each pulse coming back on the far side of the lobe it left.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "A Klein bottle in its figure eight form, with a smaller one turning inside it. Pulses of light run round and come back on the other side."
+  },
+  "params": [
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the pulses of light run along the ribbons; 0 holds them still."
+    },
+    {
+      "uniform": "u_roll",
+      "label": "Roll",
+      "min": 0.0,
+      "max": 3.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the rings churn through themselves and the inner one turns; 0 holds both."
+    },
+    {
+      "uniform": "u_glass",
+      "label": "Glass",
+      "min": 0.3,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How much the glass shows: its reflections and its dark edges."
+    },
+    {
+      "uniform": "u_turn",
+      "label": "Turn",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "Turntable speed: 1 is one turn a minute; 0 holds it."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}
