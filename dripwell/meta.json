@@ -1,0 +1,55 @@
+{
+  "name": "Dripwell",
+  "slug": "dripwell",
+  "shelf": "rework",
+  "family": "Hollow",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "cave",
+    "water",
+    "reflection",
+    "stalactite",
+    "scene"
+  ],
+  "description": "A still cave pool mirrors a vault of clustered calcite stalactites rooted in the rock, their thin tips glowing rose, and a folded drapery striped peach and rose along the right wall, all lit from below by a lime spring at the left that glows up through the water. Drips ring out across the mirror, laps circle the stalagmites, and green vapour drifts up off the surface.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Pool glow",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How brightly the spring and the pool light the cave and shine through thin calcite."
+    },
+    {
+      "uniform": "u_drip",
+      "label": "Drips",
+      "min": 0,
+      "max": 3,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How often drips fall and send rings across the mirror; at zero the pool lies still."
+    },
+    {
+      "uniform": "u_mist",
+      "label": "Vapour",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How much glowing vapour rises off the water."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1,
+    "aberration": 0
+  },
+  "defaultPalette": "sherbet"
+}
