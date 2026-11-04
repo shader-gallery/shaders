@@ -1,0 +1,67 @@
+{
+  "name": "Sprue",
+  "slug": "sprue",
+  "shelf": "rework",
+  "family": "Smithy",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "foundry",
+    "molten",
+    "sparks",
+    "interior",
+    "scene",
+    "perspective"
+  ],
+  "description": "A night foundry hall: a crane ladle hangs from a gantry on the left third and pours a violet-white stream into a basin, the metal crawls with crust down a winding sand runner past iron-framed moulds while a furnace mouth feeds a far channel. Sparks rise and cool from the pour, heat glow climbs the brick walls and cold blue shafts slant through the smoke from high arched windows.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_flow",
+      "label": "Flow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.6,
+      "effect": "How fast the crusted metal runs down the channels and the stream falls."
+    },
+    {
+      "uniform": "u_sparks",
+      "label": "Sparks",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many sparks rise from the pour and the furnace, and how bright."
+    },
+    {
+      "uniform": "u_heat",
+      "label": "Heat",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the molten metal and the glow it throws on walls, moulds and chains."
+    },
+    {
+      "uniform": "u_shafts",
+      "label": "Window shafts",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Strength of the cold light slanting through the smoke from the high windows."
+    }
+  ],
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.25,
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.1
+  },
+  "defaultPalette": "amethyst"
+}
