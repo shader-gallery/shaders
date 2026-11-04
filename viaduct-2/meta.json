@@ -1,0 +1,55 @@
+{
+  "name": "Viaduct",
+  "slug": "viaduct-2",
+  "shelf": "rework",
+  "family": "Byway",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "road",
+    "fog",
+    "night",
+    "urban",
+    "perspective",
+    "reflection"
+  ],
+  "description": "A wet road runs under a concrete viaduct into fog toward a vanishing point on the left third: board-marked square piers and heavy cross beams recede in rhythm, sodium lamps on the piers, under the beams and on poles along the open verge glow coral in the blue-black murk, and the wet asphalt drags their light toward the viewer in long broken streaks. The fog rolls in slow banks as the view creeps forward, tail lights pull away ahead and a pair of headlights comes on under the deck.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_fog",
+      "label": "Fog",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the fog: thin air shows the piers far down the road, thick fog swallows them and swells the lamp halos."
+    },
+    {
+      "uniform": "u_wet",
+      "label": "Wet road",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How wet the asphalt is, from dry road to long mirrored streaks under every lamp."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Speed of the slow creep forward under the viaduct."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 3,
+    "dither": 1
+  },
+  "defaultPalette": "coral"
+}
