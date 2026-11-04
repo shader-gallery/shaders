@@ -1,0 +1,66 @@
+{
+  "name": "Siq",
+  "slug": "siq",
+  "shelf": "rework",
+  "family": "Narrows",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "canyon",
+    "strata",
+    "sandstone",
+    "scene",
+    "depth"
+  ],
+  "description": "Looking straight up from the floor of a slot canyon: a white-hot winding slit of sky cuts diagonally across the frame, flanked by overlapping bulbous sandstone lobes whose flowing strata glow clay-orange near the light and sink into blue-black shade in the near walls. The lobes slide past each other in slow parallax while lit sand sifts down the slit.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_strata",
+      "label": "Strata",
+      "min": 0.3,
+      "max": 2.5,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the flowing sandstone bands on every wall lobe."
+    },
+    {
+      "uniform": "u_bounce",
+      "label": "Bounce light",
+      "min": 0.3,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How much sunlight bounces down the walls, from deep shade to glowing rims."
+    },
+    {
+      "uniform": "u_dust",
+      "label": "Falling sand",
+      "min": 0,
+      "max": 1.5,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "Amount of lit sand grains sifting down through the slit light."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Speed of the slow parallax drift of the wall lobes along the slit."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.3,
+    "bloom": 0.35,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.15
+  },
+  "defaultPalette": "clay"
+}
