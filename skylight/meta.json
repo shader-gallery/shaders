@@ -1,0 +1,64 @@
+{
+  "name": "Skylight",
+  "slug": "skylight",
+  "shelf": "rework",
+  "family": "Hollow",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "lava",
+    "tunnel",
+    "cave",
+    "light-shaft",
+    "steam",
+    "scene"
+  ],
+  "description": "A low eye inside a lava tube whose roof has fallen in: a ragged collapse in the upper left opens on a cold twilight sky with faint stars, its broken far lip daylit, and steam rising from the flow drifts through the pale light falling under it. Folding crust plates ride toward the viewer between ice-bright molten seams while the tube swings right and its far reach glows in fume behind the inner wall.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Seam heat",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Heat of the molten seams and the cold glow they throw up the walls and into the fume."
+    },
+    {
+      "uniform": "u_melt",
+      "label": "Molten fraction",
+      "min": 0.4,
+      "max": 1.8,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Width of the glowing seams between crust plates, from a thin-cracked crust to a broken molten floor."
+    },
+    {
+      "uniform": "u_flow",
+      "label": "Flow speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the crust plates ride the flow toward the viewer."
+    },
+    {
+      "uniform": "u_shaft",
+      "label": "Daylight shaft",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Strength of the light shaft, the steam in it and the pool it casts below the collapse."
+    }
+  ],
+  "post": {
+    "bloom": 0.5,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "glacier"
+}
