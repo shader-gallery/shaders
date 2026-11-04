@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 // SPDX-FileCopyrightText: 2026 E. T. Carter <support@shader.gallery>
-// smokering (Vitrine) - a ring of glowing smoke held over the vent it was
-// blown from, on a slim post on a dark studio floor. A vortex ring turns in
-// on itself: every slice through it spins about the core, so its wisps roll
-// endlessly round while the ring hangs in place, riding a little up and down.
-// It is the one piece here with no surface, only a density marched through
-// its box and laid over the studio, glowing in the theme colours, a little
-// brighter on the side toward the spot.
+// smokering (Vitrine) - rings of smoke blown one after another from a vent on a
+// slim post on a dark studio floor. Each ring rises, widens and leans as it
+// goes, and turns in on itself as a vortex ring does, every slice through it
+// spinning about its core, winding the smoke it carries into two arms that
+// spiral in to a glowing core, streaked along the flow, its edge fraying and
+// shedding in tatters until it thins away and the next comes up. No surface,
+// only density: the cores glow in the theme, the smoke round them is grey,
+// lit by the spot and shadowed by itself where it is thick.
 //
 // The FORM block is the sculpture itself, the same code the museum stands on a
 // plinth (src/scripts/museum/sculpture.js cuts it out of this file): map(p) and
@@ -31,12 +32,15 @@ uniform vec3  u_palette[4];
 uniform float u_mouseInfluence; // pointer orbits the camera, 0 ignores it  (default 0.0)
 
 // ---- FORM begin ---------------------------------------------------------------
-uniform float u_roll;           // how fast the ring rolls in on itself     (default 1.0)
+uniform float u_roll;           // how fast each ring rolls in on itself    (default 1.0)
 uniform float u_density;        // how thick the smoke is                   (default 1.0)
+uniform float u_turn;           // turntable speed, 1 is one turn a minute  (default 1.0)
 
 #define TAU 6.28318530718
 mat2 rot(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
 vec3 lin(vec3 c) { return pow(c, vec3(2.2)); }
+// the turntable: a point or direction in the frame of the piece
+vec3 turned(vec3 p) { p.xz *= rot(u_time * u_turn * TAU / 60.0); return p; }
 // the theme colours (display space), set before anything is drawn
 vec3 c0, c1, c2, c3;
 
@@ -45,16 +49,14 @@ vec3 c0, c1, c2, c3;
 #define VOLUME
 
 // the box it is drawn in: half width, height, half depth (m)
-const vec3 BOUNDS = vec3(0.4, 0.8, 0.4);
+const vec3 BOUNDS = vec3(0.42, 1.12, 0.42);
 
 const float FOOT = 0.04;
 const float POST = 0.26;
-const float VENT = 0.075;   // the radius of the vent the ring came out of
-const float RR = 0.22;      // the radius of the ring
-const float CORE = 0.05;    // the radius of its smoky core
-
-// the ring rides a little up and down over the vent, as if just blown
-vec3 ringCentre() { return vec3(0.0, 0.56 + 0.03 * sin(u_time * 0.31), 0.0); }
+const float VENT = 0.075;   // the radius of the vent the rings come out of
+const float MOUTH = FOOT + POST + 0.06;  // the height of its open top
+const float PERIOD = 14.0;  // seconds between rings
+const float TILT = 0.5;     // how far a ring leans once it is up
 
 // the stand: a round foot, a slim post and the vent, a short tube open on top
 vec2 map(vec3 q) {
@@ -73,15 +75,7 @@ vec3 shade(float id, vec3 q, vec3 n, vec3 rd) {
   vec3 L = normalize(vec3(0.35, 0.9, 0.55));
   float dif = max(dot(n, L), 0.0);
   float spec = pow(max(dot(n, normalize(L - rd)), 0.0), 60.0);
-  return lin(vec3(0.2, 0.2, 0.22)) * (0.3 + 0.9 * dif) + spec * 0.8;
-}
-
-// the four theme colours round a loop, linear
-vec3 theme(float a) {
-  a = fract(a) * 4.0;
-  float f = smoothstep(0.0, 1.0, fract(a));
-  vec3 c = a < 1.0 ? mix(c0, c1, f) : a < 2.0 ? mix(c1, c2, f) : a < 3.0 ? mix(c2, c3, f) : mix(c3, c0, f);
-  return lin(c);
+  return lin(vec3(0.09, 0.09, 0.1)) * (0.3 + 0.9 * dif) + spec * 0.3;
 }
 
 float hash31(vec3 p) { p = fract(p * 0.1031); p += dot(p, p.zyx + 31.32); return fract((p.x + p.y) * p.z); }
@@ -93,45 +87,68 @@ float vnoise3(vec3 p) {
   return mix(a, b, f.z);
 }
 
-// The density of the smoke at p, and a shade for its colour from where p
-// sits round the core and round the ring, seamless both ways.
-// A vortex ring turns in on itself: each slice through the ring spins about
-// its core, so the smoke is sampled from a point turned back round the core,
-// and the wisps roll as the ring holds its place.
-vec2 smoke(vec3 p) {
-  vec3 q = p - ringCentre();
-  // leaning, as a ring does on its way up
-  q.xy *= rot(0.4);
+// One ring, at age f (0 just out of the vent, 1 gone): the density of its
+// glowing core (x) and of the smoke wrapped round it (y). A vortex ring turns
+// in on itself, every slice through it spinning about the core, and as it
+// does it winds the smoke it carries into two arms spiralling in to the core,
+// streaked along the flow; its outer edge frays and sheds. It rises, widens
+// and leans as it ages, and thins away at the top.
+vec2 ring(vec3 p, float f, float seed) {
+  float y = MOUTH + 0.04 + f * 0.6;
+  float R = 0.05 + 0.18 * sqrt(f);
+  float s = 0.55 + 0.45 * f;                 // the slice grows with the ring
+  vec3 q = turned(p - vec3(0.0, y, 0.0));
+  q.xy *= rot(TILT * smoothstep(0.0, 0.5, f) + 0.25 * seed);
   float rxz = length(q.xz);
   vec2 u = rxz > 1e-4 ? q.xz / rxz : vec2(1.0, 0.0);
-  vec2 cs = vec2(rxz - RR, q.y);          // the slice through the ring
-  float rho = length(cs);
-  if (rho > CORE * 2.6) return vec2(0.0);
-  float roll = u_time * u_roll * 0.9;
-  vec2 cr = rot(roll) * cs;
-  vec3 s = vec3(u.x * (RR + cr.x), cr.y, u.y * (RR + cr.x)) * 12.0;
-  float n = vnoise3(s) * 0.55 + vnoise3(s * 2.1 + 7.3) * 0.3 + vnoise3(s * 4.3 + 1.7) * 0.15;
-  float shell = exp(-rho * rho / (CORE * CORE * 1.6));
-  float dens = max(shell * (0.15 + 1.5 * n) - 0.38, 0.0) * u_density;
-  float hue = 0.22 * (cr.y / max(rho, 1e-4)) + 0.12 * u.x + 0.08 * u.y;
-  return vec2(dens, hue);
+  vec2 cs = vec2(rxz - R, q.y);              // the slice through the ring
+  float rho = length(cs) / s;
+  if (rho > 0.12) return vec2(0.0);
+  float phi = atan(cs.y, cs.x) - u_time * u_roll * 1.4 - seed * 3.0;
+  float core = exp(-rho * rho / (0.018 * 0.018));
+  // the two arms, wound tighter toward the core
+  float arms = 0.5 + 0.5 * sin(2.0 * phi + rho * 150.0);
+  // streaks: fine across the flow (round the ring and out from the core),
+  // coarse along it
+  vec3 nq = vec3(u * R * 26.0, rho * 40.0 + 0.6 * cos(phi)) + seed * 11.0;
+  float n = vnoise3(nq) * 0.6 + vnoise3(nq * 2.3 + 3.1) * 0.4;
+  float band = (rho - 0.045) / 0.028;
+  float sheath = smoothstep(0.45, 1.0, arms) * exp(-band * band) * (0.25 + 1.3 * n);
+  // the frayed edge, shed in tatters
+  float edge = (rho - 0.085) / 0.022;
+  float shed = max(n - 0.55, 0.0) * 2.2 * exp(-edge * edge);
+  float fade = smoothstep(0.0, 0.1, f) * (1.0 - smoothstep(0.6, 1.0, f));
+  return vec2(core * (1.0 - 0.6 * f), sheath + shed) * fade;
 }
 
-// the smoke from t0 to t1 along the ray, glowing in the theme colours, lit a
-// little from the spot; premultiplied colour and coverage
+// two rings in the air at once, half a period apart
+vec2 smoke(vec3 p) {
+  float t = u_time / PERIOD;
+  return ring(p, fract(t), 0.0) + ring(p, fract(t + 0.5), 1.0);
+}
+
+// the smoke from t0 to t1 along the ray: the cores glow in the theme, the
+// smoke round them is grey and lit by the spot, shadowed by itself where it
+// is thick; premultiplied colour and coverage
 vec4 volume(vec3 ro, vec3 rd, float t0, float t1) {
   vec4 acc = vec4(0.0);
   if (t1 <= t0) return acc;
-  float dt = (t1 - t0) / 56.0;
-  float t = t0 + dt * 0.5;
-  for (int i = 0; i < 56; i++) {
+  vec3 L = normalize(vec3(0.35, 0.9, 0.55));
+  // light scattered toward you is brighter looking into the spot
+  float phase = 0.55 + 0.45 * dot(rd, L);
+  vec3 hot = lin(c0);
+  float dt = (t1 - t0) / 64.0;
+  float t = t0 + dt * (0.5 + 0.5 * hash31(rd * 517.0));
+  for (int i = 0; i < 64; i++) {
     vec3 p = ro + rd * t;
-    vec2 sm = smoke(p);
-    if (sm.x > 0.0) {
-      vec3 c = theme(sm.y + 0.3 - u_time * 0.02);
-      float a = 1.0 - exp(-sm.x * dt * 60.0);
-      vec3 lit = c * (0.6 + 0.6 * smoothstep(-0.05, 0.08, p.y - ringCentre().y));
-      acc.rgb += (1.0 - acc.a) * a * lit;
+    vec2 d = smoke(p) * u_density;
+    if (d.x + d.y > 0.002) {
+      float tau = smoke(p + L * 0.035).y * u_density;
+      float lit = exp(-tau * 2.4);
+      float a = 1.0 - exp(-(d.x * 0.5 + d.y) * dt * 70.0);
+      vec3 grey = vec3(0.7, 0.69, 0.74) * (0.1 + 1.3 * lit * phase) + lin(c1) * 0.06;
+      vec3 glow = mix(hot * 3.5, vec3(2.0), d.x * d.x * 0.3) * d.x;
+      acc.rgb += (1.0 - acc.a) * (a * grey + glow * dt * 70.0);
       acc.a += (1.0 - acc.a) * a;
       if (acc.a > 0.97) break;
     }
