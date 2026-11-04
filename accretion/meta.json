@@ -1,0 +1,62 @@
+{
+  "name": "Accretion",
+  "slug": "accretion",
+  "shelf": "logo",
+  "family": "Vitrine",
+  "author": "E. T. Carter",
+  "tags": [
+    "raymarched",
+    "3d",
+    "sculpture",
+    "volumetric",
+    "black hole",
+    "lensing",
+    "disc",
+    "glow",
+    "dark"
+  ],
+  "description": "A black hole hanging over a low black puck, ringed by its disc. Light bends round the hole, so the far side of the disc shows over the top and underneath, with a thin ring of light hugging the black. The disc spins fastest on the inside, shearing its streaks into spirals, and the side coming toward you burns brighter. Every half minute a star drifts in and is torn into a stream that winds down to the inner edge; the disc flares and two jets fire out along the axis.",
+  "entry": "shader.frag",
+  "sculpture": {
+    "label": "A black hole and its disc, the far side bent up over the top. Every half minute a star is torn apart and falls in, and two jets fire."
+  },
+  "params": [
+    {
+      "uniform": "u_feed",
+      "label": "Feed",
+      "min": 0.0,
+      "max": 1.25,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How often a star falls in: 1 is every half minute, lower waits longer, 0 leaves the disc quiet."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "Glow",
+      "min": 0.2,
+      "max": 2.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How bright the disc and the jets burn."
+    },
+    {
+      "uniform": "u_turn",
+      "label": "Turn",
+      "min": 0.0,
+      "max": 4.0,
+      "step": 0.05,
+      "default": 1.0,
+      "effect": "How fast the axis swings round: 1 is once a minute, tipping the disc from edge on to open and back; 0 holds it."
+    },
+    {
+      "uniform": "u_mouseInfluence",
+      "label": "Mouse influence",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "default": 0.0,
+      "effect": "How far the pointer orbits the camera round the piece; 0 ignores the mouse."
+    }
+  ],
+  "defaultPalette": "witchlight"
+}

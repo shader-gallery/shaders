@@ -50,6 +50,7 @@
     "Drizzle"
   ],
   "shaders": [
+    "accretion",
     "acidsquares",
     "adit",
     "agate",
