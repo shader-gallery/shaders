@@ -1,0 +1,67 @@
+{
+  "name": "Nightglass",
+  "slug": "nightglass",
+  "shelf": "rework",
+  "family": "Drizzle",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "rain",
+    "glass",
+    "bokeh",
+    "city",
+    "night",
+    "haze"
+  ],
+  "description": "Looking out through a rain-beaded night window: drops and slow winding runnels on misted glass each hold a sharp inverted fleck of the city, while beyond them soft mint towers with blurred window grids, red aviation lamps and drifting street-lamp bokeh sit under a wine-dark sky, layered with haze and motes. Worn dark glazing bars cross the pane on the left third and low down.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_rain",
+      "label": "Rain",
+      "min": 0,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many drops bead the glass and how strongly the runnels flow."
+    },
+    {
+      "uniform": "u_mist",
+      "label": "Condensation",
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How much fog clouds the pane and softens the city outside the drops."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 0.8,
+      "effect": "Haze banks and drifting motes hanging between the layers of the city."
+    },
+    {
+      "uniform": "u_drift",
+      "label": "Drift",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Speed of the runnels, the traffic and the drifting haze."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.3,
+    "bloom": 0.4,
+    "bloomRadius": 4,
+    "dither": 1,
+    "saturation": 1.1
+  },
+  "defaultPalette": "mint"
+}
