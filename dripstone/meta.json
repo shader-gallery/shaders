@@ -1,0 +1,54 @@
+{
+  "name": "Dripstone",
+  "slug": "dripstone",
+  "shelf": "rework",
+  "family": "Hollow",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "cave",
+    "water",
+    "reflection",
+    "mist",
+    "scene"
+  ],
+  "description": "A low view across a still cave pool: ragged rock arches hung with ringed stalactites recede toward a warm glowing opening on the right third, stalagmites rise from the shallows along the walls, and the black water mirrors it all. The view glides slowly up the cave while wet tips glint with drops that fall and spread faint rings and mist lifts off the water.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_glow",
+      "label": "Pool glow",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How strongly the pool and the far end of the cave glow and light the stone from below, from a dark mirror to a lamp-lit grotto."
+    },
+    {
+      "uniform": "u_mist",
+      "label": "Mist",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Density of the warm mist lifting off the water."
+    },
+    {
+      "uniform": "u_drip",
+      "label": "Drip rate",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.7,
+      "effect": "How often drops swell on the tips, fall and ring the still water."
+    }
+  ],
+  "post": {
+    "bloom": 0.4,
+    "bloomRadius": 3,
+    "dither": 1
+  },
+  "defaultPalette": "clay"
+}
