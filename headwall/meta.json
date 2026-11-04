@@ -1,0 +1,65 @@
+{
+  "name": "Headwall",
+  "slug": "headwall",
+  "shelf": "rework",
+  "family": "Hollow",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "tunnel",
+    "subway",
+    "architecture",
+    "depth",
+    "lamps"
+  ],
+  "description": "A curving subway tube seen from the track: bolted cast iron rings, sagging cable runs and violet and blue wall lamps slide past overhead while amber signal heads glow low on the right wall. The rails catch the lamp light and bend away into violet haze, the far end of the bore off to the right.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_speed",
+      "label": "Travel speed",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 0.5,
+      "effect": "How fast the view rides along the track; at zero the tunnel holds still and only the lamps breathe."
+    },
+    {
+      "uniform": "u_lamps",
+      "label": "Lamps",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the wall lamps and signal heads and the light they throw."
+    },
+    {
+      "uniform": "u_haze",
+      "label": "Haze",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Dust in the air: clear bore at zero, deep glowing haze around the lamps at the top."
+    },
+    {
+      "uniform": "u_bend",
+      "label": "Bend",
+      "min": 0,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How hard the tunnel curves: straight bore to the vanishing point at zero, a tight bend that hides the far end at the top."
+    }
+  ],
+  "post": {
+    "grain": 0.03,
+    "vignette": 0.25,
+    "bloom": 0.45,
+    "bloomRadius": 4,
+    "dither": 1
+  },
+  "defaultPalette": "amethyst"
+}
