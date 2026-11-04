@@ -46,7 +46,8 @@
     "Byway",
     "Sanctum",
     "Narrows",
-    "Hollow"
+    "Hollow",
+    "Drizzle"
   ],
   "shaders": [
     "acidsquares",
@@ -276,6 +277,7 @@
     "orrery",
     "oubliette",
     "packet",
+    "pane",
     "panicle",
     "parquet",
     "patina",

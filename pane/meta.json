@@ -1,0 +1,59 @@
+{
+  "name": "Pane",
+  "slug": "pane",
+  "shelf": "rework",
+  "family": "Drizzle",
+  "author": "E. T. Carter",
+  "tags": [
+    "dark",
+    "glow",
+    "loop",
+    "rain",
+    "glass",
+    "bokeh",
+    "city",
+    "night",
+    "refraction",
+    "window"
+  ],
+  "description": "Rain on a dusk window: beyond the glass an out-of-focus city of peach and slate seven-sided bokeh, a dark skyline and a spire with a blinking light under indigo cloud; on the glass, beads each hold a small refracted image of the lights while runnels slide down meandering clear trails through the condensation, framed by a painted mullion on the right third and a transom with beaded top edge.",
+  "entry": "shader.frag",
+  "params": [
+    {
+      "uniform": "u_rain",
+      "label": "Rain",
+      "min": 0.2,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How many beads cling to the glass and how fast the runnels slide."
+    },
+    {
+      "uniform": "u_blur",
+      "label": "Defocus",
+      "min": 0.2,
+      "max": 1.6,
+      "step": 0.01,
+      "default": 1,
+      "effect": "How far out of focus the city beyond the glass sits, from crisp points and lit windows to wide aperture discs."
+    },
+    {
+      "uniform": "u_glow",
+      "label": "City glow",
+      "min": 0.3,
+      "max": 2,
+      "step": 0.01,
+      "default": 1,
+      "effect": "Brightness of the windows, lamps and car lights."
+    }
+  ],
+  "post": {
+    "grain": 0.04,
+    "vignette": 0.3,
+    "saturation": 1.2,
+    "bloom": 0.3,
+    "bloomRadius": 3,
+    "dither": 1
+  },
+  "defaultPalette": "dusk"
+}
