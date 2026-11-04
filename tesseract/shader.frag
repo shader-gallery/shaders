@@ -49,7 +49,7 @@ vec3 c0, c1, c2, c3;
 vec3 env(vec3 r);
 
 // the box it is drawn in: half width, height, half depth (m)
-const vec3 BOUNDS = vec3(0.34, 1.08, 0.34);
+const vec3 BOUNDS = vec3(0.38, 1.12, 0.38);
 
 const vec3 C = vec3(0.0, 0.72, 0.0);  // the centre of the hypercube
 const float S = 0.12;           // half its edge, before the projection
